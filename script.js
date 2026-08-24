@@ -20,6 +20,7 @@ const PAGES = [
   { href: "networking.html", label: "Networking", page: "networking.html" },
   { href: "security.html", label: "Security", page: "security.html" },
   { href: "programming.html", label: "Programming", page: "programming.html" },
+  { href: "tags.html", label: "Tags", page: "tags.html" },
 ];
 
 const currentPage = location.pathname.split("/").pop() || "index.html";
@@ -156,6 +157,14 @@ function initArticleMeta() {
   ai.title = "This article was created with the assistance of artificial intelligence.";
   meta.appendChild(ai);
 
+  meta.querySelectorAll(".tag").forEach((t) => {
+    const link = document.createElement("a");
+    link.className = "tag";
+    link.href = "tags.html#" + encodeURIComponent(t.textContent);
+    link.textContent = t.textContent;
+    t.replaceWith(link);
+  });
+
   if (cur.updated !== cur.date) {
     const span = document.createElement("span");
     span.textContent = "· Updated " + fmtDate(cur.updated);
@@ -264,10 +273,57 @@ function initContactForm() {
   });
 }
 
+function initTagsPage() {
+  const cloud = document.getElementById("tag-cloud");
+  const results = document.getElementById("tag-results");
+  if (!cloud || !results) return;
+
+  const counts = {};
+  ARTICLES.forEach((a) => a.tags.forEach((t) => (counts[t] = (counts[t] || 0) + 1)));
+  const tags = Object.keys(counts).sort();
+
+  cloud.innerHTML = tags
+    .map(
+      (t) =>
+        '<button class="tag-btn" data-tag="' + esc(t) + '">' +
+        esc(t) + ' <span class="tag-count">' + counts[t] + "</span></button>"
+    )
+    .join("");
+
+  const select = (tag) => {
+    document.querySelectorAll(".tag-btn").forEach((b) => b.classList.toggle("active", b.dataset.tag === tag));
+    if (!tag) {
+      results.innerHTML = "";
+      return;
+    }
+    const hits = ARTICLES.filter((a) => a.tags.includes(tag));
+    results.innerHTML =
+      '<h2 class="tag-results-heading">"' + esc(tag) + '" — ' + hits.length + " article" + (hits.length === 1 ? "" : "s") + "</h2>" +
+      hits
+        .map(
+          (a) =>
+            '<a class="latest-item" href="' + a.url + '">' +
+            '<span class="latest-title">' + esc(a.title) + "</span>" +
+            '<span class="latest-meta">' + esc(a.category) + " · " + fmtDate(a.date) + "</span>" +
+            "</a>"
+        )
+        .join("");
+  };
+
+  cloud.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tag-btn");
+    if (btn) select(btn.dataset.tag);
+  });
+
+  const hash = location.hash.replace("#", "");
+  if (hash && counts[hash]) select(hash);
+}
+
 initSearch();
 initWhatsNew();
 initArticleMeta();
 initContactForm();
+initTagsPage();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

@@ -15,7 +15,7 @@ const files = fs.readdirSync(path.join(__dirname, "..")).filter((f) => f.endsWit
 const STATIC_META = {
   "index.html": {
     title: "VelsTech | Modern Tech Solutions",
-    desc: "VelsTech — modern tech notes on AI, hardware, OS, networking, security, and programming.",
+    desc: "VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming.",
   },
   "terms.html": { title: "Terms of Use | VelsTech", desc: "Terms of use and disclaimer for VelsTech." },
   "privacy.html": { title: "Privacy Policy | VelsTech", desc: "Privacy policy for VelsTech." },
@@ -67,6 +67,8 @@ for (const file of files) {
     injected++;
   } else if (file === "index.html") {
     html = html.replace(/<meta property="og:url" content="[^"]*" \/>/, `  <meta property="og:url" content="${ogUrl}" />`);
+    html = html.replace(/<meta property="og:description" content="[^"]*" \/>/, `  <meta property="og:description" content="${esc(meta.desc)}" />`);
+    html = html.replace(/<meta name="twitter:description" content="[^"]*" \/>/, `  <meta name="twitter:description" content="${esc(meta.desc)}" />`);
     fs.writeFileSync(fp, html);
   }
 }
@@ -74,13 +76,15 @@ for (const file of files) {
 const urls = [];
 for (const file of files) {
   if (!getMeta(file)) continue;
+  const loc = file === "index.html" ? `${SITE}/` : `${SITE}/${file}`;
   const priority = file === "index.html" ? "1.0" : file === "terms.html" || file === "privacy.html" ? "0.3" : "0.8";
-  urls.push(`  <url>\n    <loc>${SITE}/${file}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`);
+  urls.push({ file, loc, priority });
 }
+urls.sort((a, b) => { if (a.file === "index.html") return -1; if (b.file === "index.html") return 1; return a.file.localeCompare(b.file); });
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.join("\n")}
+${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`).join("\n")}
 </urlset>
 `;
 fs.writeFileSync(path.join(__dirname, "..", "sitemap.xml"), sitemap);

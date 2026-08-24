@@ -381,10 +381,16 @@ function applyAccent(accent) {
   });
 }
 
-const savedTheme = localStorage.getItem("vt-theme") || "dark";
+const savedTheme = localStorage.getItem("vt-theme") || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
 const savedAccent = localStorage.getItem("vt-accent") || "blue";
 applyTheme(savedTheme);
 applyAccent(savedAccent);
+
+window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", (e) => {
+  if (!localStorage.getItem("vt-theme")) {
+    applyTheme(e.matches ? "light" : "dark");
+  }
+});
 
 themeToggle.addEventListener("click", () => {
   const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";

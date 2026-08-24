@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="From a media server to a personal cloud — services you can run on a Raspberry Pi or old laptop." />
+  <title>Self-hosting 101: what can you run at home? | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="networking.html">Networking</a> / This article</p>
+    <h1 class="title">Self-hosting 101: what can you run at home?</h1>
+    <div class="meta">
+      <span class="tag">Self-hosting</span>
+      <span class="tag">Projects</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Self-hosting means running your own services on your own hardware instead of paying
+        someone else's cloud. It's private, it's a great way to learn, and for many things it
+        costs almost nothing. Here's what's worth hosting at home — and what isn't.
+      </p>
+
+      <h2>What you need to start</h2>
+      <p>
+        The entry point is tiny:
+      </p>
+      <ul>
+        <li><strong>A Raspberry Pi 4/5</strong> — the classic. ~$50–80, uses a few watts of power.</li>
+        <li><strong>An old laptop or desktop</strong> — perfectly good, and you probably already own one.</li>
+        <li><strong>A mini PC</strong> (N100-class) — cheap, quiet, low-power, surprisingly capable.</li>
+        <li><strong>Storage</strong> — a decent external or internal drive, ideally not your boot drive.</li>
+      </ul>
+      <p>
+        Install Linux (see the OS section), give the machine a static IP, and you're ready.
+        <strong>Docker</strong> makes the next part dramatically easier — most self-hosted apps
+        are one-command installs.
+      </p>
+
+      <h2>Easy, high-value wins</h2>
+      <p>
+        These are the projects people usually start with:
+      </p>
+      <ul>
+        <li>
+          <strong>Media server — Jellyfin or Plex.</strong> Stream your own movies and music
+          to any device. Jellyfin is free and fully self-contained. This is the #1 reason
+          people start self-hosting.
+        </li>
+        <li>
+          <strong>Personal cloud — Nextcloud.</strong> Your own Dropbox/Google Drive. Files,
+          photos, notes, contacts — accessible from your phone. Replace "sync to a stranger's
+          server" with "sync to my closet".
+        </li>
+        <li>
+          <strong>Ad-blocking at network level — AdGuard Home or Pi-hole.</strong> Block ads
+          and trackers for every device on your network, from the router level, before they
+          even load.
+        </li>
+        <li>
+          <strong>Home dashboard — Home Assistant.</strong> Connect smart devices, sensors,
+          and automations in one private dashboard. The gateway drug to full smart-home
+          ownership.
+        </li>
+      </ul>
+
+      <h2>Step it up</h2>
+      <p>
+        Once you're comfortable, add more:
+      </p>
+      <ul>
+        <li><strong>Password manager — Vaultwarden.</strong> Your passwords, self-hosted (a drop-in replacement for Bitwarden's server).</li>
+        <li><strong>Backup target.</strong> Back up your computers to the home server overnight. The server itself gets backed up off-site.</li>
+        <li><strong>Notes and docs — Obsidian sync, Bookstack, or Trilium.</strong> Your own knowledge base.</li>
+        <li><strong>Personal blog or site.</strong> Host it yourself — though a static site on GitHub Pages is often smarter.</li>
+        <li><strong>Git server — Gitea.</strong> Your own GitHub for personal projects.</li>
+      </ul>
+
+      <h2>Exposing it to the internet</h2>
+      <p>
+        Inside your house, services just work on the local network. The moment you want
+        access from outside, you have options — in order of increasing effort:
+      </p>
+      <ol>
+        <li>
+          <strong>VPN — Tailscale or WireGuard.</strong> The safe, modern choice. You join a
+          private network that reaches your home server from anywhere. No ports opened, no
+          exposure. Recommended for everything.
+        </li>
+        <li>
+          <strong>Cloudflare Tunnel.</strong> A free tunnel that connects your server to
+          Cloudflare without opening any ports. Great for sharing specific apps publicly.
+        </li>
+        <li>
+          <strong>Port forwarding + DDNS.</strong> The old-school way: open a port, use DDNS
+          for your changing IP. Works, but exposes the server directly — only do this with
+          strong security.
+        </li>
+      </ol>
+      <blockquote>
+        Rule of thumb: use a VPN (Tailscale) for private access to everything, and
+        Cloudflare Tunnel if you specifically want something public. Avoid raw port
+        forwarding on the open internet unless you're confident in your setup.
+      </blockquote>
+
+      <h2>What you should NOT self-host</h2>
+      <p>
+        Honesty corner. Some things aren't worth it:
+      </p>
+      <ul>
+        <li><strong>Business-critical email</strong> — delivering email reliably from a home IP is a nightmare (spam filters hate residential IPs). Use a mail provider.</li>
+        <li><strong>Anything that must be up 24/7 at enterprise uptime</strong> — home internet and power aren't data centers.</li>
+        <li><strong>Backups you can't afford to lose</strong> — always keep an off-site copy (the 3-2-1 rule).</li>
+        <li><strong>Things you won't maintain</strong> — every self-hosted service needs updates. Unmaintained = unpatched = risk.</li>
+      </ul>
+
+      <h2>A starter checklist</h2>
+      <pre>1. Get hardware (Pi / old laptop / mini PC)
+2. Install Linux + Docker
+3. Give it a static local IP
+4. Start with ONE service (Jellyfin is the classic)
+5. Add Tailscale for secure remote access
+6. Set up nightly backups to an external drive
+7. Repeat updates regularly (and actually do them)</pre>
+
+      <p>
+        Self-hosting is a hobby that pays for itself in learning and privacy. Start with one
+        thing, resist installing ten services in a weekend, and keep everything updated.
+        Six months from now you'll have a private little cloud that's entirely yours.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="networking.html">← Back to Networking</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

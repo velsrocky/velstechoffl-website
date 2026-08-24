@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A straightforward walkthrough of IP addresses, DNS, and routing — the basics that make the internet tick." />
+  <title>How does the internet actually work? | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="networking.html">Networking</a> / This article</p>
+    <h1 class="title">How does the internet actually work?</h1>
+    <div class="meta">
+      <span class="tag">Basics</span>
+      <span class="tag">DNS</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        The internet feels like magic, but it's really just three ideas stacked on top of
+        each other: <strong>addressing</strong>, <strong>naming</strong>, and
+        <strong>forwarding</strong>. Understand those, and the whole thing makes sense.
+      </p>
+
+      <h2>The mailing analogy</h2>
+      <p>
+        Sending data across the internet is like mailing a letter:
+      </p>
+      <ul>
+        <li><strong>IP address</strong> = the street address. It uniquely identifies a computer on the network.</li>
+        <li><strong>Packet</strong> = the letter, carrying a chunk of data and the destination address.</li>
+        <li><strong>Routers</strong> = post offices, forwarding each packet toward its destination.</li>
+        <li><strong>DNS</strong> = the phone book, translating names like "velstech.net" into IP addresses.</li>
+      </ul>
+      <p>
+        That's 90% of networking right there. Let's look at each piece.
+      </p>
+
+      <h2>1. IP addresses: the addressing</h2>
+      <p>
+        Every device on the internet has a unique number — an <strong>IP address</strong>.
+        There are two versions in use:
+      </p>
+      <ul>
+        <li><strong>IPv4</strong> — like <code>185.199.108.153</code>. Four numbers, ~4.3 billion total. We ran out.</li>
+        <li><strong>IPv6</strong> — like <code>2606:4700:4700::1111</code>. Vastly more addresses, slowly rolling out.</li>
+      </ul>
+      <p>
+        Most people never see these because of <strong>NAT</strong> — your home router gives
+        each device a private address (like <code>192.168.1.5</code>) and shares one public
+        address with the outside world. All your devices "mail" through the same PO box.
+      </p>
+
+      <h2>2. DNS: the phone book</h2>
+      <p>
+        Nobody wants to type <code>185.199.108.153</code> into a browser. Instead we type
+        <code>velstech.net</code>, and the <strong>Domain Name System</strong> looks up the
+        matching IP address for us.
+      </p>
+      <p>
+        When you type a domain, this happens in milliseconds:
+      </p>
+      <ol>
+        <li>Your computer asks its configured DNS server (usually your router or ISP).</li>
+        <li>If the answer isn't cached, the server follows a chain: root servers → .net servers → the specific nameserver for velstech.net.</li>
+        <li>The final nameserver returns the IP address, which gets cached so next time is instant.</li>
+      </ol>
+      <p>
+        DNS records have types: <code>A</code> points a domain to an IPv4 address,
+        <code>CNAME</code> points one domain at another, <code>MX</code> handles email.
+        This is why "buying a domain" is really "owning the entry in the DNS phone book."
+      </p>
+
+      <h2>3. Packets and routing: the forwarding</h2>
+      <p>
+        Your data doesn't travel as one piece. It's chopped into small <strong>packets</strong>,
+        each stamped with source and destination addresses, then sent on its way.
+      </p>
+      <p>
+        Each packet independently hops through <strong>routers</strong> — devices that read
+        the destination and forward the packet toward the right "next hop". Routes can
+        change in real time: if one path is congested or down, packets take another.
+      </p>
+      <blockquote>
+        Think of it like delivering thousands of pages to a friend by mailing each page
+        separately. They arrive out of order and via different post offices, but your friend
+        (the receiving software) reassembles them in the right order.
+      </blockquote>
+
+      <h2>The protocols that make it reliable</h2>
+      <p>
+        Two protocols do the heavy lifting on top of that raw forwarding:
+      </p>
+      <ul>
+        <li>
+          <strong>TCP</strong> (Transmission Control Protocol) — guarantees delivery. It
+          numbers packets, detects loss, and retransmits anything missing. Used for web,
+          email, file transfers. Reliable but heavier.
+        </li>
+        <li>
+          <strong>UDP</strong> (User Datagram Protocol) — no guarantees, just speed. Fire and
+          forget. Used for video calls, games, DNS. Perfect when a dropped frame is better
+          than a delayed one.
+        </li>
+      </ul>
+
+      <h2>Putting it together: loading velstech.net</h2>
+      <ol>
+        <li>You type <code>velstech.net</code> and hit Enter.</li>
+        <li>DNS resolves it to <code>185.199.108.153</code> (in milliseconds, via cache).</li>
+        <li>Your browser sends a request split into TCP packets, addressed to that IP.</li>
+        <li>Routers across the internet forward each packet toward GitHub's servers.</li>
+        <li>The server responds — its files split into packets and sent back the same way.</li>
+        <li>Your browser reassembles the packets and renders the page.</li>
+      </ol>
+      <p>
+        Total round trip: often under a hundred milliseconds. Hundreds of routers, thousands
+        of packets, and a phone book lookup — all before you finish blinking.
+      </p>
+
+      <h2>Why it matters to you</h2>
+      <p>
+        Networking knowledge stops being abstract the moment you buy a domain, run a home
+        server, or debug "why is the internet slow". These three ideas — IP addresses, DNS,
+        and packet routing — are the foundation of every connected thing you'll ever set up.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="networking.html">← Back to Networking</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

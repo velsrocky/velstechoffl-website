@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How to buy a domain, configure DNS records, and connect it to GitHub Pages, a VPS, or a home server." />
+  <title>Setting up a domain and pointing it anywhere | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="networking.html">Networking</a> / This article</p>
+    <h1 class="title">Setting up a domain and pointing it anywhere</h1>
+    <div class="meta">
+      <span class="tag">DNS</span>
+      <span class="tag">Self-hosting</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        A domain is the most powerful piece of internet real estate you can own. It's a
+        permanent address you control — and pointing it at a website, a server, or a home
+        machine only takes a few DNS records. This site runs exactly this way.
+      </p>
+
+      <h2>Buying the domain</h2>
+      <p>
+        You buy a domain from a <strong>registrar</strong> — a company authorized to sell
+        names in a top-level domain (TLD). Pick wisely:
+      </p>
+      <ul>
+        <li>
+          <strong>Cloudflare Registrar</strong> — sells at cost price, no markup, free
+          management. Great value.
+        </li>
+        <li>
+          <strong>Namecheap, Porkbun</strong> — cheap and beginner-friendly.
+        </li>
+        <li>
+          <strong>GoDaddy</strong> — works, but expect upsells at checkout.
+        </li>
+      </ul>
+      <p>
+        TLD choice matters more than people think:
+      </p>
+      <ul>
+        <li><code>.com</code> — the classic, most trusted, but often taken.</li>
+        <li><code>.net</code>, <code>.org</code>, <code>.dev</code>, <code>.io</code> — solid alternatives.</li>
+        <li>Fancy TLDs (<code>.xyz</code>, <code>.club</code>) — cheap, but look less serious.</li>
+      </ul>
+      <p>
+        Watch out for <strong>renewal price</strong>: many domains are cheap the first year
+        and jump afterward. Cloudflare avoids this by pricing renewals the same.
+      </p>
+
+      <h2>Understanding DNS records</h2>
+      <p>
+        A domain alone does nothing. You tell the world where it points using
+        <strong>DNS records</strong>. The ones you'll actually use:
+      </p>
+      <pre>Type     Example                         Purpose
+──────────────────────────────────────────────────────────
+A        185.199.108.153                 IPv4 address
+AAAA     2606:4700:4700::1111            IPv6 address
+CNAME    velsrocky.github.io             alias to another name
+MX       mail.yourdomain.com             email delivery
+TXT      "v=spf1 ..."                    verification / security</pre>
+      <p>
+        A record names map a domain to an IP. CNAME maps a domain to another domain — handy
+        for services that give you a name (like <code>username.github.io</code>).
+      </p>
+
+      <h2>Scenario A: GitHub Pages (this site)</h2>
+      <p>
+        To connect a domain to a free GitHub Pages site:
+      </p>
+      <pre>A        @      ->  185.199.108.153
+A        @      ->  185.199.109.153
+A        @      ->  185.199.110.153
+A        @      ->  185.199.111.153
+CNAME    www    ->  username.github.io</pre>
+      <ol>
+        <li>Add those records at your DNS provider.</li>
+        <li>In the GitHub repo: Settings → Pages → Custom domain → enter your domain.</li>
+        <li>GitHub verifies the records and issues a free HTTPS certificate automatically.</li>
+      </ol>
+
+      <h2>Scenario B: a VPS or dedicated server</h2>
+      <p>
+        If you rent a server (Linode, DigitalOcean, Hetzner, a VPS), point your domain at its
+        IP:
+      </p>
+      <pre>A        @   ->  203.0.113.10      (your server's IP)
+CNAME    www ->  @                    (www follows the root)</pre>
+      <p>
+        Then configure your web server (Nginx, Apache, Caddy) to serve your site and set up
+        HTTPS with a free <strong>Let's Encrypt</strong> certificate.
+      </p>
+
+      <h2>Scenario C: a home server</h2>
+      <p>
+        Home networking adds a layer — your house has one public IP, shared by every device
+        via NAT. You need:
+      </p>
+      <ol>
+        <li>
+          <strong>Port forwarding</strong> — tell your router to send web traffic (port 443)
+          to your server's private IP.
+        </li>
+        <li>
+          <strong>A fixed public IP</strong> — home connections often change IPs. Use a
+          <strong>DDNS</strong> service that updates a DNS record when your IP changes.
+        </li>
+        <li>
+          <strong>HTTPS</strong> — Let's Encrypt can verify ownership via DNS records, so it
+          works on home IPs too.
+        </li>
+      </ol>
+      <blockquote>
+        Security note: exposing a home server to the internet is real. Keep everything
+        updated, use SSH keys, and consider Cloudflare's free proxy as an extra shield that
+        hides your real IP.
+      </blockquote>
+
+      <h2>Email and verification records</h2>
+      <p>
+        Want <code>you@yourdomain.com</code>? That needs <strong>MX records</strong> pointing
+        at your mail provider (Gmail/Workspace, Zoho, or a custom mail server). Providers
+        also ask for <strong>TXT records</strong> (SPF, DKIM) to prove your domain owns its
+        mail.
+      </p>
+
+      <h2>Common gotchas</h2>
+      <ul>
+        <li><strong>Propagation takes time</strong> — DNS changes can take minutes to 48 hours (usually a few minutes with a good provider). Be patient.</li>
+        <li><strong>Don't mix A and CNAME on the same name</strong> — either point the root via A records, or use CNAME for subdomains.</li>
+        <li><strong>HTTPS before DNS</strong> — some hosts won't issue a certificate until DNS resolves. Order: DNS first, then HTTPS.</li>
+        <li><strong>Keep records <code>proxied: off</code></strong> (gray cloud) with GitHub Pages and home servers — Cloudflare's proxy can break direct connections.</li>
+      </ul>
+
+      <h2>That's it</h2>
+      <p>
+        Own the name, add a few records, and your domain points anywhere you own. Whether
+        it's free static hosting, a rented server, or a box in your closet — the DNS records
+        are the glue, and you now know exactly how they work.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="networking.html">← Back to Networking</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

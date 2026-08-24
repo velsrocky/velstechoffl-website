@@ -239,6 +239,66 @@ a {
   color: var(--muted);
 }
 
+/* Contact form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.contact-form label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--muted);
+}
+
+.contact-form .btn {
+  align-self: flex-start;
+  margin-top: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.contact-form .btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.form-status {
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.contact-direct {
+  margin-top: 4px;
+  font-size: 0.9rem;
+}
+
 /* Latest list */
 .latest-list {
   display: flex;

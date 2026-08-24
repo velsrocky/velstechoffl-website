@@ -187,9 +187,46 @@ feedLink.title = "VelsTech — Atom feed";
 feedLink.href = "feed.xml";
 document.head.appendChild(feedLink);
 
+function initContactForm() {
+  const form = document.querySelector(".contact-form");
+  if (!form) return;
+  const status = document.getElementById("contact-status");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector("button[type='submit']");
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    status.hidden = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        form.reset();
+        status.textContent = "Thanks! Your message has been sent.";
+        status.style.color = "var(--accent)";
+      } else {
+        status.textContent = "Something went wrong. Please email hello@velstech.net instead.";
+        status.style.color = "var(--text)";
+      }
+    } catch {
+      status.textContent = "Network error. Please email hello@velstech.net instead.";
+      status.style.color = "var(--text)";
+    }
+    status.hidden = false;
+    btn.disabled = false;
+    btn.textContent = "Send message";
+  });
+}
+
 initSearch();
 initWhatsNew();
 initArticleMeta();
+initContactForm();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A plain-language look at how large language models work under the hood — tokens, context, and probabilities." />
+  <title>What is a Large Language Model, really? | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI &amp; ML</a> / This article</p>
+    <h1 class="title">What is a Large Language Model, really?</h1>
+    <div class="meta">
+      <span class="tag">LLM</span>
+      <span class="tag">Basics</span>
+      <span>Aug 24, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        You've probably chatted with one — ChatGPT, Claude, Gemini. But when someone says
+        "large language model", what's actually inside? Here's a plain-language tour of the
+        machinery, without the jargon.
+      </p>
+
+      <h2>Three words, unpacked</h2>
+      <p>
+        <strong>Language model</strong> — a program trained to predict the next word in a sequence.
+        That's it. Not to "think", not to "understand" in a human sense. It's a next-word machine.
+        Everything else is a consequence of doing that one job astonishingly well.
+      </p>
+      <p>
+        <strong>Large</strong> — the model has billions of adjustable numbers (parameters) and was
+        trained on a huge slice of the internet's text. That scale is what turns "predict the next
+        word" into something that can answer questions, write essays, and debug code.
+      </p>
+
+      <h2>Tokens: the real alphabet</h2>
+      <p>
+        Models don't read letters or words directly — they read <strong>tokens</strong>. A token is a
+        chunk of text that's typically a few characters long. For example:
+      </p>
+      <pre>"VelsTech writes about tech"
+  -> "Vels" | "Tech" | " writes" | " about" | " tech"</pre>
+      <p>
+        The model predicts one token at a time, and each predicted token is appended to the input
+        before predicting the next. That's why longer responses take longer: every word is a fresh
+        prediction.
+      </p>
+
+      <h2>How it learns</h2>
+      <p>
+        During training, the model reads massive amounts of text and repeatedly tries to predict the
+        next token. When it's wrong, its internal numbers are nudged so it's slightly less wrong next
+        time. Repeat that a few trillion times and you get a model that has absorbed patterns of
+        grammar, facts, reasoning, and style — not because it memorized them, but because they're the
+        patterns that best predict text.
+      </p>
+      <blockquote>
+        A useful mental model: the LLM has learned the "shape" of human text — how concepts usually
+        connect — and generates by following that shape.
+      </blockquote>
+
+      <h2>Context: what it "sees"</h2>
+      <p>
+        When you send a prompt, everything you write — plus everything the model has generated in the
+        same conversation — becomes the <strong>context window</strong>. The model only "knows" what's
+        in that window. It doesn't have a memory of previous chats, and it doesn't browse the live web
+        unless a tool tells it to.
+      </p>
+      <p>
+        That's why the same question can get different answers: the model isn't recalling "the" answer,
+        it's generating the most probable continuation given <em>your specific context</em>.
+      </p>
+
+      <h2>Temperature: creativity dial</h2>
+      <p>
+        At each step the model doesn't pick just one next token — it assigns a probability to many and
+        samples from them. The <strong>temperature</strong> setting controls how random that sampling is:
+      </p>
+      <ul>
+        <li><strong>Low (0–0.3):</strong> predictable, deterministic answers. Great for code and math.</li>
+        <li><strong>Medium (0.7):</strong> balanced, natural conversation.</li>
+        <li><strong>High (1+):</strong> creative, varied, sometimes nonsensical. Good for brainstorming.</li>
+      </ul>
+
+      <h2>Why it still gets things wrong</h2>
+      <p>
+        Because it's predicting text, not checking facts, an LLM can confidently produce statements that
+        are wrong — or entirely invented (often called a <strong>hallucination</strong>). It's not lying;
+        it's just being very smooth at writing something that <em>looks</em> right.
+      </p>
+      <p>
+        The practical takeaway: use LLMs as a fast first draft, a tutor, or a coding assistant — but
+        verify anything important before you trust it.
+      </p>
+
+      <h2>The one-sentence summary</h2>
+      <p>
+        A large language model is a next-word predictor, scaled up with billions of parameters and trained
+        on enormous amounts of text, and everything it does — writing, reasoning, answering — emerges from
+        that single, simple job.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI &amp; ML</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

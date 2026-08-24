@@ -607,6 +607,56 @@ a {
   color: var(--muted);
 }
 
+/* Related articles */
+.related-section {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.related-heading {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.related-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.related-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  transition: color 0.15s;
+}
+
+.related-item:last-child {
+  border-bottom: none;
+}
+
+.related-item:hover {
+  color: var(--accent);
+}
+
+.related-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.related-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Article nav */
+.article-nav {
+
 /* Article page */
 .article-page {
   max-width: 760px;

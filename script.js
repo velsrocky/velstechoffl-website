@@ -161,6 +161,45 @@ function initArticleMeta() {
     span.textContent = "· Updated " + fmtDate(cur.updated);
     meta.appendChild(span);
   }
+
+  renderRelated(cur);
+}
+
+function renderRelated(cur) {
+  const scored = ARTICLES
+    .filter((a) => a.url !== cur.url)
+    .map((a) => {
+      let score = a.category === cur.category ? 1 : 0;
+      a.tags.forEach((t) => { if (cur.tags.includes(t)) score += 2; });
+      return { ...a, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+
+  if (!scored.length) return;
+
+  const main = document.querySelector(".article-page");
+  if (!main) return;
+
+  const section = document.createElement("section");
+  section.className = "related-section";
+  section.innerHTML =
+    '<h2 class="related-heading">Related articles</h2>' +
+    '<div class="related-list">' +
+    scored
+      .map(
+        (a) =>
+          '<a class="related-item" href="' + a.url + '">' +
+          '<span class="related-title">' + esc(a.title) + "</span>" +
+          '<span class="related-meta">' + esc(a.category) + " · " + fmtDate(a.date) + "</span>" +
+          "</a>"
+      )
+      .join("") +
+    "</div>";
+
+  const nav = main.querySelector(".article-nav");
+  if (nav) main.insertBefore(section, nav);
+  else main.appendChild(section);
 }
 
 const rssIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>';

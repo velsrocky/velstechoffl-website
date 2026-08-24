@@ -19,6 +19,30 @@
       <a href="#services">Services</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div class="controls">
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle light and dark theme" title="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+      <div class="palette-wrap">
+        <button class="icon-btn" id="palette-btn" aria-label="Choose accent color" title="Accent color" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7 7 3-3-7-7"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+          </svg>
+        </button>
+        <div class="palette" id="palette" hidden>
+          <button class="dot" data-accent="blue" style="--c: #4cc2ff" aria-label="Blue"></button>
+          <button class="dot" data-accent="green" style="--c: #3ddc97" aria-label="Green"></button>
+          <button class="dot" data-accent="purple" style="--c: #a78bfa" aria-label="Purple"></button>
+          <button class="dot" data-accent="orange" style="--c: #fb923c" aria-label="Orange"></button>
+          <button class="dot" data-accent="pink" style="--c: #f472b6" aria-label="Pink"></button>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main>

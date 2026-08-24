@@ -170,6 +170,10 @@ a {
   z-index: 10;
 }
 
+.palette[hidden] {
+  display: none;
+}
+
 .dot {
   width: 22px;
   height: 22px;

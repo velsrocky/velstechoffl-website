@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Navigation, files, permissions, and package management — the terminal commands you'll use every day." />
+  <title>Essential terminal commands everyone should know | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="os.html">Operating Systems</a> / This article</p>
+    <h1 class="title">Essential terminal commands everyone should know</h1>
+    <div class="meta">
+      <span class="tag">Terminal</span>
+      <span class="tag">Basics</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        The terminal looks intimidating, but it's really just a text box for telling your
+        computer to do things. These ~20 commands cover most of what anyone does every day.
+        Learn them once and you'll use them forever.
+      </p>
+
+      <h2>1. Finding your way around</h2>
+      <pre>pwd              # print working directory — where am I?
+ls               # list files in the current folder
+ls -la           # list everything, including hidden files (a = all, l = details)
+cd folder        # change directory — go into a folder
+cd ..            # go up one folder
+cd ~             # go to your home folder
+cd -             # go back to the previous folder you were in</pre>
+      <p>
+        <code>cd</code> is the one you'll type most. Remember: <code>..</code> means "parent
+        folder" and <code>~</code> means "home".
+      </p>
+
+      <h2>2. Working with files</h2>
+      <pre>cp source dest   # copy a file
+mv source dest   # move (or rename) a file
+rm file          # delete a file
+rm -r folder     # delete a folder and everything inside it (careful!)
+mkdir folder     # make a new folder
+touch file       # create an empty file
+cat file         # print a file's contents
+less file        # view a file page by page (q to quit)
+nano file        # edit a file in a simple editor (Ctrl+O save, Ctrl+X exit)</pre>
+      <blockquote>
+        There is no undo for <code>rm</code>. It's the terminal equivalent of dragging
+        something into the void. Always double-check the path before you press Enter.
+      </blockquote>
+
+      <h2>3. Permissions (why Linux asks who you are)</h2>
+      <p>
+        Linux is built around users and permissions. Every file has an owner and access
+        settings — read, write, execute — for the owner, their group, and everyone else.
+      </p>
+      <pre>ls -l            # shows permissions (like -rw-r--r-- and the owner)
+chmod +x file    # make a file executable
+chown user file  # change a file's owner
+sudo command     # run a command as administrator</pre>
+      <p>
+        <code>sudo</code> ("superuser do") is how you install software or change system
+        settings. Only use it when a command fails with a permission error — and always know
+        what the command does first.
+      </p>
+
+      <h2>4. Installing software (package managers)</h2>
+      <p>
+        Linux installs software through a <strong>package manager</strong>. The command
+        depends on your distro family:
+      </p>
+      <pre># Debian / Ubuntu / Mint
+sudo apt update && sudo apt upgrade   # update everything
+sudo apt install package-name         # install
+sudo apt remove package-name          # remove
+
+# Fedora / RHEL family
+sudo dnf upgrade                      # update everything
+sudo dnf install package-name         # install
+sudo dnf remove package-name          # remove</pre>
+      <p>
+        Install <code>&&</code> means "run the first, and if it succeeds, run the second".
+        Updating first keeps the package lists current.
+      </p>
+
+      <h2>5. Pipes: the terminal superpower</h2>
+      <p>
+        The <code>|</code> character (a pipe) feeds one command's output into the next
+        command. This is where the terminal becomes magical:
+      </p>
+      <pre>ls | wc -l        # count how many files are here
+history | tail   # show your recent commands
+grep error log.txt   # search a file for "error"
+ps aux | grep firefox # find running Firefox processes</pre>
+      <p>
+        <code>grep</code> deserves its own medal — it searches text for a pattern. You'll use
+        it constantly.
+      </p>
+
+      <h2>6. Looking around the system</h2>
+      <pre>top              # live view of running processes (q to quit)
+htop             # friendlier version of top (if installed)
+df -h            # how full are my disks? (h = human-readable)
+free -h          # how much RAM is in use?
+uname -a         # what kernel am I running?
+ip a             # my network addresses
+ping google.com  # is the internet reachable? (Ctrl+C to stop)</pre>
+
+      <h2>7. Quick tips that save time</h2>
+      <ul>
+        <li><strong>Tab to autocomplete</strong> — press Tab to finish file and command names. Every terminal user does this.</li>
+        <li><strong>Up arrow</strong> — recall the previous command.</li>
+        <li><strong>Ctrl+C</strong> — cancel whatever is running.</li>
+        <li><strong>Ctrl+L</strong> — clear the screen.</li>
+        <li><strong>Ctrl+R</strong> — search your command history.</li>
+        <li><strong>man command</strong> — read the manual for any command (q to quit).</li>
+      </ul>
+
+      <h2>A tiny real-world session</h2>
+      <p>Here's everything above working together:</p>
+      <pre>$ cd ~/projects
+$ mkdir mysite
+$ cd mysite
+$ touch index.html
+$ ls -la
+$ nano index.html          # type some HTML, Ctrl+O, Ctrl+X
+$ grep -i "title" index.html   # did I write a title?
+$ cd ..
+$ rm -r mysite            # oops — no undo from here</pre>
+      <p>
+        You don't need to memorize any of this — <code>man</code> and the tab key will carry
+        you. Just keep these handy and the terminal stops being scary and starts being your
+        favorite tool.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="os.html">← Back to Operating Systems</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

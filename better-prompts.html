@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Practical prompting patterns that get better answers from ChatGPT, Claude, and similar tools." />
+  <title>How to write better prompts | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI &amp; ML</a> / This article</p>
+    <h1 class="title">How to write better prompts</h1>
+    <div class="meta">
+      <span class="tag">Prompting</span>
+      <span class="tag">Tools</span>
+      <span>Aug 24, 2026</span>
+      <span>· 8 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Getting a great answer from an LLM isn't luck — it's a skill. The model is a next-word
+        predictor, but it's also a mirror: vague prompt in, vague answer out. Here's how to
+        get what you actually want, every time.
+      </p>
+
+      <h2>1. Be specific, not polite</h2>
+      <p>
+        You don't need to say "please" or "could you". The model doesn't have feelings. What
+        it needs is <strong>detail</strong>. Compare:
+      </p>
+      <pre>❌ "Explain how DNS works."
+✅ "Explain how DNS works. Assume I know what IP addresses are but nothing
+   about nameservers or TTLs. Use plain English and keep it under 4 paragraphs."</pre>
+      <p>
+        The second prompt constrains the answer — format, audience, length. The model will
+        hit all three because it was told to.
+      </p>
+
+      <h2>2. Give it a role</h2>
+      <p>
+        Dropping the model into a persona immediately changes the quality of the output:
+      </p>
+      <pre>"You are a senior Python developer reviewing a junior's code. Look at the
+function below and point out any bugs, style issues, or performance problems."</pre>
+      <p>
+        The role tells the model which "part" of its training data to draw from. "Senior
+        developer" pulls from the code-review patterns it learned, not the generic-conversation
+        ones.
+      </p>
+
+      <h2>3. Provide examples (few-shot prompting)</h2>
+      <p>
+        One of the most reliable techniques is showing the model exactly what you want:
+      </p>
+      <pre>"Convert these sentences into a formal tone:
+
+  Informal: 'Hey, can you fix this bug?'
+  Formal: 'Please address the identified issue at your earliest convenience.'
+
+  Informal: 'This code is slow.'
+  Formal:"</pre>
+      <p>
+        The model sees the pattern and continues it. You've effectively written the first
+        half of the answer yourself.
+      </p>
+
+      <h2>4. Chain of thought: ask it to think step by step</h2>
+      <p>
+        For reasoning-heavy tasks, add five words that dramatically improve accuracy:
+      </p>
+      <pre>"Think step by step before answering."</pre>
+      <p>
+        This forces the model to do its reasoning in the open, which reduces errors. It's
+        especially effective for math, logic, and planning questions.
+      </p>
+      <blockquote>
+        Why it works: the model's "reasoning" happens in the tokens it generates. If you
+        make it write intermediate steps, those steps become part of the context for the
+        final answer — and the next-token prediction is better informed.
+      </blockquote>
+
+      <h2>5. Break it down</h2>
+      <p>
+        Complex requests get better results when split into steps. Instead of one giant
+        prompt, have a short conversation:
+      </p>
+      <pre>You: "I want to write a blog post about Docker. Give me 5 topic ideas."
+Model: [lists ideas]
+You: "I like idea #3. Write an outline for it."
+Model: [outline]
+You: "Now write the introduction based on that outline."</pre>
+      <p>
+        Each step's output feeds into the next, and the model has a focused task at every
+        stage. The result is much better than a single "Write a full blog post about Docker."
+      </p>
+
+      <h2>6. Tell it what NOT to do</h2>
+      <p>
+        Negative constraints are just as important as positive ones:
+      </p>
+      <pre>"Explain REST APIs to a beginner. Do not use any jargon. Do not mention
+HTTP methods unless you define them first. Keep it under 200 words."</pre>
+      <p>
+        The model will actively avoid the things you listed, which is often more effective
+        than hoping it stays on track.
+      </p>
+
+      <h2>7. Iterate and refine</h2>
+      <p>
+        Rarely does the first output nail it. Treat the conversation like a collaboration:
+      </p>
+      <ul>
+        <li><strong>"Make it shorter."</strong> — the model will condense.</li>
+        <li><strong>"Rewrite this in a more casual tone."</strong> — adjusts style.</li>
+        <li><strong>"Add a concrete example."</strong> — fills in gaps.</li>
+        <li><strong>"What did I miss?"</strong> — the model will often spot gaps.</li>
+      </ul>
+      <p>
+        Each iteration gives you a better result, and you never have to start from scratch.
+      </p>
+
+      <h2>Quick reference</h2>
+      <pre>Technique               When to use
+─────────────────────────────────────────────────
+Be specific             Always. Give format, length, audience.
+Role prompt             Code reviews, domain-specific advice.
+Examples                When output format is unusual.
+Chain of thought        Math, logic, planning, analysis.
+Break it down           Complex or multi-step requests.
+Negative constraints    When the model goes off-track.
+Iterate                 Always. The first answer is the rough draft.</pre>
+
+      <p>
+        The best prompters don't write perfect prompts — they write <em>effective</em> ones
+        and then refine. Start with any of the patterns above, see what you get, and tweak
+        from there.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI &amp; ML</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

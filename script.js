@@ -155,7 +155,16 @@ function initUpdatedDate() {
 }
 
 const footerHTML =
-  '<footer class="footer"><p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p></footer>';
+  '<footer class="footer">' +
+  '<nav class="footer-links">' +
+  '<a href="feed.xml" title="Subscribe to the Atom feed">RSS</a>' +
+  '<a href="terms.html">Terms</a>' +
+  '<a href="privacy.html">Privacy</a>' +
+  '<a href="mailto:hello@velstech.net">Contact</a>' +
+  "</nav>" +
+  '<p class="footer-note">Content on this site is generated with the assistance of AI and is for informational purposes only.</p>' +
+  '<p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p>' +
+  "</footer>";
 
 document.body.insertAdjacentHTML("afterbegin", navHTML());
 document.body.insertAdjacentHTML("beforeend", footerHTML);

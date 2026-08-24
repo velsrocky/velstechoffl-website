@@ -12,17 +12,20 @@
 
   <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bg)" stroke="#1f2733" stroke-width="1.5"/>
 
-  <path d="M20 20 L32 44 L44 20"
+  <path d="M15 21 L25 43 L35 21"
         fill="none"
         stroke="url(#vgrad)"
-        stroke-width="7"
+        stroke-width="6"
         stroke-linecap="round"
         stroke-linejoin="round"/>
 
-  <circle cx="20" cy="18" r="3.2" fill="#4cc2ff"/>
-  <circle cx="44" cy="18" r="3.2" fill="#4cc2ff"/>
-  <circle cx="32" cy="47" r="3.2" fill="#7fd4ff"/>
+  <path d="M43 21 L59 21 M51 21 L51 43"
+        fill="none"
+        stroke="url(#vgrad)"
+        stroke-width="6"
+        stroke-linecap="round"/>
 
-  <circle cx="20" cy="18" r="6" fill="#4cc2ff" opacity="0.18"/>
-  <circle cx="44" cy="18" r="6" fill="#4cc2ff" opacity="0.18"/>
+  <circle cx="15" cy="19" r="2.6" fill="#4cc2ff"/>
+  <circle cx="35" cy="19" r="2.6" fill="#4cc2ff"/>
+  <circle cx="25" cy="45.5" r="2.6" fill="#7fd4ff"/>
 </svg>

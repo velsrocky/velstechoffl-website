@@ -144,20 +144,31 @@ function initWhatsNew() {
     .join("");
 }
 
-function initUpdatedDate() {
+function initArticleMeta() {
   const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
   if (!cur) return;
   const meta = document.querySelector(".meta");
-  if (!meta || cur.updated === cur.date) return;
-  const span = document.createElement("span");
-  span.textContent = "· Updated " + fmtDate(cur.updated);
-  meta.appendChild(span);
+  if (!meta) return;
+
+  const ai = document.createElement("span");
+  ai.className = "ai-badge";
+  ai.textContent = "🤖 AI-assisted";
+  ai.title = "This article was created with the assistance of artificial intelligence.";
+  meta.appendChild(ai);
+
+  if (cur.updated !== cur.date) {
+    const span = document.createElement("span");
+    span.textContent = "· Updated " + fmtDate(cur.updated);
+    meta.appendChild(span);
+  }
 }
+
+const rssIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>';
 
 const footerHTML =
   '<footer class="footer">' +
   '<nav class="footer-links">' +
-  '<a href="feed.xml" title="Subscribe to the Atom feed">RSS</a>' +
+  '<a href="feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' Subscribe</a>' +
   '<a href="terms.html">Terms</a>' +
   '<a href="privacy.html">Privacy</a>' +
   '<a href="mailto:hello@velstech.net">Contact</a>' +
@@ -178,7 +189,7 @@ document.head.appendChild(feedLink);
 
 initSearch();
 initWhatsNew();
-initUpdatedDate();
+initArticleMeta();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

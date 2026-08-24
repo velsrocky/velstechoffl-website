@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Breaking down the two most important components in your computer and when each one matters most." />
+  <title>CPU vs GPU: what does each one do? | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="hardware.html">Hardware</a> / This article</p>
+    <h1 class="title">CPU vs GPU: what does each one do?</h1>
+    <div class="meta">
+      <span class="tag">Components</span>
+      <span class="tag">Basics</span>
+      <span>Aug 24, 2026</span>
+      <span>· 5 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Every computer has both a CPU and a GPU, but they're built for very different kinds
+        of work. Here's the simple analogy that explains them both.
+      </p>
+
+      <h2>The kitchen analogy</h2>
+      <p>
+        Imagine a restaurant kitchen.
+      </p>
+      <p>
+        The <strong>CPU</strong> is the head chef. They're brilliant at following complex
+        recipes one at a time — or a few at a time, switching between them quickly. Give them
+        a tricky sauce, a delicate timing issue, or a multi-step calculation, and they'll
+        handle it with precision.
+      </p>
+      <p>
+        The <strong>GPU</strong> is a hundred kitchen assistants chopping vegetables. Each
+        assistant can only do a simple job — chop one carrot — but they can all do it at the
+        exact same time. Give them a task that's the same operation repeated thousands of
+        times, and they'll finish in seconds.
+      </p>
+      <blockquote>
+        CPU: few, fast, smart workers. GPU: thousands of simple workers in parallel.
+      </blockquote>
+
+      <h2>What the CPU does</h2>
+      <p>
+        The CPU is the <strong>general-purpose brain</strong>. It handles:
+      </p>
+      <ul>
+        <li>Running the operating system</li>
+        <li>Opening and managing applications</li>
+        <li>Web browsing, file handling, system logic</li>
+        <li>Single-threaded tasks like audio processing, compression</li>
+        <li>Coordinating all other components</li>
+      </ul>
+      <p>
+        CPUs have a few powerful cores (4–16 in most consumer chips), each optimized for
+        complex, sequential work. A fast CPU makes your computer feel <em>snappy</em>.
+      </p>
+
+      <h2>What the GPU does</h2>
+      <p>
+        The GPU is a <strong>specialized parallel processor</strong>. It excels at:
+      </p>
+      <ul>
+        <li>Rendering graphics — drawing every pixel on your screen, 60+ times a second</li>
+        <li>Machine learning — training and running neural networks (matrix math at scale)</li>
+        <li>Video encoding/decoding, 3D rendering, simulation</li>
+        <li>Any task that's "do the same thing to millions of data points"</li>
+      </ul>
+      <p>
+        A modern GPU has thousands of small cores (called CUDA cores on NVIDIA, Stream
+        Processors on AMD). Each core is individually weak, but together they crush
+        embarrassingly parallel workloads.
+      </p>
+
+      <h2>When each one matters</h2>
+      <pre>Task                  Needs CPU    Needs GPU
+─────────────────────────────────────────
+Web browsing           High        Low
+Word processing       High        Low
+Programming / comp.   High        Low
+Gaming (1080p)        Medium      High
+Gaming (4K)           Low         Very high
+Video editing         Medium      High
+3D rendering          Medium      Very high
+AI / ML training      Low         Very high
+File compression      High        Low
+Multitasking (many    High        Low
+  apps open)</pre>
+
+      <h2>Integrated vs dedicated</h2>
+      <p>
+        Many CPUs have a small GPU built in (<strong>integrated graphics</strong>). It's fine
+        for web browsing, video, and light creative work — but it won't run modern games well.
+      </p>
+      <p>
+        A <strong>dedicated GPU</strong> is a separate card with its own memory and cooling.
+        This is what you need for gaming, rendering, or AI work.
+      </p>
+
+      <h2>Can they work together?</h2>
+      <p>
+        Yes. In a modern system, the CPU sends draw commands to the GPU, and the GPU executes
+        them. The CPU handles the "what to draw" and the game logic; the GPU handles the
+        "how to draw every pixel". They're not competitors — they're teammates.
+      </p>
+      <p>
+        The bottleneck is whichever one finishes its job slower. A very fast GPU with a weak
+        CPU means the CPU can't feed commands fast enough (<em>CPU bottleneck</em>). A very
+        fast CPU with a weak GPU means the GPU can't keep up (<em>GPU bottleneck</em>).
+        Balanced builds aim for neither being the bottleneck, though for gaming, a slight
+        GPU bottleneck is normal and fine.
+      </p>
+
+      <h2>Bottom line</h2>
+      <p>
+        CPU is your computer's brain; GPU is your computer's muscle for parallel work. You
+        need both, and which one matters more depends entirely on what you're doing. For most
+        people, a mid-range CPU paired with a decent GPU (or integrated graphics for non-gaming
+        builds) is the right balance.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="hardware.html">← Back to Hardware</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

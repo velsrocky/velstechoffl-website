@@ -213,8 +213,9 @@ function initContactForm() {
         status.textContent = "Something went wrong. Please email hello@velstech.net instead.";
         status.style.color = "var(--text)";
       }
-    } catch {
-      status.textContent = "Network error. Please email hello@velstech.net instead.";
+    } catch (err) {
+      console.error("Contact form error:", err);
+      status.textContent = "Couldn't reach the form service. Please email hello@velstech.net instead.";
       status.style.color = "var(--text)";
     }
     status.hidden = false;

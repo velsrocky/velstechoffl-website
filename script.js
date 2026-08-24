@@ -319,11 +319,50 @@ function initTagsPage() {
   if (hash && counts[hash]) select(hash);
 }
 
+function initCopyButtons() {
+  document.querySelectorAll(".article-body pre").forEach((pre) => {
+    const wrap = document.createElement("div");
+    wrap.className = "code-block";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    const btn = document.createElement("button");
+    btn.className = "copy-btn";
+    btn.type = "button";
+    btn.textContent = "Copy";
+    btn.setAttribute("aria-label", "Copy code");
+    wrap.appendChild(btn);
+
+    btn.addEventListener("click", async () => {
+      const text = pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+      }
+      setTimeout(() => {
+        btn.textContent = "Copy";
+        btn.classList.remove("copied");
+      }, 2000);
+    });
+  });
+}
+
 initSearch();
 initWhatsNew();
 initArticleMeta();
 initContactForm();
 initTagsPage();
+initCopyButtons();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

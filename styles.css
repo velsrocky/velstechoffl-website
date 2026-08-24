@@ -799,6 +799,51 @@ a.tag:hover {
   margin: 18px 0;
 }
 
+.code-block {
+  position: relative;
+  margin: 18px 0;
+}
+
+.code-block pre {
+  margin: 0;
+}
+
+.code-block:hover .copy-btn {
+  opacity: 1;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-soft);
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.copy-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.copy-btn.copied {
+  color: var(--accent);
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .copy-btn {
+    opacity: 1;
+  }
+}
+
 .article-body code {
   font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.9em;

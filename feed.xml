@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>VelsTech</title>
+  <subtitle>Modern tech, built simple — AI, hardware, OS, networking, security, and programming notes.</subtitle>
+  <id>https://velstech.net/</id>
+  <link rel="alternate" href="https://velstech.net/" />
+  <link rel="self" href="https://velstech.net/feed.xml" />
+  <updated>2026-08-24T16:50:07.854Z</updated>
+  <author><name>VelsTech</name></author>
+
+  <entry>
+    <title>What is a Large Language Model, really?</title>
+    <link rel="alternate" href="https://velstech.net/what-is-an-llm.html" />
+    <id>https://velstech.net/what-is-an-llm.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>A plain-language look at how LLMs work under the hood — tokens, context, and probabilities — without the jargon.</summary>
+  </entry>
+  <entry>
+    <title>How to write better prompts</title>
+    <link rel="alternate" href="https://velstech.net/better-prompts.html" />
+    <id>https://velstech.net/better-prompts.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>Practical prompting patterns that get better answers from ChatGPT, Claude, and similar tools.</summary>
+  </entry>
+  <entry>
+    <title>Local vs cloud AI: which should you choose?</title>
+    <link rel="alternate" href="https://velstech.net/local-vs-cloud-ai.html" />
+    <id>https://velstech.net/local-vs-cloud-ai.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>Privacy, cost, and capability — a comparison of running models on your own hardware versus cloud APIs.</summary>
+  </entry>
+  <entry>
+    <title>How to choose parts for your first PC build</title>
+    <link rel="alternate" href="https://velstech.net/first-pc-build.html" />
+    <id>https://velstech.net/first-pc-build.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Hardware" />
+    <summary>A beginner-friendly guide to picking a CPU, GPU, RAM, and storage that actually match how you'll use the PC.</summary>
+  </entry>
+  <entry>
+    <title>CPU vs GPU: what does each one do?</title>
+    <link rel="alternate" href="https://velstech.net/cpu-vs-gpu.html" />
+    <id>https://velstech.net/cpu-vs-gpu.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Hardware" />
+    <summary>Breaking down the two most important components in your machine and when each one matters most.</summary>
+  </entry>
+  <entry>
+    <title>SSD vs HDD: the upgrade that changes everything</title>
+    <link rel="alternate" href="https://velstech.net/ssd-vs-hdd.html" />
+    <id>https://velstech.net/ssd-vs-hdd.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Hardware" />
+    <summary>Why an SSD makes an old computer feel new again, and how to pick the right drive and size.</summary>
+  </entry>
+  <entry>
+    <title>Linux for beginners: getting started</title>
+    <link rel="alternate" href="https://velstech.net/linux-beginners.html" />
+    <id>https://velstech.net/linux-beginners.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Operating Systems" />
+    <summary>Picking a distro, installing it, and surviving your first week without breaking anything.</summary>
+  </entry>
+  <entry>
+    <title>Essential terminal commands everyone should know</title>
+    <link rel="alternate" href="https://velstech.net/terminal-commands.html" />
+    <id>https://velstech.net/terminal-commands.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Operating Systems" />
+    <summary>Navigation, files, permissions, and package management — the commands you'll use every single day.</summary>
+  </entry>
+  <entry>
+    <title>Windows vs Linux: when to use which</title>
+    <link rel="alternate" href="https://velstech.net/windows-vs-linux.html" />
+    <id>https://velstech.net/windows-vs-linux.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Operating Systems" />
+    <summary>An honest comparison of the two for daily use, gaming, and development work.</summary>
+  </entry>
+  <entry>
+    <title>How does the internet actually work?</title>
+    <link rel="alternate" href="https://velstech.net/how-internet-works.html" />
+    <id>https://velstech.net/how-internet-works.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Networking" />
+    <summary>A straightforward walkthrough of IP addresses, DNS, and routing — the basics that make the internet tick.</summary>
+  </entry>
+  <entry>
+    <title>Setting up a domain and pointing it anywhere</title>
+    <link rel="alternate" href="https://velstech.net/setup-domain.html" />
+    <id>https://velstech.net/setup-domain.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Networking" />
+    <summary>How to buy a domain, configure DNS records, and connect it to GitHub Pages, a VPS, or a home server.</summary>
+  </entry>
+  <entry>
+    <title>Self-hosting 101: what can you run at home?</title>
+    <link rel="alternate" href="https://velstech.net/self-hosting-101.html" />
+    <id>https://velstech.net/self-hosting-101.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Networking" />
+    <summary>From a media server to a personal cloud — services you can run on a Raspberry Pi or old laptop.</summary>
+  </entry>
+  <entry>
+    <title>The only 5 security habits you really need</title>
+    <link rel="alternate" href="https://velstech.net/security-habits.html" />
+    <id>https://velstech.net/security-habits.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Security &amp; Privacy" />
+    <summary>Passwords, two-factor authentication, updates, backups, and skepticism — the checklist that covers most risks.</summary>
+  </entry>
+  <entry>
+    <title>Password managers: why you need one</title>
+    <link rel="alternate" href="https://velstech.net/password-managers.html" />
+    <id>https://velstech.net/password-managers.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Security &amp; Privacy" />
+    <summary>How a password manager works, what to look for, and why reusing passwords is the biggest risk most people have.</summary>
+  </entry>
+  <entry>
+    <title>Spotting phishing attempts</title>
+    <link rel="alternate" href="https://velstech.net/spotting-phishing.html" />
+    <id>https://velstech.net/spotting-phishing.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Security &amp; Privacy" />
+    <summary>Real examples of fake emails and messages, and the red flags that give them away before you click.</summary>
+  </entry>
+  <entry>
+    <title>How to start learning to code in 2026</title>
+    <link rel="alternate" href="https://velstech.net/learn-to-code.html" />
+    <id>https://velstech.net/learn-to-code.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Programming &amp; Web" />
+    <summary>A realistic roadmap — pick a language, build tiny projects, and avoid the tutorial trap.</summary>
+  </entry>
+  <entry>
+    <title>HTML, CSS, and JavaScript: what does each one do?</title>
+    <link rel="alternate" href="https://velstech.net/html-css-js.html" />
+    <id>https://velstech.net/html-css-js.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Programming &amp; Web" />
+    <summary>The three building blocks of every website, explained with a simple analogy.</summary>
+  </entry>
+  <entry>
+    <title>Version control with Git for complete beginners</title>
+    <link rel="alternate" href="https://velstech.net/git-beginners.html" />
+    <id>https://velstech.net/git-beginners.html</id>
+    <published>2026-08-24T00:00:00Z</published>
+    <updated>2026-08-24T00:00:00Z</updated>
+    <category term="Programming &amp; Web" />
+    <summary>Why every developer uses Git, and the handful of commands that cover 90% of daily work.</summary>
+  </entry>
+</feed>

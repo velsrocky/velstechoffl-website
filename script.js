@@ -1,5 +1,17 @@
 const root = document.documentElement;
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const fmtDate = (iso) => {
+  const [y, m, d] = iso.split("-");
+  return `${MONTHS[+m - 1]} ${+d}, ${y}`;
+};
+const esc = (s) =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
 const PAGES = [
   { href: "index.html", label: "Home", page: "index.html" },
   { href: "ai.html", label: "AI & ML", page: "ai.html" },
@@ -50,6 +62,10 @@ function navHTML() {
   return (
     '<header class="nav">' +
     '<a class="brand" href="index.html">' + brandSVG + '<span class="brand-name">VelsTech</span></a>' +
+    '<div class="search-wrap">' +
+    '<input id="search-input" class="search-input" type="search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off" />' +
+    '<div id="search-results" class="search-results" hidden></div>' +
+    "</div>" +
     '<nav class="links">' + links + "</nav>" +
     '<div class="controls">' +
     '<button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme"></button>' +
@@ -60,11 +76,100 @@ function navHTML() {
   );
 }
 
+function initSearch() {
+  const input = document.getElementById("search-input");
+  const results = document.getElementById("search-results");
+  if (!input || !results) return;
+
+  const render = () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q) {
+      results.hidden = true;
+      return;
+    }
+    const hits = ARTICLES.filter(
+      (a) =>
+        a.title.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q) ||
+        a.tags.some((t) => t.toLowerCase().includes(q))
+    ).slice(0, 8);
+
+    if (!hits.length) {
+      results.innerHTML = '<div class="search-empty">No results for "' + esc(q) + '"</div>';
+      results.hidden = false;
+      return;
+    }
+    results.innerHTML = hits
+      .map(
+        (a) =>
+          '<a class="search-result" href="' + a.url + '">' +
+          '<span class="search-title">' + esc(a.title) + "</span>" +
+          '<span class="search-meta">' + esc(a.category) + " · " + fmtDate(a.date) + "</span>" +
+          "</a>"
+      )
+      .join("");
+    results.hidden = false;
+  };
+
+  input.addEventListener("input", render);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      input.value = "";
+      results.hidden = true;
+    }
+  });
+  document.addEventListener("click", (e) => {
+    if (!results.contains(e.target) && e.target !== input) results.hidden = true;
+  });
+  results.addEventListener("click", () => {
+    input.value = "";
+    results.hidden = true;
+  });
+}
+
+function initWhatsNew() {
+  const list = document.getElementById("latest-list");
+  if (!list) return;
+  const latest = [...ARTICLES]
+    .sort((a, b) => b.updated.localeCompare(a.updated))
+    .slice(0, 5);
+  list.innerHTML = latest
+    .map(
+      (a) =>
+        '<a class="latest-item" href="' + a.url + '">' +
+        '<span class="latest-title">' + esc(a.title) + "</span>" +
+        '<span class="latest-meta">' + esc(a.category) + " · " + fmtDate(a.updated) + "</span>" +
+        "</a>"
+    )
+    .join("");
+}
+
+function initUpdatedDate() {
+  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  if (!cur) return;
+  const meta = document.querySelector(".meta");
+  if (!meta || cur.updated === cur.date) return;
+  const span = document.createElement("span");
+  span.textContent = "· Updated " + fmtDate(cur.updated);
+  meta.appendChild(span);
+}
+
 const footerHTML =
   '<footer class="footer"><p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p></footer>';
 
 document.body.insertAdjacentHTML("afterbegin", navHTML());
 document.body.insertAdjacentHTML("beforeend", footerHTML);
+
+const feedLink = document.createElement("link");
+feedLink.rel = "alternate";
+feedLink.type = "application/atom+xml";
+feedLink.title = "VelsTech — Atom feed";
+feedLink.href = "feed.xml";
+document.head.appendChild(feedLink);
+
+initSearch();
+initWhatsNew();
+initUpdatedDate();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

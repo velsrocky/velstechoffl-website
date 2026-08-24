@@ -1,0 +1,43 @@
+name: Stale article reminders
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check-stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find stale articles
+        id: stale
+        run: node tools/check-stale.js
+
+      - name: Open issue if stale articles found
+        if: steps.stale.outputs.stale == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = "📋 Articles needing a refresh (weekly check)";
+            const body = process.env.STALE_BODY;
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+            });
+            const exists = issues.data.some((i) => i.title === title);
+            if (!exists) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+              });
+            }
+        env:
+          STALE_BODY: ${{ steps.stale.outputs.body }}

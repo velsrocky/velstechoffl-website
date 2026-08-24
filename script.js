@@ -200,12 +200,13 @@ function initContactForm() {
     status.hidden = true;
 
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: new FormData(form),
         headers: { Accept: "application/json" },
       });
-      if (res.ok) {
+      const json = await res.json();
+      if (res.ok && json.success) {
         form.reset();
         status.textContent = "Thanks! Your message has been sent.";
         status.style.color = "var(--accent)";

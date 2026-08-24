@@ -83,7 +83,9 @@
     <section id="contact" class="section">
       <h2>Contact</h2>
       <p>Questions, corrections, or ideas for a topic? I'd love to hear from you.</p>
-      <form class="contact-form" action="https://formspree.io/f/mzeplzlg" method="POST">
+      <form class="contact-form" id="contact-form" method="POST">
+        <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
+        <input type="hidden" name="subject" value="New message from VelsTech contact form" />
         <label for="contact-name">Name</label>
         <input id="contact-name" type="text" name="name" placeholder="Your name" required />
 

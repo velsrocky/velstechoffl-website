@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Why every developer uses Git, and the handful of commands that cover 90% of daily work." />
+  <title>Version control with Git for complete beginners | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="programming.html">Programming &amp; Web</a> / This article</p>
+    <h1 class="title">Version control with Git for complete beginners</h1>
+    <div class="meta">
+      <span class="tag">Git</span>
+      <span class="tag">Tools</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Every developer uses Git. This site is stored in Git. Yet it's rarely explained from
+        zero. The good news: Git is simple once you understand the mental model — and you
+        only need a handful of commands for 90% of daily work.
+      </p>
+
+      <h2>What problem does Git solve?</h2>
+      <p>
+        Imagine editing a document and thinking, "this version was better". Without version
+        control, you'd save copies: <code>report_final.doc</code>,
+        <code>report_final_v2.doc</code>, <code>report_FINAL_actually.doc</code>. Chaos.
+      </p>
+      <p>
+        Git gives you a <strong>snapshot of your whole project at every saved point</strong>.
+        You can:
+      </p>
+      <ul>
+        <li>Go back to any past version</li>
+        <li>See exactly what changed and when</li>
+        <li>Try experiments without risking your working code</li>
+        <li>Collaborate with others without overwriting each other</li>
+      </ul>
+
+      <h2>The mental model: saves and save-points</h2>
+      <p>
+        The two ideas you need:
+      </p>
+      <ul>
+        <li><strong>Commit</strong> — a save point. A snapshot of your files with a message like "fix login bug".</li>
+        <li><strong>Repository (repo)</strong> — a folder that Git tracks. All your commits live here.</li>
+      </ul>
+      <p>
+        Think of commits like save points in a video game. You make them constantly so you
+        can always rewind. The git history is just a chain of commits.
+      </p>
+
+      <h2>The 5 commands that cover everything</h2>
+      <p>
+        Here's the complete beginner's toolkit:
+      </p>
+      <pre>git init          # start tracking this folder (do once)
+git add .         # stage your changes (choose what to save)
+git commit -m "message"   # create a save point
+git status        # what's changed? (check constantly)
+git log           # see the history of commits</pre>
+      <p>
+        <code>add</code> then <code>commit</code> is the rhythm. First you pick what to save,
+        then you take the snapshot. You'll run <code>git status</code> constantly — it's a
+        safety check, never a chore.
+      </p>
+
+      <h2>Branching: parallel universes</h2>
+      <p>
+        A <strong>branch</strong> is a separate line of development — a copy of the project
+        you can experiment in without affecting the main line.
+      </p>
+      <pre>git branch new-feature   # create a branch
+git switch new-feature   # move to it
+# ...work and commit here...
+git switch main          # go back
+git merge new-feature    # bring the work into main</pre>
+      <p>
+        For solo beginners, branches feel optional — and they are, at first. But learning
+        them early makes you comfortable with how real teams work. The golden habit:
+        <strong>never commit directly to main when trying something risky</strong>.
+      </p>
+
+      <h2>GitHub: Git in the cloud</h2>
+      <p>
+        <strong>GitHub</strong> is a hosting service for Git repositories — like Dropbox for
+        your code, plus collaboration tools. The commands that connect them:
+      </p>
+      <pre>git clone URL        # copy a repo to your computer (start)
+git push             # upload your commits
+git pull             # download others' commits (or your own from another machine)</pre>
+      <p>
+        <code>push</code> sends your saves to GitHub; <code>pull</code> brings them down.
+        This is exactly how this website deploys — a push triggers GitHub Pages to publish.
+      </p>
+
+      <h2>Undoing mistakes (the reassuring part)</h2>
+      <p>
+        The best thing about version control: almost nothing is permanent.
+      </p>
+      <pre>git restore file         # discard uncommitted changes to a file
+git reset --hard HEAD    # throw away uncommitted changes entirely
+git revert &lt;commit-id&gt;    # undo a past commit safely
+git log                  # find any commit-id you need</pre>
+      <p>
+        Messed up? Restore it. Broke everything? Reset. Committed something bad? Revert.
+        Git's whole job is letting you un-do.
+      </p>
+
+      <h2>Good habits from day one</h2>
+      <ul>
+        <li><strong>Commit small and often.</strong> A save point every feature/fix, with a clear message.</li>
+        <li><strong>Write honest commit messages.</strong> "fix login bug" beats "stuff". Future-you will thank you.</li>
+        <li><strong>Commit before you take a risk.</strong> Then you can always rewind.</li>
+        <li><strong>Check git status</strong> before pushing, so you know what's going out.</li>
+      </ul>
+
+      <h2>A typical first session</h2>
+      <pre>$ cd ~/myproject
+$ git init                    # start tracking
+$ git add .
+$ git commit -m "Initial version of my app"
+$ git branch main             # name the main branch (already set on most setups)
+# ... edit some files ...
+$ git status                  # "modified: index.html"
+$ git add .
+$ git commit -m "Add dark mode toggle"
+$ git log --oneline           # 2 commits, nice and tidy</pre>
+
+      <p>
+        Git sounds big, but it's really just: <strong>save points (commit), parallel lines
+        (branch), and sync (push/pull)</strong>. Master those three ideas, and you're using
+        version control like a pro. And the best part — once you start, you'll never want to
+        work without it.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="programming.html">← Back to Programming &amp; Web</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

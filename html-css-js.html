@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The three building blocks of every website — HTML, CSS, and JavaScript — explained with a simple analogy." />
+  <title>HTML, CSS, and JavaScript: what does each one do? | VelsTech</title>
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="programming.html">Programming &amp; Web</a> / This article</p>
+    <h1 class="title">HTML, CSS, and JavaScript: what does each one do?</h1>
+    <div class="meta">
+      <span class="tag">Web</span>
+      <span class="tag">Basics</span>
+      <span>Aug 24, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Every website you've ever visited — including this one — is built from the same
+        three languages. They do three completely different jobs, and understanding the
+        split is the moment web development stops being confusing.
+      </p>
+
+      <h2>The house analogy</h2>
+      <p>
+        Think of a website as a house:
+      </p>
+      <ul>
+        <li><strong>HTML</strong> is the structure — the rooms, walls, doors. "Here's a heading, here's a paragraph, here's a button."</li>
+        <li><strong>CSS</strong> is the decoration — paint, wallpaper, furniture, lighting. "The heading is blue and big, the button is rounded, the page has margins."</li>
+        <li><strong>JavaScript</strong> is the electricity — the wiring that makes things <em>happen</em>. "When you click the button, open a menu."</li>
+      </ul>
+      <p>
+        You need all three for a modern site. A structure with no style is ugly but works; a
+        styled structure with no JS is pretty but static; JS is what brings it to life.
+      </p>
+
+      <h2>HTML: the skeleton</h2>
+      <p>
+        HTML (HyperText Markup Language) defines <em>what's on the page</em>. It's not
+        really a programming language — it's a markup language. It wraps content in tags:
+      </p>
+      <pre>&lt;h1&gt;Welcome to VelsTech&lt;/h1&gt;
+&lt;p&gt;This is a paragraph of text.&lt;/p&gt;
+&lt;button&gt;Click me&lt;/button&gt;</pre>
+      <p>
+        Each tag describes its content: <code>&lt;h1&gt;</code> is the main heading,
+        <code>&lt;p&gt;</code> is a paragraph, <code>&lt;img&gt;</code> is an image,
+        <code>&lt;a&gt;</code> is a link. The browser reads this structure and knows how to
+        lay the page out.
+      </p>
+
+      <h2>CSS: the appearance</h2>
+      <p>
+        CSS (Cascading Style Sheets) controls <em>how it looks</em>. It selects elements and
+        applies styles:
+      </p>
+      <pre>h1 {
+  color: #4cc2ff;
+  font-size: 3rem;
+}
+
+button {
+  background: #4cc2ff;
+  border-radius: 8px;
+  padding: 12px 24px;
+}</pre>
+      <p>
+        The name "cascading" means styles apply in layers and can inherit. One CSS rule can
+        restyle every heading on the site at once — that's why CSS makes redesigns a
+        one-file job.
+      </p>
+
+      <h2>JavaScript: the behavior</h2>
+      <p>
+        JavaScript makes the page <em>do things</em>. It's the only one of the three that's a
+        true programming language with logic:
+      </p>
+      <pre>const button = document.querySelector("button");
+
+button.addEventListener("click", () => {
+  alert("You clicked me!");
+});</pre>
+      <p>
+        JS can read and change the page after it loads, react to clicks and keystrokes,
+        fetch data from servers, and build entire apps. This page's theme toggle and color
+        palette? That's JavaScript at work.
+      </p>
+
+      <h2>How they fit together in a file</h2>
+      <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;              &lt;!-- CSS here --&gt;
+    body { background: #0b0f14; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello!&lt;/h1&gt;       &lt;!-- HTML here --&gt;
+  &lt;script&gt;             &lt;!-- JavaScript here --&gt;
+    alert("Hi");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+      <p>
+        In real sites these live in separate files (<code>index.html</code>,
+        <code>styles.css</code>, <code>script.js</code>) and link together — exactly how
+        this site is organized.
+      </p>
+
+      <h2>Why each one matters</h2>
+      <pre>Layer          Job                 Who touches it
+──────────────────────────────────────────────
+HTML           Structure/content   Everyone (even non-coders can read it)
+CSS            Look and feel       Design-minded people love this
+JavaScript     Behavior/logic      Programmers</pre>
+
+      <h2>How to start</h2>
+      <p>
+        You can start right now with nothing but a text editor and a browser:
+      </p>
+      <ol>
+        <li>Open Notepad/VS Code and write a few HTML tags.</li>
+        <li>Save as <code>index.html</code> and open it in your browser.</li>
+        <li>Add a <code>&lt;style&gt;</code> block and change some colors.</li>
+        <li>Add a <code>&lt;script&gt;</code> block and make a button show a message.</li>
+      </ol>
+      <p>
+        That's the entire stack of the classic web, in about twenty minutes. HTML says what
+        it is, CSS says how it looks, JavaScript says what it does. Master that trio and
+        you're building websites — like the one you're reading right now.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="programming.html">← Back to Programming &amp; Web</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

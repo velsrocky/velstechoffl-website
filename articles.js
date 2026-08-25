@@ -180,6 +180,15 @@ const ARTICLES = [
     tags: ["ROCm", "Radeon", "GPU"],
     description: "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification.",
   },
+  {
+    title: "Installing PyTorch with ROCm on Radeon GPUs",
+    url: "install-pytorch-rocm-ubuntu.html",
+    date: "2026-08-25",
+    updated: "2026-08-25",
+    category: "Tutorials",
+    tags: ["PyTorch", "ROCm", "Radeon"],
+    description: "Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs — venv setup, pip install, and GPU verification.",
+  },
 ];
 
 if (typeof module !== "undefined" && module.exports) {

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs — venv setup, pip install, and GPU verification." />
+  <title>Installing PyTorch with ROCm on Radeon GPUs | VelsTech</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+  <meta property="og:title" content="Installing PyTorch with ROCm on Radeon GPUs | VelsTech" />
+  <meta property="og:description" content="Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs — venv setup, pip install, and GPU verification." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Installing PyTorch with ROCm on Radeon GPUs | VelsTech" />
+  <meta name="twitter:description" content="Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs — venv setup, pip install, and GPU verification." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tutorials.html">Tutorials</a> / This article</p>
+    <h1 class="title">Installing PyTorch with ROCm on Radeon GPUs</h1>
+    <div class="meta">
+      <span class="tag">PyTorch</span>
+      <span class="tag">ROCm</span>
+      <span class="tag">Radeon</span>
+      <span>Aug 25, 2026</span>
+      <span>· 5 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        PyTorch is the go-to framework for deep learning, and on AMD hardware it runs
+        through <strong>ROCm</strong>. Once ROCm is installed, getting PyTorch working on
+        a Radeon GPU is just a <code>pip install</code> away.
+      </p>
+
+      <p>
+        I tested this on a <strong>Radeon RX 6800M</strong> (gfx1031, RDNA2) with ROCm
+        7.14 on Ubuntu 26.04 — the exact commands below are what worked. The same flow
+        applies to other RDNA2/RDNA3 cards; just swap the gfx target in the install
+        command.
+      </p>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>
+          <strong>ROCm installed and verified</strong> — if you haven't done this yet, follow
+          our <a href="install-rocm-ubuntu.html">Installing ROCm on Ubuntu for Radeon GPUs</a>
+          guide first, and confirm <code>rocminfo</code> shows your GPU.
+        </li>
+        <li>Python <strong>3.11, 3.12, 3.13, or 3.14</strong> installed.</li>
+        <li>Your GPU's <code>gfx</code> architecture (e.g. gfx1031 for RX 6800M).</li>
+      </ul>
+
+      <h2>Step 1 — Create a virtual environment</h2>
+      <p>
+        Always install PyTorch in a fresh virtual environment so it never conflicts with
+        system packages or other Python projects:
+      </p>
+
+      <pre>python3.12 -m venv .venv</pre>
+
+      <p>
+        Use whichever Python version you have — <code>python3.11</code>,
+        <code>python3.13</code>, or <code>python3.14</code> all work. This creates a
+        folder called <code>.venv</code> in your current directory.
+      </p>
+
+      <h2>Step 2 — Activate the environment</h2>
+      <p>
+        Activate it so <code>python</code> and <code>pip</code> point at the venv:
+      </p>
+
+      <pre>source .venv/bin/activate</pre>
+
+      <p>
+        You'll know it worked when the prompt shows <code>(.venv)</code> at the start.
+      </p>
+
+      <h2>Step 3 — Install PyTorch with ROCm support</h2>
+      <p>
+        Install the ROCm-enabled PyTorch, torchvision, and torchaudio from AMD's wheel
+        repository. Use your GPU's <code>device-gfx</code> target — for the RX 6800M that's
+        <code>device-gfx1031</code>:
+      </p>
+
+      <pre>python -m pip install --index-url https://repo.amd.com/rocm/whl-multi-arch/ \
+    "torch[device-gfx1031]==2.12.0+rocm7.14.0" \
+    "torchvision[device-gfx1031]==0.27.0+rocm7.14.0" \
+    "torchaudio==2.11.0+rocm7.14.0"</pre>
+
+      <p>
+        A few notes:
+      </p>
+      <ul>
+        <li>
+          The <code>[device-gfx1031]</code> extra pulls in the ROCm libraries tuned for
+          your exact GPU architecture — <strong>don't skip it</strong>.
+        </li>
+        <li>
+          For other cards, swap the target: gfx1030 (RX 6800/6700 XT), gfx1100 (RX 7900
+          XTX), and so on. Or use <code>[device-all]</code> if you want support for every
+          architecture at once (larger download).
+        </li>
+        <li>
+          The <code>+rocm7.14.0</code> version tag must match your installed ROCm release.
+        </li>
+      </ul>
+
+      <blockquote>
+        If pip complains about resolving dependencies, make sure the venv is active and
+        you're passing <code>--index-url https://repo.amd.com/rocm/whl-multi-arch/</code> —
+        that repository is what AMD publishes the ROCm builds to.
+      </blockquote>
+
+      <h2>Step 4 — Verify the GPU is detected</h2>
+      <p>
+        Run this one-liner to confirm PyTorch sees your AMD GPU:
+      </p>
+
+      <pre>python -c "import torch; print(torch.cuda.is_available())"</pre>
+
+      <p>
+        It prints <code>True</code> if PyTorch and ROCm are installed correctly and your
+        AMD GPU is detected. (Yes, it's <code>cuda</code> in the API — PyTorch keeps the
+        same interface for ROCm so code is portable.)
+      </p>
+
+      <p>
+        You can go further and check the device name:
+      </p>
+
+      <pre>python -c "import torch; print(torch.cuda.get_device_name(0))"</pre>
+
+      <p>
+        On the RX 6800M this reports something like <code>AMD Radeon RX 6800M</code>.
+      </p>
+
+      <h2>What's next?</h2>
+      <p>
+        With PyTorch running on ROCm you can:
+      </p>
+      <ul>
+        <li>Train models and run inference with full GPU acceleration</li>
+        <li>Run LLMs locally — Hugging Face Transformers, text-generation-webui, and similar tools work out of the box</li>
+        <li>Use torchvision for image models and torchaudio for audio pipelines</li>
+      </ul>
+
+      <p>
+        The official guide has more detail if you need it:
+        <a href="https://rocm.docs.amd.com/projects/ai-ecosystem/en/latest/frameworks/pytorch/install.html" target="_blank" rel="noopener">Install PyTorch for ROCm — AMD AI ecosystem docs</a>.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="tutorials.html">← Back to Tutorials</a>
+      <a href="install-rocm-ubuntu.html">Previous: Install ROCm</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=4"></script>
+  <script src="script.js?v=5"></script>
+</body>
+</html>

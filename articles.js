@@ -189,6 +189,15 @@ const ARTICLES = [
     tags: ["PyTorch", "ROCm", "Radeon"],
     description: "Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs — venv setup, pip install, and GPU verification.",
   },
+  {
+    title: "Apple's new Mac desktops: Mac Studio M5 Max/Ultra and Mac mini M6/M5 Pro",
+    url: "new-mac-desktops.html",
+    date: "2026-08-25",
+    updated: "2026-08-25",
+    category: "Hardware",
+    tags: ["Apple Silicon", "Mac", "Desktop"],
+    description: "Apple's compact desktops land on 22 September — the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.",
+  },
 ];
 
 if (typeof module !== "undefined" && module.exports) {

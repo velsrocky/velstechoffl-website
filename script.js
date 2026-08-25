@@ -62,7 +62,7 @@ function navHTML() {
 
   return (
     '<header class="nav">' +
-    '<a class="brand" href="index.html">' + brandSVG + '<span class="brand-name">VelsTech</span></a>' +
+    '<a class="brand" href="index.html">' + brandSVG + '<span class="brand-name">VelsTech<span class="brand-sub">Solutions</span></span></a>' +
     '<div class="search-wrap">' +
     '<input id="search-input" class="search-input" type="search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off" />' +
     '<div id="search-results" class="search-results" hidden></div>' +

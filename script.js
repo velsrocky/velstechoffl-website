@@ -133,13 +133,17 @@ function initWhatsNew() {
   const list = document.getElementById("latest-list");
   if (!list) return;
   const latest = [...ARTICLES]
-    .sort((a, b) => b.updated.localeCompare(a.updated))
+    .sort((a, b) => {
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+      return b.updated.localeCompare(a.updated);
+    })
     .slice(0, 5);
   list.innerHTML = latest
     .map(
       (a) =>
-        '<a class="latest-item" href="' + a.url + '">' +
-        '<span class="latest-title">' + esc(a.title) + "</span>" +
+        '<a class="latest-item' + (a.featured ? " featured" : "") + '" href="' + a.url + '">' +
+        '<span class="latest-title">' + esc(a.title) + (a.featured ? '<span class="latest-badge">Featured</span>' : "") + "</span>" +
         '<span class="latest-meta">' + esc(a.category) + " · " + fmtDate(a.updated) + "</span>" +
         "</a>"
     )

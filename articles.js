@@ -176,6 +176,7 @@ const ARTICLES = [
     date: "2026-08-25",
     updated: "2026-08-25",
     category: "Tutorials",
+    featured: true,
     tags: ["ROCm", "Radeon", "GPU"],
     description: "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification.",
   },

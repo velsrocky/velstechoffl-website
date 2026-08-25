@@ -389,6 +389,20 @@ a {
   font-weight: 600;
 }
 
+.latest-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, #4cc2ff, #a78bfa);
+  vertical-align: middle;
+}
+
 .latest-meta {
   font-size: 0.82rem;
   color: var(--muted);

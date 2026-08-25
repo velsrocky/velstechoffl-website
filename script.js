@@ -19,6 +19,7 @@ const PAGES = [
   { href: "os.html", label: "OS", page: "os.html" },
   { href: "networking.html", label: "Networking", page: "networking.html" },
   { href: "security.html", label: "Security", page: "security.html" },
+  { href: "tutorials.html", label: "Tutorials", page: "tutorials.html" },
   { href: "programming.html", label: "Programming", page: "programming.html" },
   { href: "tags.html", label: "Tags", page: "tags.html" },
 ];

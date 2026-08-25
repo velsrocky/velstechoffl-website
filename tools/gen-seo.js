@@ -14,7 +14,7 @@ const files = fs.readdirSync(path.join(__dirname, "..")).filter((f) => f.endsWit
 
 const STATIC_META = {
   "index.html": {
-    title: "VelsTech | Modern Tech Solutions",
+    title: "VelsTech Solutions",
     desc: "VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming.",
   },
   "terms.html": { title: "Terms of Use | VelsTech", desc: "Terms of use and disclaimer for VelsTech." },
@@ -29,6 +29,7 @@ const CATEGORY_META = {
   "networking.html": { title: "Networking | VelsTech", desc: "Networking notes — DNS, routers, self-hosting, and how the internet works." },
   "security.html": { title: "Security & Privacy | VelsTech", desc: "Security and privacy basics — passwords, backups, and safe habits." },
   "programming.html": { title: "Programming & Web | VelsTech", desc: "Programming and web development — learning to code and building websites." },
+  "tutorials.html": { title: "Tutorials | VelsTech", desc: "Step-by-step tutorials and practical guides — build, set up, and learn with clear instructions." },
 };
 
 function getMeta(file) {

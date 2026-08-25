@@ -2,8 +2,8 @@ const ARTICLES = [
   {
     title: "What is machine learning, really?",
     url: "what-is-machine-learning.html",
-    date: "2026-08-24",
-    updated: "2026-08-24",
+    date: "2026-08-25",
+    updated: "2026-08-25",
     category: "AI & ML",
     tags: ["Basics", "ML"],
     description: "A plain-language look at what learning from data actually means — training, models, and prediction — without the jargon.",

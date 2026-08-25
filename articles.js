@@ -196,6 +196,7 @@ const ARTICLES = [
     updated: "2026-08-25",
     category: "Hardware",
     tags: ["Apple Silicon", "Mac", "Desktop"],
+    featured: true,
     description: "Apple's compact desktops land on 22 September — the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.",
   },
 ];

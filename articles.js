@@ -1,5 +1,15 @@
 const ARTICLES = [
   {
+    title: "Omarchy: the beautiful, opinionated Linux distro everyone's talking about",
+    url: "omarchy.html",
+    date: "2026-08-26",
+    updated: "2026-08-26",
+    category: "Operating Systems",
+    featured: true,
+    tags: ["Linux", "Arch", "Distro"],
+    description: "The Arch-based distro made by DHH of Basecamp — beautiful, opinionated, terminal-first. Here's what it is, why it's trending, and whether you should try it.",
+  },
+  {
     title: "What is machine learning, really?",
     url: "what-is-machine-learning.html",
     date: "2026-08-25",

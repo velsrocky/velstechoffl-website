@@ -464,6 +464,29 @@ function addCategoryPill() {
   meta.insertBefore(pill, meta.firstChild);
 }
 
+function initHotTopic() {
+  const container = document.getElementById("hot-topic-list");
+  if (!container) return;
+
+  const featured = ARTICLES.filter((a) => a.featured)
+    .sort((a, b) => b.date.localeCompare(a.date))[0];
+  const article = featured || ARTICLES[0];
+  if (!article) return;
+
+  const color = CAT_COLORS[article.category];
+  const style = color ? ' style="--cat-color: ' + color + '"' : "";
+  const meta = article.category + " · " + fmtDate(article.date);
+
+  container.innerHTML =
+    '<a class="hot-topic-card"' + style + ' href="' + article.url + '">' +
+      '<span class="hot-cat">' + esc(article.category) + "</span>" +
+      '<h3>' + esc(article.title) + "</h3>" +
+      '<p>' + esc(article.description) + "</p>" +
+      '<span class="hot-topic-cta">Read article</span>' +
+      '<div class="hot-topic-meta">' + esc(meta) + "</div>" +
+    "</a>";
+}
+
 initSearch();
 initWhatsNew();
 initArticleMeta();
@@ -474,6 +497,7 @@ addCategoryPill();
 initProgressBar();
 initReveal();
 initCategoryColors();
+initHotTopic();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

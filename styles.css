@@ -1019,3 +1019,113 @@ a.tag:hover {
 .meta .cat-pill {
   border: none;
 }
+
+/* Hot Topic */
+.hot-topic-section {
+  padding: 24px 32px 8px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.hot-topic-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 0 20px;
+}
+.hot-topic-head h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+.hot-topic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, #fb923c, #f472b6);
+  white-space: nowrap;
+}
+.hot-topic-card {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  padding: 32px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.hot-topic-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--cat-color, var(--accent));
+}
+.hot-topic-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--cat-color, var(--accent));
+}
+.hot-topic-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--cat-color, transparent), transparent 45%);
+  opacity: 0.12;
+  pointer-events: none;
+}
+.hot-cat {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--accent-soft);
+  color: var(--cat-color, var(--accent));
+  margin-bottom: 14px;
+}
+.hot-topic-card h3 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+.hot-topic-card p {
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+.hot-topic-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--cat-color, var(--accent));
+}
+.hot-topic-cta::after {
+  content: "→";
+  transition: transform 0.2s;
+}
+.hot-topic-card:hover .hot-topic-cta {
+  transform: translateX(3px);
+}
+.hot-topic-meta {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.hot-topic-loading {
+  color: var(--muted);
+  font-size: 0.95rem;
+}

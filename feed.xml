@@ -5,9 +5,18 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-25T18:25:13.730Z</updated>
+  <updated>2026-08-25T19:53:46.585Z</updated>
   <author><name>VelsTech</name></author>
 
+  <entry>
+    <title>Omarchy: the beautiful, opinionated Linux distro everyone's talking about</title>
+    <link rel="alternate" href="https://velstech.net/omarchy.html" />
+    <id>https://velstech.net/omarchy.html</id>
+    <published>2026-08-26T00:00:00Z</published>
+    <updated>2026-08-26T00:00:00Z</updated>
+    <category term="Operating Systems" />
+    <summary>The Arch-based distro made by DHH of Basecamp — beautiful, opinionated, terminal-first. Here's what it is, why it's trending, and whether you should try it.</summary>
+  </entry>
   <entry>
     <title>What is machine learning, really?</title>
     <link rel="alternate" href="https://velstech.net/what-is-machine-learning.html" />

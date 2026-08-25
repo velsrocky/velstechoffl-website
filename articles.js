@@ -170,6 +170,15 @@ const ARTICLES = [
     tags: ["Git", "Tools"],
     description: "Why every developer uses Git, and the handful of commands that cover 90% of daily work.",
   },
+  {
+    title: "Installing ROCm on Ubuntu for Radeon GPUs",
+    url: "install-rocm-ubuntu.html",
+    date: "2026-08-25",
+    updated: "2026-08-25",
+    category: "Tutorials",
+    tags: ["ROCm", "Radeon", "GPU"],
+    description: "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification.",
+  },
 ];
 
 if (typeof module !== "undefined" && module.exports) {

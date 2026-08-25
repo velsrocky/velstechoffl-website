@@ -960,3 +960,62 @@ a.tag:hover {
   font-size: 0.8rem;
   margin-bottom: 8px;
 }
+
+/* Scroll progress bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 1000;
+  transition: transform 0.12s linear;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Category colors */
+.cat-card {
+  position: relative;
+  overflow: hidden;
+  border-color: var(--cat-color, var(--border));
+}
+.cat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--cat-color, var(--accent));
+}
+.cat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--cat-color, transparent), transparent 45%);
+  opacity: 0.14;
+  pointer-events: none;
+}
+.cat-card:hover {
+  border-color: var(--cat-color, var(--accent));
+}
+.cat-card .cat-count {
+  color: var(--cat-color, var(--accent));
+}
+
+.meta .cat-pill {
+  border: none;
+}

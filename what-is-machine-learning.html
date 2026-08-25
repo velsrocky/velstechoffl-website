@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A plain-language look at what machine learning actually is — learning from data, training, and prediction — without the jargon." />
+  <title>What is machine learning, really? | VelsTech</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/what-is-machine-learning.html" />
+  <meta property="og:title" content="What is machine learning, really? | VelsTech" />
+  <meta property="og:description" content="A plain-language look at what machine learning actually is — learning from data, training, and prediction — without the jargon." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="What is machine learning, really? | VelsTech" />
+  <meta name="twitter:description" content="A plain-language look at what machine learning actually is — learning from data, training, and prediction — without the jargon." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI &amp; ML</a> / This article</p>
+    <h1 class="title">What is machine learning, really?</h1>
+    <div class="meta">
+      <span class="tag">Basics</span>
+      <span class="tag">ML</span>
+      <span>Aug 24, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Every article in this section starts with "large language model" — but before those, there's a
+        simpler idea underneath. "Machine learning" is the foundation, and LLMs are one kind of machine
+        learning. So what actually is it?
+      </p>
+
+      <h2>The normal way vs. the learning way</h2>
+      <p>
+        Normally, when you write a program, <em>you</em> spell out the rules. If you want a program that
+        tells whether an email is spam, you write a list of clues: contains "winner", has a suspicious
+        link, uses all caps. You code the rules, the computer follows them.
+      </p>
+      <p>
+        <strong>Machine learning</strong> flips that around. Instead of you writing the rules, you show
+        the computer lots of <em>examples</em> — thousands of emails already labelled "spam" or "not
+        spam" — and the computer figures out the rules by itself. You give it the answers, and it hunts for
+        the patterns that connect them.
+      </p>
+
+      <h2>What "learning" actually means</h2>
+      <p>
+        A <strong>model</strong> is a program with a lot of adjustable numbers inside it. "Learning" is
+        just the process of tweaking those numbers so the model's guesses get closer to the real answers.
+        It works in a loop:
+      </p>
+      <ul>
+        <li><strong>Try:</strong> the model makes a guess on an example.</li>
+        <li><strong>Check:</strong> compare the guess to the correct answer — how far off was it?</li>
+        <li><strong>Adjust:</strong> nudge the numbers a little to be slightly less wrong next time.</li>
+        <li><strong>Repeat:</strong> do this millions of times over millions of examples.</li>
+      </ul>
+      <p>
+        After enough repetition, the model has learned the patterns — not because it was told "this is a
+        rule", but because adjusting toward the answers is the only thing that made its mistakes shrink.
+      </p>
+      <blockquote>
+        A useful mental model: training is just <em>guess, measure the error, adjust</em> — repeated so
+        often that the errors stop shrinking. What's left is the pattern.
+      </blockquote>
+
+      <h2>Training data: the real limit</h2>
+      <p>
+        A model is only as good as the examples it learned from. If you train a weather model on data from
+        a desert only, it'll do poorly in a rainy climate. This is why the <strong>training data</strong>
+        matters so much: the model can't know more than what its examples contained, and it can't tell the
+        difference between a real pattern and a coincidence in the data.
+      </p>
+
+      <h2>Not all machine learning is the same</h2>
+      <ul>
+        <li><strong>Supervised:</strong> the examples come with correct answers (spam/not spam). This is the most common starting point.</li>
+        <li><strong>Unsupervised:</strong> the examples have no labels — the model looks for hidden groups or structure on its own.</li>
+        <li><strong>Reinforcement:</strong> the model learns by trying things in a system and getting rewards or penalties, like training a dog with treats.</li>
+      </ul>
+      <p>
+        LLMs are a form of supervised learning, where the "answer" to every example is just the next piece
+        of text. But the idea — learn from examples, then predict — is the same machine learning idea.
+      </p>
+
+      <h2>Why it still gets things wrong</h2>
+      <p>
+        A model doesn't understand anything; it just generalizes from examples. So it can confidently
+        match a new situation to a pattern it saw before, even when the match is wrong. That's why a model
+        can misclassify a legitimate email as spam, or get a fact wrong. It's not thinking — it's
+        extrapolating from what it learned.
+      </p>
+      <p>
+        The practical takeaway: machine learning is powerful when it learns from <em>good, relevant,
+        representative</em> examples. When the data is thin or biased, the model's guesses will be too.
+      </p>
+
+      <h2>The one-sentence summary</h2>
+      <p>
+        Machine learning is a way of teaching computers by showing them lots of examples and letting them
+        figure out the patterns themselves — through guess, measure, and adjust — instead of handing them a
+        written list of rules.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI &amp; ML</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=3"></script>
+  <script src="script.js?v=5"></script>
+</body>
+</html>

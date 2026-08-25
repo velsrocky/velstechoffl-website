@@ -136,6 +136,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/what-is-machine-learning.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/windows-vs-linux.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

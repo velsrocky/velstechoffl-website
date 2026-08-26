@@ -40,6 +40,88 @@ function getMeta(file) {
   return null;
 }
 
+function pageUrl(file) {
+  return file === "index.html" ? `${SITE}/` : `${SITE}/${file}`;
+}
+
+function jsonLd(file, meta) {
+  const url = pageUrl(file);
+  const art = ARTICLES.find((a) => a.url === file);
+  let schema;
+
+  if (file === "index.html") {
+    schema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": `${SITE}/#website`,
+          url: `${SITE}/`,
+          name: "VelsTech",
+          description: meta.desc,
+          inLanguage: "en",
+          publisher: { "@id": `${SITE}/#organization` },
+          potentialAction: {
+            "@type": "SearchAction",
+            target: { "@type": "EntryPoint", urlTemplate: `${SITE}/?q={search_term_string}` },
+            "query-input": "required name=search_term_string",
+          },
+        },
+        {
+          "@type": "Organization",
+          "@id": `${SITE}/#organization`,
+          name: "VelsTech",
+          url: `${SITE}/`,
+          logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
+        },
+      ],
+    };
+  } else if (art) {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "@id": `${url}#article`,
+      headline: art.title,
+      description: art.description,
+      url,
+      datePublished: `${art.date}T00:00:00Z`,
+      dateModified: `${art.updated}T00:00:00Z`,
+      inLanguage: "en",
+      image: `${SITE}/og-image.png`,
+      author: { "@type": "Person", name: "VelsTech", url: `${SITE}/` },
+      publisher: {
+        "@type": "Organization",
+        name: "VelsTech",
+        url: `${SITE}/`,
+        logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
+      },
+      mainEntityOfPage: url,
+    };
+  } else if (CATEGORY_META[file]) {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${url}#webpage`,
+      url,
+      name: meta.title,
+      description: meta.desc,
+      inLanguage: "en",
+    };
+  } else {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      url,
+      name: meta.title,
+      description: meta.desc,
+      inLanguage: "en",
+    };
+  }
+
+  return `  <script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n  </script>`;
+}
+
 let injected = 0;
 for (const file of files) {
   const meta = getMeta(file);
@@ -47,11 +129,11 @@ for (const file of files) {
   const fp = path.join(__dirname, "..", file);
   let html = fs.readFileSync(fp, "utf8");
 
-  const ogUrl = file === "index.html" ? `${SITE}/` : `${SITE}/${file}`;
+  const url = pageUrl(file);
   const og = `
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="${ogUrl}" />
+  <meta property="og:url" content="${url}" />
   <meta property="og:title" content="${esc(meta.title)}" />
   <meta property="og:description" content="${esc(meta.desc)}" />
   <meta property="og:image" content="${SITE}/og-image.png" />
@@ -62,16 +144,23 @@ for (const file of files) {
   <meta name="twitter:description" content="${esc(meta.desc)}" />
   <meta name="twitter:image" content="${SITE}/og-image.png" />`;
 
-  if (!html.includes('property="og:title"')) {
-    html = html.replace('<link rel="icon"', og.trim() + '\n  <link rel="icon"');
-    fs.writeFileSync(fp, html);
+  const canonical = `  <link rel="canonical" href="${url}" />`;
+  const ld = jsonLd(file, meta);
+
+  const seoBlock = [canonical, ld.trim(), og.trim()].join("\n  ");
+
+  if (!html.includes('rel="canonical"')) {
+    html = html.replace('<link rel="icon"', seoBlock + '\n  <link rel="icon"');
     injected++;
-  } else if (file === "index.html") {
-    html = html.replace(/<meta property="og:url" content="[^"]*" \/>/, `  <meta property="og:url" content="${ogUrl}" />`);
-    html = html.replace(/<meta property="og:description" content="[^"]*" \/>/, `  <meta property="og:description" content="${esc(meta.desc)}" />`);
-    html = html.replace(/<meta name="twitter:description" content="[^"]*" \/>/, `  <meta name="twitter:description" content="${esc(meta.desc)}" />`);
-    fs.writeFileSync(fp, html);
+  } else {
+    // Canonical already present — just refresh OG url/desc on index (idempotent).
+    if (file === "index.html") {
+      html = html.replace(/<meta property="og:url" content="[^"]*" \/>/, `  <meta property="og:url" content="${url}" />`);
+      html = html.replace(/<meta property="og:description" content="[^"]*" \/>/, `  <meta property="og:description" content="${esc(meta.desc)}" />`);
+      html = html.replace(/<meta name="twitter:description" content="[^"]*" \/>/, `  <meta name="twitter:description" content="${esc(meta.desc)}" />`);
+    }
   }
+  fs.writeFileSync(fp, html);
 }
 
 const urls = [];
@@ -97,6 +186,6 @@ Sitemap: ${SITE}/sitemap.xml
 `;
 fs.writeFileSync(path.join(__dirname, "..", "robots.txt"), robots);
 
-console.log(`Meta injected into ${injected} pages`);
+console.log(`Canonical + JSON-LD injected into ${injected} pages`);
 console.log(`sitemap.xml: ${urls.length} URLs`);
 console.log("robots.txt written");

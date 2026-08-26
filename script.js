@@ -230,8 +230,25 @@ const footerHTML =
   '<p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p>' +
   "</footer>";
 
+function injectChat() {
+  if (document.getElementById("vt-chat-link")) return;
+  const link = document.createElement("link");
+  link.id = "vt-chat-link";
+  link.rel = "stylesheet";
+  link.href = "chat.css?v=3";
+  document.head.appendChild(link);
+
+  if (document.getElementById("vt-chat-script")) return;
+  const s = document.createElement("script");
+  s.id = "vt-chat-script";
+  s.src = "chat.js?v=8";
+  s.onerror = () => console.error("[VelsTech] Failed to load chat widget");
+  document.head.appendChild(s);
+}
+
 document.body.insertAdjacentHTML("afterbegin", navHTML());
 document.body.insertAdjacentHTML("beforeend", footerHTML);
+injectChat();
 
 const feedLink = document.createElement("link");
 feedLink.rel = "alternate";

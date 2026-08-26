@@ -19,14 +19,14 @@
   "use strict";
 
   // "local" or "proxy"
-  const CHAT_BACKEND = "local";
+  const CHAT_BACKEND = "proxy";
 
   // Local backend: your OmniRoute API base (the OpenAI-compatible endpoint).
   // NOTE: the API is at /v1 — /home is only the web dashboard.
   const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";
 
   // Proxy backend: the URL where you deployed chat-proxy.js.
-  const CHAT_PROXY_URL = ""; // e.g. "https://velstech-chat.x.workers.dev"
+  const CHAT_PROXY_URL = "https://chat.velstech.net";
 
   // Model sent to OmniRoute.
   // NOTE: avoid "auto/*" combos — they force tool-calling (MCP tools) and can

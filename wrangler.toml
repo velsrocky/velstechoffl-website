@@ -1,0 +1,21 @@
+name = "velstech-chat"
+main = "chat-proxy.js"
+compatibility_date = "2026-08-26"
+
+# Deploy to your domain instead of workers.dev
+routes = ["chat.velstech.net/*"]
+
+[vars]
+ALLOWED_ORIGIN = "https://velstech.net"
+RATE_LIMIT = 30
+RATE_WINDOW = 60000
+AI_PROVIDER = "cloudflare"
+# Cloudflare Workers AI model - options include:
+# @cf/meta/llama-3.1-8b-instruct
+# @cf/meta/llama-3.2-3b-instruct
+# @cf/qwen/qwen2.5-7b-instruct
+AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
+
+# Set secrets via CLI:
+# wrangler secret put CLOUDFLARE_API_KEY
+# wrangler secret put CLOUDFLARE_ACCOUNT_ID

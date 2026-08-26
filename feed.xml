@@ -5,9 +5,36 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-26T23:17:04.265Z</updated>
+  <updated>2026-08-26T23:25:26.363Z</updated>
   <author><name>VelsTech</name></author>
 
+  <entry>
+    <title>Xiaomi AI Cube: the mini desktop built for local AI</title>
+    <link rel="alternate" href="https://velstech.net/xiaomi-ai-cube.html" />
+    <id>https://velstech.net/xiaomi-ai-cube.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="Hardware" />
+    <summary>Xiaomi's AI Cube is a small desktop with a big NPU — made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.</summary>
+  </entry>
+  <entry>
+    <title>Qwen3.8 Flash Next: Alibaba's new fast reasoning model</title>
+    <link rel="alternate" href="https://velstech.net/qwen3-8-flash-next.html" />
+    <id>https://velstech.net/qwen3-8-flash-next.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>Qwen3.8 Flash Next is Alibaba's newest reasoning model — faster, cheaper, and smarter. Here's what changed, how it performs, and how it compares.</summary>
+  </entry>
+  <entry>
+    <title>GLM 5.3: what's new in Zhipu AI's latest model</title>
+    <link rel="alternate" href="https://velstech.net/glm-5-3.html" />
+    <id>https://velstech.net/glm-5-3.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>GLM 5.3 is Zhipu AI's newest update — stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.</summary>
+  </entry>
   <entry>
     <title>Omarchy: the beautiful, opinionated Linux distro everyone's talking about</title>
     <link rel="alternate" href="https://velstech.net/omarchy.html" />

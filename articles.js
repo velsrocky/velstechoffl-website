@@ -1,5 +1,32 @@
 const ARTICLES = [
   {
+    title: "Xiaomi AI Cube: the mini desktop built for local AI",
+    url: "xiaomi-ai-cube.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "Hardware",
+    tags: ["AI Hardware", "NPU", "Mini PC"],
+    description: "Xiaomi's AI Cube is a small desktop with a big NPU — made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.",
+  },
+  {
+    title: "Qwen3.8 Flash Next: Alibaba's new fast reasoning model",
+    url: "qwen3-8-flash-next.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "AI & ML",
+    tags: ["LLM", "Qwen", "Reasoning"],
+    description: "Qwen3.8 Flash Next is Alibaba's newest reasoning model — faster, cheaper, and smarter. Here's what changed, how it performs, and how it compares.",
+  },
+  {
+    title: "GLM 5.3: what's new in Zhipu AI's latest model",
+    url: "glm-5-3.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "AI & ML",
+    tags: ["LLM", "GLM", "Benchmarks"],
+    description: "GLM 5.3 is Zhipu AI's newest update — stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.",
+  },
+  {
     title: "Omarchy: the beautiful, opinionated Linux distro everyone's talking about",
     url: "omarchy.html",
     date: "2026-08-26",

@@ -31,6 +31,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/glm-5-3.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/hardware.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -61,11 +66,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://velstech.net/omarchy.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://velstech.net/linux-beginners.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -77,6 +77,16 @@
   </url>
   <url>
     <loc>https://velstech.net/networking.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/new-mac-desktops.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/omarchy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -97,6 +107,11 @@
   </url>
   <url>
     <loc>https://velstech.net/programming.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/qwen3-8-flash-next.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -127,11 +142,6 @@
   </url>
   <url>
     <loc>https://velstech.net/ssd-vs-hdd.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://velstech.net/new-mac-desktops.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -167,6 +177,11 @@
   </url>
   <url>
     <loc>https://velstech.net/windows-vs-linux.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/xiaomi-ai-cube.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

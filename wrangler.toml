@@ -1,9 +1,13 @@
 name = "velstech-chat"
 main = "chat-proxy.js"
 compatibility_date = "2026-08-26"
+workers_dev = false
 
-# Deploy to your domain instead of workers.dev
-routes = ["chat.velstech.net/*"]
+# Deploy to your domain instead of workers.dev.
+# Custom domain (auto-provisions the DNS record via Workers API).
+[[custom_domains]]
+hostname = "chat.velstech.net"
+zone_name = "velstech.net"
 
 [vars]
 ALLOWED_ORIGIN = "https://velstech.net"

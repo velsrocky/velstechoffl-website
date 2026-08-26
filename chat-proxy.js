@@ -247,7 +247,10 @@ async function handleCloudflare(payload, env, origin, model) {
   if (!apiKey || !accountId) return json({ error: "missing_cloudflare_config" }, 500, origin);
 
   // Cloudflare Workers AI endpoint format: https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}
-  const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${model}`;
+  // Prefer the model the client requested (so the widget's fallback chain works),
+  // otherwise fall back to the model configured in wrangler.toml.
+  const activeModel = payload.model || model;
+  const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${activeModel}`;
 
   // Convert OpenAI messages to Cloudflare format
   const messages = payload.messages.map(m => ({

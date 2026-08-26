@@ -7,13 +7,12 @@
  * - Streams replies from OmniRoute.
  *
  * TWO BACKENDS (toggle with CHAT_BACKEND):
- *   "local"  (default) → calls your local OmniRoute directly at
+ *   "local"  → calls your local OmniRoute directly at
  *               OMNIRUTE_BASE_URL + "/chat/completions".
  *               No proxy, no key (OmniRoute is keyless). Works while the site
  *               and OmniRoute run on the same machine.
- *   "proxy"  → calls your deployed Cloudflare Worker (chat-proxy.js), which
- *               forwards to a PUBLIC hosted OmniRoute relay. Use this once you
- *               have a public relay URL for the live site.
+ *   "proxy"  (default) → calls your deployed Cloudflare Worker (chat-proxy.js),
+ *               which proxies through Cloudflare Workers AI.
  */
 (function () {
   "use strict";
@@ -28,26 +27,26 @@
   // Proxy backend: the URL where you deployed chat-proxy.js.
   const CHAT_PROXY_URL = "https://chat.velstech.net";
 
-  // Model sent to OmniRoute.
-  // NOTE: avoid "auto/*" combos — they force tool-calling (MCP tools) and can
-  // return no text for a plain chat widget. Use a specific provider model that
-  // returns text directly. See https://<relay>/v1/models for the full list.
-  const CHAT_MODEL = "kr/claude-haiku-4.5";
+  // Model sent to the proxy. With CHAT_BACKEND = "proxy", this must be a
+  // Cloudflare Workers AI model name (e.g. @cf/meta/llama-3.1-8b-instruct).
+  // With CHAT_BACKEND = "local", use an OmniRoute provider model (e.g.
+  // "kr/claude-haiku-4.5"); avoid "auto/*" combos, which force tool-calling
+  // and can return no text for a plain chat message.
+  const CHAT_MODEL = "@cf/meta/llama-3.1-8b-instruct";
 
-  // Active model, chosen via the widget's model picker (defaults to CHAT_MODEL).
-  // Swappable at runtime — persists in localStorage.
-  let activeModel = CHAT_MODEL;
-
-  // If the primary model returns no text (e.g. tool-only / empty), retry with
-  // these in order until one replies.
+  // If the primary model returns no text, retry with these in order until one
+  // replies. Keep these valid for the active backend (Cloudflare Workers AI
+  // names for proxy mode, OmniRoute names for local mode).
   const CHAT_FALLBACK_MODELS = [
-    "kr/claude-sonnet-4.5",
-    "antigravity/claude-sonnet-4-6",
-    "antigravity/gemini-3.6-flash-medium",
+    "@cf/meta/llama-3.2-3b-instruct",
+    "@cf/qwen/qwen2.5-7b-instruct",
   ];
 
+  // Active model (defaults to CHAT_MODEL; kept simple — no runtime picker).
+  let activeModel = CHAT_MODEL;
+
   // System prompt (scoped, safe-by-design). Sent as a `system` message in both
-  // local and proxy modes. Mirrors chat-proxy.js CHAT_GUIDANCE.
+  // local and proxy modes.
   const CHAT_GUIDANCE =
     "You are the VelsTech assistant — a helpful, friendly, plain-language helper for a " +
     "personal technology blog (velstech.net) aimed at tech-curious beginners and intermediate users.\n" +
@@ -269,7 +268,7 @@
   async function init() {
     ensureContainer();
 
-    // Use the default model configured in CHAT_MODEL
+    // Use the default model configured in CHAT_MODEL (no picker needed).
     activeModel = CHAT_MODEL;
 
     $("vt-chat-bubble").addEventListener("click", () => {

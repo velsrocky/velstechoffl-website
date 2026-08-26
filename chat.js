@@ -127,7 +127,7 @@
           <div class="vt-header-title">
             <span class="vt-logo" aria-hidden="true">◆</span>
             <div>
-              <h4 class="vt-title">VelsTech Assistant</h4>
+              <h4 class="vt-title">VelsChat</h4>
               <span class="vt-sub">AI · answers from the blog + general</span>
             </div>
           </div>

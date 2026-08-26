@@ -5,6 +5,7 @@ const ARTICLES = [
     date: "2026-08-27",
     updated: "2026-08-27",
     category: "Hardware",
+    featured: true,
     tags: ["AI Hardware", "NPU", "Mini PC"],
     description: "Xiaomi's AI Cube is a small desktop with a big NPU — made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.",
   },

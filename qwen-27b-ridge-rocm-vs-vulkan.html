@@ -82,13 +82,13 @@
         <li><strong>Context:</strong> <code>-c 16384</code> with <code>--cache-type-k q8_0 --cache-type-v q8_0 -fa on</code> (q8 KV, flash attention on)</li>
         <li><strong>Offload:</strong> <code>-ngl 999 --fit on</code> (forced all layers; see warning below)</li>
         <li><strong>Prompt:</strong> 373 tokens (same prompt both runs), <code>n_slots=4, n_ctx_slot=16384, kv_unified=true, n_threads=8</code></li>
-        <li><strong>Builds:</strong> Run 1 — <code>/home/velsrocky/llama.cpp/build/bin/llama-server</code> (ROCm); Run 2 — <code>/home/velsrocky/llama.cpp_vulkan/build-vulkan/bin/llama-server</code> (Vulkan)</li>
+        <li><strong>Builds:</strong> Run 1 — <code>/home/user-name/llama.cpp/build/bin/llama-server</code> (ROCm); Run 2 — <code>/home/user-name/llama.cpp_vulkan/build-vulkan/bin/llama-server</code> (Vulkan)</li>
       </ul>
 
       <h2>How we ran it</h2>
       <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
 llama-server \
- -m /home/velsrocky/models/Qwen3.8-27B-Ridge-3.7bpw.gguf \
+ -m /home/user-name/models/Qwen3.8-27B-Ridge-3.7bpw.gguf \
  -ngl 999 \
  --cache-type-k q8_0 --cache-type-v q8_0 \
  -c 16384 -fa on --fit on --reasoning-preserve --jinja</pre>

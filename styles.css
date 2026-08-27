@@ -468,8 +468,8 @@ a {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: #fff;
-  background: linear-gradient(135deg, #4cc2ff, #a78bfa);
+  color: var(--on-accent);
+  background: var(--accent);
   vertical-align: middle;
 }
 
@@ -1307,8 +1307,8 @@ a.tag:hover {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: #fff;
-  background: linear-gradient(135deg, #fb923c, #f472b6);
+  color: var(--on-accent);
+  background: var(--accent);
   white-space: nowrap;
 }
 .hot-topic-card {
@@ -1443,7 +1443,7 @@ a.tag:hover {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, #a78bfa, #4cc2ff);
+  background: var(--accent);
 }
 
 .experiment-badge {

@@ -2051,6 +2051,17 @@ a.tag:hover {
   cursor: pointer;
 }
 
+.color-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.color-row .input {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Diff checker */
 .diff-out {
   background: var(--bg);
@@ -2313,5 +2324,51 @@ summary:focus-visible,
     background: #f0f0f0 !important;
     border-color: #ddd !important;
     color: #111 !important;
+  }
+}
+
+/* ===== Mobile overrides (must stay after base rules to win the cascade) ===== */
+@media (max-width: 640px) {
+  .hero {
+    padding: 72px 20px 48px;
+  }
+  .section,
+  .page-hero,
+  .article-grid,
+  .article-page {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  /* Tools on mobile */
+  .calc {
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .calc-grid,
+  .calc-subgrid {
+    gap: 10px;
+  }
+  .calc-subgrid {
+    padding: 10px;
+  }
+  .result-row strong {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .result-verdict {
+    font-size: 0.9rem;
+  }
+  .tool-radio-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .kv-row .input {
+    min-width: 0;
+  }
+  .tool-textarea {
+    min-height: 140px;
+  }
+  .preset-row {
+    gap: 6px;
   }
 }

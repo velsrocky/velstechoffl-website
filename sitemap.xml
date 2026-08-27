@@ -151,6 +151,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/networking.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

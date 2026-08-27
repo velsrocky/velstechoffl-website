@@ -285,6 +285,16 @@ const ARTICLES = [
     tags: ["VelsTech Lab", "MoE", "Ornith 35B", "RX 6800M", "ROCm", "Vulkan", "Benchmark"],
     description: "Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.",
   },
+  {
+    title: "MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab",
+    url: "moe-vs-dense-rx6800m-16k-vs-262k.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "AI & ML",
+    featured: true,
+    tags: ["VelsTech Lab", "MoE vs Dense", "RX 6800M", "Benchmark"],
+    description: "Same RX 6800M 12GB — Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head.",
+  },
 ];
 
 if (typeof module !== "undefined" && module.exports) {

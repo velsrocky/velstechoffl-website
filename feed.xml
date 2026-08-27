@@ -5,7 +5,7 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-27T18:04:37.454Z</updated>
+  <updated>2026-08-27T18:18:12.556Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>
@@ -79,6 +79,15 @@
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
     <summary>Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.</summary>
+  </entry>
+  <entry>
+    <title>MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab</title>
+    <link rel="alternate" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
+    <id>https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>Same RX 6800M 12GB — Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head.</summary>
   </entry>
   <entry>
     <title>Omarchy: the beautiful, opinionated Linux distro everyone's talking about</title>

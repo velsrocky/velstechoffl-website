@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free regex tester — paste a regular expression and test string to see every match, capture group, and match position highlighted inline." />
+  <title>Regex Tester | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/regex-tester.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/regex-tester.html#webapp",
+  "name": "Regex Tester | VelsTech",
+  "description": "Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline.",
+  "url": "https://velstech.net/regex-tester.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/regex-tester.html" />
+  <meta property="og:title" content="Regex Tester | VelsTech" />
+  <meta property="og:description" content="Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Regex Tester | VelsTech" />
+  <meta name="twitter:description" content="Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Regex Tester</p>
+    <h1 class="title">Regex Tester</h1>
+    <div class="meta">
+      <span>Test patterns live · see matches and capture groups</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Build and test a regular expression against some text. Matches are highlighted
+        inline and listed with their position and capture groups — handy before you pipe a
+        <code>grep</code> or <code>sed</code> command into production.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Pattern</span>
+            <input id="pattern" class="input" type="text" value="\b(\w+)@(\w+)\.(com|net)" spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>Flags</span>
+            <input id="flags" class="input" type="text" value="g" placeholder="g i m s u" spellcheck="false" />
+          </label>
+        </div>
+
+        <label class="field" style="margin-top:14px">
+          <span>Test string</span>
+          <textarea id="test" class="tool-textarea" rows="6" spellcheck="false">Contact help@velstech.net or dev@example.org for support.
+Sales is sales@velstech.com.</textarea>
+        </label>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="tool-out" id="highlight"></div>
+          <h3 style="font-size:1rem;margin:16px 0 8px">Matches</h3>
+          <div class="result-rows" id="match-list"></div>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="terminal-commands.html">Essential terminal commands everyone should know</a></li>
+        <li><a href="html-css-js.html">HTML, CSS, and JavaScript: what does each one do?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const patternInput = document.getElementById("pattern");
+    const flagsInput = document.getElementById("flags");
+    const testInput = document.getElementById("test");
+    const results = document.getElementById("results");
+    const verdict = document.getElementById("verdict");
+    const highlightEl = document.getElementById("highlight");
+    const matchList = document.getElementById("match-list");
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    function render() {
+      const pattern = patternInput.value;
+      const flags = flagsInput.value.replace(/[^gimsuy]/g, "");
+      const text = testInput.value;
+
+      if (!pattern || !text) { results.hidden = true; return; }
+
+      let re;
+      try {
+        re = new RegExp(pattern, flags);
+      } catch (e) {
+        results.hidden = false;
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>Invalid pattern:</strong> " + esc(e.message);
+        highlightEl.innerHTML = "";
+        matchList.innerHTML = "";
+        return;
+      }
+
+      const matches = [];
+      const re2 = new RegExp(re.source, re.flags.includes("g") ? re.flags : re.flags + "g");
+      let m;
+      while ((m = re2.exec(text)) !== null) {
+        matches.push({ index: m.index, groups: Array.from(m).map((g) => g === undefined ? null : g) });
+        if (m[0] === "") re2.lastIndex++;
+      }
+
+      // Inline highlighting
+      let html = "", pos = 0;
+      matches.forEach((match, i) => {
+        html += esc(text.slice(pos, match.index));
+        // color the full match, then overlay group spans (simplified: color groups within)
+        html += '<span class="match-hl">' + esc(match.groups[0]) + "</span>";
+        pos = match.index + match.groups[0].length;
+      });
+      html += esc(text.slice(pos));
+      highlightEl.innerHTML = html;
+
+      // Match list
+      matchList.innerHTML = matches.length
+        ? matches.map((match, i) => {
+            const groupHtml = match.groups.map((g, gi) => {
+              return g === null ? "" : '<span class="match-grp">' + esc(g) + "</span>";
+            }).join(" ");
+            return '<div class="result-row" style="font-family:var(--mono, monospace)">' +
+              "<span>#"+ (i+1) + " @ " + match.index + " — " + (groupHtml || "<em>no capture groups</em>") + "</span>" +
+              "</div>";
+          }).join("")
+        : '<div class="result-row"><span><em>No matches</em></span></div>';
+
+      verdict.className = "result-verdict " + (matches.length ? "verdict-ok" : "verdict-warn");
+      verdict.innerHTML = matches.length
+        ? "✅ <strong>" + matches.length + " match" + (matches.length === 1 ? "" : "es") + "</strong> found."
+        : "⚠️ <strong>No matches</strong> for /" + esc(pattern) + "/" + esc(flags) + ".";
+      results.hidden = false;
+    }
+
+    [patternInput, flagsInput, testInput].forEach((el) => el.addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

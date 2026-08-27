@@ -1,5 +1,33 @@
 const ARTICLES = [
   {
+    title: "Best GPU for running LLMs locally (2026)",
+    url: "best-gpu-for-local-llm.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "Hardware",
+    featured: true,
+    tags: ["GPU", "LLM", "Local AI", "Benchmarks"],
+    description: "The best GPUs for running LLMs locally in 2026 — RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.",
+  },
+  {
+    title: "How much VRAM do you need for 7B, 14B, and 32B models?",
+    url: "how-much-vram-for-llm.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "AI & ML",
+    tags: ["VRAM", "LLM", "GPU", "Quantization"],
+    description: "VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table.",
+  },
+  {
+    title: "Best GPU for AI under ₹50,000 (India, 2026)",
+    url: "best-gpu-ai-under-50000.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "Hardware",
+    tags: ["GPU", "Budget", "India", "Local AI"],
+    description: "The best GPUs for AI under ₹50,000 in India — which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.",
+  },
+  {
     title: "Xiaomi AI Cube: the mini desktop built for local AI",
     url: "xiaomi-ai-cube.html",
     date: "2026-08-27",

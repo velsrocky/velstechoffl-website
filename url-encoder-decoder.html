@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free URL encoder and decoder — encode and decode URL components (percent-encoding) with UTF-8 support, plus form-encoding. Runs entirely in your browser." />
+  <title>URL Encoder / Decoder | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/url-encoder-decoder.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/url-encoder-decoder.html#webapp",
+  "name": "URL Encoder / Decoder | VelsTech",
+  "description": "Percent-encode and decode URL components with UTF-8 support. Runs entirely in your browser.",
+  "url": "https://velstech.net/url-encoder-decoder.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/url-encoder-decoder.html" />
+  <meta property="og:title" content="URL Encoder / Decoder | VelsTech" />
+  <meta property="og:description" content="Percent-encode and decode URL components with UTF-8 support. Runs entirely in your browser." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="URL Encoder / Decoder | VelsTech" />
+  <meta name="twitter:description" content="Percent-encode and decode URL components with UTF-8 support. Runs entirely in your browser." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / URL Encoder / Decoder</p>
+    <h1 class="title">URL Encoder / Decoder</h1>
+    <div class="meta">
+      <span>Percent-encode &amp; decode URL components · UTF-8 safe</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Encode or decode URL query parameters, paths, and components using percent-encoding.
+        <code>encodeURIComponent</code> is the right tool for most values you put in a URL —
+        this lets you check your work before you ship a link or a redirect.
+      </p>
+
+      <div class="calc">
+        <div class="tool-radio-row">
+          <label><input type="radio" name="mode" value="encode" checked /> Encode → URL-safe</label>
+          <label><input type="radio" name="mode" value="decode" /> Decode → plain text</label>
+        </div>
+
+        <label class="field" style="margin-top:14px">
+          <span>Input</span>
+          <textarea id="input" class="tool-textarea" rows="5" spellcheck="false"></textarea>
+        </label>
+
+        <label class="field" style="margin-top:14px">
+          <span>Output</span>
+          <textarea id="output" class="tool-textarea" rows="5" spellcheck="false" readonly></textarea>
+        </label>
+
+        <div class="tool-btn-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn btn-primary" id="btn-copy" type="button">Copy output</button>
+          <button class="btn btn-ghost" id="btn-swap" type="button">Swap input ↔ output</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="how-internet-works.html">How does the internet actually work?</a></li>
+        <li><a href="base64-encoder-decoder.html">Base64 Encoder / Decoder</a></li>
+        <li><a href="json-formatter.html">JSON Formatter &amp; Validator</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+    const verdict = document.getElementById("verdict");
+    const results = document.getElementById("results");
+    const encode = document.querySelector('input[name="mode"][value="encode"]');
+    const decode = document.querySelector('input[name="mode"][value="decode"]');
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    function mode() { return encode.checked ? "encode" : "decode"; }
+
+    function render() {
+      const raw = input.value;
+      if (!raw) { results.hidden = true; output.value = ""; return; }
+      results.hidden = false;
+
+      try {
+        if (mode() === "encode") {
+          output.value = encodeURIComponent(raw);
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Encoded " + raw.length + " chars → " + output.value.length + " chars, using <code>encodeURIComponent()</code>.";
+        } else {
+          output.value = decodeURIComponent(raw);
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Decoded " + raw.length + " chars → " + output.value.length + " chars, using <code>decodeURIComponent()</code>.";
+        }
+      } catch (e) {
+        output.value = "";
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>Couldn't " + mode() + " that.</strong> " + esc(e.message) +
+          " — check for a malformed <code>%</code> sequence.";
+      }
+    }
+
+    [encode, decode].forEach((r) => r.addEventListener("change", render));
+    input.addEventListener("input", render);
+
+    document.getElementById("btn-copy").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(output.value); } catch { output.select(); document.execCommand("copy"); }
+      const btn = document.getElementById("btn-copy");
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = "Copy output"; }, 1500);
+    });
+
+    document.getElementById("btn-swap").addEventListener("click", () => {
+      const tmp = input.value;
+      input.value = output.value;
+      output.value = tmp;
+      const wasEncode = encode.checked;
+      encode.checked = !wasEncode;
+      decode.checked = wasEncode;
+      render();
+    });
+
+    input.value = "q=AI hardware & GPU benchmarks";
+    render();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

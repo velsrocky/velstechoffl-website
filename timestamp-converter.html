@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free Unix timestamp converter — convert between epoch seconds, milliseconds, and human-readable dates, with relative time. Copy the current timestamp instantly." />
+  <title>Unix Timestamp Converter | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/timestamp-converter.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/timestamp-converter.html#webapp",
+  "name": "Unix Timestamp Converter | VelsTech",
+  "description": "Convert between Unix timestamps (seconds or milliseconds) and human-readable dates with relative time. Copy the current timestamp instantly.",
+  "url": "https://velstech.net/timestamp-converter.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/timestamp-converter.html" />
+  <meta property="og:title" content="Unix Timestamp Converter | VelsTech" />
+  <meta property="og:description" content="Convert between Unix timestamps (seconds or milliseconds) and human-readable dates with relative time. Copy the current timestamp instantly." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Unix Timestamp Converter | VelsTech" />
+  <meta name="twitter:description" content="Convert between Unix timestamps (seconds or milliseconds) and human-readable dates with relative time. Copy the current timestamp instantly." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Timestamp Converter</p>
+    <h1 class="title">Unix Timestamp Converter</h1>
+    <div class="meta">
+      <span>Epoch seconds ↔ human-readable date · milliseconds too</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Convert between Unix timestamps and human-readable dates, in both seconds and
+        milliseconds (JavaScript's <code>Date.now()</code> format). Also shows relative time —
+        handy when you're debugging logs, checking a JWT <code>exp</code>, or working with APIs.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field" style="grid-column:1/-1">
+            <span>Unix timestamp (seconds or milliseconds)</span>
+            <input id="ts" class="input" type="text" spellcheck="false" placeholder="1724697600 or 1724697600000" />
+          </label>
+          <label class="field" style="grid-column:1/-1">
+            <span>Human date (e.g. 2026-08-27 14:30 or 08/27/2026 2:30 PM)</span>
+            <input id="date" class="input" type="text" spellcheck="false" placeholder="2026-08-27 14:30" />
+          </label>
+        </div>
+
+        <div class="tool-btn-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn btn-primary" id="btn-now" type="button">Copy current timestamp</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>Seconds (Unix)</span><strong id="r-sec">—</strong></div>
+            <div class="result-row"><span>Milliseconds (JS)</span><strong id="r-ms">—</strong></div>
+            <div class="result-row"><span>ISO 8601 (UTC)</span><strong id="r-iso">—</strong></div>
+            <div class="result-row"><span>Local time</span><strong id="r-local">—</strong></div>
+            <div class="result-row total"><span>Relative time</span><strong id="r-rel">—</strong></div>
+          </div>
+          <p class="tool-note">
+            Most APIs use <strong>seconds</strong>; JavaScript and many databases use
+            <strong>milliseconds</strong>. A 10-digit number is seconds, 13 digits is
+            milliseconds.
+          </p>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="jwt-decoder.html">JWT Decoder — check token expiration</a></li>
+        <li><a href="terminal-commands.html">Essential terminal commands</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const tsInput = document.getElementById("ts");
+    const dateInput = document.getElementById("date");
+    const results = document.getElementById("results");
+    const verdict = document.getElementById("verdict");
+
+    function relTime(d) {
+      const diff = d - Date.now();
+      const abs = Math.abs(diff);
+      if (abs < 60000) return "just now";
+      if (abs < 3600000) return (diff < 0 ? "~" + Math.round(-diff / 60000) + " minutes ago" : "in ~" + Math.round(diff / 60000) + " minutes");
+      if (abs < 86400000) return (diff < 0 ? "~" + Math.round(-diff / 3600000) + " hours ago" : "in ~" + Math.round(diff / 3600000) + " hours");
+      return (diff < 0 ? "~" + Math.round(-diff / 86400000) + " days ago" : "in ~" + Math.round(diff / 86400000) + " days");
+    }
+
+    function show(d) {
+      results.hidden = false;
+      const sec = Math.floor(d.getTime() / 1000);
+      document.getElementById("r-sec").textContent = sec.toLocaleString("en-US");
+      document.getElementById("r-ms").textContent = d.getTime().toLocaleString("en-US");
+      document.getElementById("r-iso").textContent = d.toISOString().replace("T", " ").replace("Z", " UTC");
+      document.getElementById("r-local").textContent = d.toString();
+      document.getElementById("r-rel").textContent = relTime(d);
+      verdict.className = "result-verdict verdict-ok";
+      verdict.innerHTML = "✅ <strong>" + d.toUTCString() + "</strong>";
+    }
+
+    function fromTs(raw) {
+      if (!/^\d+$/.test(raw.trim())) return null;
+      const n = parseInt(raw.trim(), 10);
+      if (n < 1e12) return new Date(n * 1000);
+      return new Date(n);
+    }
+
+    function fromDate(raw) {
+      const s = raw.trim();
+      if (!s) return null;
+      const d = new Date(s);
+      if (!isNaN(d.getTime())) return d;
+      // try flexible formats: DD/MM/YYYY or MM/DD/YYYY with time
+      const m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})(?:[\sT](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+      if (m) {
+        const [_, a, b, y, hh, mm, ss] = m;
+        const year = y.length === 2 ? 2000 + parseInt(y, 10) : parseInt(y, 10);
+        const date = new Date(year, parseInt(a, 10) - 1, parseInt(b, 10), hh || 0, mm || 0, ss || 0);
+        if (!isNaN(date.getTime())) return date;
+      }
+      return null;
+    }
+
+    function showError(msg) {
+      results.hidden = false;
+      verdict.className = "result-verdict verdict-no";
+      verdict.innerHTML = "❌ " + msg;
+      ["r-sec", "r-ms", "r-iso", "r-local", "r-rel"].forEach((id) => document.getElementById(id).textContent = "—");
+    }
+
+    function renderFromTs() {
+      const d = fromTs(tsInput.value);
+      if (!d) { showError("Couldn't parse that timestamp."); return; }
+      show(d);
+    }
+
+    function renderFromDate() {
+      const d = fromDate(dateInput.value);
+      if (!d) { showError("Couldn't parse that date. Try YYYY-MM-DD HH:MM or 08/27/2026 2:30 PM."); return; }
+      show(d);
+    }
+
+    tsInput.addEventListener("input", renderFromTs);
+    dateInput.addEventListener("input", renderFromDate);
+
+    document.getElementById("btn-now").addEventListener("click", async () => {
+      const now = Math.floor(Date.now() / 1000);
+      try { await navigator.clipboard.writeText(String(now)); } catch {}
+      const btn = document.getElementById("btn-now");
+      btn.textContent = "Copied " + now + "!";
+      setTimeout(() => { btn.textContent = "Copy current timestamp"; }, 2000);
+    });
+
+    tsInput.value = String(Math.floor(Date.now() / 1000));
+    renderFromTs();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

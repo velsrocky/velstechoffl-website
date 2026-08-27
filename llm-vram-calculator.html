@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free LLM VRAM calculator — estimate how much GPU memory a model needs for a given quantization and context length, including KV cache, and see if it fits your GPU." />
+  <title>LLM VRAM Calculator | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/llm-vram-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/llm-vram-calculator.html#webapp",
+  "name": "LLM VRAM Calculator | VelsTech",
+  "description": "Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU.",
+  "url": "https://velstech.net/llm-vram-calculator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/llm-vram-calculator.html" />
+  <meta property="og:title" content="LLM VRAM Calculator | VelsTech" />
+  <meta property="og:description" content="Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LLM VRAM Calculator | VelsTech" />
+  <meta name="twitter:description" content="Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / LLM VRAM Calculator</p>
+    <h1 class="title">LLM VRAM Calculator</h1>
+    <div class="meta">
+      <span>Estimate model memory · KV cache · does it fit your GPU?</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Pick a model and quantization, set your context length, and this estimates the
+        total GPU memory you'll need — model weights plus the KV cache plus a small
+        overhead. Enter your GPU's VRAM to get a straight <strong>runs / partial offload /
+        won't fit</strong> verdict. Runs entirely in your browser.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Model</span>
+            <select id="model" class="input"></select>
+          </label>
+
+          <div id="custom-model" class="calc-subgrid" hidden>
+            <label class="field">
+              <span>Parameters (B)</span>
+              <input id="c-params" class="input" type="number" min="0.1" step="0.1" value="8" />
+            </label>
+            <label class="field">
+              <span>Layers</span>
+              <input id="c-layers" class="input" type="number" min="1" value="32" />
+            </label>
+            <label class="field">
+              <span>KV heads</span>
+              <input id="c-kv" class="input" type="number" min="1" value="8" />
+            </label>
+            <label class="field">
+              <span>Head dim</span>
+              <input id="c-hd" class="input" type="number" min="1" value="128" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Quantization</span>
+            <select id="quant" class="input"></select>
+          </label>
+
+          <label class="field">
+            <span>Context length (tokens)</span>
+            <input id="ctx" class="input" type="number" min="512" max="262144" step="512" value="8192" />
+          </label>
+
+          <label class="field">
+            <span>Batch size</span>
+            <input id="batch" class="input" type="number" min="1" max="512" step="1" value="1" />
+          </label>
+
+          <label class="field">
+            <span>Your GPU VRAM (GB, optional)</span>
+            <input id="vram" class="input" type="number" min="1" step="1" value="12" />
+          </label>
+
+          <label class="field">
+            <span>System RAM (GB, optional)</span>
+            <input id="ram" class="input" type="number" min="1" step="1" value="16" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>Model weights</span><strong id="r-weights">—</strong></div>
+            <div class="result-row"><span>KV cache (at this context)</span><strong id="r-kv">—</strong></div>
+            <div class="result-row"><span>Overhead</span><strong id="r-overhead">—</strong></div>
+            <div class="result-row total"><span>Total VRAM needed</span><strong id="r-total">—</strong></div>
+            <div class="result-row"><span>Recommended GPU</span><strong id="r-gpu">—</strong></div>
+          </div>
+          <p class="tool-note">
+            Rough estimates. Real usage varies with the exact model build, tokenizer, CUDA/
+            compute graph overhead, and your inference engine. KV cache assumes FP16.
+          </p>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="what-is-an-llm.html">What is a Large Language Model, really?</a></li>
+        <li><a href="local-vs-cloud-ai.html">Local vs cloud AI: which should you choose?</a></li>
+        <li><a href="gpu-ai-calculator.html">GPU AI Performance Calculator — how fast will it run?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="ai.html">AI &amp; ML notes</a>
+    </div>
+  </main>
+
+  <script>
+    const MODELS = [
+      { name: "Llama 3.2 1B", params: 1.2, layers: 16, kv: 8, hd: 64 },
+      { name: "Llama 3.2 3B", params: 3.2, layers: 28, kv: 8, hd: 128 },
+      { name: "Phi-3 mini 3.8B", params: 3.8, layers: 32, kv: 32, hd: 128 },
+      { name: "Mistral 7B", params: 7.3, layers: 32, kv: 8, hd: 128 },
+      { name: "Llama 3.1 8B", params: 8.0, layers: 32, kv: 8, hd: 128 },
+      { name: "Qwen 2.5 7B", params: 7.6, layers: 28, kv: 4, hd: 128 },
+      { name: "Qwen 3 8B", params: 8.2, layers: 36, kv: 8, hd: 128 },
+      { name: "Gemma 2 9B", params: 9.2, layers: 42, kv: 8, hd: 128 },
+      { name: "Qwen 2.5 14B", params: 14.8, layers: 48, kv: 8, hd: 128 },
+      { name: "Qwen 3 14B", params: 14.8, layers: 40, kv: 8, hd: 128 },
+      { name: "DeepSeek R1 Distill 14B", params: 14.8, layers: 48, kv: 8, hd: 128 },
+      { name: "Gemma 3 27B", params: 27.0, layers: 46, kv: 4, hd: 128 },
+      { name: "Qwen 27B (Qwen3-30B-A3B, MoE)", params: 30.5, layers: 48, kv: 4, hd: 128 },
+      { name: "Qwen 2.5 32B", params: 32.8, layers: 64, kv: 8, hd: 128 },
+      { name: "DeepSeek R1 Distill 32B", params: 32.8, layers: 64, kv: 8, hd: 128 },
+      { name: "Mixtral 8x7B (MoE)", params: 46.7, layers: 32, kv: 8, hd: 128 },
+      { name: "Llama 3.3 70B", params: 70.6, layers: 80, kv: 8, hd: 128 },
+      { name: "Custom model…", params: 8, layers: 32, kv: 8, hd: 128 },
+    ];
+
+    const QUANTS = [
+      { name: "FP32", bytes: 4.0 },
+      { name: "FP16 / BF16", bytes: 2.0 },
+      { name: "Q8_0 (≈8-bit)", bytes: 1.0625 },
+      { name: "Q6_K (≈6.5-bit)", bytes: 0.8125 },
+      { name: "Q5_K_M (≈5.5-bit)", bytes: 0.66 },
+      { name: "Q5_0", bytes: 0.65 },
+      { name: "Q4_K_M (≈4.8-bit)", bytes: 0.61 },
+      { name: "Q4_0", bytes: 0.56 },
+      { name: "INT4 (bitsandbytes)", bytes: 0.5 },
+      { name: "INT8 (bitsandbytes)", bytes: 1.0 },
+    ];
+
+    const GPU_TIERS = [
+      { max: 8, label: "8 GB — RTX 4060 / RX 7600" },
+      { max: 12, label: "12–16 GB — RTX 4070 / RX 7700 XT / RX 6800M (12 GB)" },
+      { max: 16, label: "16 GB — RTX 4080 Super / RX 7800 XT / RX 9070 XT" },
+      { max: 24, label: "24 GB — RTX 4090 / RX 7900 XTX / RX 9080 XT" },
+      { max: 32, label: "32 GB — RTX 5090" },
+      { max: Infinity, label: "More than 32 GB — cloud GPU or multi-GPU" },
+    ];
+
+    const modelSel = document.getElementById("model");
+    const quantSel = document.getElementById("quant");
+    MODELS.forEach((m, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = m.name;
+      modelSel.appendChild(o);
+    });
+    QUANTS.forEach((q, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = q.name;
+      quantSel.appendChild(o);
+    });
+
+    const customBox = document.getElementById("custom-model");
+    function isCustom() {
+      return modelSel.value === String(MODELS.length - 1);
+    }
+    function currentModel() {
+      if (isCustom()) {
+        return {
+          params: parseFloat(document.getElementById("c-params").value) || 1,
+          layers: parseInt(document.getElementById("c-layers").value, 10) || 32,
+          kv: parseInt(document.getElementById("c-kv").value, 10) || 8,
+          hd: parseInt(document.getElementById("c-hd").value, 10) || 128,
+        };
+      }
+      return MODELS[modelSel.value];
+    }
+
+    const giB = 1073741824;
+    function fmt(gb) {
+      return gb >= 1 ? gb.toFixed(1) + " GB" : Math.round(gb * 1024) + " MB";
+    }
+
+    function calc() {
+      const m = currentModel();
+      const q = QUANTS[quantSel.value];
+      const ctx = Math.max(1, parseInt(document.getElementById("ctx").value, 10) || 8192);
+      const batch = Math.max(1, parseInt(document.getElementById("batch").value, 10) || 1);
+      const vram = parseFloat(document.getElementById("vram").value);
+      const ram = parseFloat(document.getElementById("ram").value);
+
+      const weights = (m.params * 1e9 * q.bytes) / giB;
+      const kvPerTok = 2 * m.layers * m.kv * m.hd * 2; // K+V, FP16
+      const kv = (kvPerTok * ctx * batch) / giB;
+      const overhead = (weights + kv) * 0.06 + 0.25;
+      const total = weights + kv + overhead;
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-weights").textContent = fmt(weights);
+      document.getElementById("r-kv").textContent = fmt(kv);
+      document.getElementById("r-overhead").textContent = fmt(overhead);
+      document.getElementById("r-total").textContent = fmt(total);
+
+      const tier = GPU_TIERS.find((t) => total <= t.max);
+      document.getElementById("r-gpu").textContent = tier.label;
+
+      const verdict = document.getElementById("verdict");
+      const classes = ["result-verdict", "verdict-ok", "verdict-warn", "verdict-no"];
+      if (!vram) {
+        verdict.className = classes.join(" ");
+        verdict.innerHTML = "<strong>Needs " + fmt(total) + " of GPU memory.</strong> Enter your VRAM to see if it fits.";
+      } else if (total <= vram * 0.95) {
+        verdict.className = classes[0] + " verdict-ok";
+        verdict.innerHTML = "✅ <strong>Fits in your GPU VRAM.</strong> " + fmt(total) + " needed vs " + vram + " GB available — runs fully on GPU.";
+      } else if (ram && total - vram <= ram * 0.9) {
+        const offload = Math.max(0, total - vram);
+        verdict.className = classes[0] + " verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>Possible with partial CPU offload.</strong> Needs ~" + fmt(offload) + " of free system RAM (you have " + ram + " GB). Expect slower speeds.";
+      } else {
+        verdict.className = classes[0] + " verdict-no";
+        verdict.innerHTML = "❌ <strong>Too big for your setup.</strong> Try a smaller model or lower quantization, or add VRAM.";
+      }
+    }
+
+    modelSel.addEventListener("change", () => {
+      customBox.hidden = !isCustom();
+      calc();
+    });
+    ["c-params", "c-layers", "c-kv", "c-hd", "ctx", "batch", "vram", "ram", quantSel.id]
+      .forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", calc);
+      });
+
+    calc();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

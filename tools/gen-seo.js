@@ -20,6 +20,28 @@ const STATIC_META = {
   "terms.html": { title: "Terms of Use | VelsTech", desc: "Terms of use and disclaimer for VelsTech." },
   "privacy.html": { title: "Privacy Policy | VelsTech", desc: "Privacy policy for VelsTech." },
   "tags.html": { title: "Tags | VelsTech", desc: "Browse all VelsTech articles by tag — Linux, AI, security, and more." },
+  "disclosure.html": { title: "Affiliate Disclosure | VelsTech", desc: "How affiliate links on VelsTech work — when we earn a commission and why it never costs you anything extra." },
+  "resources.html": { title: "Recommended Tools | VelsTech", desc: "VelsTech's recommended tools — the AI apps, developer tools, cloud services, hosting, and security software we actually use." },
+  "advertise.html": { title: "Advertise | VelsTech", desc: "Advertise on VelsTech — sponsored tutorials, product reviews, newsletter sponsorships, and display advertising for AI, hardware, Linux, and developer tools." },
+};
+
+const TOOLS_META = {
+  "tools.html": { title: "Tools | VelsTech", desc: "Free practical tools — an LLM VRAM calculator, a GPU AI performance calculator, and a PC power supply calculator." },
+  "llm-vram-calculator.html": { title: "LLM VRAM Calculator | VelsTech", desc: "Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU." },
+  "gpu-ai-calculator.html": { title: "GPU AI Performance Calculator | VelsTech", desc: "Estimate tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." },
+  "psu-calculator.html": { title: "PC Power Supply Calculator | VelsTech", desc: "Estimate your build's peak power draw and get a recommended PSU wattage with headroom." },
+  "cidr-calculator.html": { title: "CIDR / Subnet Calculator | VelsTech", desc: "Enter an IPv4 address and prefix to get the network address, usable host range, broadcast address, subnet mask, and wildcard mask." },
+  "chmod-calculator.html": { title: "chmod Calculator | VelsTech", desc: "Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run." },
+  "docker-compose-generator.html": { title: "Docker Compose Generator | VelsTech", desc: "Generate a copy-paste ready docker-compose.yml — pick an image, ports, volumes, environment variables, and restart policy." },
+  "ffmpeg-command-generator.html": { title: "FFmpeg Command Generator | VelsTech", desc: "Build a correct ffmpeg command for converting, compressing, and trimming media — container, codec, quality, scale, and audio settings." },
+  "json-formatter.html": { title: "JSON Formatter & Validator | VelsTech", desc: "Format, minify, validate, and check the size of JSON with syntax highlighting. Runs entirely in your browser." },
+  "regex-tester.html": { title: "Regex Tester | VelsTech", desc: "Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline." },
+  "jwt-decoder.html": { title: "JWT Decoder | VelsTech", desc: "Decode and inspect a JSON Web Token — header, payload, claims like exp/iat/iss, and signature. All data stays in your browser." },
+  "base64-encoder-decoder.html": { title: "Base64 Encoder / Decoder | VelsTech", desc: "Convert text to and from base64 with proper UTF-8 support. Runs entirely in your browser." },
+  "timestamp-converter.html": { title: "Unix Timestamp Converter | VelsTech", desc: "Convert between Unix timestamps (seconds or milliseconds) and human-readable dates with relative time. Copy the current timestamp instantly." },
+  "color-converter.html": { title: "Color Converter (HEX / RGB / HSL) | VelsTech", desc: "Convert colors between HEX, RGB, and HSL with a live swatch and copy-ready CSS values. Runs entirely in your browser." },
+  "text-diff-checker.html": { title: "Text Diff Checker | VelsTech", desc: "Compare two versions of text with added and removed lines highlighted. A simple line-based diff, no server involved." },
+  "url-encoder-decoder.html": { title: "URL Encoder / Decoder | VelsTech", desc: "Percent-encode and decode URL components with UTF-8 support. Runs entirely in your browser." },
 };
 
 const CATEGORY_META = {
@@ -34,6 +56,7 @@ const CATEGORY_META = {
 
 function getMeta(file) {
   if (STATIC_META[file]) return STATIC_META[file];
+  if (TOOLS_META[file]) return TOOLS_META[file];
   if (CATEGORY_META[file]) return CATEGORY_META[file];
   const art = ARTICLES.find((a) => a.url === file);
   if (art) return { title: `${art.title} | VelsTech`, desc: art.description };
@@ -107,6 +130,18 @@ function jsonLd(file, meta) {
       description: meta.desc,
       inLanguage: "en",
     };
+  } else if (TOOLS_META[file]) {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "@id": `${url}#webapp`,
+      name: meta.title,
+      description: meta.desc,
+      url,
+      inLanguage: "en",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "Web",
+    };
   } else {
     schema = {
       "@context": "https://schema.org",
@@ -167,7 +202,7 @@ const urls = [];
 for (const file of files) {
   if (!getMeta(file)) continue;
   const loc = file === "index.html" ? `${SITE}/` : `${SITE}/${file}`;
-  const priority = file === "index.html" ? "1.0" : file === "terms.html" || file === "privacy.html" ? "0.3" : "0.8";
+  const priority = file === "index.html" ? "1.0" : file === "terms.html" || file === "privacy.html" ? "0.3" : TOOLS_META[file] ? "0.9" : "0.8";
   urls.push({ file, loc, priority });
 }
 urls.sort((a, b) => { if (a.file === "index.html") return -1; if (b.file === "index.html") return 1; return a.file.localeCompare(b.file); });

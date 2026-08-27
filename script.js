@@ -1,5 +1,92 @@
 const root = document.documentElement;
 
+/* Amazon Associates tracking ID — ONE place to change it site-wide.
+   Every <a data-amazon="search query"> is rewritten to an Amazon.in
+   keyword link carrying this tag. */
+const AMAZON_TAG = "velstechoffl-21";
+
+/* Software / cloud / hosting affiliate referral URLs.
+   Each key matches a <a data-aff="key" href="..."> link on the site.
+   Add the referral URL you get from each program's signup; until then
+   the plain homepage href is used. Edit these values — not the HTML.
+   Order: cash-per-sale programs first (priority), then credit-based. */
+const AFFILIATE_LINKS = {
+  /* Cash-per-sale / recurring commissions (priority) */
+  hostinger: "",   // hosting · 40%+ per sale, grows with volume — https://affiliates.hostinger.com
+  nordvpn: "",     // VPN · 40–100% per sale + 30% recurring renewals — nordvpn.com/affiliate (also unlocks NordPass/NordLocker)
+  kit: "",         // email/newsletter · 50% of first 12 months + 10–20% recurring — https://kit.com/affiliates
+  brevo: "",       // email/CRM · affiliate program, reward per referred signup — brevo.com/partners
+  /* Credit-based referral programs (secondary) */
+  bitwarden: "",   // credit-based referral
+  proton: "",      // credit-based referral
+  tailscale: "",   // credit-based referral
+  digitalocean: "",// credit-based referral ($25 credit per refer)
+  runpod: "",      // credit-based referral
+  vastai: "",      // credit-based referral
+  hetzner: "",     // no public program confirmed — remove data-aff if none
+  namecheap: "",   // check current program — remove data-aff if none
+  copilot: "",     // no public program confirmed — remove data-aff if none
+};
+
+function affiliateHref(key) {
+  const url = AFFILIATE_LINKS[key];
+  return url || null;
+}
+
+/* Google AdSense — leave empty until approved. Once approved, set your
+   client ID ("ca-pub-XXXXXXXX") and slot ID; the script loads automatically
+   and a responsive ad slot is inserted into article pages. */
+const ADSENSE_CLIENT = "";
+const ADSENSE_SLOT = "";
+
+function initAdsense() {
+  if (!ADSENSE_CLIENT || !ADSENSE_SLOT) return;
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + ADSENSE_CLIENT;
+  s.crossOrigin = "anonymous";
+  document.head.appendChild(s);
+
+  const slot = document.createElement("ins");
+  slot.className = "adsbygoogle";
+  slot.style.display = "block";
+  slot.style.margin = "24px 0";
+  slot.setAttribute("data-ad-client", ADSENSE_CLIENT);
+  slot.setAttribute("data-ad-slot", ADSENSE_SLOT);
+  slot.setAttribute("data-ad-format", "auto");
+  slot.setAttribute("data-full-width-responsive", "true");
+
+  const main = document.querySelector("main");
+  if (!main) return;
+  const nav = main.querySelector(".article-nav");
+  if (nav) main.insertBefore(slot, nav);
+  else main.appendChild(slot);
+  (adsbygoogle = window.adsbygoogle || []).push({});
+}
+
+function initAmazonLinks() {
+  document.querySelectorAll("a[data-amazon]").forEach((a) => {
+    const query = a.getAttribute("data-amazon").trim();
+    if (!query) return;
+    a.href =
+      "https://www.amazon.in/s?k=" + encodeURIComponent(query) +
+      "&tag=" + encodeURIComponent(AMAZON_TAG) + "&linkCode=ll1&language=en_IN";
+    a.target = "_blank";
+    const rel = a.getAttribute("rel") ? a.getAttribute("rel").split(/\s+/) : [];
+    ["sponsored", "nofollow", "noopener"].forEach((r) => { if (!rel.includes(r)) rel.push(r); });
+    a.setAttribute("rel", rel.join(" "));
+  });
+
+  document.querySelectorAll("a[data-aff]").forEach((a) => {
+    const url = affiliateHref(a.getAttribute("data-aff"));
+    if (!url) return;
+    a.href = url;
+    a.target = "_blank";
+    a.setAttribute("rel", "sponsored nofollow noopener");
+  });
+}
+
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const fmtDate = (iso) => {
   const [y, m, d] = iso.split("-");
@@ -21,6 +108,7 @@ const PAGES = [
   { href: "security.html", label: "Security", page: "security.html" },
   { href: "tutorials.html", label: "Tutorials", page: "tutorials.html" },
   { href: "programming.html", label: "Programming", page: "programming.html" },
+  { href: "tools.html", label: "Tools", page: "tools.html" },
   { href: "tags.html", label: "Tags", page: "tags.html" },
 ];
 
@@ -222,6 +310,9 @@ const footerHTML =
   '<footer class="footer">' +
   '<nav class="footer-links">' +
   '<a href="feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' Subscribe</a>' +
+  '<a href="resources.html">Resources</a>' +
+  '<a href="advertise.html">Advertise</a>' +
+  '<a href="disclosure.html">Affiliate Disclosure</a>' +
   '<a href="terms.html">Terms</a>' +
   '<a href="privacy.html">Privacy</a>' +
   '<a href="mailto:hello@velstech.net">Contact</a>' +
@@ -292,6 +383,45 @@ function initContactForm() {
     status.hidden = false;
     btn.disabled = false;
     btn.textContent = "Send message";
+  });
+}
+
+function initNewsletter() {
+  const form = document.getElementById("newsletter-form");
+  if (!form) return;
+  const status = document.getElementById("newsletter-status");
+  const email = document.getElementById("newsletter-email");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector("button[type='submit']");
+    btn.disabled = true;
+    btn.textContent = "Subscribing…";
+    status.hidden = true;
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        form.reset();
+        status.textContent = "You're in! Watch your inbox for the next issue.";
+        status.style.color = "var(--accent)";
+      } else {
+        status.textContent = "Couldn't subscribe right now. Please email hello@velstech.net instead.";
+        status.style.color = "var(--text)";
+      }
+    } catch (err) {
+      console.error("Newsletter error:", err);
+      status.textContent = "Couldn't reach the form service. Please email hello@velstech.net instead.";
+      status.style.color = "var(--text)";
+    }
+    status.hidden = false;
+    btn.disabled = false;
+    btn.textContent = "Subscribe";
   });
 }
 
@@ -508,6 +638,7 @@ initSearch();
 initWhatsNew();
 initArticleMeta();
 initContactForm();
+initNewsletter();
 initTagsPage();
 initCopyButtons();
 addCategoryPill();
@@ -515,6 +646,8 @@ initProgressBar();
 initReveal();
 initCategoryColors();
 initHotTopic();
+initAmazonLinks();
+initAdsense();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

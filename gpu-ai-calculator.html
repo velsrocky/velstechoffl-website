@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free GPU AI performance calculator — estimate decode tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." />
+  <title>GPU AI Performance Calculator | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/gpu-ai-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/gpu-ai-calculator.html#webapp",
+  "name": "GPU AI Performance Calculator | VelsTech",
+  "description": "Estimate tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU.",
+  "url": "https://velstech.net/gpu-ai-calculator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/gpu-ai-calculator.html" />
+  <meta property="og:title" content="GPU AI Performance Calculator | VelsTech" />
+  <meta property="og:description" content="Estimate tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GPU AI Performance Calculator | VelsTech" />
+  <meta name="twitter:description" content="Estimate tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / GPU AI Performance</p>
+    <h1 class="title">GPU AI Performance Calculator</h1>
+    <div class="meta">
+      <span>Estimate tokens/sec · time to first token · generation speed</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Pick a GPU and a model, and this estimates how fast local inference will actually
+        feel: <strong>decode</strong> speed (tokens per second while the model answers —
+        this is memory-bandwidth bound) and <strong>prompt processing</strong> speed
+        (compute bound). Estimates only — real numbers depend on your engine, drivers, and
+        settings.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>GPU</span>
+            <select id="gpu" class="input"></select>
+          </label>
+
+          <div id="custom-gpu" class="calc-subgrid" hidden>
+            <label class="field">
+              <span>VRAM (GB)</span>
+              <input id="c-vram" class="input" type="number" min="1" step="1" value="12" />
+            </label>
+            <label class="field">
+              <span>FP16 TFLOPS</span>
+              <input id="c-tf" class="input" type="number" min="0.1" step="0.1" value="22" />
+            </label>
+            <label class="field">
+              <span>Memory bandwidth (GB/s)</span>
+              <input id="c-bw" class="input" type="number" min="1" step="1" value="400" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Model parameters (B)</span>
+            <input id="params" class="input" type="number" min="0.5" step="0.5" value="8" list="params-list" />
+            <datalist id="params-list">
+              <option value="3"></option><option value="7"></option><option value="8"></option>
+              <option value="9"></option><option value="14"></option><option value="27"></option>
+              <option value="32"></option><option value="70"></option>
+            </datalist>
+          </label>
+
+          <label class="field">
+            <span>Quantization</span>
+            <select id="quant" class="input"></select>
+          </label>
+
+          <label class="field">
+            <span>Context length (tokens)</span>
+            <input id="ctx" class="input" type="number" min="512" max="262144" step="512" value="8192" />
+          </label>
+
+          <label class="field">
+            <span>Prompt length (tokens)</span>
+            <input id="prompt" class="input" type="number" min="1" step="1" value="512" />
+          </label>
+
+          <label class="field">
+            <span>Answer length (tokens)</span>
+            <input id="answer" class="input" type="number" min="1" step="1" value="512" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>Model size at this quant</span><strong id="r-size">—</strong></div>
+            <div class="result-row"><span>Decode speed</span><strong id="r-decode">—</strong></div>
+            <div class="result-row"><span>Prompt processing speed</span><strong id="r-prefill">—</strong></div>
+            <div class="result-row"><span>Time to first token</span><strong id="r-ttft">—</strong></div>
+            <div class="result-row total"><span>Time to generate answer</span><strong id="r-gen">—</strong></div>
+          </div>
+          <p class="tool-note">
+            Decode assumes weights + KV cache stay in VRAM and uses ~80% of memory bandwidth;
+            prompt processing assumes ~55% compute efficiency. MoE models compute on their
+            active parameters, so real prefill can be faster than shown.
+          </p>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="llm-vram-calculator.html">LLM VRAM Calculator — does it even fit?</a></li>
+        <li><a href="cpu-vs-gpu.html">CPU vs GPU: what does each one do?</a></li>
+        <li><a href="local-vs-cloud-ai.html">Local vs cloud AI: which should you choose?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="hardware.html">Hardware notes</a>
+    </div>
+  </main>
+
+  <script>
+    const GPUS = [
+      { name: "RTX 3060 12GB", vram: 12, tf: 12.9, bw: 360 },
+      { name: "RTX 4060 8GB", vram: 8, tf: 15.0, bw: 272 },
+      { name: "RTX 4060 Ti 16GB", vram: 16, tf: 22.1, bw: 288 },
+      { name: "RTX 4070 12GB", vram: 12, tf: 20.1, bw: 504 },
+      { name: "RTX 4070 Super 12GB", vram: 12, tf: 28.2, bw: 504 },
+      { name: "RTX 4070 Ti Super 16GB", vram: 16, tf: 44.3, bw: 672 },
+      { name: "RTX 4080 Super 16GB", vram: 16, tf: 52.5, bw: 736 },
+      { name: "RTX 4090 24GB", vram: 24, tf: 82.6, bw: 1008 },
+      { name: "RTX 5080 16GB", vram: 16, tf: 56.1, bw: 960 },
+      { name: "RTX 5090 32GB", vram: 32, tf: 104.8, bw: 1792 },
+      { name: "RX 7600 8GB", vram: 8, tf: 21.4, bw: 288 },
+      { name: "RX 7700 XT 12GB", vram: 12, tf: 36.9, bw: 432 },
+      { name: "RX 7800 XT 16GB", vram: 16, tf: 36.7, bw: 624 },
+      { name: "RX 9070 XT 16GB", vram: 16, tf: 48.7, bw: 644 },
+      { name: "RX 9080 XT 24GB", vram: 24, tf: 60.3, bw: 900 },
+      { name: "RX 7900 XTX 24GB", vram: 24, tf: 61.4, bw: 960 },
+      { name: "RX 6900 XT 16GB", vram: 16, tf: 23.0, bw: 512 },
+      { name: "RX 6800M 12GB", vram: 12, tf: 22.8, bw: 384 },
+      { name: "Custom GPU…", vram: 12, tf: 22.0, bw: 400 },
+    ];
+
+    const QUANTS = [
+      { name: "FP16 / BF16", bytes: 2.0 },
+      { name: "Q8_0 (≈8-bit)", bytes: 1.0625 },
+      { name: "Q6_K (≈6.5-bit)", bytes: 0.8125 },
+      { name: "Q5_K_M (≈5.5-bit)", bytes: 0.66 },
+      { name: "Q5_0", bytes: 0.65 },
+      { name: "Q4_K_M (≈4.8-bit)", bytes: 0.61 },
+      { name: "Q4_0", bytes: 0.56 },
+      { name: "INT4 (bitsandbytes)", bytes: 0.5 },
+    ];
+
+    const gpuSel = document.getElementById("gpu");
+    const quantSel = document.getElementById("quant");
+    GPUS.forEach((g, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = g.name;
+      gpuSel.appendChild(o);
+    });
+    QUANTS.forEach((q, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = q.name;
+      quantSel.appendChild(o);
+    });
+
+    const customBox = document.getElementById("custom-gpu");
+    function isCustom() {
+      return gpuSel.value === String(GPUS.length - 1);
+    }
+    function currentGpu() {
+      if (isCustom()) {
+        return {
+          vram: parseFloat(document.getElementById("c-vram").value) || 1,
+          tf: parseFloat(document.getElementById("c-tf").value) || 1,
+          bw: parseFloat(document.getElementById("c-bw").value) || 1,
+        };
+      }
+      return GPUS[gpuSel.value];
+    }
+
+    const giB = 1073741824;
+    const fmtGB = (gb) => (gb >= 1 ? gb.toFixed(1) + " GB" : Math.round(gb * 1024) + " MB");
+    const fmtSec = (s) => {
+      if (s < 0.001) return (s * 1000).toFixed(0) + " ms";
+      if (s < 60) return s.toFixed(1) + " s";
+      const m = Math.floor(s / 60);
+      const sec = Math.round(s % 60);
+      return m + " min " + sec + " s";
+    };
+
+    function calc() {
+      const g = currentGpu();
+      const q = QUANTS[quantSel.value];
+      const params = parseFloat(document.getElementById("params").value) || 1;
+      const ctx = Math.max(1, parseInt(document.getElementById("ctx").value, 10) || 8192);
+      const prompt = Math.max(1, parseInt(document.getElementById("prompt").value, 10) || 512);
+      const answer = Math.max(1, parseInt(document.getElementById("answer").value, 10) || 512);
+
+      const weights = (params * 1e9 * q.bytes) / giB;
+      const kvPerTokBytes = params * 16384; // rough 8B-style arch (~128 KB/token per 8B params)
+      const kvCache = (kvPerTokBytes * ctx) / giB;
+      const total = weights + kvCache;
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-size").textContent = fmtGB(weights);
+
+      const verdict = document.getElementById("verdict");
+      if (total > g.vram) {
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>Won't fully fit in VRAM.</strong> Model + KV cache ≈ " + fmtGB(total) + " vs " + g.vram + " GB available. Use a smaller quant, shorter context, or a higher-VRAM GPU.";
+      } else {
+        verdict.className = "result-verdict verdict-ok";
+        verdict.innerHTML = "✅ <strong>Fits in VRAM.</strong> Model + KV cache ≈ " + fmtGB(total) + " of " + g.vram + " GB — numbers below assume full GPU offload.";
+      }
+
+      const bytesPerTok = weights * giB + kvPerTokBytes;
+      const decodeTokPerSec = (g.bw * 1e9 * 0.8) / bytesPerTok;
+      const prefillTokPerSec = (g.tf * 1e12 * 0.55) / (2 * params * 1e9);
+
+      document.getElementById("r-decode").textContent = decodeTokPerSec.toFixed(1) + " tok/s";
+      document.getElementById("r-prefill").textContent = prefillTokPerSec.toFixed(0) + " tok/s";
+
+      const ttft = prompt / prefillTokPerSec;
+      const genTime = answer / decodeTokPerSec;
+      document.getElementById("r-ttft").textContent = fmtSec(ttft);
+      document.getElementById("r-gen").textContent = fmtSec(genTime);
+    }
+
+    gpuSel.addEventListener("change", () => {
+      customBox.hidden = !isCustom();
+      calc();
+    });
+    ["c-vram", "c-tf", "c-bw", "params", "ctx", "prompt", "answer", quantSel.id]
+      .forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", calc);
+      });
+
+    calc();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

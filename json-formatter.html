@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free JSON formatter and validator — paste JSON to format, minify, validate, and check size. Runs entirely in your browser." />
+  <title>JSON Formatter &amp; Validator | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/json-formatter.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/json-formatter.html#webapp",
+  "name": "JSON Formatter & Validator | VelsTech",
+  "description": "Format, minify, validate, and check the size of JSON with syntax highlighting. Runs entirely in your browser.",
+  "url": "https://velstech.net/json-formatter.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/json-formatter.html" />
+  <meta property="og:title" content="JSON Formatter &amp; Validator | VelsTech" />
+  <meta property="og:description" content="Format, minify, validate, and check the size of JSON with syntax highlighting. Runs entirely in your browser." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JSON Formatter &amp; Validator | VelsTech" />
+  <meta name="twitter:description" content="Format, minify, validate, and check the size of JSON with syntax highlighting. Runs entirely in your browser." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / JSON Formatter</p>
+    <h1 class="title">JSON Formatter &amp; Validator</h1>
+    <div class="meta">
+      <span>Format · minify · validate · check size</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Paste any JSON and this formats it with syntax highlighting, validates it, and tells
+        you its size. Useful when you're debugging an API response or tidying up a config file.
+        Nothing is sent anywhere — everything runs in your browser.
+      </p>
+
+      <div class="calc">
+        <textarea id="input" class="tool-textarea" rows="10" spellcheck="false" placeholder='Paste JSON here… e.g. {"hello": "world", "count": 42}'></textarea>
+
+        <div class="tool-btn-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn btn-primary" id="btn-format" type="button">Format</button>
+          <button class="btn btn-ghost" id="btn-minify" type="button">Minify</button>
+          <button class="btn btn-ghost" id="btn-clear" type="button">Clear</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="tool-out" id="output" dir="ltr"></div>
+          <div class="tool-info" id="info"></div>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="html-css-js.html">HTML, CSS, and JavaScript: what does each one do?</a></li>
+        <li><a href="how-internet-works.html">How does the internet actually work?</a></li>
+        <li><a href="jwt-decoder.html">JWT Decoder — inspect tokens</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+    const verdict = document.getElementById("verdict");
+    const info = document.getElementById("info");
+    const results = document.getElementById("results");
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    function highlight(json) {
+      let out = "", i = 0;
+      while (i < json.length) {
+        const c = json[i];
+        if (c === "\"") {
+          let j = i + 1, token = "\"", backslash = false;
+          while (j < json.length) {
+            const d = json[j];
+            token += d;
+            if (backslash) backslash = false;
+            else if (d === "\\") backslash = true;
+            else if (d === "\"") { j++; break; }
+            j++;
+          }
+          let k = j;
+          while (k < json.length && /\s/.test(json[k])) k++;
+          const cls = json[k] === ":" ? "json-key" : "json-string";
+          out += '<span class="' + cls + '">' + esc(token) + "</span>";
+          i = j;
+        } else if (/[0-9-]/.test(c)) {
+          let j = i, token = "";
+          while (j < json.length && /[0-9eE+\-.]/.test(json[j])) { token += json[j]; j++; }
+          out += '<span class="json-number">' + esc(token) + "</span>";
+          i = j;
+        } else if (/[a-zA-Z]/.test(c)) {
+          let j = i, token = "";
+          while (j < json.length && /[a-zA-Z]/.test(json[j])) { token += json[j]; j++; }
+          const cls = token === "true" || token === "false" ? "json-bool" : token === "null" ? "json-null" : "";
+          out += cls ? '<span class="' + cls + '">' + token + "</span>" : token;
+          i = j;
+        } else {
+          out += esc(c);
+          i++;
+        }
+      }
+      return out;
+    }
+
+    function bytes(str) {
+      return new TextEncoder().encode(str).length;
+    }
+
+    function lineCol(json, pos) {
+      const before = json.slice(0, pos);
+      const lines = before.split("\n");
+      return { line: lines.length, col: lines[lines.length - 1].length + 1 };
+    }
+
+    function process(mode) {
+      const raw = input.value;
+      if (!raw.trim()) { results.hidden = true; return; }
+      input.classList.remove("error");
+
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (e) {
+        results.hidden = false;
+        verdict.className = "result-verdict verdict-no";
+        let msg = e.message;
+        const m = msg.match(/position\s+(\d+)/);
+        if (m) {
+          const lc = lineCol(raw, parseInt(m[1], 10));
+          msg = "Invalid JSON near line " + lc.line + ", column " + lc.col + ".";
+        }
+        verdict.innerHTML = "❌ <strong>Invalid JSON.</strong> " + esc(msg);
+        output.innerHTML = "";
+        info.textContent = raw.length + " chars · " + bytes(raw) + " bytes";
+        input.classList.add("error");
+        return;
+      }
+
+      const text = mode === "minify" ? JSON.stringify(parsed) : JSON.stringify(parsed, null, 2);
+      results.hidden = false;
+      verdict.className = "result-verdict verdict-ok";
+      verdict.innerHTML = "✅ <strong>Valid JSON.</strong>";
+      output.innerHTML = highlight(text);
+      info.textContent = (mode === "minify" ? "Minified · " : "Formatted · ") + text.length + " chars · " + bytes(text) + " bytes";
+    }
+
+    document.getElementById("btn-format").addEventListener("click", () => process("format"));
+    document.getElementById("btn-minify").addEventListener("click", () => process("minify"));
+    document.getElementById("btn-clear").addEventListener("click", () => {
+      input.value = "";
+      input.classList.remove("error");
+      results.hidden = true;
+    });
+
+    input.value = '{\n  "site": "velstech.net",\n  "tools": 7,\n  "ai_assisted": true\n}';
+    process("format");
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

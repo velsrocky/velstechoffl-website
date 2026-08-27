@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free base64 encoder and decoder — convert text to and from base64 with proper UTF-8 support. Runs entirely in your browser." />
+  <title>Base64 Encoder / Decoder | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/base64-encoder-decoder.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/base64-encoder-decoder.html#webapp",
+  "name": "Base64 Encoder / Decoder | VelsTech",
+  "description": "Convert text to and from base64 with proper UTF-8 support. Runs entirely in your browser.",
+  "url": "https://velstech.net/base64-encoder-decoder.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/base64-encoder-decoder.html" />
+  <meta property="og:title" content="Base64 Encoder / Decoder | VelsTech" />
+  <meta property="og:description" content="Convert text to and from base64 with proper UTF-8 support. Runs entirely in your browser." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Base64 Encoder / Decoder | VelsTech" />
+  <meta name="twitter:description" content="Convert text to and from base64 with proper UTF-8 support. Runs entirely in your browser." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Base64 Encoder / Decoder</p>
+    <h1 class="title">Base64 Encoder / Decoder</h1>
+    <div class="meta">
+      <span>Encode or decode text to/from base64 · UTF-8 safe</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Convert text to base64 (for embedding small data in configs, emails, or URLs) or
+        decode base64 back to readable text. Handles UTF-8 characters properly, so emoji and
+        non-English text survive the round trip.
+      </p>
+
+      <div class="calc">
+        <div class="tool-radio-row">
+          <label><input type="radio" name="mode" value="encode" checked /> Encode (text → base64)</label>
+          <label><input type="radio" name="mode" value="decode" /> Decode (base64 → text)</label>
+        </div>
+
+        <label class="field" style="margin-top:14px">
+          <span>Input</span>
+          <textarea id="input" class="tool-textarea" rows="6" spellcheck="false"></textarea>
+        </label>
+
+        <label class="field" style="margin-top:14px">
+          <span>Output</span>
+          <textarea id="output" class="tool-textarea" rows="6" spellcheck="false" readonly></textarea>
+        </label>
+
+        <div class="tool-btn-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn btn-primary" id="btn-copy" type="button">Copy output</button>
+          <button class="btn btn-ghost" id="btn-swap" type="button">Swap input ↔ output</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="jwt-decoder.html">JWT Decoder — inspect tokens</a></li>
+        <li><a href="terminal-commands.html">Essential terminal commands everyone should know</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+    const verdict = document.getElementById("verdict");
+    const results = document.getElementById("results");
+    const encode = document.querySelector('input[name="mode"][value="encode"]');
+    const decode = document.querySelector('input[name="mode"][value="decode"]');
+
+    function mode() { return encode.checked ? "encode" : "decode"; }
+
+    function render() {
+      const raw = input.value;
+      if (!raw) { results.hidden = true; output.value = ""; return; }
+      results.hidden = false;
+
+      try {
+        if (mode() === "encode") {
+          const bytes = new TextEncoder().encode(raw);
+          let bin = "";
+          for (const b of bytes) bin += String.fromCharCode(b);
+          output.value = btoa(bin);
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Encoded " + bytes.length + " bytes → " + output.value.length + " base64 chars.";
+        } else {
+          const bytes = Uint8Array.from(atob(raw.replace(/\s/g, "")), (c) => c.charCodeAt(0));
+          output.value = new TextDecoder().decode(bytes);
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Decoded " + raw.length + " base64 chars → " + output.value.length + " chars of text.";
+        }
+      } catch (e) {
+        output.value = "";
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ " + (mode() === "decode"
+          ? "<strong>Invalid base64 input.</strong> Check for missing characters or whitespace."
+          : "<strong>Could not encode.</strong> " + esc(e.message));
+      }
+    }
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    [encode, decode].forEach((r) => r.addEventListener("change", render));
+    input.addEventListener("input", render);
+
+    document.getElementById("btn-copy").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(output.value); } catch {
+        output.select(); document.execCommand("copy");
+      }
+      const btn = document.getElementById("btn-copy");
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = "Copy output"; }, 1500);
+    });
+
+    document.getElementById("btn-swap").addEventListener("click", () => {
+      const tmp = input.value;
+      input.value = output.value;
+      output.value = tmp;
+      const wasEncode = encode.checked;
+      encode.checked = !wasEncode;
+      decode.checked = wasEncode;
+      render();
+    });
+
+    input.value = "Hello VelsTech! 🚀";
+    render();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

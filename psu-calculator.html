@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free PC power supply calculator — estimate peak power draw for your build and get a recommended PSU wattage with headroom." />
+  <title>PC Power Supply Calculator | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/psu-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/psu-calculator.html#webapp",
+  "name": "PC Power Supply Calculator | VelsTech",
+  "description": "Estimate your build's peak power draw and get a recommended PSU wattage with headroom.",
+  "url": "https://velstech.net/psu-calculator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/psu-calculator.html" />
+  <meta property="og:title" content="PC Power Supply Calculator | VelsTech" />
+  <meta property="og:description" content="Estimate your build's peak power draw and get a recommended PSU wattage with headroom." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PC Power Supply Calculator | VelsTech" />
+  <meta name="twitter:description" content="Estimate your build's peak power draw and get a recommended PSU wattage with headroom." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / PSU Calculator</p>
+    <h1 class="title">PC Power Supply Calculator</h1>
+    <div class="meta">
+      <span>Estimate peak draw · get a recommended PSU wattage</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Add your parts and this estimates peak power draw for the whole system, then
+        recommends a power supply with comfortable headroom. Use it before you buy — a PSU
+        that's too small is the #1 cause of random shutdowns under load.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>CPU</span>
+            <select id="cpu" class="input"></select>
+          </label>
+
+          <div id="custom-cpu" class="calc-subgrid" hidden>
+            <label class="field">
+              <span>CPU TDP (W)</span>
+              <input id="c-cpu-w" class="input" type="number" min="1" step="1" value="100" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>GPU</span>
+            <select id="gpu" class="input"></select>
+          </label>
+
+          <div id="custom-gpu" class="calc-subgrid" hidden>
+            <label class="field">
+              <span>GPU TDP (W)</span>
+              <input id="c-gpu-w" class="input" type="number" min="0" step="1" value="250" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>RAM sticks</span>
+            <input id="ram" class="input" type="number" min="0" max="8" step="1" value="2" />
+          </label>
+
+          <label class="field">
+            <span>M.2 SSDs</span>
+            <input id="ssd" class="input" type="number" min="0" max="6" step="1" value="1" />
+          </label>
+
+          <label class="field">
+            <span>HDDs</span>
+            <input id="hdd" class="input" type="number" min="0" max="8" step="1" value="0" />
+          </label>
+
+          <label class="field">
+            <span>Case fans</span>
+            <input id="fans" class="input" type="number" min="0" max="12" step="1" value="3" />
+          </label>
+
+          <label class="field">
+            <span>Liquid cooler (AIO)</span>
+            <select id="aio" class="input">
+              <option value="0">No</option>
+              <option value="8" selected>Yes (+8 W pump)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>RGB strips</span>
+            <input id="rgb" class="input" type="number" min="0" max="12" step="1" value="0" />
+          </label>
+
+          <label class="field">
+            <span>USB devices</span>
+            <input id="usb" class="input" type="number" min="0" max="20" step="1" value="3" />
+          </label>
+
+          <label class="field">
+            <span>PSU condition</span>
+            <select id="age" class="input">
+              <option value="1" selected>New / high quality</option>
+              <option value="1.1">A few years old</option>
+              <option value="1.25">Older / budget</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>Estimated peak draw</span><strong id="r-peak">—</strong></div>
+            <div class="result-row total"><span>Recommended PSU</span><strong id="r-psu">—</strong></div>
+            <div class="result-row"><span>Sustained load on that PSU</span><strong id="r-sustained">—</strong></div>
+          </div>
+          <p class="tool-note">
+            Estimates use typical component power draw, not worst-case transient spikes —
+            cards like the RTX 4090/5090 can momentarily spike well above their TDP, so when
+            in doubt, go one size up.
+          </p>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="first-pc-build.html">How to choose parts for your first PC build</a></li>
+        <li><a href="cpu-vs-gpu.html">CPU vs GPU: what does each one do?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="hardware.html">Hardware notes</a>
+    </div>
+  </main>
+
+  <script>
+    const CPUS = [
+      { name: "Intel Core i3 / AMD Ryzen 3", w: 65 },
+      { name: "Intel Core i5 / AMD Ryzen 5", w: 65 },
+      { name: "Intel Core i5 K / Ryzen 5 X", w: 105 },
+      { name: "Intel Core i7 / AMD Ryzen 7", w: 125 },
+      { name: "Intel Core i9 / AMD Ryzen 9", w: 170 },
+      { name: "Threadripper / Xeon", w: 280 },
+      { name: "Custom CPU…", w: 100 },
+    ];
+
+    const GPUS = [
+      { name: "Integrated graphics only", w: 0 },
+      { name: "RTX 4060", w: 115 },
+      { name: "RTX 4070", w: 200 },
+      { name: "RTX 4070 Super", w: 220 },
+      { name: "RTX 4080 Super", w: 320 },
+      { name: "RTX 4090", w: 450 },
+      { name: "RTX 5080", w: 360 },
+      { name: "RTX 5090", w: 575 },
+      { name: "RX 7600", w: 165 },
+      { name: "RX 7700 XT", w: 245 },
+      { name: "RX 7800 XT", w: 263 },
+      { name: "RX 9070 XT", w: 304 },
+      { name: "RX 9080 XT", w: 350 },
+      { name: "RX 7900 XTX", w: 355 },
+      { name: "RX 6800M (mobile card)", w: 145 },
+      { name: "Custom GPU…", w: 250 },
+    ];
+
+    const cpuSel = document.getElementById("cpu");
+    const gpuSel = document.getElementById("gpu");
+    const cpus = CPUS.length, gpus = GPUS.length;
+    CPUS.forEach((c, i) => {
+      const o = document.createElement("option");
+      o.value = i; o.textContent = c.name; cpuSel.appendChild(o);
+    });
+    GPUS.forEach((g, i) => {
+      const o = document.createElement("option");
+      o.value = i; o.textContent = g.name; gpuSel.appendChild(o);
+    });
+
+    const cpuCustom = document.getElementById("custom-cpu");
+    const gpuCustom = document.getElementById("custom-gpu");
+    function isCustom(id) { return id.value === String(id === cpuSel ? cpus - 1 : gpus - 1); }
+
+    function calc() {
+      const cpuW = isCustom(cpuSel)
+        ? parseFloat(document.getElementById("c-cpu-w").value) || 1
+        : CPUS[cpuSel.value].w;
+      const gpuW = isCustom(gpuSel)
+        ? parseFloat(document.getElementById("c-gpu-w").value) || 0
+        : GPUS[gpuSel.value].w;
+
+      const ramW = (parseInt(document.getElementById("ram").value, 10) || 0) * 3;
+      const ssdW = (parseInt(document.getElementById("ssd").value, 10) || 0) * 3;
+      const hddW = (parseInt(document.getElementById("hdd").value, 10) || 0) * 8;
+      const fanW = (parseInt(document.getElementById("fans").value, 10) || 0) * 3;
+      const aioW = parseInt(document.getElementById("aio").value, 10) || 0;
+      const rgbW = (parseInt(document.getElementById("rgb").value, 10) || 0) * 4;
+      const usbW = (parseInt(document.getElementById("usb").value, 10) || 0) * 5;
+      const age = parseFloat(document.getElementById("age").value) || 1;
+
+      const peak = (cpuW + gpuW + ramW + ssdW + hddW + fanW + aioW + rgbW + usbW) * age;
+      const recommended = Math.ceil(peak * 1.3 / 50) * 50;
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-peak").textContent = Math.round(peak) + " W";
+      document.getElementById("r-psu").textContent = recommended + " W";
+      document.getElementById("r-sustained").textContent = Math.round(peak / recommended * 100) + "% of rated power";
+
+      const verdict = document.getElementById("verdict");
+      if (gpuW >= 400) {
+        verdict.className = "result-verdict verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>High-end GPU detected.</strong> For a " + gpuW + " W card, a " + recommended + " W unit is the minimum — consider going one tier higher (850 W+) for transient spikes.";
+      } else {
+        verdict.className = "result-verdict verdict-ok";
+        verdict.innerHTML = "✅ <strong>A " + recommended + " W PSU (80 Plus Bronze or better) is a comfortable fit</strong> for this build with ~30% headroom.";
+      }
+    }
+
+    cpuSel.addEventListener("change", () => { cpuCustom.hidden = !isCustom(cpuSel); calc(); });
+    gpuSel.addEventListener("change", () => { gpuCustom.hidden = !isCustom(gpuSel); calc(); });
+    ["c-cpu-w", "c-gpu-w", "ram", "ssd", "hdd", "fans", "aio", "rgb", "usb", "age"]
+      .forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", calc);
+      });
+
+    calc();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

@@ -5,9 +5,36 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-26T23:53:08.678Z</updated>
+  <updated>2026-08-27T14:52:08.096Z</updated>
   <author><name>VelsTech</name></author>
 
+  <entry>
+    <title>Best GPU for running LLMs locally (2026)</title>
+    <link rel="alternate" href="https://velstech.net/best-gpu-for-local-llm.html" />
+    <id>https://velstech.net/best-gpu-for-local-llm.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="Hardware" />
+    <summary>The best GPUs for running LLMs locally in 2026 — RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.</summary>
+  </entry>
+  <entry>
+    <title>How much VRAM do you need for 7B, 14B, and 32B models?</title>
+    <link rel="alternate" href="https://velstech.net/how-much-vram-for-llm.html" />
+    <id>https://velstech.net/how-much-vram-for-llm.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table.</summary>
+  </entry>
+  <entry>
+    <title>Best GPU for AI under ₹50,000 (India, 2026)</title>
+    <link rel="alternate" href="https://velstech.net/best-gpu-ai-under-50000.html" />
+    <id>https://velstech.net/best-gpu-ai-under-50000.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="Hardware" />
+    <summary>The best GPUs for AI under ₹50,000 in India — which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.</summary>
+  </entry>
   <entry>
     <title>Xiaomi AI Cube: the mini desktop built for local AI</title>
     <link rel="alternate" href="https://velstech.net/xiaomi-ai-cube.html" />

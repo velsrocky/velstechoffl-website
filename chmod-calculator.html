@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free chmod calculator — pick read/write/execute permissions for owner, group, and others and instantly get the numeric mode (like 755) and the command to run." />
+  <title>chmod Calculator | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/chmod-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/chmod-calculator.html#webapp",
+  "name": "chmod Calculator | VelsTech",
+  "description": "Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run.",
+  "url": "https://velstech.net/chmod-calculator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/chmod-calculator.html" />
+  <meta property="og:title" content="chmod Calculator | VelsTech" />
+  <meta property="og:description" content="Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="chmod Calculator | VelsTech" />
+  <meta name="twitter:description" content="Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / chmod Calculator</p>
+    <h1 class="title">chmod Calculator</h1>
+    <div class="meta">
+      <span>Numeric + symbolic permissions · ready-to-run commands</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Toggle read / write / execute for owner, group, and others and this instantly shows
+        the <strong>numeric mode</strong> (like <code>755</code>), the <strong>symbolic
+        form</strong>, and the exact <code>chmod</code> command to copy. No more memorizing
+        the number table.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <div class="preset-row">
+            <button class="preset-chip" data-bits="7,5,5">755</button>
+            <button class="preset-chip" data-bits="6,4,4">644</button>
+            <button class="preset-chip" data-bits="6,0,0">600</button>
+            <button class="preset-chip" data-bits="7,0,0">700</button>
+            <button class="preset-chip" data-bits="7,7,7">777</button>
+            <button class="preset-chip" data-bits="4,0,0">400</button>
+          </div>
+
+          <fieldset class="field perm-group">
+            <legend>Owner (u)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="4" /> read (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="2" /> write (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="1" /> execute (1)</label>
+          </fieldset>
+          <fieldset class="field perm-group">
+            <legend>Group (g)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="4" /> read (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="2" /> write (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="1" /> execute (1)</label>
+          </fieldset>
+          <fieldset class="field perm-group">
+            <legend>Others (o)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="4" /> read (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="2" /> write (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="1" /> execute (1)</label>
+          </fieldset>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>Numeric mode</span><strong id="r-num">—</strong></div>
+            <div class="result-row"><span>Symbolic form</span><strong id="r-sym">—</strong></div>
+            <div class="result-row"><span>Owner / Group / Others</span><strong id="r-desc">—</strong></div>
+            <div class="result-row total"><span>Command (file)</span><strong id="r-cmd-file">—</strong></div>
+            <div class="result-row"><span>Command (directory, recursive)</span><strong id="r-cmd-dir">—</strong></div>
+          </div>
+          <p class="tool-note">
+            Special bits (setuid <code>4</code>, setgid <code>2</code>, sticky <code>1</code>)
+            can be prepended, e.g. <code>4755</code> for setuid — rarely needed for normal use.
+          </p>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="terminal-commands.html">Essential terminal commands everyone should know</a></li>
+        <li><a href="linux-beginners.html">Linux for beginners: getting started</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="os.html">Operating system notes</a>
+    </div>
+  </main>
+
+  <script>
+    const SYM = {
+      owner: "u", group: "g", others: "o",
+    };
+    const bits = { owner: 0, group: 0, others: 0 };
+    const checked = { owner: [false, false, false], group: [false, false, false], others: [false, false, false] };
+    const R = 4, W = 2, X = 1;
+
+    function value(group, v) {
+      const order = v === R ? 0 : v === W ? 1 : 2;
+      return checked[group][order];
+    }
+
+    function applyBits(o, g, o2) {
+      [[o, "owner"], [g, "group"], [o2, "others"]].forEach(([num, grp]) => {
+        checked[grp] = [!!(num & R), !!(num & W), !!(num & X)];
+      });
+      render();
+    }
+
+    function render() {
+      ["owner", "group", "others"].forEach((grp) => {
+        const sum = (checked[grp][0] ? R : 0) + (checked[grp][1] ? W : 0) + (checked[grp][2] ? X : 0);
+        bits[grp] = sum;
+        document.querySelectorAll('input[data-g="' + grp + '"]').forEach((cb) => {
+          cb.checked = checked[grp][cb.dataset.v === "4" ? 0 : cb.dataset.v === "2" ? 1 : 2];
+        });
+      });
+
+      const num = "" + bits.owner + bits.group + bits.others;
+      const sym = ["owner", "group", "others"]
+        .map((grp) => SYM[grp] + "=" + (checked[grp][0] ? "r" : "") + (checked[grp][1] ? "w" : "") + (checked[grp][2] ? "x" : "") + (bits[grp] ? "" : ""))
+        .join(",");
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-num").textContent = num;
+      document.getElementById("r-sym").textContent = "chmod " + sym;
+      document.getElementById("r-desc").textContent =
+        bits.owner + (bits.owner ? "" : "") + " / " + bits.group + " / " + bits.others;
+      document.getElementById("r-cmd-file").textContent = "chmod " + num + " file";
+      document.getElementById("r-cmd-dir").textContent = "chmod -R " + num + " directory/";
+
+      const verdict = document.getElementById("verdict");
+      verdict.className = "result-verdict";
+      if (bits.others === 7 || bits.others === 6) {
+        verdict.className += " verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>" + num + " gives " + (bits.others === 7 ? "full read+write+execute" : "read+write") + " to everyone.</strong> For public directories that's often intentional — just make sure you mean it.";
+      } else if (bits.owner === 0) {
+        verdict.className += " verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>Owner has no permissions.</strong> You may lock yourself out — this is usually a mistake.";
+      } else {
+        verdict.className += " verdict-ok";
+        verdict.innerHTML = "✅ <strong>" + num + " is set.</strong> Owner: " + describe(bits.owner) + ", group: " + describe(bits.group) + ", others: " + describe(bits.others) + ".";
+      }
+    }
+
+    function describe(n) {
+      if (n === 0) return "no access";
+      const parts = [];
+      if (n & R) parts.push("read");
+      if (n & W) parts.push("write");
+      if (n & X) parts.push("execute");
+      return parts.join("+");
+    }
+
+    document.querySelectorAll('input[data-g]').forEach((cb) => {
+      cb.addEventListener("change", () => {
+        const grp = cb.dataset.g;
+        const idx = cb.dataset.v === "4" ? 0 : cb.dataset.v === "2" ? 1 : 2;
+        checked[grp][idx] = cb.checked;
+        render();
+      });
+    });
+
+    document.querySelectorAll(".preset-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const [o, g, o2] = chip.dataset.bits.split(",").map(Number);
+        applyBits(o, g, o2);
+      });
+    });
+
+    applyBits(7, 5, 5);
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

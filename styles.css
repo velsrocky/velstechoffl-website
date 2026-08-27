@@ -1145,3 +1145,451 @@ a.tag:hover {
   color: var(--muted);
   font-size: 0.95rem;
 }
+
+/* ===== Tools ===== */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.tool-card {
+  display: block;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  color: var(--text);
+  transition: transform 0.15s, border-color 0.2s;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.tool-card-icon {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.tool-card h3 {
+  margin: 12px 0 8px;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.tool-card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.tool-card-cta {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Calculator layout */
+.calc {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.calc-subgrid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  padding: 14px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.calc-results {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.result-verdict {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  line-height: 1.55;
+}
+
+.verdict-ok {
+  background: rgba(61, 220, 151, 0.12);
+  border: 1px solid rgba(61, 220, 151, 0.4);
+}
+
+.verdict-warn {
+  background: rgba(251, 146, 60, 0.12);
+  border: 1px solid rgba(251, 146, 60, 0.4);
+}
+
+.verdict-no {
+  background: rgba(244, 114, 182, 0.12);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+}
+
+.result-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.result-row span {
+  color: var(--muted);
+}
+
+.result-row strong {
+  color: var(--text);
+  text-align: right;
+}
+
+.result-row.total {
+  border-bottom: none;
+  font-size: 1.05rem;
+}
+
+.result-row.total strong {
+  color: var(--accent);
+}
+
+.tool-note {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* In-article tool callout */
+.tool-callout {
+  margin: 24px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--bg-soft);
+}
+
+.tool-callout .tool-callout-title {
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.tool-callout p {
+  margin: 4px 0 10px;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.tool-callout .btn {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+/* Tool list editors (Docker compose, env vars, ports…) */
+.kv-list {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kv-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.kv-row .input {
+  flex: 1;
+}
+
+.kv-remove {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.kv-remove:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.add-btn {
+  justify-self: start;
+  margin-top: 2px;
+}
+
+.gen-out {
+  margin: 18px 0 0;
+}
+
+.gen-out pre {
+  margin: 0;
+}
+
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  grid-column: 1 / -1;
+}
+
+.preset-chip {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.preset-chip:hover,
+.preset-chip.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Permission editor (chmod) */
+.perm-group {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--bg);
+}
+
+.perm-group legend {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 0 6px;
+}
+
+.perm-bit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.perm-bit input {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+}
+
+/* Textarea-based tools (JSON, regex, etc.) */
+.tool-textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+
+.tool-textarea:focus {
+  border-color: var(--accent);
+}
+
+.tool-textarea.error {
+  border-color: rgba(244, 114, 182, 0.5);
+}
+
+.tool-out {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  overflow-x: auto;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.tool-out .json-key { color: var(--accent); }
+.tool-out .json-string { color: #3ddc97; }
+.tool-out .json-number { color: #fb923c; }
+.tool-out .json-bool { color: #f472b6; }
+.tool-out .json-null { color: #a78bfa; }
+
+.match-hl { background: rgba(76, 194, 255, 0.3); border-radius: 2px; }
+.match-grp { background: rgba(167, 139, 250, 0.25); border-radius: 2px; }
+
+.tool-radio-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.tool-radio-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.tool-radio-row input { accent-color: var(--accent); }
+
+.tool-info {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* Color converter */
+.color-swatch {
+  width: 100%;
+  height: 72px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+
+.color-input {
+  width: 64px;
+  height: 40px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+/* Diff checker */
+.diff-out {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow-x: auto;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.diff-line {
+  display: block;
+  padding: 0 12px;
+}
+
+.diff-add { background: rgba(61, 220, 151, 0.14); }
+.diff-del { background: rgba(244, 114, 182, 0.14); }
+.diff-unchanged { color: var(--muted); }
+.diff-meta { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+
+/* Newsletter */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.newsletter-form input[type="email"] {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.newsletter-form input[type="email"]:focus {
+  border-color: var(--accent);
+}

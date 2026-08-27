@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free Docker Compose generator — pick a service image, ports, volumes, environment variables, and restart policy to get a copy-paste ready docker-compose.yml." />
+  <title>Docker Compose Generator | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/docker-compose-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/docker-compose-generator.html#webapp",
+  "name": "Docker Compose Generator | VelsTech",
+  "description": "Generate a copy-paste ready docker-compose.yml — pick an image, ports, volumes, environment variables, and restart policy.",
+  "url": "https://velstech.net/docker-compose-generator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/docker-compose-generator.html" />
+  <meta property="og:title" content="Docker Compose Generator | VelsTech" />
+  <meta property="og:description" content="Generate a copy-paste ready docker-compose.yml — pick an image, ports, volumes, environment variables, and restart policy." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Docker Compose Generator | VelsTech" />
+  <meta name="twitter:description" content="Generate a copy-paste ready docker-compose.yml — pick an image, ports, volumes, environment variables, and restart policy." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Docker Compose Generator</p>
+    <h1 class="title">Docker Compose Generator</h1>
+    <div class="meta">
+      <span>Generate a docker-compose.yml · ports · volumes · env</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Quickly generate a <code>docker-compose.yml</code> for a single service. Set the image,
+        map ports and volumes, add environment variables, pick a restart policy — then copy the
+        output straight into your project.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Service name</span>
+            <input id="svc" class="input" type="text" value="web" />
+          </label>
+          <label class="field">
+            <span>Image</span>
+            <input id="img" class="input" type="text" value="nginx:latest" list="img-list" />
+            <datalist id="img-list">
+              <option value="nginx:latest"></option>
+              <option value="postgres:17"></option>
+              <option value="redis:7"></option>
+              <option value="node:22"></option>
+              <option value="python:3.13-slim"></option>
+              <option value="ubuntu:24.04"></option>
+            </datalist>
+          </label>
+          <label class="field" style="grid-column:1/-1">
+            <span>Restart policy</span>
+            <select id="restart" class="input">
+              <option value="unless-stopped">unless-stopped</option>
+              <option value="always">always</option>
+              <option value="on-failure">on-failure</option>
+              <option value="no">no</option>
+            </select>
+          </label>
+
+          <label class="field" style="grid-column:1/-1">
+            <span>Ports (host:container)</span>
+            <div class="kv-list" id="ports-list"></div>
+            <button class="btn btn-ghost add-btn" id="add-port" type="button">+ Add port</button>
+          </label>
+
+          <label class="field" style="grid-column:1/-1">
+            <span>Volumes (host:container)</span>
+            <div class="kv-list" id="vols-list"></div>
+            <button class="btn btn-ghost add-btn" id="add-vol" type="button">+ Add volume</button>
+          </label>
+
+          <label class="field" style="grid-column:1/-1">
+            <span>Environment variables (KEY=value)</span>
+            <div class="kv-list" id="env-list"></div>
+            <button class="btn btn-ghost add-btn" id="add-env" type="button">+ Add variable</button>
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="gen-out" id="gen-out"></div>
+          <p class="tool-note">
+            Generated for Compose file format v3.8. Add a <code>networks:</code> section and
+            <code>depends_on:</code> for multi-service setups — this generates one service as a
+            starting point.
+          </p>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="self-hosting-101.html">Self-hosting 101: what can you run at home?</a></li>
+        <li><a href="setup-domain.html">Setting up a domain and pointing it anywhere</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="tutorials.html">Tutorials</a>
+    </div>
+  </main>
+
+  <script>
+    function makeList(id, addBtnId, addVal) {
+      const container = document.getElementById(id);
+      const addBtn = document.getElementById(addBtnId);
+      let idx = 0;
+
+      function addRow(value) {
+        const row = document.createElement("div");
+        row.className = "kv-row";
+        const inp = document.createElement("input");
+        inp.className = "input";
+        inp.type = "text";
+        inp.placeholder = addVal;
+        inp.value = value || "";
+        inp.addEventListener("input", render);
+        const rem = document.createElement("button");
+        rem.className = "kv-remove";
+        rem.textContent = "×";
+        rem.type = "button";
+        rem.addEventListener("click", () => { row.remove(); render(); });
+        row.appendChild(inp);
+        row.appendChild(rem);
+        container.appendChild(row);
+        idx++;
+        return inp;
+      }
+
+      addBtn.addEventListener("click", () => addRow(""));
+      return { container, addRow };
+    }
+
+    const ports = makeList("ports-list", "add-port", "80:80");
+    const vols = makeList("vols-list", "add-vol", "./html:/usr/share/nginx/html");
+    const envs = makeList("env-list", "add-env", "NODE_ENV=production");
+    ports.addRow("80:80");
+    vols.addRow("./html:/usr/share/nginx/html");
+
+    function render() {
+      const svc = document.getElementById("svc").value.trim() || "app";
+      const img = document.getElementById("img").value.trim() || "alpine:latest";
+      const restart = document.getElementById("restart").value;
+
+      const portVals = Array.from(document.querySelectorAll("#ports-list .input")).map(i => i.value.trim()).filter(Boolean);
+      const volVals = Array.from(document.querySelectorAll("#vols-list .input")).map(i => i.value.trim()).filter(Boolean);
+      const envVals = Array.from(document.querySelectorAll("#env-list .input")).map(i => i.value.trim()).filter(Boolean);
+
+      let yaml = "version: '3.8'\n\nservices:\n  " + svc + ":\n    image: " + img;
+      if (restart !== "no") yaml += "\n    restart: " + restart;
+      if (portVals.length) yaml += "\n    ports:\n" + portVals.map(p => "      - " + JSON.stringify(p)).join("\n");
+      if (volVals.length) yaml += "\n    volumes:\n" + volVals.map(v => "      - " + JSON.stringify(v)).join("\n");
+      if (envVals.length) yaml += "\n    environment:\n" + envVals.map(e => "      - " + JSON.stringify(e)).join("\n");
+      yaml += "\n";
+
+      document.getElementById("results").hidden = false;
+      const out = document.getElementById("gen-out");
+      out.innerHTML = "";
+
+      const wrap = document.createElement("div");
+      wrap.className = "code-block";
+      const pre = document.createElement("pre");
+      pre.textContent = yaml;
+      wrap.appendChild(pre);
+
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.type = "button";
+      btn.textContent = "Copy";
+      btn.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(yaml); } catch {
+          const ta = document.createElement("textarea");
+          ta.value = yaml; document.body.appendChild(ta); ta.select();
+          document.execCommand("copy"); ta.remove();
+        }
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2000);
+      });
+      wrap.appendChild(btn);
+      out.appendChild(wrap);
+
+      const verdict = document.getElementById("verdict");
+      verdict.className = "result-verdict verdict-ok";
+      verdict.innerHTML = "✅ <strong>Compose file generated</strong> — " + svc +
+        " (" + img + ")" +
+        (portVals.length ? " · " + portVals.length + " port" + (portVals.length > 1 ? "s" : "") : "") +
+        (volVals.length ? " · " + volVals.length + " volume" + (volVals.length > 1 ? "s" : "") : "") +
+        (envVals.length ? " · " + envVals.length + " env var" + (envVals.length > 1 ? "s" : "") : "") + ".";
+    }
+
+    ["svc", "img", "restart"].forEach((id) => document.getElementById(id).addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

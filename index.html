@@ -7,15 +7,15 @@
   <title>VelsTech Solutions</title>
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="VelsTech" />
-                        <meta property="og:url" content="https://velstech.net/" />
+                                    <meta property="og:url" content="https://velstech.net/" />
   <meta property="og:title" content="VelsTech Solutions" />
-              <meta property="og:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
+                          <meta property="og:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="VelsTech Solutions" />
-              <meta name="twitter:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
+                          <meta name="twitter:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
     <link rel="canonical" href="https://velstech.net/" />
   <script type="application/ld+json">
@@ -71,7 +71,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
   <main>
@@ -150,6 +150,48 @@
       <div id="latest-list" class="latest-list"></div>
     </section>
 
+    <section id="tools" class="section">
+      <h2>Free tools</h2>
+      <p>Calculators and utilities that run in your browser — no sign-up, no tracking, no data leaves your machine.</p>
+      <div class="tool-grid">
+        <a class="tool-card" href="llm-vram-calculator.html">
+          <span class="tool-card-icon">🤖</span>
+          <h3>LLM VRAM Calculator</h3>
+          <p>How much GPU memory does Qwen 27B at Q4_K_M with 32K context need?</p>
+          <span class="tool-card-cta">Use calculator →</span>
+        </a>
+        <a class="tool-card" href="gpu-ai-calculator.html">
+          <span class="tool-card-icon">⚡</span>
+          <h3>GPU AI Performance Calculator</h3>
+          <p>Tokens/sec, time to first token, and generation speed for your GPU.</p>
+          <span class="tool-card-cta">Use calculator →</span>
+        </a>
+        <a class="tool-card" href="psu-calculator.html">
+          <span class="tool-card-icon">🔌</span>
+          <h3>PC Power Supply Calculator</h3>
+          <p>Peak power draw for your build and a recommended PSU wattage.</p>
+          <span class="tool-card-cta">Use calculator →</span>
+        </a>
+      </div>
+      <p style="margin-top:16px"><a href="tools.html">Browse all tools →</a></p>
+    </section>
+
+    <section id="newsletter" class="section">
+      <h2>VelsTech Weekly</h2>
+      <p>
+        Five useful things I found this week — AI, hardware, Linux, tools, and the deal of
+        the week. No spam, no tracking, unsubscribe anytime.
+      </p>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
+        <input type="hidden" name="subject" value="VelsTech newsletter signup" />
+        <label class="sr-only" for="newsletter-email">Email</label>
+        <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" required />
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+        <p class="form-status" id="newsletter-status" hidden></p>
+      </form>
+    </section>
+
     <section id="about" class="section">
       <h2>About</h2>
       <p>
@@ -183,7 +225,7 @@
     </section>
   </main>
 
-  <script src="articles.js?v=5"></script>
-  <script src="script.js?v=10"></script>
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
 </body>
 </html>

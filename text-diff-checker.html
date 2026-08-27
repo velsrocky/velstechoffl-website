@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free text diff checker — compare two versions of text or config side by side with added/removed lines highlighted. Runs entirely in your browser." />
+  <title>Text Diff Checker | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/text-diff-checker.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/text-diff-checker.html#webapp",
+  "name": "Text Diff Checker | VelsTech",
+  "description": "Compare two versions of text with added and removed lines highlighted. A simple line-based diff, no server involved.",
+  "url": "https://velstech.net/text-diff-checker.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/text-diff-checker.html" />
+  <meta property="og:title" content="Text Diff Checker | VelsTech" />
+  <meta property="og:description" content="Compare two versions of text with added and removed lines highlighted. A simple line-based diff, no server involved." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Text Diff Checker | VelsTech" />
+  <meta name="twitter:description" content="Compare two versions of text with added and removed lines highlighted. A simple line-based diff, no server involved." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Text Diff Checker</p>
+    <h1 class="title">Text Diff Checker</h1>
+    <div class="meta">
+      <span>Compare two versions · added &amp; removed lines highlighted</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Paste two versions of any text — a config file, a script, a chunk of code — and this
+        highlights exactly what changed. Added lines are shown in green, removed lines in red.
+        A simple line-based diff, no server involved.
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>Original (A)</span>
+          <textarea id="text-a" class="tool-textarea" rows="8" spellcheck="false"></textarea>
+        </label>
+
+        <label class="field" style="margin-top:14px">
+          <span>Changed (B)</span>
+          <textarea id="text-b" class="tool-textarea" rows="8" spellcheck="false"></textarea>
+        </label>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="diff-out" id="diff"></div>
+          <div class="diff-meta" id="diff-meta"></div>
+        </div>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="git-beginners.html">Version control with Git for complete beginners</a></li>
+        <li><a href="json-formatter.html">JSON Formatter &amp; Validator</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const textA = document.getElementById("text-a");
+    const textB = document.getElementById("text-b");
+    const results = document.getElementById("results");
+    const verdict = document.getElementById("verdict");
+    const diffEl = document.getElementById("diff");
+    const metaEl = document.getElementById("diff-meta");
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    // LCS-based diff (suitable for line counts in a web tool)
+    function diffLines(a, b) {
+      const n = a.length, m = b.length;
+      const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+      for (let i = n - 1; i >= 0; i--) {
+        for (let j = m - 1; j >= 0; j--) {
+          dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+        }
+      }
+      const out = [];
+      let i = 0, j = 0;
+      while (i < n && j < m) {
+        if (a[i] === b[j]) { out.push({ t: "=", v: a[i] }); i++; j++; }
+        else if (dp[i + 1][j] >= dp[i][j + 1]) { out.push({ t: "-", v: a[i] }); i++; }
+        else { out.push({ t: "+", v: b[j] }); j++; }
+      }
+      while (i < n) { out.push({ t: "-", v: a[i] }); i++; }
+      while (j < m) { out.push({ t: "+", v: b[j] }); j++; }
+      return out;
+    }
+
+    function render() {
+      const aLines = textA.value.split("\n");
+      const bLines = textB.value.split("\n");
+      if (!textA.value && !textB.value) { results.hidden = true; return; }
+      results.hidden = false;
+
+      const ops = diffLines(aLines, bLines);
+      let adds = 0, dels = 0;
+      diffEl.innerHTML = ops.map((op) => {
+        if (op.t === "+") { adds++; return '<span class="diff-line diff-add">+ ' + esc(op.v) + "</span>"; }
+        if (op.t === "-") { dels++; return '<span class="diff-line diff-del">- ' + esc(op.v) + "</span>"; }
+        return '<span class="diff-line diff-unchanged">  ' + esc(op.v) + "</span>";
+      }).join("");
+
+      if (adds === 0 && dels === 0) {
+        verdict.className = "result-verdict verdict-ok";
+        verdict.innerHTML = "✅ <strong>No differences</strong> — the two texts are identical.";
+      } else {
+        verdict.className = "result-verdict verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>" + adds + " added</strong> and <strong>" + dels + " removed</strong> line" + (adds + dels === 1 ? "" : "s") + ".";
+      }
+      metaEl.textContent = aLines.length + " lines (A) · " + bLines.length + " lines (B)";
+    }
+
+    [textA, textB].forEach((el) => el.addEventListener("input", render));
+
+    textA.value = "server {\n  listen 80;\n  server_name velstech.net;\n  root /var/www/site;\n}\n";
+    textB.value = "server {\n  listen 443 ssl;\n  server_name velstech.net;\n  root /var/www/site;\n  index index.html;\n}\n";
+    render();
+  </script>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=17"></script>
+</body>
+</html>

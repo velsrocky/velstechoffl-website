@@ -41,11 +41,13 @@ const ADSENSE_SLOT = "";
 
 function initAdsense() {
   if (!ADSENSE_CLIENT) return;
-  const s = document.createElement("script");
-  s.async = true;
-  s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + ADSENSE_CLIENT;
-  s.crossOrigin = "anonymous";
-  document.head.appendChild(s);
+  if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + ADSENSE_CLIENT;
+    s.crossOrigin = "anonymous";
+    document.head.appendChild(s);
+  }
 
   if (!ADSENSE_SLOT) return; // Auto Ads mode — Google decides placement
 

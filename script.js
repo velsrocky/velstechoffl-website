@@ -105,13 +105,12 @@ const esc = (s) =>
 
 const PAGES = [
   { href: "index.html", label: "Home", page: "index.html" },
-  { href: "ai.html", label: "AI & ML", page: "ai.html" },
+  { href: "ai.html", label: "AI", page: "ai.html" },
   { href: "hardware.html", label: "Hardware", page: "hardware.html" },
-  { href: "os.html", label: "OS", page: "os.html" },
+  { href: "os.html", label: "Linux", page: "os.html" },
+  { href: "programming.html", label: "Development", page: "programming.html" },
   { href: "networking.html", label: "Networking", page: "networking.html" },
   { href: "security.html", label: "Security", page: "security.html" },
-  { href: "tutorials.html", label: "Tutorials", page: "tutorials.html" },
-  { href: "programming.html", label: "Programming", page: "programming.html" },
   { href: "tools.html", label: "Tools", page: "tools.html" },
   { href: "tags.html", label: "Tags", page: "tags.html" },
 ];
@@ -515,21 +514,31 @@ function initCopyButtons() {
 
 const CAT_COLORS = {
   "AI & ML": "#a78bfa",
+  "AI": "#a78bfa",
   "Hardware": "#fb923c",
   "Operating Systems": "#3ddc97",
+  "Linux": "#3ddc97",
   "Networking": "#4cc2ff",
+  "Networking & Self-hosting": "#4cc2ff",
   "Security & Privacy": "#f472b6",
+  "Security": "#f472b6",
   "Programming & Web": "#facc15",
+  "Development": "#facc15",
   "Tutorials": "#38bdf8",
 };
 
 const CAT_URL = {
   "AI & ML": "ai.html",
+  "AI": "ai.html",
   "Hardware": "hardware.html",
   "Operating Systems": "os.html",
+  "Linux": "os.html",
   "Networking": "networking.html",
+  "Networking & Self-hosting": "networking.html",
   "Security & Privacy": "security.html",
+  "Security": "security.html",
   "Programming & Web": "programming.html",
+  "Development": "programming.html",
   "Tutorials": "tutorials.html",
 };
 

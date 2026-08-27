@@ -157,7 +157,7 @@
       try { payloadJson = JSON.parse(payloadDecoded); } catch { payloadJson = null; }
 
       const sigBytes = base64urlDecode(sigB64);
-      const sigHex = sigBytes ? Array.from(new TextEncoder().encode(sigBytes)).map(b => b.toString(16).padStart(2, "0")).join("") : "(invalid)";
+      const sigHex = sigBytes ? Array.from(sigBytes, (c) => c.charCodeAt(0).toString(16).padStart(2, "0")).join("") : "(invalid)";
 
       results.hidden = false;
       headerOut.innerHTML = headerJson ? highlight(JSON.stringify(headerJson, null, 2)) : esc(headerDecoded);

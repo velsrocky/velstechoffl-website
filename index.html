@@ -72,62 +72,55 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main>
     <section class="hero">
-      <h1>Modern tech, <span class="accent">built simple.</span></h1>
+      <p class="eyebrow" style="margin-bottom:10px">Practical AI · Hardware · Linux</p>
+      <h1>Practical AI, hardware &amp; <span class="accent">Linux.</span></h1>
       <p class="tagline">
-        Practical AI, Linux &amp; hardware — <strong>tested, explained, and built.</strong><br />
-        I document things I actually use, build, benchmark, and break — with practical guides that help you get things working.
+        Real-world guides, experiments, benchmarks and free tools for developers and tech enthusiasts who actually build and run things.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#topics">Explore VelsTech</a>
-        <a class="btn btn-ghost" href="#lab">VelsTech Lab</a>
+        <a class="btn btn-primary" href="#topics">Explore Guides</a>
+        <a class="btn btn-ghost" href="tools.html">Try the Tools</a>
       </div>
+      <p class="hero-sub">Guides, experiments &amp; calculators for local LLMs, GPUs and Linux — <a href="#about">why VelsTech exists →</a></p>
     </section>
 
     <section id="topics" class="section">
-      <h2>Topics</h2>
-      <p>Six focused areas — guides, experiments and tools for the things we actually test.</p>
-      <div class="cat-grid">
+      <div class="section-head" style="text-align:left; margin-bottom:22px">
+        <p class="eyebrow">Explore</p>
+        <h2>Practical AI, hardware &amp; Linux</h2>
+        <p>Guides, experiments, benchmarks and tools for people who actually build and run things. Other notes are archived below — not the focus.</p>
+      </div>
+      <div class="cat-grid cat-grid-primary">
         <a class="cat-card" href="ai.html">
           <span class="cat-icon">🤖</span>
           <h3>AI</h3>
-          <p>Local LLMs, inference, GGUF models, and practical AI tools.</p>
+          <p>Local LLMs, VRAM, inference speed, GGUF &amp; what actually runs on your GPU.</p>
           <span class="cat-count">Explore →</span>
         </a>
         <a class="cat-card" href="hardware.html">
           <span class="cat-icon">🖥️</span>
           <h3>Hardware</h3>
-          <p>GPUs, PC builds, benchmarks, and performance per rupee.</p>
+          <p>GPUs, VRAM per rupee, PC builds and real-world benchmarks.</p>
           <span class="cat-count">Explore →</span>
         </a>
         <a class="cat-card" href="os.html">
           <span class="cat-icon">🐧</span>
           <h3>Linux</h3>
-          <p>Ubuntu, Arch, drivers, servers, and troubleshooting.</p>
+          <p>Ubuntu, Arch, ROCm, drivers, servers and troubleshooting that fixes it.</p>
           <span class="cat-count">Explore →</span>
         </a>
-        <a class="cat-card" href="networking.html">
-          <span class="cat-icon">🌐</span>
-          <h3>Networking &amp; Self-hosting</h3>
-          <p>DNS, homelab, self-hosting, and how the internet fits together.</p>
-          <span class="cat-count">Explore →</span>
-        </a>
-        <a class="cat-card" href="security.html">
-          <span class="cat-icon">🔐</span>
-          <h3>Security</h3>
-          <p>Privacy, backups, and safe habits that actually matter.</p>
-          <span class="cat-count">Explore →</span>
-        </a>
-        <a class="cat-card" href="programming.html">
-          <span class="cat-icon">💻</span>
-          <h3>Development</h3>
-          <p>Programming, web dev, and developer tools.</p>
-          <span class="cat-count">Explore →</span>
-        </a>
+      </div>
+      <div class="secondary-topics">
+        <span>Also archived:</span>
+        <a href="networking.html">Networking &amp; Self-hosting</a>
+        <a href="security.html">Security</a>
+        <a href="programming.html">Development</a>
+        <a href="tutorials.html">Tutorials</a>
       </div>
     </section>
 
@@ -212,10 +205,15 @@
 
     <section id="newsletter" class="section">
       <h2>VelsTech Weekly</h2>
-      <p>
-        Five useful things I found this week — AI, hardware, Linux, tools, and the deal of
-        the week. No spam, no tracking, unsubscribe anytime.
-      </p>
+      <p><strong>5 things worth knowing this week — without the tech-news noise.</strong></p>
+      <ul class="newsletter-list">
+        <li>One AI discovery — a model, paper, or local-AI trick actually worth trying</li>
+        <li>One useful tool — a calculator, generator, or open-source find</li>
+        <li>One hardware finding — GPU, price, or benchmark worth your money</li>
+        <li>One Linux / dev trick — a command, config, or fix that saved time</li>
+        <li>One interesting deal — only if it's genuinely good</li>
+      </ul>
+      <p class="newsletter-note">No spam, no tracking, unsubscribe anytime. One email a week, 2-minute read.</p>
       <form class="newsletter-form" id="newsletter-form">
         <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
         <input type="hidden" name="subject" value="VelsTech newsletter signup" />
@@ -270,6 +268,6 @@
   </main>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

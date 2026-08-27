@@ -33,7 +33,7 @@
   <meta name="twitter:description" content="Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main class="article-page">
@@ -119,11 +119,30 @@
         </div>
       </div>
 
+      <details class="calc-method">
+        <summary>How we calculate this — assumptions &amp; formulas</summary>
+        <div class="calc-method-body">
+          <p>This is an estimate, not a lab measurement. Real usage varies with tokenizer, model build, CUDA graph, and your inference engine (llama.cpp, vLLM, etc.). Numbers below match the live calculator logic.</p>
+          <h4>1. Model weights</h4>
+          <pre>weights = parameters × bytes_per_weight / GiB</pre>
+          <p>Bytes per weight comes from quantization: FP32 4.0, FP16/BF16 2.0, Q8_0 1.0625, Q6_K 0.8125, Q5_K_M 0.66, Q4_K_M 0.61, Q4_0 0.56, INT4 0.5, INT8 1.0. Example: 8B params at Q4_K_M ≈ 8e9 × 0.61 / 1.07e9 ≈ 4.5 GB.</p>
+          <h4>2. KV cache</h4>
+          <pre>kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes
+kv_cache = kv_per_token × context × batch / GiB</pre>
+          <p>The <code>×2</code> covers K and V; the trailing <code>×2 bytes</code> assumes FP16 KV (the default for most engines). For a 32-layer, 8-KV-head, 128-dim model at 8192 context and batch 1, that's ~134 MB per 1K tokens. Long context dominates memory — 32K needs ~4× the KV of 8K.</p>
+          <h4>3. Overhead</h4>
+          <pre>overhead = (weights + kv_cache) × 0.06 + 0.25 GB</pre>
+          <p>6% covers CUDA context / engine buffers, plus a fixed 0.25 GB floor. Small but noticeable on 8 GB cards.</p>
+          <h4>4. Verdict</h4>
+          <p><code>total = weights + kv_cache + overhead</code>. Fits if <code>total ≤ vram × 0.95</code>. Partial offload if spill fits in <code>ram × 0.9</code>; otherwise won't fit. Full details: <a href="how-much-vram-for-llm.html">How much VRAM do you need?</a></p>
+        </div>
+      </details>
+
       <h2>Related guides</h2>
       <ul>
-        <li><a href="what-is-an-llm.html">What is a Large Language Model, really?</a></li>
-        <li><a href="local-vs-cloud-ai.html">Local vs cloud AI: which should you choose?</a></li>
+        <li><a href="how-much-vram-for-llm.html">How much VRAM do you need for 7B/14B/32B? — the table &amp; context math</a></li>
         <li><a href="gpu-ai-calculator.html">GPU AI Performance Calculator — how fast will it run?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for local LLMs — benchmarks &amp; picks</a></li>
       </ul>
     </div>
 
@@ -268,6 +287,6 @@
   </script>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

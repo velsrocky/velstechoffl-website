@@ -33,7 +33,7 @@
   <meta name="twitter:description" content="Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main class="article-page">
@@ -54,12 +54,12 @@
       <div class="calc">
         <div class="calc-grid">
           <div class="preset-row">
-            <button class="preset-chip" data-bits="7,5,5">755</button>
-            <button class="preset-chip" data-bits="6,4,4">644</button>
-            <button class="preset-chip" data-bits="6,0,0">600</button>
-            <button class="preset-chip" data-bits="7,0,0">700</button>
-            <button class="preset-chip" data-bits="7,7,7">777</button>
-            <button class="preset-chip" data-bits="4,0,0">400</button>
+            <button class="preset-chip" data-bits="7,5,5" title="Set 755 — rwxr-xr-x (owner full, group/others read+execute)" aria-label="Set permissions to 755">755</button>
+            <button class="preset-chip" data-bits="6,4,4" title="Set 644 — rw-r--r-- (owner read/write, group/others read)" aria-label="Set permissions to 644">644</button>
+            <button class="preset-chip" data-bits="6,0,0" title="Set 600 — rw------- (owner read/write only)" aria-label="Set permissions to 600">600</button>
+            <button class="preset-chip" data-bits="7,0,0" title="Set 700 — rwx------ (owner full only)" aria-label="Set permissions to 700">700</button>
+            <button class="preset-chip" data-bits="7,7,7" title="Set 777 — rwxrwxrwx (everyone full — use cautiously)" aria-label="Set permissions to 777">777</button>
+            <button class="preset-chip" data-bits="4,0,0" title="Set 400 — r-------- (owner read only)" aria-label="Set permissions to 400">400</button>
           </div>
 
           <fieldset class="field perm-group">
@@ -196,6 +196,6 @@
   </script>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

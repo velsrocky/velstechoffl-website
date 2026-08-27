@@ -33,7 +33,7 @@
   <meta name="twitter:description" content="Generate a copy-paste ready docker-compose.yml — pick an image, ports, volumes, environment variables, and restart policy." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main class="article-page">
@@ -81,19 +81,19 @@
           <label class="field" style="grid-column:1/-1">
             <span>Ports (host:container)</span>
             <div class="kv-list" id="ports-list"></div>
-            <button class="btn btn-ghost add-btn" id="add-port" type="button">+ Add port</button>
+            <button class="btn btn-ghost add-btn" id="add-port" type="button" title="Add another port mapping" aria-label="Add port">+ Add port</button>
           </label>
 
           <label class="field" style="grid-column:1/-1">
             <span>Volumes (host:container)</span>
             <div class="kv-list" id="vols-list"></div>
-            <button class="btn btn-ghost add-btn" id="add-vol" type="button">+ Add volume</button>
+            <button class="btn btn-ghost add-btn" id="add-vol" type="button" title="Add another volume mount" aria-label="Add volume">+ Add volume</button>
           </label>
 
           <label class="field" style="grid-column:1/-1">
             <span>Environment variables (KEY=value)</span>
             <div class="kv-list" id="env-list"></div>
-            <button class="btn btn-ghost add-btn" id="add-env" type="button">+ Add variable</button>
+            <button class="btn btn-ghost add-btn" id="add-env" type="button" title="Add another environment variable" aria-label="Add variable">+ Add variable</button>
           </label>
         </div>
 
@@ -140,6 +140,8 @@
         rem.className = "kv-remove";
         rem.textContent = "×";
         rem.type = "button";
+        rem.setAttribute('aria-label', 'Remove row');
+        rem.title = "Remove this row";
         rem.addEventListener("click", () => { row.remove(); render(); });
         row.appendChild(inp);
         row.appendChild(rem);
@@ -188,6 +190,8 @@
       btn.className = "copy-btn";
       btn.type = "button";
       btn.textContent = "Copy";
+      btn.title = "Copy YAML to clipboard";
+      btn.setAttribute("aria-label", "Copy compose file");
       btn.addEventListener("click", async () => {
         try { await navigator.clipboard.writeText(yaml); } catch {
           const ta = document.createElement("textarea");
@@ -215,6 +219,6 @@
   </script>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

@@ -56,11 +56,40 @@
     "- Answer the user's question directly and helpfully. This includes general (non-blog) questions: " +
     "never refuse or say you lack access just because blog content wasn't provided.\n" +
     "- If the question relates to a blog topic (AI/ML, hardware, operating systems, networking, security, programming, tutorials) and blog content is provided, use it to give an accurate, specific answer and cite the article title(s).\n" +
+    "- If 'Current page content' is provided, it is the authoritative text of the page the user is viewing. Use it to summarize/explain that page accurately and cite its title/URL when relevant. Do not hallucinate beyond it.\n" +
     "- For high-stakes topics (security, passwords, financial, legal, medical advice), do NOT give definitive instructions. Summarize what the blog says and recommend the reader consult the relevant guide or email hello@velstech.net.\n" +
     "- Be concise, friendly, and plain-language. Use short paragraphs and bullet points.\n" +
     "- If you don't know or the blog doesn't cover it, say so honestly instead of guessing.";
 
   const ART = (typeof ARTICLES !== "undefined") ? ARTICLES : [];
+
+  // ---------- page-aware context (DOM extraction) ----------
+  function extractPageContext(limit) {
+    limit = limit || 4000;
+    try {
+      const title = (document.querySelector('.article-page .title')?.textContent
+        || document.querySelector('.page-hero h1')?.textContent
+        || document.querySelector('h1')?.textContent
+        || document.title || '').trim();
+      const bodyEl = document.querySelector('.article-body')
+        || document.querySelector('.article-page')
+        || document.querySelector('main');
+      let body = bodyEl ? bodyEl.innerText : '';
+      // Normalise whitespace and trim to limit
+      body = body.replace(/\s+/g, ' ').trim().slice(0, limit);
+      const url = location.href;
+      if (!body) return '';
+      return `Title: ${title}\nURL: ${url}\nContent: ${body}`;
+    } catch { return ''; }
+  }
+
+  function shouldIncludePageContext(query) {
+    return /(this page|this article|this post|this tool|this calculator|current page|explain this|summarize|tl;dr|what (is|does) this)/i.test(query);
+  }
+
+  function isArticlePage() {
+    return !!document.querySelector('.article-body, .article-page');
+  }
 
   // ---------- lightweight retrieval (keyword scoring) ----------
   function tokenize(s) {
@@ -137,6 +166,10 @@
             </button>
           </div>
         </header>
+        <div id="vt-page-bar" class="vt-page-bar" hidden>
+          <button id="vt-page-explain" class="vt-page-btn" type="button">✨ Explain this page</button>
+          <span class="vt-page-hint">Summarize what this page says</span>
+        </div>
         <div id="vt-chat-messages" class="vt-messages"></div>
         <form id="vt-chat-form" class="vt-form" autocomplete="off">
           <textarea id="vt-chat-input" class="vt-input" rows="1" placeholder="Ask about the blog or anything else…" aria-label="Message"></textarea>
@@ -181,7 +214,8 @@
     t.style.height = Math.min(t.scrollHeight, 140) + "px";
   }
 
-  async function sendMessage(text) {
+  async function sendMessage(text, opts) {
+    opts = opts || {};
     if (!text.trim()) return;
     addMessage("user", renderContent(text));
 
@@ -194,11 +228,18 @@
     }
 
     const { text: context } = retrieveContext(text, 4);
+    const includePage = opts.forcePage || shouldIncludePageContext(text);
+    const pageContext = includePage ? extractPageContext(4000) : "";
 
     // Build messages: a scoped system prompt (guidance + retrieved blog
-    // snippets) followed by the user's question. Works identically for local
-    // and proxy backends.
+    // snippets + optional current-page content) followed by the user's question.
+    // Works identically for local and proxy backends.
     const systemParts = [CHAT_GUIDANCE];
+    if (pageContext) {
+      systemParts.push("Current page content:\n" + pageContext);
+      // show subtle indicator in the typing bubble
+      bodyEl.setAttribute('data-page', '1');
+    }
     if (context) systemParts.push("Relevant blog content:\n" + context);
     const messages = [
       { role: "system", content: systemParts.join("\n\n") },
@@ -265,8 +306,15 @@
     );
   }
 
+  function updatePageBar() {
+    const bar = $("vt-page-bar");
+    if (!bar) return;
+    bar.hidden = !isArticlePage();
+  }
+
   async function init() {
     ensureContainer();
+    updatePageBar();
 
     // Use the default model configured in CHAT_MODEL (no picker needed).
     activeModel = CHAT_MODEL;
@@ -275,6 +323,14 @@
       $("vt-chat-panel").hidden ? openPanel() : closePanel();
     });
     $("vt-chat-close").addEventListener("click", closePanel);
+    const pageBtn = $("vt-page-explain");
+    if (pageBtn) {
+      pageBtn.addEventListener("click", () => {
+        if (pageBtn.disabled) return;
+        // force page context and give a clear prompt
+        sendMessage("Explain this page briefly — what is it about, key points, and who is it for?", { forcePage: true });
+      });
+    }
     const ta = $("vt-chat-input");
     const form = $("vt-chat-form");
     ta.addEventListener("input", () => autoGrow(ta));
@@ -296,7 +352,7 @@
     // Welcome message
     const w = addMessage("assistant",
       '👋 Hi — I\'m the VelsTech assistant. Ask me about articles on this site ' +
-      '(AI, hardware, Linux, security…) or anything else.');
+      '(AI, hardware, Linux, security…) or anything else.<br><span style="opacity:.7;font-size:12px">Tip: try “Explain this page” when viewing an article.</span>');
   }
 
   if (document.readyState === "loading") {

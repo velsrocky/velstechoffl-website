@@ -33,7 +33,7 @@
   <meta name="twitter:description" content="Build a correct ffmpeg command for converting, compressing, and trimming media — container, codec, quality, scale, and audio settings." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main class="article-page">
@@ -265,6 +265,8 @@
       btn.className = "copy-btn";
       btn.type = "button";
       btn.textContent = "Copy";
+      btn.title = "Copy command to clipboard";
+      btn.setAttribute("aria-label", "Copy command");
       btn.addEventListener("click", async () => {
         try { await navigator.clipboard.writeText(cmd); } catch {
           const ta = document.createElement("textarea");
@@ -293,6 +295,6 @@
   </script>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

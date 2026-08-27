@@ -33,7 +33,7 @@
   <meta name="twitter:description" content="Estimate tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main class="article-page">
@@ -122,11 +122,34 @@
         </div>
       </div>
 
+      <details class="calc-method">
+        <summary>How we calculate this — assumptions &amp; formulas</summary>
+        <div class="calc-method-body">
+          <p>Real performance depends on engine, kernels, driver, and cooling. These are memory- and compute-bound <em>upper bounds</em> scaled by realized efficiency, not benchmarks.</p>
+          <h4>1. Does it fit?</h4>
+          <pre>weights = params × bytes_per_quant / GiB
+kv_cache ≈ params × 16384 × context / GiB
+total = weights + kv_cache</pre>
+          <p>KV here uses a rough 8B-arch approximation (~128 KB per token for 8B). If <code>total &gt; vram</code> we mark won't fit; real KV from layers/heads/dim is more precise — use the <a href="llm-vram-calculator.html">VRAM calculator</a> for that.</p>
+          <h4>2. Decode speed (memory bound)</h4>
+          <pre>bytes_per_token = weights × GiB + kv_per_token
+decode_tok/s = (memory_BW × 0.8) / bytes_per_token</pre>
+          <p>Every generated token reads the whole model + KV. 0.8 models ~80% achievable bandwidth; quantization helps because fewer bytes per token.</p>
+          <h4>3. Prefill / prompt processing (compute bound)</h4>
+          <pre>prefill_tok/s = (TFLOPS × 0.55) / (2 × params)</pre>
+          <p>Prompt processing is a large matmul: ~2 FLOPs per parameter per token. 0.55 models 55% compute utilization. MoE models use active params, so actual prefill can be higher.</p>
+          <h4>4. Times</h4>
+          <pre>TTFT = prompt_tokens / prefill_tok/s
+gen_time = answer_tokens / decode_tok/s</pre>
+          <p>See also: <a href="how-much-vram-for-llm.html">How much VRAM do you need?</a> and <a href="best-gpu-for-local-llm.html">Best GPU for local LLMs</a>.</p>
+        </div>
+      </details>
+
       <h2>Related guides</h2>
       <ul>
         <li><a href="llm-vram-calculator.html">LLM VRAM Calculator — does it even fit?</a></li>
-        <li><a href="cpu-vs-gpu.html">CPU vs GPU: what does each one do?</a></li>
-        <li><a href="local-vs-cloud-ai.html">Local vs cloud AI: which should you choose?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for local LLMs — which card to buy</a></li>
+        <li><a href="how-much-vram-for-llm.html">How much VRAM do you really need?</a></li>
       </ul>
     </div>
 
@@ -262,6 +285,6 @@
   </script>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

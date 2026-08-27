@@ -4,13 +4,13 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5002392377660300" crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AI and machine learning notes — LLMs, tools, prompting, and trends." />
-  <title>AI & ML | VelsTech</title>
+  <meta name="description" content="Practical AI for local LLMs — VRAM, inference, benchmarks and tools. Real measurements over generic explainers." />
+  <title>AI — Practical local LLMs &amp; benchmarks | VelsTech</title>
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/ai.html" />
-  <meta property="og:title" content="AI &amp; ML | VelsTech" />
-  <meta property="og:description" content="AI and machine learning notes — LLMs, tools, prompting, and trends." />
+  <meta property="og:title" content="AI — Practical local LLMs &amp; benchmarks | VelsTech" />
+  <meta property="og:description" content="Practical AI for local LLMs — VRAM, inference, benchmarks and tools. Real measurements over generic explainers." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -25,43 +25,49 @@
   "@type": "CollectionPage",
   "@id": "https://velstech.net/ai.html#webpage",
   "url": "https://velstech.net/ai.html",
-  "name": "AI & ML | VelsTech",
-  "description": "AI and machine learning notes — LLMs, tools, prompting, and trends.",
+  "name": "AI — Practical local LLMs & benchmarks | VelsTech",
+  "description": "Practical AI for local LLMs — VRAM, inference, benchmarks and tools. Real measurements over generic explainers.",
   "inLanguage": "en"
 }
   </script>
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/ai.html" />
-  <meta property="og:title" content="AI &amp; ML | VelsTech" />
-  <meta property="og:description" content="AI and machine learning notes — LLMs, tools, prompting, and trends." />
+  <meta property="og:title" content="AI — Practical local LLMs &amp; benchmarks | VelsTech" />
+  <meta property="og:description" content="Practical AI for local LLMs — VRAM, inference, benchmarks and tools. Real measurements over generic explainers." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AI &amp; ML | VelsTech" />
-  <meta name="twitter:description" content="AI and machine learning notes — LLMs, tools, prompting, and trends." />
+  <meta name="twitter:title" content="AI — Practical local LLMs &amp; benchmarks | VelsTech" />
+  <meta name="twitter:description" content="Practical AI for local LLMs — VRAM, inference, benchmarks and tools. Real measurements over generic explainers." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main>
     <header class="page-hero">
-      <p class="breadcrumb"><a href="index.html">Home</a> / AI &amp; Machine Learning</p>
-      <h1>AI &amp; Machine Learning</h1>
+      <p class="breadcrumb"><a href="index.html">Home</a> / AI · Practical local LLMs</p>
+      <h1>AI — Practical local LLMs</h1>
       <p>
-        Everything from large language models to practical everyday AI tools —
-        what they are, how to use them, and where the field is heading.
+        VRAM, quantization, KV cache and real-world inference — <strong>what actually runs on your hardware</strong> and how fast. Benchmarks, calculators and experiments first; generic explainers last.
       </p>
+      <p class="tool-note" style="margin-top:12px"><a href="llm-vram-calculator.html">VRAM Calculator</a> · <a href="gpu-ai-calculator.html">GPU Performance Calculator</a> · <a href="how-much-vram-for-llm.html">VRAM guide (7B/14B/32B)</a> · <a href="best-gpu-for-local-llm.html">Best GPU picks</a></p>
     </header>
 
     <section class="article-grid">
-      <article class="article">
+      <article class="article" style="border-color: var(--accent)">
         <h3><a href="how-much-vram-for-llm.html">How much VRAM do you need for 7B, 14B, and 32B models?</a></h3>
         <p>VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table.</p>
         <div class="tags"><span class="tag">VRAM</span><span class="tag">LLM</span><span class="tag">GPU</span><span class="tag">Quantization</span></div>
-        <span class="date">Aug 27, 2026</span>
+        <span class="date">Aug 27, 2026 · VelsTech Lab</span>
+      </article>
+      <article class="article">
+        <h3><a href="local-vs-cloud-ai.html">Local vs cloud AI: which should you choose?</a></h3>
+        <p>Privacy, cost, and capability — a comparison of running models on your own hardware versus cloud APIs.</p>
+        <div class="tags"><span class="tag">Privacy</span><span class="tag">Hardware</span></div>
+        <span class="date">Aug 24, 2026</span>
       </article>
       <article class="article">
         <h3><a href="qwen3-8-flash-next.html">Qwen3.8 Flash Next: Alibaba's new fast reasoning model</a></h3>
@@ -75,34 +81,28 @@
         <div class="tags"><span class="tag">LLM</span><span class="tag">GLM</span><span class="tag">Benchmarks</span></div>
         <span class="date">Aug 27, 2026</span>
       </article>
-      <article class="article">
-        <h3><a href="what-is-machine-learning.html">What is machine learning, really?</a></h3>
-        <p>A plain-language look at what learning from data actually means — training, models, and prediction — before the LLMs.</p>
-        <div class="tags"><span class="tag">Basics</span><span class="tag">ML</span></div>
-        <span class="date">Aug 25, 2026</span>
-      </article>
-      <article class="article">
-        <h3><a href="what-is-an-llm.html">What is a Large Language Model, really?</a></h3>
-        <p>A plain-language look at how LLMs work under the hood — tokens, context, and probabilities — without the jargon.</p>
-        <div class="tags"><span class="tag">LLM</span><span class="tag">Basics</span></div>
-        <span class="date">Aug 24, 2026</span>
-      </article>
-      <article class="article">
+      <article class="article" style="opacity:0.92">
         <h3><a href="better-prompts.html">How to write better prompts</a></h3>
         <p>Practical prompting patterns that get better answers from ChatGPT, Claude, and similar tools.</p>
         <div class="tags"><span class="tag">Prompting</span><span class="tag">Tools</span></div>
-        <span class="date">Aug 24, 2026</span>
+        <span class="date">Aug 24, 2026 · Fundamentals</span>
       </article>
-      <article class="article">
-        <h3><a href="local-vs-cloud-ai.html">Local vs cloud AI: which should you choose?</a></h3>
-        <p>Privacy, cost, and capability — a comparison of running models on your own hardware versus cloud APIs.</p>
-        <div class="tags"><span class="tag">Privacy</span><span class="tag">Hardware</span></div>
-        <span class="date">Aug 24, 2026</span>
+      <article class="article" style="opacity:0.92">
+        <h3><a href="what-is-an-llm.html">What is a Large Language Model, really?</a></h3>
+        <p>A plain-language look at how LLMs work under the hood — tokens, context, and probabilities — without the jargon.</p>
+        <div class="tags"><span class="tag">LLM</span><span class="tag">Basics</span></div>
+        <span class="date">Aug 24, 2026 · Fundamentals</span>
+      </article>
+      <article class="article" style="opacity:0.92">
+        <h3><a href="what-is-machine-learning.html">What is machine learning, really?</a></h3>
+        <p>A plain-language look at what learning from data actually means — training, models, and prediction — before the LLMs.</p>
+        <div class="tags"><span class="tag">Basics</span><span class="tag">ML</span></div>
+        <span class="date">Aug 25, 2026 · Fundamentals</span>
       </article>
     </section>
   </main>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

@@ -108,10 +108,11 @@ const PAGES = [
   { href: "ai.html", label: "AI", page: "ai.html" },
   { href: "hardware.html", label: "Hardware", page: "hardware.html" },
   { href: "os.html", label: "Linux", page: "os.html" },
+  { href: "index.html#lab", label: "Lab", page: "__lab__" },
+  { href: "tools.html", label: "Tools", page: "tools.html" },
   { href: "programming.html", label: "Development", page: "programming.html" },
   { href: "networking.html", label: "Networking", page: "networking.html" },
   { href: "security.html", label: "Security", page: "security.html" },
-  { href: "tools.html", label: "Tools", page: "tools.html" },
   { href: "tags.html", label: "Tags", page: "tags.html" },
 ];
 
@@ -329,13 +330,13 @@ function injectChat() {
   const link = document.createElement("link");
   link.id = "vt-chat-link";
   link.rel = "stylesheet";
-  link.href = "chat.css?v=4";
+  link.href = "chat.css?v=5";
   document.head.appendChild(link);
 
   if (document.getElementById("vt-chat-script")) return;
   const s = document.createElement("script");
   s.id = "vt-chat-script";
-  s.src = "chat.js?v=11";
+  s.src = "chat.js?v=12";
   s.onerror = () => console.error("[VelsTech] Failed to load chat widget");
   document.head.appendChild(s);
 }
@@ -486,6 +487,7 @@ function initCopyButtons() {
     btn.type = "button";
     btn.textContent = "Copy";
     btn.setAttribute("aria-label", "Copy code");
+    btn.title = "Copy code to clipboard";
     wrap.appendChild(btn);
 
     btn.addEventListener("click", async () => {

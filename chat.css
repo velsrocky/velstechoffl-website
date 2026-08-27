@@ -201,6 +201,43 @@
 .vt-send:hover { opacity: .9; }
 .vt-send:disabled { opacity: .4; }
 
+.vt-page-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--vt-chat-border);
+  background: var(--vt-chat-surface);
+}
+
+.vt-page-bar[hidden] { display: none; }
+
+.vt-page-btn {
+  flex: none;
+  padding: 6px 12px;
+  border: 1px solid var(--vt-chat-border);
+  border-radius: 999px;
+  background: var(--vt-accent-soft);
+  color: var(--vt-accent);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+.vt-page-btn:hover {
+  background: var(--vt-accent);
+  color: #06121f;
+  border-color: var(--vt-accent);
+}
+
+.vt-page-hint {
+  font-size: 11px;
+  color: var(--vt-chat-text);
+  opacity: .6;
+}
+
 .vt-disclaimer {
   margin: 0;
   padding: 6px 12px;

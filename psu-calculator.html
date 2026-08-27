@@ -33,7 +33,7 @@
   <meta name="twitter:description" content="Estimate your build's peak power draw and get a recommended PSU wattage with headroom." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main class="article-page">
@@ -139,10 +139,26 @@
         </div>
       </div>
 
+      <details class="calc-method">
+        <summary>How we calculate this — assumptions &amp; formulas</summary>
+        <div class="calc-method-body">
+          <p>Not a lab measurement — a conservative peak estimate so you don't trip under load. Transient spikes (especially on RTX 4090/5090) can still exceed TDP briefly.</p>
+          <h4>1. Peak draw</h4>
+          <pre>peak = (cpu + gpu + ram×3W + ssd×3W + hdd×8W + fans×3W + aio + rgb×4W + usb×5W) × age_factor</pre>
+          <p>CPU/GPU use TDP presets (e.g., i7/R7 125 W, RTX 4090 450 W, RX 7900 XTX 355 W) or your custom wattage. Small parts are averaged per unit: RAM stick 3 W, NVMe 3 W, HDD 8 W, fan 3 W, AIO pump 8 W, RGB strip 4 W, USB device 5 W.</p>
+          <h4>2. Recommended PSU</h4>
+          <pre>recommended = ceil(peak × 1.30 / 50) × 50</pre>
+          <p>30% headroom for efficiency, noise, and aging, then rounded up to the next 50 W tier (the common retail step). If <code>age_factor</code> is 1.1 (a few years old) or 1.25 (older/budget unit), peak is inflated before headroom.</p>
+          <h4>3. Verdict</h4>
+          <p>High-end GPUs ≥400 W get a warning to consider one tier higher for spikes. Otherwise the recommended size is shown as a comfortable 80 Plus Bronze-or-better floor. Full build advice: <a href="first-pc-build.html">How to choose parts</a>.</p>
+        </div>
+      </details>
+
       <h2>Related guides</h2>
       <ul>
         <li><a href="first-pc-build.html">How to choose parts for your first PC build</a></li>
-        <li><a href="cpu-vs-gpu.html">CPU vs GPU: what does each one do?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for running LLMs — power matters too</a></li>
+        <li><a href="ssd-vs-hdd.html">SSD vs HDD — what draws power and why</a></li>
       </ul>
     </div>
 
@@ -245,6 +261,6 @@
   </script>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

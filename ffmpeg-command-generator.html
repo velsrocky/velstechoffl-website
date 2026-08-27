@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free FFmpeg command generator — pick a container, codec, quality, scale, and audio settings to get a copy-paste ready ffmpeg command." />
+  <meta name="description" content="Free FFmpeg command generator – pick a container, codec, quality, scale, and audio settings to get a copy-paste ready ffmpeg command." />
   <title>FFmpeg Command Generator | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/ffmpeg-command-generator.html" />
   <script type="application/ld+json">
@@ -12,7 +12,7 @@
   "@type": "WebApplication",
   "@id": "https://velstech.net/ffmpeg-command-generator.html#webapp",
   "name": "FFmpeg Command Generator | VelsTech",
-  "description": "Build a correct ffmpeg command for converting, compressing, and trimming media — container, codec, quality, scale, and audio settings.",
+  "description": "Build a correct ffmpeg command for converting, compressing, and trimming media – container, codec, quality, scale, and audio settings.",
   "url": "https://velstech.net/ffmpeg-command-generator.html",
   "inLanguage": "en",
   "applicationCategory": "UtilitiesApplication",
@@ -23,13 +23,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/ffmpeg-command-generator.html" />
   <meta property="og:title" content="FFmpeg Command Generator | VelsTech" />
-  <meta property="og:description" content="Build a correct ffmpeg command for converting, compressing, and trimming media — container, codec, quality, scale, and audio settings." />
+  <meta property="og:description" content="Build a correct ffmpeg command for converting, compressing, and trimming media – container, codec, quality, scale, and audio settings." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="FFmpeg Command Generator | VelsTech" />
-  <meta name="twitter:description" content="Build a correct ffmpeg command for converting, compressing, and trimming media — container, codec, quality, scale, and audio settings." />
+  <meta name="twitter:description" content="Build a correct ffmpeg command for converting, compressing, and trimming media – container, codec, quality, scale, and audio settings." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=22" />
@@ -45,7 +45,7 @@
     <div class="article-body">
       <p>
         Set the format, codec, quality, and trim times and this builds the full
-        <code>ffmpeg</code> command for you — with a plain-English explanation of what each
+        <code>ffmpeg</code> command for you – with a plain-English explanation of what each
         part does. Copy it straight into your terminal.
       </p>
 
@@ -218,7 +218,7 @@
         if (ss) parts.push("-ss", ss);
         if (vcodec === "copy") {
           parts.push("-c:v", "copy");
-          explain.push("Video stream copied without re-encoding (fast, lossless — container/audio change only).");
+          explain.push("Video stream copied without re-encoding (fast, lossless – container/audio change only).");
         } else {
           parts.push("-c:v", vcodec);
           explain.push("Video re-encoded with " + vcodec + " at CRF " + crfInput.value + ".");

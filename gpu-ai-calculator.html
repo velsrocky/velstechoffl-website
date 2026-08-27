@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free GPU AI performance calculator — estimate decode tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." />
+  <meta name="description" content="Free GPU AI performance calculator – estimate decode tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." />
   <title>GPU AI Performance Calculator | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/gpu-ai-calculator.html" />
   <script type="application/ld+json">
@@ -45,9 +45,9 @@
     <div class="article-body">
       <p>
         Pick a GPU and a model, and this estimates how fast local inference will actually
-        feel: <strong>decode</strong> speed (tokens per second while the model answers —
+        feel: <strong>decode</strong> speed (tokens per second while the model answers –
         this is memory-bandwidth bound) and <strong>prompt processing</strong> speed
-        (compute bound). Estimates only — real numbers depend on your engine, drivers, and
+        (compute bound). Estimates only – real numbers depend on your engine, drivers, and
         settings.
       </p>
 
@@ -107,11 +107,11 @@
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
           <div class="result-rows">
-            <div class="result-row"><span>Model size at this quant</span><strong id="r-size">—</strong></div>
-            <div class="result-row"><span>Decode speed</span><strong id="r-decode">—</strong></div>
-            <div class="result-row"><span>Prompt processing speed</span><strong id="r-prefill">—</strong></div>
-            <div class="result-row"><span>Time to first token</span><strong id="r-ttft">—</strong></div>
-            <div class="result-row total"><span>Time to generate answer</span><strong id="r-gen">—</strong></div>
+            <div class="result-row"><span>Model size at this quant</span><strong id="r-size">–</strong></div>
+            <div class="result-row"><span>Decode speed</span><strong id="r-decode">–</strong></div>
+            <div class="result-row"><span>Prompt processing speed</span><strong id="r-prefill">–</strong></div>
+            <div class="result-row"><span>Time to first token</span><strong id="r-ttft">–</strong></div>
+            <div class="result-row total"><span>Time to generate answer</span><strong id="r-gen">–</strong></div>
           </div>
           <p class="tool-note">
             Decode assumes weights + KV cache stay in VRAM and uses ~80% of memory bandwidth;
@@ -122,14 +122,14 @@
       </div>
 
       <details class="calc-method">
-        <summary>How we calculate this — assumptions &amp; formulas</summary>
+        <summary>How we calculate this – assumptions &amp; formulas</summary>
         <div class="calc-method-body">
           <p>Real performance depends on engine, kernels, driver, and cooling. These are memory- and compute-bound <em>upper bounds</em> scaled by realized efficiency, not benchmarks.</p>
           <h4>1. Does it fit?</h4>
           <pre>weights = params × bytes_per_quant / GiB
 kv_cache ≈ params × 16384 × context / GiB
 total = weights + kv_cache</pre>
-          <p>KV here uses a rough 8B-arch approximation (~128 KB per token for 8B). If <code>total &gt; vram</code> we mark won't fit; real KV from layers/heads/dim is more precise — use the <a href="llm-vram-calculator.html">VRAM calculator</a> for that.</p>
+          <p>KV here uses a rough 8B-arch approximation (~128 KB per token for 8B). If <code>total &gt; vram</code> we mark won't fit; real KV from layers/heads/dim is more precise – use the <a href="llm-vram-calculator.html">VRAM calculator</a> for that.</p>
           <h4>2. Decode speed (memory bound)</h4>
           <pre>bytes_per_token = weights × GiB + kv_per_token
 decode_tok/s = (memory_BW × 0.8) / bytes_per_token</pre>
@@ -146,8 +146,8 @@ gen_time = answer_tokens / decode_tok/s</pre>
 
       <h2>Related guides</h2>
       <ul>
-        <li><a href="llm-vram-calculator.html">LLM VRAM Calculator — does it even fit?</a></li>
-        <li><a href="best-gpu-for-local-llm.html">Best GPU for local LLMs — which card to buy</a></li>
+        <li><a href="llm-vram-calculator.html">LLM VRAM Calculator – does it even fit?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for local LLMs – which card to buy</a></li>
         <li><a href="how-much-vram-for-llm.html">How much VRAM do you really need?</a></li>
       </ul>
     </div>
@@ -254,7 +254,7 @@ gen_time = answer_tokens / decode_tok/s</pre>
         verdict.innerHTML = "❌ <strong>Won't fully fit in VRAM.</strong> Model + KV cache ≈ " + fmtGB(total) + " vs " + g.vram + " GB available. Use a smaller quant, shorter context, or a higher-VRAM GPU.";
       } else {
         verdict.className = "result-verdict verdict-ok";
-        verdict.innerHTML = "✅ <strong>Fits in VRAM.</strong> Model + KV cache ≈ " + fmtGB(total) + " of " + g.vram + " GB — numbers below assume full GPU offload.";
+        verdict.innerHTML = "✅ <strong>Fits in VRAM.</strong> Model + KV cache ≈ " + fmtGB(total) + " of " + g.vram + " GB – numbers below assume full GPU offload.";
       }
 
       const bytesPerTok = weights * giB + kvPerTokBytes;

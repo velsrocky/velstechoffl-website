@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free Unix timestamp converter — convert between epoch seconds, milliseconds, and human-readable dates, with relative time. Copy the current timestamp instantly." />
+  <meta name="description" content="Free Unix timestamp converter – convert between epoch seconds, milliseconds, and human-readable dates, with relative time. Copy the current timestamp instantly." />
   <title>Unix Timestamp Converter | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/timestamp-converter.html" />
   <script type="application/ld+json">
@@ -45,7 +45,7 @@
     <div class="article-body">
       <p>
         Convert between Unix timestamps and human-readable dates, in both seconds and
-        milliseconds (JavaScript's <code>Date.now()</code> format). Also shows relative time —
+        milliseconds (JavaScript's <code>Date.now()</code> format). Also shows relative time –
         handy when you're debugging logs, checking a JWT <code>exp</code>, or working with APIs.
       </p>
 
@@ -68,11 +68,11 @@
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
           <div class="result-rows">
-            <div class="result-row"><span>Seconds (Unix)</span><strong id="r-sec">—</strong></div>
-            <div class="result-row"><span>Milliseconds (JS)</span><strong id="r-ms">—</strong></div>
-            <div class="result-row"><span>ISO 8601 (UTC)</span><strong id="r-iso">—</strong></div>
-            <div class="result-row"><span>Local time</span><strong id="r-local">—</strong></div>
-            <div class="result-row total"><span>Relative time</span><strong id="r-rel">—</strong></div>
+            <div class="result-row"><span>Seconds (Unix)</span><strong id="r-sec">–</strong></div>
+            <div class="result-row"><span>Milliseconds (JS)</span><strong id="r-ms">–</strong></div>
+            <div class="result-row"><span>ISO 8601 (UTC)</span><strong id="r-iso">–</strong></div>
+            <div class="result-row"><span>Local time</span><strong id="r-local">–</strong></div>
+            <div class="result-row total"><span>Relative time</span><strong id="r-rel">–</strong></div>
           </div>
           <p class="tool-note">
             Most APIs use <strong>seconds</strong>; JavaScript and many databases use
@@ -84,7 +84,7 @@
 
       <h2>Related guides</h2>
       <ul>
-        <li><a href="jwt-decoder.html">JWT Decoder — check token expiration</a></li>
+        <li><a href="jwt-decoder.html">JWT Decoder – check token expiration</a></li>
         <li><a href="terminal-commands.html">Essential terminal commands</a></li>
       </ul>
     </div>
@@ -149,7 +149,7 @@
       results.hidden = false;
       verdict.className = "result-verdict verdict-no";
       verdict.innerHTML = "❌ " + msg;
-      ["r-sec", "r-ms", "r-iso", "r-local", "r-rel"].forEach((id) => document.getElementById(id).textContent = "—");
+      ["r-sec", "r-ms", "r-iso", "r-local", "r-rel"].forEach((id) => document.getElementById(id).textContent = "–");
     }
 
     function renderFromTs() {

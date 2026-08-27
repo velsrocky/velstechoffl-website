@@ -7,7 +7,7 @@ const ARTICLES = [
     category: "Hardware",
     featured: true,
     tags: ["GPU", "LLM", "Local AI", "Benchmarks"],
-    description: "The best GPUs for running LLMs locally in 2026 — RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.",
+    description: "The best GPUs for running LLMs locally in 2026 – RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.",
   },
   {
     title: "How much VRAM do you need for 7B, 14B, and 32B models?",
@@ -16,7 +16,7 @@ const ARTICLES = [
     updated: "2026-08-27",
     category: "AI & ML",
     tags: ["VRAM", "LLM", "GPU", "Quantization"],
-    description: "VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table.",
+    description: "VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table.",
   },
   {
     title: "Best GPU for AI under ₹50,000 (India, 2026)",
@@ -25,7 +25,7 @@ const ARTICLES = [
     updated: "2026-08-27",
     category: "Hardware",
     tags: ["GPU", "Budget", "India", "Local AI"],
-    description: "The best GPUs for AI under ₹50,000 in India — which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.",
+    description: "The best GPUs for AI under ₹50,000 in India – which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.",
   },
   {
     title: "Xiaomi AI Cube: the mini desktop built for local AI",
@@ -35,7 +35,7 @@ const ARTICLES = [
     category: "Hardware",
     featured: true,
     tags: ["AI Hardware", "NPU", "Mini PC"],
-    description: "Xiaomi's AI Cube is a small desktop with a big NPU — made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.",
+    description: "Xiaomi's AI Cube is a small desktop with a big NPU – made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.",
   },
   {
     title: "Qwen3.8 Flash Next: Alibaba's new fast reasoning model",
@@ -44,7 +44,7 @@ const ARTICLES = [
     updated: "2026-08-27",
     category: "AI & ML",
     tags: ["LLM", "Qwen", "Reasoning"],
-    description: "Qwen3.8 Flash Next is Alibaba's newest reasoning model — faster, cheaper, and smarter. Here's what changed, how it performs, and how it compares.",
+    description: "Qwen3.8 Flash Next is Alibaba's newest reasoning model – faster, cheaper, and smarter. Here's what changed, how it performs, and how it compares.",
   },
   {
     title: "GLM 5.3: what's new in Zhipu AI's latest model",
@@ -53,7 +53,7 @@ const ARTICLES = [
     updated: "2026-08-27",
     category: "AI & ML",
     tags: ["LLM", "GLM", "Benchmarks"],
-    description: "GLM 5.3 is Zhipu AI's newest update — stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.",
+    description: "GLM 5.3 is Zhipu AI's newest update – stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.",
   },
   {
     title: "Omarchy: the beautiful, opinionated Linux distro everyone's talking about",
@@ -63,7 +63,7 @@ const ARTICLES = [
     category: "Operating Systems",
     featured: true,
     tags: ["Linux", "Arch", "Distro"],
-    description: "The Arch-based distro made by DHH of Basecamp — beautiful, opinionated, terminal-first. Here's what it is, why it's trending, and whether you should try it.",
+    description: "The Arch-based distro made by DHH of Basecamp – beautiful, opinionated, terminal-first. Here's what it is, why it's trending, and whether you should try it.",
   },
   {
     title: "What is machine learning, really?",
@@ -72,7 +72,7 @@ const ARTICLES = [
     updated: "2026-08-25",
     category: "AI & ML",
     tags: ["Basics", "ML"],
-    description: "A plain-language look at what learning from data actually means — training, models, and prediction — without the jargon.",
+    description: "A plain-language look at what learning from data actually means – training, models, and prediction – without the jargon.",
   },
   {
     title: "What is a Large Language Model, really?",
@@ -81,7 +81,7 @@ const ARTICLES = [
     updated: "2026-08-24",
     category: "AI & ML",
     tags: ["LLM", "Basics"],
-    description: "A plain-language look at how LLMs work under the hood — tokens, context, and probabilities — without the jargon.",
+    description: "A plain-language look at how LLMs work under the hood – tokens, context, and probabilities – without the jargon.",
   },
   {
     title: "How to write better prompts",
@@ -99,7 +99,7 @@ const ARTICLES = [
     updated: "2026-08-24",
     category: "AI & ML",
     tags: ["Privacy", "Hardware"],
-    description: "Privacy, cost, and capability — a comparison of running models on your own hardware versus cloud APIs.",
+    description: "Privacy, cost, and capability – a comparison of running models on your own hardware versus cloud APIs.",
   },
   {
     title: "How to choose parts for your first PC build",
@@ -144,7 +144,7 @@ const ARTICLES = [
     updated: "2026-08-24",
     category: "Operating Systems",
     tags: ["Terminal", "Basics"],
-    description: "Navigation, files, permissions, and package management — the commands you'll use every single day.",
+    description: "Navigation, files, permissions, and package management – the commands you'll use every single day.",
   },
   {
     title: "Windows vs Linux: when to use which",
@@ -162,7 +162,7 @@ const ARTICLES = [
     updated: "2026-08-24",
     category: "Networking",
     tags: ["Basics", "DNS"],
-    description: "A straightforward walkthrough of IP addresses, DNS, and routing — the basics that make the internet tick.",
+    description: "A straightforward walkthrough of IP addresses, DNS, and routing – the basics that make the internet tick.",
   },
   {
     title: "Setting up a domain and pointing it anywhere",
@@ -180,7 +180,7 @@ const ARTICLES = [
     updated: "2026-08-24",
     category: "Networking",
     tags: ["Self-hosting", "Projects"],
-    description: "From a media server to a personal cloud — services you can run on a Raspberry Pi or old laptop.",
+    description: "From a media server to a personal cloud – services you can run on a Raspberry Pi or old laptop.",
   },
   {
     title: "The only 5 security habits you really need",
@@ -189,7 +189,7 @@ const ARTICLES = [
     updated: "2026-08-24",
     category: "Security & Privacy",
     tags: ["Basics", "Passwords"],
-    description: "Passwords, two-factor authentication, updates, backups, and skepticism — the checklist that covers most risks.",
+    description: "Passwords, two-factor authentication, updates, backups, and skepticism – the checklist that covers most risks.",
   },
   {
     title: "Password managers: why you need one",
@@ -216,7 +216,7 @@ const ARTICLES = [
     updated: "2026-08-24",
     category: "Programming & Web",
     tags: ["Beginners", "Roadmap"],
-    description: "A realistic roadmap — pick a language, build tiny projects, and avoid the tutorial trap.",
+    description: "A realistic roadmap – pick a language, build tiny projects, and avoid the tutorial trap.",
   },
   {
     title: "HTML, CSS, and JavaScript: what does each one do?",
@@ -244,7 +244,7 @@ const ARTICLES = [
     category: "Tutorials",
     featured: true,
     tags: ["ROCm", "Radeon", "GPU"],
-    description: "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification.",
+    description: "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification.",
   },
   {
     title: "Installing PyTorch with ROCm on Radeon GPUs",
@@ -253,7 +253,7 @@ const ARTICLES = [
     updated: "2026-08-25",
     category: "Tutorials",
     tags: ["PyTorch", "ROCm", "Radeon"],
-    description: "Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs — venv setup, pip install, and GPU verification.",
+    description: "Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs – venv setup, pip install, and GPU verification.",
   },
   {
     title: "Apple's new Mac desktops: Mac Studio M5 Max/Ultra and Mac mini M6/M5 Pro",
@@ -263,37 +263,37 @@ const ARTICLES = [
     category: "Hardware",
     tags: ["Apple Silicon", "Mac", "Desktop"],
     featured: true,
-    description: "Apple's compact desktops land on 22 September — the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.",
+    description: "Apple's compact desktops land on 22 September – the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.",
   },
   {
-    title: "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab",
+    title: "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab",
     url: "qwen-27b-ridge-rocm-vs-vulkan.html",
     date: "2026-08-27",
     updated: "2026-08-27",
     category: "AI & ML",
     featured: true,
     tags: ["VelsTech Lab", "Qwen", "RX 6800M", "ROCm", "Vulkan", "Benchmark"],
-    description: "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.",
+    description: "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.",
   },
   {
-    title: "Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab",
+    title: "Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan – VelsTech Lab",
     url: "ornith-35b-moe-262k-rocm-vs-vulkan.html",
     date: "2026-08-27",
     updated: "2026-08-27",
     category: "AI & ML",
     featured: true,
     tags: ["VelsTech Lab", "MoE", "Ornith 35B", "RX 6800M", "ROCm", "Vulkan", "Benchmark"],
-    description: "Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.",
+    description: "Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M – ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.",
   },
   {
-    title: "MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab",
+    title: "MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab",
     url: "moe-vs-dense-rx6800m-16k-vs-262k.html",
     date: "2026-08-27",
     updated: "2026-08-27",
     category: "AI & ML",
     featured: true,
     tags: ["VelsTech Lab", "MoE vs Dense", "RX 6800M", "Benchmark"],
-    description: "Same RX 6800M 12GB — Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head.",
+    description: "Same RX 6800M 12GB – Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head.",
   },
 ];
 

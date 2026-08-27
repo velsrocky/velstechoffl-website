@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs, VRAM fit, and why -ngl 999 breaks --fit." />
-  <title>Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab | VelsTech</title>
+  <meta name="description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs, VRAM fit, and why -ngl 999 breaks --fit." />
+  <title>Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "@id": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html#article",
-  "headline": "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab",
-  "description": "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit.",
+  "headline": "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab",
+  "description": "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit.",
   "url": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html",
   "datePublished": "2026-08-27T00:00:00Z",
   "dateModified": "2026-08-27T00:00:00Z",
@@ -38,14 +38,14 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
-  <meta property="og:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab | VelsTech" />
-  <meta property="og:description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit." />
+  <meta property="og:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech" />
+  <meta property="og:description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab | VelsTech" />
-  <meta name="twitter:description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit." />
+  <meta name="twitter:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=22" />
@@ -53,7 +53,7 @@
 <body>
   <main class="article-page">
     <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / <a href="index.html#lab">VelsTech Lab</a> / This experiment</p>
-    <h1 class="title">Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab</h1>
+    <h1 class="title">Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab</h1>
     <div class="meta">
       <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
       <span class="tag">VelsTech Lab</span>
@@ -66,22 +66,22 @@
     </div>
 
     <div class="article-body">
-      <p><span class="tested-badge">🧪 VelsTech Lab — Coming soon</span> This is the first measured post in the Lab format: exact hardware, software, command, and raw <code>llama-server</code> timings — including what broke.</p>
+      <p><span class="tested-badge">🧪 VelsTech Lab – Coming soon</span> This is the first measured post in the Lab format: exact hardware, software, command, and raw <code>llama-server</code> timings – including what broke.</p>
 
       <div class="tool-callout">
         <div class="tool-callout-title">🔧 Check your own fit first</div>
-        <p><a href="llm-vram-calculator.html">LLM VRAM Calculator</a> — does 27B 3.7bpw + 16K fit your VRAM? · <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> — what tok/s to expect before you run.</p>
+        <p><a href="llm-vram-calculator.html">LLM VRAM Calculator</a> – does 27B 3.7bpw + 16K fit your VRAM? · <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> – what tok/s to expect before you run.</p>
         <a class="btn btn-primary" href="llm-vram-calculator.html">Open calculators →</a>
       </div>
 
       <h2>What we tested</h2>
       <ul>
-        <li><strong>GPU:</strong> AMD RX 6800M 12GB (mobile, RDNA2, 12 GB VRAM, ~384 GB/s) — the budget 12 GB card we keep recommending for local AI</li>
-        <li><strong>Model:</strong> <code>Qwen3.8-27B-Ridge-3.7bpw.gguf</code> — Qwen 27B class at 3.7 bits per weight (~12.3 GB weights). Ridge quant, not K-quants.</li>
+        <li><strong>GPU:</strong> AMD RX 6800M 12GB (mobile, RDNA2, 12 GB VRAM, ~384 GB/s) – the budget 12 GB card we keep recommending for local AI</li>
+        <li><strong>Model:</strong> <code>Qwen3.8-27B-Ridge-3.7bpw.gguf</code> – Qwen 27B class at 3.7 bits per weight (~12.3 GB weights). Ridge quant, not K-quants.</li>
         <li><strong>Context:</strong> <code>-c 16384</code> with <code>--cache-type-k q8_0 --cache-type-v q8_0 -fa on</code> (q8 KV, flash attention on)</li>
         <li><strong>Offload:</strong> <code>-ngl 999 --fit on</code> (forced all layers; see warning below)</li>
         <li><strong>Prompt:</strong> 373 tokens (same prompt both runs), <code>n_slots=4, n_ctx_slot=16384, kv_unified=true, n_threads=8</code></li>
-        <li><strong>Builds:</strong> Run 1 — <code>/home/user-name/llama.cpp/build/bin/llama-server</code> (ROCm); Run 2 — <code>/home/user-name/llama.cpp_vulkan/build-vulkan/bin/llama-server</code> (Vulkan)</li>
+        <li><strong>Builds:</strong> Run 1 – <code>/home/user-name/llama.cpp/build/bin/llama-server</code> (ROCm); Run 2 – <code>/home/user-name/llama.cpp_vulkan/build-vulkan/bin/llama-server</code> (Vulkan)</li>
       </ul>
 
       <h2>How we ran it</h2>
@@ -98,20 +98,20 @@ llama-server \
 ─────────────────────────────────────────────────────────────────────────────
 ROCm  (build)  1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s   100:18.42  155:18.12  210:18.08 → 18.12 tok/s   14.24s / 601 tok  graphs reused 226
 Vulkan        2493 ms / 373 tok = 6.68 ms/tok = 149.6 tok/s   100:22.09  166:21.83  232:21.82 → 21.84 tok/s   13.57s / 616 tok  graphs reused 241</pre>
-      <p><strong>Takeaway:</strong> Vulkan is <strong>~20% faster at decode</strong> (21.84 vs 18.12 tok/s) — the part that matters for chatting. ROCm is ~45% faster at prompt eval (217 vs 149 tok/s) — the time to first token on a long prompt. End-to-end for 615 tokens, Vulkan wins by 0.67s (13.57 vs 14.23) because decode dominates.</p>
+      <p><strong>Takeaway:</strong> Vulkan is <strong>~20% faster at decode</strong> (21.84 vs 18.12 tok/s) – the part that matters for chatting. ROCm is ~45% faster at prompt eval (217 vs 149 tok/s) – the time to first token on a long prompt. End-to-end for 615 tokens, Vulkan wins by 0.67s (13.57 vs 14.23) because decode dominates.</p>
 
-      <h2>What the logs actually said — and what broke</h2>
+      <h2>What the logs actually said – and what broke</h2>
       <ol>
-        <li><code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> — You forced <code>-ngl 999</code> so <code>--fit on</code> is ignored. On a 12 GB card this 27B q8-KV run must partially offload; forcing 999 hides how many layers actually fit. <strong>Fix next run: drop <code>-ngl 999</code> and let <code>--fit on</code> choose, or set <code>-ngl 60</code> and log <code>n_gpu_layers</code>.</strong></li>
-        <li>14× <code>W model has unused tensor blk.64.* (size ~20KB–73MB)</code> — Model header advertises 65 blocks (0-64) but block 64 is Qwen3 <code>nextn</code> speculative head (<code>eh_proj/enorm/hnorm/shared_head_norm</code>). llama.cpp ignores it when not drafting with <code>--jinja --reasoning-preserve</code> under this build. Not an error, but you load ~300 MB of dead weight.</li>
-        <li><code>kv_unified=true, n_slots=4, n_ctx_slot=16384</code> — 4 slots share one KV pool. If you hammer parallel requests at 16K each, you’ll OOM faster than the single-slot test shows.</li>
+        <li><code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – You forced <code>-ngl 999</code> so <code>--fit on</code> is ignored. On a 12 GB card this 27B q8-KV run must partially offload; forcing 999 hides how many layers actually fit. <strong>Fix next run: drop <code>-ngl 999</code> and let <code>--fit on</code> choose, or set <code>-ngl 60</code> and log <code>n_gpu_layers</code>.</strong></li>
+        <li>14× <code>W model has unused tensor blk.64.* (size ~20KB–73MB)</code> – Model header advertises 65 blocks (0-64) but block 64 is Qwen3 <code>nextn</code> speculative head (<code>eh_proj/enorm/hnorm/shared_head_norm</code>). llama.cpp ignores it when not drafting with <code>--jinja --reasoning-preserve</code> under this build. Not an error, but you load ~300 MB of dead weight.</li>
+        <li><code>kv_unified=true, n_slots=4, n_ctx_slot=16384</code> – 4 slots share one KV pool. If you hammer parallel requests at 16K each, you’ll OOM faster than the single-slot test shows.</li>
       </ol>
 
       <h2>How this maps to the calculators</h2>
-      <p>Weights: <code>27B × 0.4625 bytes (3.7bpw/8) ≈ 12.5 GB</code>. KV q8 at 16K: our <a href="llm-vram-calculator.html">VRAM Calculator</a> estimates ~1.0 GB at 8K with <code>2×layers×kv_heads×head_dim×2 bytes×context</code> — at 16K q8 it's ~2× that, so ~2.2 GB. Plus 6% overhead + 0.25 GB → total ~15.6 GB, well above 12 GB. The fact it ran at all proves partial offload (via system RAM) — which explains the ~18-21 tok/s vs the <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> upper bound of ~30 tok/s if fully resident. That delta is the offload tax.</p>
+      <p>Weights: <code>27B × 0.4625 bytes (3.7bpw/8) ≈ 12.5 GB</code>. KV q8 at 16K: our <a href="llm-vram-calculator.html">VRAM Calculator</a> estimates ~1.0 GB at 8K with <code>2×layers×kv_heads×head_dim×2 bytes×context</code> – at 16K q8 it's ~2× that, so ~2.2 GB. Plus 6% overhead + 0.25 GB → total ~15.6 GB, well above 12 GB. The fact it ran at all proves partial offload (via system RAM) – which explains the ~18-21 tok/s vs the <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> upper bound of ~30 tok/s if fully resident. That delta is the offload tax.</p>
 
       <details class="calc-method">
-        <summary>How we calculate — the formulas behind the numbers</summary>
+        <summary>How we calculate – the formulas behind the numbers</summary>
         <div class="calc-method-body">
           <p>Same logic as the calculators, linked so you can verify.</p>
           <h4>VRAM: <a href="llm-vram-calculator.html">LLM VRAM Calculator</a></h4>
@@ -125,7 +125,7 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
       </details>
 
       <h2>Bottom line</h2>
-      <p>On a 12 GB RX 6800M at 16K, Qwen 27B Ridge 3.7bpw <strong>does run, but not fully resident</strong>. If you chat (decode-bound), Vulkan’s +20% is real. If you feed long documents, ROCm’s faster prefill matters more. For a Lab verdict: <strong>usable but offloaded</strong> — expect 18-21 tok/s at 16K q8 KV, slower at 32K. Want it comfortably resident? Drop to <code>c 8192</code>, use <code>q8_0→f16</code> only if you have headroom, or step up to 16/24 GB.</p>
+      <p>On a 12 GB RX 6800M at 16K, Qwen 27B Ridge 3.7bpw <strong>does run, but not fully resident</strong>. If you chat (decode-bound), Vulkan’s +20% is real. If you feed long documents, ROCm’s faster prefill matters more. For a Lab verdict: <strong>usable but offloaded</strong> – expect 18-21 tok/s at 16K q8 KV, slower at 32K. Want it comfortably resident? Drop to <code>c 8192</code>, use <code>q8_0→f16</code> only if you have headroom, or step up to 16/24 GB.</p>
 
       <div class="tool-callout">
         <div class="tool-callout-title">🧪 More Lab</div>

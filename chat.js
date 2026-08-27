@@ -21,7 +21,7 @@
   const CHAT_BACKEND = "proxy";
 
   // Local backend: your OmniRoute API base (the OpenAI-compatible endpoint).
-  // NOTE: the API is at /v1 — /home is only the web dashboard.
+  // NOTE: the API is at /v1 – /home is only the web dashboard.
   const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";
 
   // Proxy backend: the URL where you deployed chat-proxy.js.
@@ -42,16 +42,16 @@
     "@cf/qwen/qwen2.5-7b-instruct",
   ];
 
-  // Active model (defaults to CHAT_MODEL; kept simple — no runtime picker).
+  // Active model (defaults to CHAT_MODEL; kept simple – no runtime picker).
   let activeModel = CHAT_MODEL;
 
   // System prompt (scoped, safe-by-design). Sent as a `system` message in both
   // local and proxy modes.
   const CHAT_GUIDANCE =
-    "You are the VelsTech assistant — a helpful, friendly, plain-language helper for a " +
+    "You are the VelsTech assistant – a helpful, friendly, plain-language helper for a " +
     "personal technology blog (velstech.net) aimed at tech-curious beginners and intermediate users.\n" +
     "You can usually answer any question directly. Treat the blog content below as OPTIONAL " +
-    "supplementary reference — it is only included when the user's question seems related to the blog.\n" +
+    "supplementary reference – it is only included when the user's question seems related to the blog.\n" +
     "Guidelines:\n" +
     "- Answer the user's question directly and helpfully. This includes general (non-blog) questions: " +
     "never refuse or say you lack access just because blog content wasn't provided.\n" +
@@ -328,7 +328,7 @@
       pageBtn.addEventListener("click", () => {
         if (pageBtn.disabled) return;
         // force page context and give a clear prompt
-        sendMessage("Explain this page briefly — what is it about, key points, and who is it for?", { forcePage: true });
+        sendMessage("Explain this page briefly – what is it about, key points, and who is it for?", { forcePage: true });
       });
     }
     const ta = $("vt-chat-input");
@@ -351,7 +351,7 @@
 
     // Welcome message
     const w = addMessage("assistant",
-      '👋 Hi — I\'m the VelsTech assistant. Ask me about articles on this site ' +
+      '👋 Hi – I\'m the VelsTech assistant. Ask me about articles on this site ' +
       '(AI, hardware, Linux, security…) or anything else.<br><span style="opacity:.7;font-size:12px">Tip: try “Explain this page” when viewing an article.</span>');
   }
 

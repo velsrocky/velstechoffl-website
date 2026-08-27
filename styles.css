@@ -615,7 +615,7 @@ a {
   background: #ffffff;
 }
 
-/* Light-theme secondary controls — stronger border/shadow vs --border #e2e8f0 which is invisible on white */
+/* Light-theme secondary controls – stronger border/shadow vs --border #e2e8f0 which is invisible on white */
 [data-theme="light"] .preset-chip {
   border-color: #94a3b8;
   background: #ffffff;
@@ -1381,7 +1381,7 @@ a.tag:hover {
   font-size: 0.9rem;
 }
 
-/* VelsTech Lab — boxed card, not full-width band */
+/* VelsTech Lab – boxed card, not full-width band */
 .lab-section {
   max-width: 760px;
   margin: 48px auto;
@@ -1457,7 +1457,7 @@ a.tag:hover {
   color: var(--accent);
 }
 
-/* About — VelsTech Tested */
+/* About – VelsTech Tested */
 .about-tested {
   margin-top: 16px;
   padding: 14px 18px;

@@ -1,5 +1,5 @@
 /*
- * VelsTech AI chat proxy — Cloudflare Worker.
+ * VelsTech AI chat proxy – Cloudflare Worker.
  *
  * Supports: OpenAI, Anthropic, or OmniRoute relay.
  *

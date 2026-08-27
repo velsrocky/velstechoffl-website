@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free LLM VRAM calculator — estimate how much GPU memory a model needs for a given quantization and context length, including KV cache, and see if it fits your GPU." />
+  <meta name="description" content="Free LLM VRAM calculator – estimate how much GPU memory a model needs for a given quantization and context length, including KV cache, and see if it fits your GPU." />
   <title>LLM VRAM Calculator | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/llm-vram-calculator.html" />
   <script type="application/ld+json">
@@ -12,7 +12,7 @@
   "@type": "WebApplication",
   "@id": "https://velstech.net/llm-vram-calculator.html#webapp",
   "name": "LLM VRAM Calculator | VelsTech",
-  "description": "Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU.",
+  "description": "Estimate how much GPU memory an LLM needs – model weights plus KV cache at your quantization and context length – and see if it fits your GPU.",
   "url": "https://velstech.net/llm-vram-calculator.html",
   "inLanguage": "en",
   "applicationCategory": "UtilitiesApplication",
@@ -23,13 +23,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/llm-vram-calculator.html" />
   <meta property="og:title" content="LLM VRAM Calculator | VelsTech" />
-  <meta property="og:description" content="Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU." />
+  <meta property="og:description" content="Estimate how much GPU memory an LLM needs – model weights plus KV cache at your quantization and context length – and see if it fits your GPU." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="LLM VRAM Calculator | VelsTech" />
-  <meta name="twitter:description" content="Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU." />
+  <meta name="twitter:description" content="Estimate how much GPU memory an LLM needs – model weights plus KV cache at your quantization and context length – and see if it fits your GPU." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=22" />
@@ -45,7 +45,7 @@
     <div class="article-body">
       <p>
         Pick a model and quantization, set your context length, and this estimates the
-        total GPU memory you'll need — model weights plus the KV cache plus a small
+        total GPU memory you'll need – model weights plus the KV cache plus a small
         overhead. Enter your GPU's VRAM to get a straight <strong>runs / partial offload /
         won't fit</strong> verdict. Runs entirely in your browser.
       </p>
@@ -105,11 +105,11 @@
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
           <div class="result-rows">
-            <div class="result-row"><span>Model weights</span><strong id="r-weights">—</strong></div>
-            <div class="result-row"><span>KV cache (at this context)</span><strong id="r-kv">—</strong></div>
-            <div class="result-row"><span>Overhead</span><strong id="r-overhead">—</strong></div>
-            <div class="result-row total"><span>Total VRAM needed</span><strong id="r-total">—</strong></div>
-            <div class="result-row"><span>Recommended GPU</span><strong id="r-gpu">—</strong></div>
+            <div class="result-row"><span>Model weights</span><strong id="r-weights">–</strong></div>
+            <div class="result-row"><span>KV cache (at this context)</span><strong id="r-kv">–</strong></div>
+            <div class="result-row"><span>Overhead</span><strong id="r-overhead">–</strong></div>
+            <div class="result-row total"><span>Total VRAM needed</span><strong id="r-total">–</strong></div>
+            <div class="result-row"><span>Recommended GPU</span><strong id="r-gpu">–</strong></div>
           </div>
           <p class="tool-note">
             Rough estimates. Real usage varies with the exact model build, tokenizer, CUDA/
@@ -119,7 +119,7 @@
       </div>
 
       <details class="calc-method">
-        <summary>How we calculate this — assumptions &amp; formulas</summary>
+        <summary>How we calculate this – assumptions &amp; formulas</summary>
         <div class="calc-method-body">
           <p>This is an estimate, not a lab measurement. Real usage varies with tokenizer, model build, CUDA graph, and your inference engine (llama.cpp, vLLM, etc.). Numbers below match the live calculator logic.</p>
           <h4>1. Model weights</h4>
@@ -128,7 +128,7 @@
           <h4>2. KV cache</h4>
           <pre>kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes
 kv_cache = kv_per_token × context × batch / GiB</pre>
-          <p>The <code>×2</code> covers K and V; the trailing <code>×2 bytes</code> assumes FP16 KV (the default for most engines). For a 32-layer, 8-KV-head, 128-dim model at 8192 context and batch 1, that's ~134 MB per 1K tokens. Long context dominates memory — 32K needs ~4× the KV of 8K.</p>
+          <p>The <code>×2</code> covers K and V; the trailing <code>×2 bytes</code> assumes FP16 KV (the default for most engines). For a 32-layer, 8-KV-head, 128-dim model at 8192 context and batch 1, that's ~134 MB per 1K tokens. Long context dominates memory – 32K needs ~4× the KV of 8K.</p>
           <h4>3. Overhead</h4>
           <pre>overhead = (weights + kv_cache) × 0.06 + 0.25 GB</pre>
           <p>6% covers CUDA context / engine buffers, plus a fixed 0.25 GB floor. Small but noticeable on 8 GB cards.</p>
@@ -139,9 +139,9 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
 
       <h2>Related guides</h2>
       <ul>
-        <li><a href="how-much-vram-for-llm.html">How much VRAM do you need for 7B/14B/32B? — the table &amp; context math</a></li>
-        <li><a href="gpu-ai-calculator.html">GPU AI Performance Calculator — how fast will it run?</a></li>
-        <li><a href="best-gpu-for-local-llm.html">Best GPU for local LLMs — benchmarks &amp; picks</a></li>
+        <li><a href="how-much-vram-for-llm.html">How much VRAM do you need for 7B/14B/32B? – the table &amp; context math</a></li>
+        <li><a href="gpu-ai-calculator.html">GPU AI Performance Calculator – how fast will it run?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for local LLMs – benchmarks &amp; picks</a></li>
       </ul>
     </div>
 
@@ -187,12 +187,12 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
     ];
 
     const GPU_TIERS = [
-      { max: 8, label: "8 GB — RTX 4060 / RX 7600" },
-      { max: 12, label: "12–16 GB — RTX 4070 / RX 7700 XT / RX 6800M (12 GB)" },
-      { max: 16, label: "16 GB — RTX 4080 Super / RX 7800 XT / RX 9070 XT" },
-      { max: 24, label: "24 GB — RTX 4090 / RX 7900 XTX / RX 9080 XT" },
-      { max: 32, label: "32 GB — RTX 5090" },
-      { max: Infinity, label: "More than 32 GB — cloud GPU or multi-GPU" },
+      { max: 8, label: "8 GB – RTX 4060 / RX 7600" },
+      { max: 12, label: "12–16 GB – RTX 4070 / RX 7700 XT / RX 6800M (12 GB)" },
+      { max: 16, label: "16 GB – RTX 4080 Super / RX 7800 XT / RX 9070 XT" },
+      { max: 24, label: "24 GB – RTX 4090 / RX 7900 XTX / RX 9080 XT" },
+      { max: 32, label: "32 GB – RTX 5090" },
+      { max: Infinity, label: "More than 32 GB – cloud GPU or multi-GPU" },
     ];
 
     const modelSel = document.getElementById("model");
@@ -261,7 +261,7 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
         verdict.innerHTML = "<strong>Needs " + fmt(total) + " of GPU memory.</strong> Enter your VRAM to see if it fits.";
       } else if (total <= vram * 0.95) {
         verdict.className = classes[0] + " verdict-ok";
-        verdict.innerHTML = "✅ <strong>Fits in your GPU VRAM.</strong> " + fmt(total) + " needed vs " + vram + " GB available — runs fully on GPU.";
+        verdict.innerHTML = "✅ <strong>Fits in your GPU VRAM.</strong> " + fmt(total) + " needed vs " + vram + " GB available – runs fully on GPU.";
       } else if (ram && total - vram <= ram * 0.9) {
         const offload = Math.max(0, total - vram);
         verdict.className = classes[0] + " verdict-warn";

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>VelsTech</title>
-  <subtitle>Hands-on tech: AI, hardware and Software — guides, experiments, benchmarks and free tools for builders.</subtitle>
+  <subtitle>Hands-on tech: AI, hardware and Software – guides, experiments, benchmarks and free tools for builders.</subtitle>
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
@@ -15,7 +15,7 @@
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="Hardware" />
-    <summary>The best GPUs for running LLMs locally in 2026 — RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.</summary>
+    <summary>The best GPUs for running LLMs locally in 2026 – RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.</summary>
   </entry>
   <entry>
     <title>How much VRAM do you need for 7B, 14B, and 32B models?</title>
@@ -24,7 +24,7 @@
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table.</summary>
+    <summary>VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table.</summary>
   </entry>
   <entry>
     <title>Best GPU for AI under ₹50,000 (India, 2026)</title>
@@ -33,7 +33,7 @@
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="Hardware" />
-    <summary>The best GPUs for AI under ₹50,000 in India — which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.</summary>
+    <summary>The best GPUs for AI under ₹50,000 in India – which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.</summary>
   </entry>
   <entry>
     <title>Xiaomi AI Cube: the mini desktop built for local AI</title>
@@ -42,7 +42,7 @@
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="Hardware" />
-    <summary>Xiaomi's AI Cube is a small desktop with a big NPU — made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.</summary>
+    <summary>Xiaomi's AI Cube is a small desktop with a big NPU – made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.</summary>
   </entry>
   <entry>
     <title>Qwen3.8 Flash Next: Alibaba's new fast reasoning model</title>
@@ -51,7 +51,7 @@
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>Qwen3.8 Flash Next is Alibaba's newest reasoning model — faster, cheaper, and smarter. Here's what changed, how it performs, and how it compares.</summary>
+    <summary>Qwen3.8 Flash Next is Alibaba's newest reasoning model – faster, cheaper, and smarter. Here's what changed, how it performs, and how it compares.</summary>
   </entry>
   <entry>
     <title>GLM 5.3: what's new in Zhipu AI's latest model</title>
@@ -60,34 +60,34 @@
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>GLM 5.3 is Zhipu AI's newest update — stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.</summary>
+    <summary>GLM 5.3 is Zhipu AI's newest update – stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.</summary>
   </entry>
   <entry>
-    <title>Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab</title>
+    <title>Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab</title>
     <link rel="alternate" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
     <id>https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html</id>
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.</summary>
+    <summary>Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.</summary>
   </entry>
   <entry>
-    <title>Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab</title>
+    <title>Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan – VelsTech Lab</title>
     <link rel="alternate" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
     <id>https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html</id>
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.</summary>
+    <summary>Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M – ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.</summary>
   </entry>
   <entry>
-    <title>MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab</title>
+    <title>MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab</title>
     <link rel="alternate" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
     <id>https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html</id>
     <published>2026-08-27T00:00:00Z</published>
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>Same RX 6800M 12GB — Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head.</summary>
+    <summary>Same RX 6800M 12GB – Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head.</summary>
   </entry>
   <entry>
     <title>Omarchy: the beautiful, opinionated Linux distro everyone's talking about</title>
@@ -96,7 +96,7 @@
     <published>2026-08-26T00:00:00Z</published>
     <updated>2026-08-26T00:00:00Z</updated>
     <category term="Operating Systems" />
-    <summary>The Arch-based distro made by DHH of Basecamp — beautiful, opinionated, terminal-first. Here's what it is, why it's trending, and whether you should try it.</summary>
+    <summary>The Arch-based distro made by DHH of Basecamp – beautiful, opinionated, terminal-first. Here's what it is, why it's trending, and whether you should try it.</summary>
   </entry>
   <entry>
     <title>What is machine learning, really?</title>
@@ -105,7 +105,7 @@
     <published>2026-08-25T00:00:00Z</published>
     <updated>2026-08-25T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>A plain-language look at what learning from data actually means — training, models, and prediction — without the jargon.</summary>
+    <summary>A plain-language look at what learning from data actually means – training, models, and prediction – without the jargon.</summary>
   </entry>
   <entry>
     <title>Installing ROCm on Ubuntu for Radeon GPUs</title>
@@ -114,7 +114,7 @@
     <published>2026-08-25T00:00:00Z</published>
     <updated>2026-08-25T00:00:00Z</updated>
     <category term="Tutorials" />
-    <summary>Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification.</summary>
+    <summary>Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification.</summary>
   </entry>
   <entry>
     <title>Installing PyTorch with ROCm on Radeon GPUs</title>
@@ -123,7 +123,7 @@
     <published>2026-08-25T00:00:00Z</published>
     <updated>2026-08-25T00:00:00Z</updated>
     <category term="Tutorials" />
-    <summary>Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs — venv setup, pip install, and GPU verification.</summary>
+    <summary>Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs – venv setup, pip install, and GPU verification.</summary>
   </entry>
   <entry>
     <title>Apple's new Mac desktops: Mac Studio M5 Max/Ultra and Mac mini M6/M5 Pro</title>
@@ -132,7 +132,7 @@
     <published>2026-08-25T00:00:00Z</published>
     <updated>2026-08-25T00:00:00Z</updated>
     <category term="Hardware" />
-    <summary>Apple's compact desktops land on 22 September — the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.</summary>
+    <summary>Apple's compact desktops land on 22 September – the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.</summary>
   </entry>
   <entry>
     <title>What is a Large Language Model, really?</title>
@@ -141,7 +141,7 @@
     <published>2026-08-24T00:00:00Z</published>
     <updated>2026-08-24T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>A plain-language look at how LLMs work under the hood — tokens, context, and probabilities — without the jargon.</summary>
+    <summary>A plain-language look at how LLMs work under the hood – tokens, context, and probabilities – without the jargon.</summary>
   </entry>
   <entry>
     <title>How to write better prompts</title>
@@ -159,7 +159,7 @@
     <published>2026-08-24T00:00:00Z</published>
     <updated>2026-08-24T00:00:00Z</updated>
     <category term="AI &amp; ML" />
-    <summary>Privacy, cost, and capability — a comparison of running models on your own hardware versus cloud APIs.</summary>
+    <summary>Privacy, cost, and capability – a comparison of running models on your own hardware versus cloud APIs.</summary>
   </entry>
   <entry>
     <title>How to choose parts for your first PC build</title>
@@ -204,7 +204,7 @@
     <published>2026-08-24T00:00:00Z</published>
     <updated>2026-08-24T00:00:00Z</updated>
     <category term="Operating Systems" />
-    <summary>Navigation, files, permissions, and package management — the commands you'll use every single day.</summary>
+    <summary>Navigation, files, permissions, and package management – the commands you'll use every single day.</summary>
   </entry>
   <entry>
     <title>Windows vs Linux: when to use which</title>
@@ -222,7 +222,7 @@
     <published>2026-08-24T00:00:00Z</published>
     <updated>2026-08-24T00:00:00Z</updated>
     <category term="Networking" />
-    <summary>A straightforward walkthrough of IP addresses, DNS, and routing — the basics that make the internet tick.</summary>
+    <summary>A straightforward walkthrough of IP addresses, DNS, and routing – the basics that make the internet tick.</summary>
   </entry>
   <entry>
     <title>Setting up a domain and pointing it anywhere</title>
@@ -240,7 +240,7 @@
     <published>2026-08-24T00:00:00Z</published>
     <updated>2026-08-24T00:00:00Z</updated>
     <category term="Networking" />
-    <summary>From a media server to a personal cloud — services you can run on a Raspberry Pi or old laptop.</summary>
+    <summary>From a media server to a personal cloud – services you can run on a Raspberry Pi or old laptop.</summary>
   </entry>
   <entry>
     <title>The only 5 security habits you really need</title>
@@ -249,7 +249,7 @@
     <published>2026-08-24T00:00:00Z</published>
     <updated>2026-08-24T00:00:00Z</updated>
     <category term="Security &amp; Privacy" />
-    <summary>Passwords, two-factor authentication, updates, backups, and skepticism — the checklist that covers most risks.</summary>
+    <summary>Passwords, two-factor authentication, updates, backups, and skepticism – the checklist that covers most risks.</summary>
   </entry>
   <entry>
     <title>Password managers: why you need one</title>
@@ -276,7 +276,7 @@
     <published>2026-08-24T00:00:00Z</published>
     <updated>2026-08-24T00:00:00Z</updated>
     <category term="Programming &amp; Web" />
-    <summary>A realistic roadmap — pick a language, build tiny projects, and avoid the tutorial trap.</summary>
+    <summary>A realistic roadmap – pick a language, build tiny projects, and avoid the tutorial trap.</summary>
   </entry>
   <entry>
     <title>HTML, CSS, and JavaScript: what does each one do?</title>

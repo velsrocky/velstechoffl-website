@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free color converter — convert between HEX, RGB, and HSL instantly, with a live swatch and copy buttons. Perfect for CSS and design work." />
+  <meta name="description" content="Free color converter – convert between HEX, RGB, and HSL instantly, with a live swatch and copy buttons. Perfect for CSS and design work." />
   <title>Color Converter (HEX / RGB / HSL) | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/color-converter.html" />
   <script type="application/ld+json">
@@ -73,15 +73,15 @@
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
           <div class="result-rows">
-            <div class="result-row"><span>HEX (6-digit)</span><strong id="r-hex">—</strong></div>
-            <div class="result-row"><span>HEX (shorthand, if possible)</span><strong id="r-hex3">—</strong></div>
-            <div class="result-row"><span>RGB (0–255)</span><strong id="r-rgb">—</strong></div>
-            <div class="result-row"><span>RGBA (with 0.5 alpha)</span><strong id="r-rgba">—</strong></div>
-            <div class="result-row"><span>HSL</span><strong id="r-hsl">—</strong></div>
-            <div class="result-row total"><span>Relative luminance</span><strong id="r-lum">—</strong></div>
+            <div class="result-row"><span>HEX (6-digit)</span><strong id="r-hex">–</strong></div>
+            <div class="result-row"><span>HEX (shorthand, if possible)</span><strong id="r-hex3">–</strong></div>
+            <div class="result-row"><span>RGB (0–255)</span><strong id="r-rgb">–</strong></div>
+            <div class="result-row"><span>RGBA (with 0.5 alpha)</span><strong id="r-rgba">–</strong></div>
+            <div class="result-row"><span>HSL</span><strong id="r-hsl">–</strong></div>
+            <div class="result-row total"><span>Relative luminance</span><strong id="r-lum">–</strong></div>
           </div>
           <p class="tool-note">
-            Relative luminance is the WCAG basis for contrast — dark text on this background
+            Relative luminance is the WCAG basis for contrast – dark text on this background
             needs luminance above ~0.18, light text below. Blue is a common accent choice;
             this one sits right in the middle.
           </p>
@@ -162,7 +162,7 @@
       document.getElementById("r-lum").textContent = lum.toFixed(3);
 
       verdict.className = "result-verdict verdict-ok";
-      verdict.innerHTML = "✅ <strong>" + hex + "</strong> — " + r + ", " + g + ", " + b + " · converted from " + source + ".";
+      verdict.innerHTML = "✅ <strong>" + hex + "</strong> – " + r + ", " + g + ", " + b + " · converted from " + source + ".";
     }
 
     function fromHex(s) {

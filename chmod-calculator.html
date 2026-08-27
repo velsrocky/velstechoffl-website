@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free chmod calculator — pick read/write/execute permissions for owner, group, and others and instantly get the numeric mode (like 755) and the command to run." />
+  <meta name="description" content="Free chmod calculator – pick read/write/execute permissions for owner, group, and others and instantly get the numeric mode (like 755) and the command to run." />
   <title>chmod Calculator | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/chmod-calculator.html" />
   <script type="application/ld+json">
@@ -53,12 +53,12 @@
       <div class="calc">
         <div class="calc-grid">
           <div class="preset-row">
-            <button class="preset-chip" data-bits="7,5,5" title="Set 755 — rwxr-xr-x (owner full, group/others read+execute)" aria-label="Set permissions to 755">755</button>
-            <button class="preset-chip" data-bits="6,4,4" title="Set 644 — rw-r--r-- (owner read/write, group/others read)" aria-label="Set permissions to 644">644</button>
-            <button class="preset-chip" data-bits="6,0,0" title="Set 600 — rw------- (owner read/write only)" aria-label="Set permissions to 600">600</button>
-            <button class="preset-chip" data-bits="7,0,0" title="Set 700 — rwx------ (owner full only)" aria-label="Set permissions to 700">700</button>
-            <button class="preset-chip" data-bits="7,7,7" title="Set 777 — rwxrwxrwx (everyone full — use cautiously)" aria-label="Set permissions to 777">777</button>
-            <button class="preset-chip" data-bits="4,0,0" title="Set 400 — r-------- (owner read only)" aria-label="Set permissions to 400">400</button>
+            <button class="preset-chip" data-bits="7,5,5" title="Set 755 – rwxr-xr-x (owner full, group/others read+execute)" aria-label="Set permissions to 755">755</button>
+            <button class="preset-chip" data-bits="6,4,4" title="Set 644 – rw-r--r-- (owner read/write, group/others read)" aria-label="Set permissions to 644">644</button>
+            <button class="preset-chip" data-bits="6,0,0" title="Set 600 – rw------- (owner read/write only)" aria-label="Set permissions to 600">600</button>
+            <button class="preset-chip" data-bits="7,0,0" title="Set 700 – rwx------ (owner full only)" aria-label="Set permissions to 700">700</button>
+            <button class="preset-chip" data-bits="7,7,7" title="Set 777 – rwxrwxrwx (everyone full – use cautiously)" aria-label="Set permissions to 777">777</button>
+            <button class="preset-chip" data-bits="4,0,0" title="Set 400 – r-------- (owner read only)" aria-label="Set permissions to 400">400</button>
           </div>
 
           <fieldset class="field perm-group">
@@ -84,15 +84,15 @@
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
           <div class="result-rows">
-            <div class="result-row"><span>Numeric mode</span><strong id="r-num">—</strong></div>
-            <div class="result-row"><span>Symbolic form</span><strong id="r-sym">—</strong></div>
-            <div class="result-row"><span>Owner / Group / Others</span><strong id="r-desc">—</strong></div>
-            <div class="result-row total"><span>Command (file)</span><strong id="r-cmd-file">—</strong></div>
-            <div class="result-row"><span>Command (directory, recursive)</span><strong id="r-cmd-dir">—</strong></div>
+            <div class="result-row"><span>Numeric mode</span><strong id="r-num">–</strong></div>
+            <div class="result-row"><span>Symbolic form</span><strong id="r-sym">–</strong></div>
+            <div class="result-row"><span>Owner / Group / Others</span><strong id="r-desc">–</strong></div>
+            <div class="result-row total"><span>Command (file)</span><strong id="r-cmd-file">–</strong></div>
+            <div class="result-row"><span>Command (directory, recursive)</span><strong id="r-cmd-dir">–</strong></div>
           </div>
           <p class="tool-note">
             Special bits (setuid <code>4</code>, setgid <code>2</code>, sticky <code>1</code>)
-            can be prepended, e.g. <code>4755</code> for setuid — rarely needed for normal use.
+            can be prepended, e.g. <code>4755</code> for setuid – rarely needed for normal use.
           </p>
         </div>
       </div>
@@ -156,10 +156,10 @@
       verdict.className = "result-verdict";
       if (bits.others === 7 || bits.others === 6) {
         verdict.className += " verdict-warn";
-        verdict.innerHTML = "⚠️ <strong>" + num + " gives " + (bits.others === 7 ? "full read+write+execute" : "read+write") + " to everyone.</strong> For public directories that's often intentional — just make sure you mean it.";
+        verdict.innerHTML = "⚠️ <strong>" + num + " gives " + (bits.others === 7 ? "full read+write+execute" : "read+write") + " to everyone.</strong> For public directories that's often intentional – just make sure you mean it.";
       } else if (bits.owner === 0) {
         verdict.className += " verdict-warn";
-        verdict.innerHTML = "⚠️ <strong>Owner has no permissions.</strong> You may lock yourself out — this is usually a mistake.";
+        verdict.innerHTML = "⚠️ <strong>Owner has no permissions.</strong> You may lock yourself out – this is usually a mistake.";
       } else {
         verdict.className += " verdict-ok";
         verdict.innerHTML = "✅ <strong>" + num + " is set.</strong> Owner: " + describe(bits.owner) + ", group: " + describe(bits.group) + ", others: " + describe(bits.others) + ".";

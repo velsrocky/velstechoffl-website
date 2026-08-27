@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MoE vs dense on the same RX 6800M 12GB — Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan decode/prefill, VRAM math and when MoE wins." />
-  <title>MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab | VelsTech</title>
+  <meta name="description" content="MoE vs dense on the same RX 6800M 12GB – Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan decode/prefill, VRAM math and when MoE wins." />
+  <title>MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "@id": "https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html#article",
-  "headline": "MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab",
-  "description": "MoE vs dense on the same RX 6800M 12GB — Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan.",
+  "headline": "MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab",
+  "description": "MoE vs dense on the same RX 6800M 12GB – Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan.",
   "url": "https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html",
   "datePublished": "2026-08-27T00:00:00Z",
   "dateModified": "2026-08-27T00:00:00Z",
@@ -38,14 +38,14 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
-  <meta property="og:title" content="MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab | VelsTech" />
-  <meta property="og:description" content="MoE vs dense on the same RX 6800M 12GB — Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan." />
+  <meta property="og:title" content="MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab | VelsTech" />
+  <meta property="og:description" content="MoE vs dense on the same RX 6800M 12GB – Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab | VelsTech" />
-  <meta name="twitter:description" content="MoE vs dense on the same RX 6800M 12GB — Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan." />
+  <meta name="twitter:title" content="MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="MoE vs dense on the same RX 6800M 12GB – Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=22" />
@@ -53,7 +53,7 @@
 <body>
   <main class="article-page">
     <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / <a href="index.html#lab">VelsTech Lab</a> / MoE vs dense</p>
-    <h1 class="title">MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab</h1>
+    <h1 class="title">MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab</h1>
     <div class="meta">
       <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
       <span class="tag">VelsTech Lab</span>
@@ -82,23 +82,23 @@ Qwen 27B Ridge       27B dense  16K   q8_0     -ngl 999 (+fit abort)  ROCm    17
 
 Ornith 35B-A3B MoE   35B/3B*    262K  q8_0     --n-cpu-moe 28        ROCm    3995 ms /335 = 83.8 tok/s    25.62 tok/s   14.65s /609 tok
 Q5_K/Q4_K mix               kv_unified=false              Vulkan  4029 ms /335 = 83.1 tok/s    19.66 tok/s   19.59s /642 tok
-* 35B total, 3B active — MoE decodes 3B, not 35B.</pre>
+* 35B total, 3B active – MoE decodes 3B, not 35B.</pre>
       <p class="tool-note">First two rows: <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B 16K full report</a>; last two: <a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B 262K full report</a>. All at <code>-c</code> reserved KV, <code>fa on</code>, 373/335 prompt tokens, ~600 gen tokens.</p>
 
       <h2>What actually happens</h2>
       <ul>
-        <li><strong>Decode is MoE’s win at scale, but not universally.</strong> At 16K dense, Vulkan wins +20% (21.84 vs 18.12). At 262K MoE, ROCm wins +30% (25.62 vs 19.66). Same card, opposite engine winner — the bottleneck flips from pure VRAM BW (dense 27B) to CPU-MoE + PCIe (28 experts on CPU) at 262K.</li>
-        <li><strong>Prompt eval collapses with context reservation, not prompt size.</strong> Qwen 16K prompt 217 tok/s vs Ornith 262K prompt 83 tok/s — same 335 tokens, but Ornith reserves a 262K KV pool (<code>kv_unified=false, n_slots=1</code>) that costs prefill bookkeeping. You pay for <code>-c</code> even when prompt is short.</li>
-        <li><strong>MoE decodes far fewer bytes per token.</strong> Dense decodes 27B weights per token; MoE decodes ~3B active. That’s why Ornith at 262K can still do 25.6 tok/s on 12GB while Qwen at 16K does 18-21 — active, not total, matters. Our <a href="gpu-ai-calculator.html">GPU calculator</a> bound <code>decode ≈ BW×0.8 / bytes_per_token</code> predicts ~30 tok/s if resident; the gap to 25.6 is CPU MoE + offload.</li>
+        <li><strong>Decode is MoE’s win at scale, but not universally.</strong> At 16K dense, Vulkan wins +20% (21.84 vs 18.12). At 262K MoE, ROCm wins +30% (25.62 vs 19.66). Same card, opposite engine winner – the bottleneck flips from pure VRAM BW (dense 27B) to CPU-MoE + PCIe (28 experts on CPU) at 262K.</li>
+        <li><strong>Prompt eval collapses with context reservation, not prompt size.</strong> Qwen 16K prompt 217 tok/s vs Ornith 262K prompt 83 tok/s – same 335 tokens, but Ornith reserves a 262K KV pool (<code>kv_unified=false, n_slots=1</code>) that costs prefill bookkeeping. You pay for <code>-c</code> even when prompt is short.</li>
+        <li><strong>MoE decodes far fewer bytes per token.</strong> Dense decodes 27B weights per token; MoE decodes ~3B active. That’s why Ornith at 262K can still do 25.6 tok/s on 12GB while Qwen at 16K does 18-21 – active, not total, matters. Our <a href="gpu-ai-calculator.html">GPU calculator</a> bound <code>decode ≈ BW×0.8 / bytes_per_token</code> predicts ~30 tok/s if resident; the gap to 25.6 is CPU MoE + offload.</li>
         <li><strong>Both forced <code>-ngl 999</code> → <code>failed to fit params... abort</code>.</strong> <code>--fit on</code> was ignored. Next Lab will drop <code>-ngl</code> and log fitted layers, plus add <code>--load-mode none</code> for MoE (fixes <code>tensor overrides to CPU with mmap</code>).</li>
       </ul>
 
-      <h2>VRAM math — why 12GB still runs</h2>
-      <p>Qwen 27B 3.7bpw: <code>27B ×0.4625 ≈12.5 GB</code> weights + q8 KV 16K ≈2.2 GB + 6% overhead → ~15.6 GB (from <a href="llm-vram-calculator.html">VRAM Calculator</a>) — well over 12GB, so partial offload explains 18-21 tok/s vs 30 tok/s bound.</p>
-      <p>Ornith 35B MoE 3B active: 35B mix Q5/Q4 ≈13-14 GB if counted as 35B, but KV per token scales with <em>active</em> 3B, so 262K q8 is ~262K×0.5KB ≈131 GB if naively counted as dense. That’s why we force 28 experts to CPU — you’re not resident, you’re sparse. Enter <code>3B active</code> + custom <code>layers 48 / kv 4 / hd 128</code> in the calculator, not 35B, or toggle <code>Custom model…</code>.</p>
+      <h2>VRAM math – why 12GB still runs</h2>
+      <p>Qwen 27B 3.7bpw: <code>27B ×0.4625 ≈12.5 GB</code> weights + q8 KV 16K ≈2.2 GB + 6% overhead → ~15.6 GB (from <a href="llm-vram-calculator.html">VRAM Calculator</a>) – well over 12GB, so partial offload explains 18-21 tok/s vs 30 tok/s bound.</p>
+      <p>Ornith 35B MoE 3B active: 35B mix Q5/Q4 ≈13-14 GB if counted as 35B, but KV per token scales with <em>active</em> 3B, so 262K q8 is ~262K×0.5KB ≈131 GB if naively counted as dense. That’s why we force 28 experts to CPU – you’re not resident, you’re sparse. Enter <code>3B active</code> + custom <code>layers 48 / kv 4 / hd 128</code> in the calculator, not 35B, or toggle <code>Custom model…</code>.</p>
 
       <details class="calc-method">
-        <summary>How we calculate — the formulas behind the numbers</summary>
+        <summary>How we calculate – the formulas behind the numbers</summary>
         <div class="calc-method-body">
           <h4>VRAM</h4>
           <pre>weights = params × bytes_per_weight / GiB
@@ -108,7 +108,7 @@ total = weights + kv_cache + (weights+kv)×0.06+0.25</pre>
           <p>For MoE, use <em>active</em> params for KV, not total. See <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> → Custom model.</p>
           <h4>Speed bound</h4>
           <pre>decode_tok/s ≈ (memory_BW ×0.8) / bytes_per_token (weights + KV per token)</pre>
-          <p>MoE bytes_per_token ≈ active 3B, dense ≈27B — hence Ornith can be faster than Qwen despite larger total.</p>
+          <p>MoE bytes_per_token ≈ active 3B, dense ≈27B – hence Ornith can be faster than Qwen despite larger total.</p>
         </div>
       </details>
 
@@ -121,7 +121,7 @@ total = weights + kv_cache + (weights+kv)×0.06+0.25</pre>
 
       <div class="tool-callout">
         <div class="tool-callout-title">🧪 Dive into the raw runs</div>
-        <p>Full logs, commands and warnings are in the two source Labs — start with Qwen 16K, then Ornith 262K, then compare here.</p>
+        <p>Full logs, commands and warnings are in the two source Labs – start with Qwen 16K, then Ornith 262K, then compare here.</p>
         <a class="btn btn-primary" href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B 16K →</a> <a class="btn btn-ghost" href="ornith-35b-moe-262k-rocm-vs-vulkan.html" style="margin-left:8px">Ornith 35B 262K →</a>
       </div>
     </div>

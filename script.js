@@ -1,6 +1,6 @@
 const root = document.documentElement;
 
-/* Amazon Associates tracking ID — ONE place to change it site-wide.
+/* Amazon Associates tracking ID – ONE place to change it site-wide.
    Every <a data-amazon="search query"> is rewritten to an Amazon.in
    keyword link carrying this tag. */
 const AMAZON_TAG = "velstechoffl-21";
@@ -8,14 +8,14 @@ const AMAZON_TAG = "velstechoffl-21";
 /* Software / cloud / hosting affiliate referral URLs.
    Each key matches a <a data-aff="key" href="..."> link on the site.
    Add the referral URL you get from each program's signup; until then
-   the plain homepage href is used. Edit these values — not the HTML.
+   the plain homepage href is used. Edit these values – not the HTML.
    Order: cash-per-sale programs first (priority), then credit-based. */
 const AFFILIATE_LINKS = {
   /* Cash-per-sale / recurring commissions (priority) */
-  hostinger: "",   // hosting · 40%+ per sale, grows with volume — https://affiliates.hostinger.com
-  nordvpn: "",     // VPN · 40–100% per sale + 30% recurring renewals — nordvpn.com/affiliate (also unlocks NordPass/NordLocker)
-  kit: "",         // email/newsletter · 50% of first 12 months + 10–20% recurring — https://kit.com/affiliates
-  brevo: "",       // email/CRM · affiliate program, reward per referred signup — brevo.com/partners
+  hostinger: "",   // hosting · 40%+ per sale, grows with volume – https://affiliates.hostinger.com
+  nordvpn: "",     // VPN · 40–100% per sale + 30% recurring renewals – nordvpn.com/affiliate (also unlocks NordPass/NordLocker)
+  kit: "",         // email/newsletter · 50% of first 12 months + 10–20% recurring – https://kit.com/affiliates
+  brevo: "",       // email/CRM · affiliate program, reward per referred signup – brevo.com/partners
   /* Credit-based referral programs (secondary) */
   bitwarden: "",   // credit-based referral
   proton: "",      // credit-based referral
@@ -23,9 +23,9 @@ const AFFILIATE_LINKS = {
   digitalocean: "",// credit-based referral ($25 credit per refer)
   runpod: "",      // credit-based referral
   vastai: "",      // credit-based referral
-  hetzner: "",     // no public program confirmed — remove data-aff if none
-  namecheap: "",   // check current program — remove data-aff if none
-  copilot: "",     // no public program confirmed — remove data-aff if none
+  hetzner: "",     // no public program confirmed – remove data-aff if none
+  namecheap: "",   // check current program – remove data-aff if none
+  copilot: "",     // no public program confirmed – remove data-aff if none
 };
 
 function affiliateHref(key) {
@@ -33,7 +33,7 @@ function affiliateHref(key) {
   return url || null;
 }
 
-/* Google AdSense — client ID is live (Auto Ads). Setting ADSENSE_SLOT additionally
+/* Google AdSense – client ID is live (Auto Ads). Setting ADSENSE_SLOT additionally
    inserts a manual responsive unit before .article-nav; leave empty to let Google
    auto-place ads. Ads only serve after AdSense approval. */
 const ADSENSE_CLIENT = "ca-pub-5002392377660300";
@@ -49,7 +49,7 @@ function initAdsense() {
     document.head.appendChild(s);
   }
 
-  if (!ADSENSE_SLOT) return; // Auto Ads mode — Google decides placement
+  if (!ADSENSE_SLOT) return; // Auto Ads mode – Google decides placement
 
   const slot = document.createElement("ins");
   slot.className = "adsbygoogle";
@@ -242,7 +242,7 @@ function initWhatsNew() {
       return b.updated.localeCompare(a.updated);
     }).slice(0, 5);
     if (!sorted.length) {
-      list.innerHTML = '<p class="tool-note">No articles in this filter yet — try All.</p>';
+      list.innerHTML = '<p class="tool-note">No articles in this filter yet – try All.</p>';
       return;
     }
     list.innerHTML = sorted.map((a) =>
@@ -382,7 +382,7 @@ injectChat();
 const feedLink = document.createElement("link");
 feedLink.rel = "alternate";
 feedLink.type = "application/atom+xml";
-feedLink.title = "VelsTech — Atom feed";
+feedLink.title = "VelsTech – Atom feed";
 feedLink.href = "feed.xml";
 document.head.appendChild(feedLink);
 
@@ -488,7 +488,7 @@ function initTagsPage() {
     }
     const hits = ARTICLES.filter((a) => a.tags.includes(tag));
     results.innerHTML =
-      '<h2 class="tag-results-heading">"' + esc(tag) + '" — ' + hits.length + " article" + (hits.length === 1 ? "" : "s") + "</h2>" +
+      '<h2 class="tag-results-heading">"' + esc(tag) + '" – ' + hits.length + " article" + (hits.length === 1 ? "" : "s") + "</h2>" +
       hits
         .map(
           (a) =>

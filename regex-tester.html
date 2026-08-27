@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free regex tester — paste a regular expression and test string to see every match, capture group, and match position highlighted inline." />
+  <meta name="description" content="Free regex tester – paste a regular expression and test string to see every match, capture group, and match position highlighted inline." />
   <title>Regex Tester | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/regex-tester.html" />
   <script type="application/ld+json">
@@ -12,7 +12,7 @@
   "@type": "WebApplication",
   "@id": "https://velstech.net/regex-tester.html#webapp",
   "name": "Regex Tester | VelsTech",
-  "description": "Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline.",
+  "description": "Test regular expressions live – paste a pattern and test string to see every match, capture group, and position highlighted inline.",
   "url": "https://velstech.net/regex-tester.html",
   "inLanguage": "en",
   "applicationCategory": "UtilitiesApplication",
@@ -23,13 +23,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/regex-tester.html" />
   <meta property="og:title" content="Regex Tester | VelsTech" />
-  <meta property="og:description" content="Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline." />
+  <meta property="og:description" content="Test regular expressions live – paste a pattern and test string to see every match, capture group, and position highlighted inline." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Regex Tester | VelsTech" />
-  <meta name="twitter:description" content="Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline." />
+  <meta name="twitter:description" content="Test regular expressions live – paste a pattern and test string to see every match, capture group, and position highlighted inline." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=22" />
@@ -45,7 +45,7 @@
     <div class="article-body">
       <p>
         Build and test a regular expression against some text. Matches are highlighted
-        inline and listed with their position and capture groups — handy before you pipe a
+        inline and listed with their position and capture groups – handy before you pipe a
         <code>grep</code> or <code>sed</code> command into production.
       </p>
 
@@ -144,7 +144,7 @@ Sales is sales@velstech.com.</textarea>
               return g === null ? "" : '<span class="match-grp">' + esc(g) + "</span>";
             }).join(" ");
             return '<div class="result-row" style="font-family:var(--mono, monospace)">' +
-              "<span>#"+ (i+1) + " @ " + match.index + " — " + (groupHtml || "<em>no capture groups</em>") + "</span>" +
+              "<span>#"+ (i+1) + " @ " + match.index + " – " + (groupHtml || "<em>no capture groups</em>") + "</span>" +
               "</div>";
           }).join("")
         : '<div class="result-row"><span><em>No matches</em></span></div>';

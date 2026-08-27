@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Navigation, files, permissions, and package management — the terminal commands you'll use every day." />
+  <meta name="description" content="Navigation, files, permissions, and package management – the terminal commands you'll use every day." />
   <title>Essential terminal commands everyone should know | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/terminal-commands.html" />
   <script type="application/ld+json">
@@ -12,7 +12,7 @@
   "@type": "BlogPosting",
   "@id": "https://velstech.net/terminal-commands.html#article",
   "headline": "Essential terminal commands everyone should know",
-  "description": "Navigation, files, permissions, and package management — the commands you'll use every single day.",
+  "description": "Navigation, files, permissions, and package management – the commands you'll use every single day.",
   "url": "https://velstech.net/terminal-commands.html",
   "datePublished": "2026-08-24T00:00:00Z",
   "dateModified": "2026-08-24T00:00:00Z",
@@ -39,13 +39,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/terminal-commands.html" />
   <meta property="og:title" content="Essential terminal commands everyone should know | VelsTech" />
-  <meta property="og:description" content="Navigation, files, permissions, and package management — the commands you'll use every single day." />
+  <meta property="og:description" content="Navigation, files, permissions, and package management – the commands you'll use every single day." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Essential terminal commands everyone should know | VelsTech" />
-  <meta name="twitter:description" content="Navigation, files, permissions, and package management — the commands you'll use every single day." />
+  <meta name="twitter:description" content="Navigation, files, permissions, and package management – the commands you'll use every single day." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=22" />
@@ -69,10 +69,10 @@
       </p>
 
       <h2>1. Finding your way around</h2>
-      <pre>pwd              # print working directory — where am I?
+      <pre>pwd              # print working directory – where am I?
 ls               # list files in the current folder
 ls -la           # list everything, including hidden files (a = all, l = details)
-cd folder        # change directory — go into a folder
+cd folder        # change directory – go into a folder
 cd ..            # go up one folder
 cd ~             # go to your home folder
 cd -             # go back to the previous folder you were in</pre>
@@ -99,7 +99,7 @@ nano file        # edit a file in a simple editor (Ctrl+O save, Ctrl+X exit)</pr
       <h2>3. Permissions (why Linux asks who you are)</h2>
       <p>
         Linux is built around users and permissions. Every file has an owner and access
-        settings — read, write, execute — for the owner, their group, and everyone else.
+        settings – read, write, execute – for the owner, their group, and everyone else.
       </p>
       <pre>ls -l            # shows permissions (like -rw-r--r-- and the owner)
 chmod +x file    # make a file executable
@@ -107,7 +107,7 @@ chown user file  # change a file's owner
 sudo command     # run a command as administrator</pre>
       <p>
         <code>sudo</code> ("superuser do") is how you install software or change system
-        settings. Only use it when a command fails with a permission error — and always know
+        settings. Only use it when a command fails with a permission error – and always know
         what the command does first.
       </p>
 
@@ -140,7 +140,7 @@ history | tail   # show your recent commands
 grep error log.txt   # search a file for "error"
 ps aux | grep firefox # find running Firefox processes</pre>
       <p>
-        <code>grep</code> deserves its own medal — it searches text for a pattern. You'll use
+        <code>grep</code> deserves its own medal – it searches text for a pattern. You'll use
         it constantly.
       </p>
 
@@ -155,12 +155,12 @@ ping google.com  # is the internet reachable? (Ctrl+C to stop)</pre>
 
       <h2>7. Quick tips that save time</h2>
       <ul>
-        <li><strong>Tab to autocomplete</strong> — press Tab to finish file and command names. Every terminal user does this.</li>
-        <li><strong>Up arrow</strong> — recall the previous command.</li>
-        <li><strong>Ctrl+C</strong> — cancel whatever is running.</li>
-        <li><strong>Ctrl+L</strong> — clear the screen.</li>
-        <li><strong>Ctrl+R</strong> — search your command history.</li>
-        <li><strong>man command</strong> — read the manual for any command (q to quit).</li>
+        <li><strong>Tab to autocomplete</strong> – press Tab to finish file and command names. Every terminal user does this.</li>
+        <li><strong>Up arrow</strong> – recall the previous command.</li>
+        <li><strong>Ctrl+C</strong> – cancel whatever is running.</li>
+        <li><strong>Ctrl+L</strong> – clear the screen.</li>
+        <li><strong>Ctrl+R</strong> – search your command history.</li>
+        <li><strong>man command</strong> – read the manual for any command (q to quit).</li>
       </ul>
 
       <h2>A tiny real-world session</h2>
@@ -173,16 +173,16 @@ $ ls -la
 $ nano index.html          # type some HTML, Ctrl+O, Ctrl+X
 $ grep -i "title" index.html   # did I write a title?
 $ cd ..
-$ rm -r mysite            # oops — no undo from here</pre>
+$ rm -r mysite            # oops – no undo from here</pre>
       <p>
-        You don't need to memorize any of this — <code>man</code> and the tab key will carry
+        You don't need to memorize any of this – <code>man</code> and the tab key will carry
         you. Just keep these handy and the terminal stops being scary and starts being your
         favorite tool.
       </p>
 
       <div class="tool-callout">
         <div class="tool-callout-title">🔐 Try the VelsTech chmod Calculator</div>
-        <p>Never memorize the permission number table again — toggle read/write/execute and get the chmod command instantly.</p>
+        <p>Never memorize the permission number table again – toggle read/write/execute and get the chmod command instantly.</p>
         <a class="btn btn-primary" href="chmod-calculator.html">Open calculator →</a>
       </div>
     </div>

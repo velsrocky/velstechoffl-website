@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification." />
+  <meta name="description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification." />
   <title>Installing ROCm on Ubuntu for Radeon GPUs | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/install-rocm-ubuntu.html" />
   <script type="application/ld+json">
@@ -12,7 +12,7 @@
   "@type": "BlogPosting",
   "@id": "https://velstech.net/install-rocm-ubuntu.html#article",
   "headline": "Installing ROCm on Ubuntu for Radeon GPUs",
-  "description": "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification.",
+  "description": "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification.",
   "url": "https://velstech.net/install-rocm-ubuntu.html",
   "datePublished": "2026-08-25T00:00:00Z",
   "dateModified": "2026-08-25T00:00:00Z",
@@ -39,13 +39,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/install-rocm-ubuntu.html" />
   <meta property="og:title" content="Installing ROCm on Ubuntu for Radeon GPUs | VelsTech" />
-  <meta property="og:description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification." />
+  <meta property="og:description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Installing ROCm on Ubuntu for Radeon GPUs | VelsTech" />
-  <meta name="twitter:description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs — from apt setup to rocminfo verification." />
+  <meta name="twitter:description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -70,7 +70,7 @@
       <p>
         AMD's ROCm (Radeon Open Compute) platform lets you run GPU-accelerated workloads like
         PyTorch, TensorFlow, and LLM inference on AMD GPUs. If you have a supported Radeon
-        card — RDNA2 (RX 6000 series / gfx1030) or RDNA3 (RX 7000 series / gfx1100) — this
+        card – RDNA2 (RX 6000 series / gfx1030) or RDNA3 (RX 7000 series / gfx1100) – this
         guide walks you through installing ROCm 7.14 on Ubuntu 26.04 LTS.
       </p>
 
@@ -87,7 +87,7 @@
         <li>A user account with sudo privileges</li>
       </ul>
 
-      <h2>Step 1 — Install the amdgpu-install script</h2>
+      <h2>Step 1 – Install the amdgpu-install script</h2>
       <p>
         ROCm uses the <code>amdgpu-install</code> script to handle the GPU driver, ROCm
         runtime, and graphics components together. Download and install it from AMD's
@@ -103,7 +103,7 @@ sudo apt install ./amdgpu-install_31.40.1.314001-1_all.deb</pre>
         (22.04) if you're on a different Ubuntu version.
       </p>
 
-      <h2>Step 2 — Install ROCm and the GPU driver</h2>
+      <h2>Step 2 – Install ROCm and the GPU driver</h2>
       <p>
         Now run <code>amdgpu-install</code> with the appropriate use case and GPU target.
       </p>
@@ -130,11 +130,11 @@ sudo apt install ./amdgpu-install_31.40.1.314001-1_all.deb</pre>
         device family, you have two options:
         <ul>
           <li>
-            <strong>All</strong> — installs runtime support for every AMD GPU architecture.
+            <strong>All</strong> – installs runtime support for every AMD GPU architecture.
             Good if you're developing cross-platform or testing on multiple cards.
           </li>
           <li>
-            <strong>AMD Radeon</strong> — targets only consumer Radeon GPUs. This is the
+            <strong>AMD Radeon</strong> – targets only consumer Radeon GPUs. This is the
             leaner, more focused choice for a single Radeon card.
           </li>
         </ul>
@@ -143,7 +143,7 @@ sudo apt install ./amdgpu-install_31.40.1.314001-1_all.deb</pre>
         <strong>All</strong>.
       </blockquote>
 
-      <h2>Step 3 — Install additional libraries</h2>
+      <h2>Step 3 – Install additional libraries</h2>
       <p>
         Some ROCm tools need the <code>libatomic</code> and <code>libquadmath</code>
         libraries to run correctly. Install them now so you don't hit a cryptic error
@@ -152,7 +152,7 @@ sudo apt install ./amdgpu-install_31.40.1.314001-1_all.deb</pre>
 
       <pre>sudo apt install libatomic1 libquadmath0</pre>
 
-      <h2>Step 4 — Add your user to the render and video groups</h2>
+      <h2>Step 4 – Add your user to the render and video groups</h2>
       <p>
         GPU access is controlled through Linux groups. Your user needs to be in the
         <code>render</code> and <code>video</code> groups to use the AMD GPU without
@@ -165,14 +165,14 @@ sudo apt install ./amdgpu-install_31.40.1.314001-1_all.deb</pre>
         Log out and back in (or restart) for the group change to take effect.
       </p>
 
-      <h2>Step 5 — Reboot</h2>
+      <h2>Step 5 – Reboot</h2>
       <p>
         A reboot ensures the kernel module (amdgpu) and ROCk driver are loaded:
       </p>
 
       <pre>sudo reboot</pre>
 
-      <h2>Step 6 — Verify the installation</h2>
+      <h2>Step 6 – Verify the installation</h2>
       <p>
         After rebooting, run <code>rocminfo</code> to confirm your GPU is detected:
       </p>
@@ -206,15 +206,15 @@ ls /dev/dri/  # should show renderD* nodes</pre>
       </p>
       <ul>
         <li>
-          <strong>Install PyTorch with ROCm support</strong> —
+          <strong>Install PyTorch with ROCm support</strong> –
           <code>pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.1</code>
         </li>
         <li>
-          <strong>Run LLMs locally</strong> — tools like Ollama, LM Studio, and
+          <strong>Run LLMs locally</strong> – tools like Ollama, LM Studio, and
           text-generation-webui all support ROCm out of the box.
         </li>
         <li>
-          <strong>Use HIP</strong> for GPU programming — AMD's CUDA-compatible framework.
+          <strong>Use HIP</strong> for GPU programming – AMD's CUDA-compatible framework.
         </li>
       </ul>
 

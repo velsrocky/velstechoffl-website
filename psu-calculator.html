@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free PC power supply calculator — estimate peak power draw for your build and get a recommended PSU wattage with headroom." />
+  <meta name="description" content="Free PC power supply calculator – estimate peak power draw for your build and get a recommended PSU wattage with headroom." />
   <title>PC Power Supply Calculator | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/psu-calculator.html" />
   <script type="application/ld+json">
@@ -45,7 +45,7 @@
     <div class="article-body">
       <p>
         Add your parts and this estimates peak power draw for the whole system, then
-        recommends a power supply with comfortable headroom. Use it before you buy — a PSU
+        recommends a power supply with comfortable headroom. Use it before you buy – a PSU
         that's too small is the #1 cause of random shutdowns under load.
       </p>
 
@@ -126,12 +126,12 @@
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
           <div class="result-rows">
-            <div class="result-row"><span>Estimated peak draw</span><strong id="r-peak">—</strong></div>
-            <div class="result-row total"><span>Recommended PSU</span><strong id="r-psu">—</strong></div>
-            <div class="result-row"><span>Sustained load on that PSU</span><strong id="r-sustained">—</strong></div>
+            <div class="result-row"><span>Estimated peak draw</span><strong id="r-peak">–</strong></div>
+            <div class="result-row total"><span>Recommended PSU</span><strong id="r-psu">–</strong></div>
+            <div class="result-row"><span>Sustained load on that PSU</span><strong id="r-sustained">–</strong></div>
           </div>
           <p class="tool-note">
-            Estimates use typical component power draw, not worst-case transient spikes —
+            Estimates use typical component power draw, not worst-case transient spikes –
             cards like the RTX 4090/5090 can momentarily spike well above their TDP, so when
             in doubt, go one size up.
           </p>
@@ -139,9 +139,9 @@
       </div>
 
       <details class="calc-method">
-        <summary>How we calculate this — assumptions &amp; formulas</summary>
+        <summary>How we calculate this – assumptions &amp; formulas</summary>
         <div class="calc-method-body">
-          <p>Not a lab measurement — a conservative peak estimate so you don't trip under load. Transient spikes (especially on RTX 4090/5090) can still exceed TDP briefly.</p>
+          <p>Not a lab measurement – a conservative peak estimate so you don't trip under load. Transient spikes (especially on RTX 4090/5090) can still exceed TDP briefly.</p>
           <h4>1. Peak draw</h4>
           <pre>peak = (cpu + gpu + ram×3W + ssd×3W + hdd×8W + fans×3W + aio + rgb×4W + usb×5W) × age_factor</pre>
           <p>CPU/GPU use TDP presets (e.g., i7/R7 125 W, RTX 4090 450 W, RX 7900 XTX 355 W) or your custom wattage. Small parts are averaged per unit: RAM stick 3 W, NVMe 3 W, HDD 8 W, fan 3 W, AIO pump 8 W, RGB strip 4 W, USB device 5 W.</p>
@@ -156,8 +156,8 @@
       <h2>Related guides</h2>
       <ul>
         <li><a href="first-pc-build.html">How to choose parts for your first PC build</a></li>
-        <li><a href="best-gpu-for-local-llm.html">Best GPU for running LLMs — power matters too</a></li>
-        <li><a href="ssd-vs-hdd.html">SSD vs HDD — what draws power and why</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for running LLMs – power matters too</a></li>
+        <li><a href="ssd-vs-hdd.html">SSD vs HDD – what draws power and why</a></li>
       </ul>
     </div>
 
@@ -241,7 +241,7 @@
       const verdict = document.getElementById("verdict");
       if (gpuW >= 400) {
         verdict.className = "result-verdict verdict-warn";
-        verdict.innerHTML = "⚠️ <strong>High-end GPU detected.</strong> For a " + gpuW + " W card, a " + recommended + " W unit is the minimum — consider going one tier higher (850 W+) for transient spikes.";
+        verdict.innerHTML = "⚠️ <strong>High-end GPU detected.</strong> For a " + gpuW + " W card, a " + recommended + " W unit is the minimum – consider going one tier higher (850 W+) for transient spikes.";
       } else {
         verdict.className = "result-verdict verdict-ok";
         verdict.innerHTML = "✅ <strong>A " + recommended + " W PSU (80 Plus Bronze or better) is a comfortable fit</strong> for this build with ~30% headroom.";

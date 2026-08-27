@@ -64,7 +64,7 @@
     <div class="article-body">
       <p>
         Every developer uses Git. This site is stored in Git. Yet it's rarely explained from
-        zero. The good news: Git is simple once you understand the mental model — and you
+        zero. The good news: Git is simple once you understand the mental model – and you
         only need a handful of commands for 90% of daily work.
       </p>
 
@@ -90,8 +90,8 @@
         The two ideas you need:
       </p>
       <ul>
-        <li><strong>Commit</strong> — a save point. A snapshot of your files with a message like "fix login bug".</li>
-        <li><strong>Repository (repo)</strong> — a folder that Git tracks. All your commits live here.</li>
+        <li><strong>Commit</strong> – a save point. A snapshot of your files with a message like "fix login bug".</li>
+        <li><strong>Repository (repo)</strong> – a folder that Git tracks. All your commits live here.</li>
       </ul>
       <p>
         Think of commits like save points in a video game. You make them constantly so you
@@ -109,13 +109,13 @@ git status        # what's changed? (check constantly)
 git log           # see the history of commits</pre>
       <p>
         <code>add</code> then <code>commit</code> is the rhythm. First you pick what to save,
-        then you take the snapshot. You'll run <code>git status</code> constantly — it's a
+        then you take the snapshot. You'll run <code>git status</code> constantly – it's a
         safety check, never a chore.
       </p>
 
       <h2>Branching: parallel universes</h2>
       <p>
-        A <strong>branch</strong> is a separate line of development — a copy of the project
+        A <strong>branch</strong> is a separate line of development – a copy of the project
         you can experiment in without affecting the main line.
       </p>
       <pre>git branch new-feature   # create a branch
@@ -124,14 +124,14 @@ git switch new-feature   # move to it
 git switch main          # go back
 git merge new-feature    # bring the work into main</pre>
       <p>
-        For solo beginners, branches feel optional — and they are, at first. But learning
+        For solo beginners, branches feel optional – and they are, at first. But learning
         them early makes you comfortable with how real teams work. The golden habit:
         <strong>never commit directly to main when trying something risky</strong>.
       </p>
 
       <h2>GitHub: Git in the cloud</h2>
       <p>
-        <strong>GitHub</strong> is a hosting service for Git repositories — like Dropbox for
+        <strong>GitHub</strong> is a hosting service for Git repositories – like Dropbox for
         your code, plus collaboration tools. The commands that connect them:
       </p>
       <pre>git clone URL        # copy a repo to your computer (start)
@@ -139,7 +139,7 @@ git push             # upload your commits
 git pull             # download others' commits (or your own from another machine)</pre>
       <p>
         <code>push</code> sends your saves to GitHub; <code>pull</code> brings them down.
-        This is exactly how this website deploys — a push triggers GitHub Pages to publish.
+        This is exactly how this website deploys – a push triggers GitHub Pages to publish.
       </p>
 
       <h2>Undoing mistakes (the reassuring part)</h2>
@@ -178,7 +178,7 @@ $ git log --oneline           # 2 commits, nice and tidy</pre>
       <p>
         Git sounds big, but it's really just: <strong>save points (commit), parallel lines
         (branch), and sync (push/pull)</strong>. Master those three ideas, and you're using
-        version control like a pro. And the best part — once you start, you'll never want to
+        version control like a pro. And the best part – once you start, you'll never want to
         work without it.
       </p>
     </div>

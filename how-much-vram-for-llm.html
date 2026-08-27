@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="How much VRAM do you really need for 7B, 14B, and 32B LLMs? Weights, quantization, KV cache, and context length — with a quick-reference table." />
+  <meta name="description" content="How much VRAM do you really need for 7B, 14B, and 32B LLMs? Weights, quantization, KV cache, and context length – with a quick-reference table." />
   <title>How much VRAM do you need for 7B, 14B, and 32B models? | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/how-much-vram-for-llm.html" />
   <script type="application/ld+json">
@@ -12,7 +12,7 @@
   "@type": "BlogPosting",
   "@id": "https://velstech.net/how-much-vram-for-llm.html#article",
   "headline": "How much VRAM do you need for 7B, 14B, and 32B models?",
-  "description": "VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table.",
+  "description": "VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table.",
   "url": "https://velstech.net/how-much-vram-for-llm.html",
   "datePublished": "2026-08-27T00:00:00Z",
   "dateModified": "2026-08-27T00:00:00Z",
@@ -39,13 +39,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/how-much-vram-for-llm.html" />
   <meta property="og:title" content="How much VRAM do you need for 7B, 14B, and 32B models? | VelsTech" />
-  <meta property="og:description" content="VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table." />
+  <meta property="og:description" content="VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="How much VRAM do you need for 7B, 14B, and 32B models? | VelsTech" />
-  <meta name="twitter:description" content="VRAM needed for 7B, 14B, and 32B LLMs — weights, quantization, KV cache, and context length, with a quick-reference table." />
+  <meta name="twitter:description" content="VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=22" />
@@ -67,11 +67,11 @@
       <p>
         The single most common question in local AI is "can my GPU run this model?" The answer
         comes down to one number: <strong>VRAM</strong>. Here's how to estimate it yourself in
-        about thirty seconds — and a cheat sheet for the popular model sizes.
+        about thirty seconds – and a cheat sheet for the popular model sizes.
       </p>
 
       <div class="tool-callout">
-        <div class="tool-callout-title">🔧 Skip the math — use the calculator</div>
+        <div class="tool-callout-title">🔧 Skip the math – use the calculator</div>
         <p>Pick your model, quantization, and context to get an exact VRAM estimate with a fit check for your GPU.</p>
         <a class="btn btn-primary" href="llm-vram-calculator.html">Open the LLM VRAM Calculator →</a>
       </div>
@@ -86,7 +86,7 @@
 70B          ~40–45 GB    ~75 GB       cloud only</pre>
       <p>
         Translate that to GPUs: an <strong>8 GB</strong> card runs 7B Q4. A <strong>16 GB</strong>
-        card is the sweet spot — 14B Q4 fully, 32B with light offload. A <strong>24 GB</strong>
+        card is the sweet spot – 14B Q4 fully, 32B with light offload. A <strong>24 GB</strong>
         card runs 32B Q4 fully. That's why "16 GB" keeps showing up in our
         <a href="best-gpu-for-local-llm.html">best GPU for local LLMs</a> picks.
       </p>
@@ -94,10 +94,10 @@
       <h2>What actually eats VRAM</h2>
       <p>Three things, and you need to add all of them:</p>
       <ol>
-        <li><strong>Model weights</strong> — the big one. Roughly <code>parameters × bytes per weight</code>.
+        <li><strong>Model weights</strong> – the big one. Roughly <code>parameters × bytes per weight</code>.
         At Q4_K_M that's ~0.6 bytes/weight; at Q8_0 ~1.06; at FP16 exactly 2.</li>
-        <li><strong>KV cache</strong> — grows with context length and batch size. Small at 8K, significant at 128K. For a 7B it's ~0.5 GB at 8K and ~3–4 GB at 64K+.</li>
-        <li><strong>Overhead</strong> — CUDA context, engine buffers, tokenizer: usually ~0.5–1.5 GB on top.</li>
+        <li><strong>KV cache</strong> – grows with context length and batch size. Small at 8K, significant at 128K. For a 7B it's ~0.5 GB at 8K and ~3–4 GB at 64K+.</li>
+        <li><strong>Overhead</strong> – CUDA context, engine buffers, tokenizer: usually ~0.5–1.5 GB on top.</li>
       </ol>
       <p>
         So a 7B at Q4_K_M with 8K context ≈ 4.5 GB weights + 0.5 GB KV + ~0.5 GB overhead
@@ -106,16 +106,16 @@
 
       <h2>7B models: the entry level</h2>
       <ul>
-        <li><strong>Q4_K_M (~4.5 GB)</strong> — runs on an 8 GB GPU (RTX 4060, RX 7600) with room for context.</li>
-        <li><strong>Q8_0 (~8 GB)</strong> — an 8 GB card is right at the edge; 12 GB is comfortable.</li>
-        <li><strong>FP16 (~16 GB)</strong> — you need a 16 GB card; at that point you'd usually rather run a 14B Q4.</li>
+        <li><strong>Q4_K_M (~4.5 GB)</strong> – runs on an 8 GB GPU (RTX 4060, RX 7600) with room for context.</li>
+        <li><strong>Q8_0 (~8 GB)</strong> – an 8 GB card is right at the edge; 12 GB is comfortable.</li>
+        <li><strong>FP16 (~16 GB)</strong> – you need a 16 GB card; at that point you'd usually rather run a 14B Q4.</li>
       </ul>
 
       <h2>13–14B models: the practical sweet spot</h2>
       <ul>
-        <li><strong>Q4_K_M (~9–10 GB)</strong> — 12 GB runs it; 16 GB (RTX 4060 Ti 16 GB, RX 7600 XT) runs it with a long context.</li>
-        <li><strong>Q8_0 (~16 GB)</strong> — a 16 GB card runs this with a short context; 24 GB is comfortable.</li>
-        <li><strong>FP16 (~30 GB)</strong> — needs a 24 GB card with offload, or cloud.</li>
+        <li><strong>Q4_K_M (~9–10 GB)</strong> – 12 GB runs it; 16 GB (RTX 4060 Ti 16 GB, RX 7600 XT) runs it with a long context.</li>
+        <li><strong>Q8_0 (~16 GB)</strong> – a 16 GB card runs this with a short context; 24 GB is comfortable.</li>
+        <li><strong>FP16 (~30 GB)</strong> – needs a 24 GB card with offload, or cloud.</li>
       </ul>
       <p>
         14B Q4 at ~40–50 tok/s is the point where a local model stops feeling like a demo and
@@ -124,18 +124,18 @@
 
       <h2>27–32B models: where 24 GB earns its keep</h2>
       <ul>
-        <li><strong>Q4_K_M (~20 GB + KV)</strong> — a 24 GB GPU (RTX 4090, RX 7900 XTX) runs 32B Q4 with an 8–16K context. At 32K context you're right at the edge.</li>
-        <li><strong>Q8_0 (~32 GB)</strong> — beyond consumer cards; needs a 32 GB card or cloud.</li>
+        <li><strong>Q4_K_M (~20 GB + KV)</strong> – a 24 GB GPU (RTX 4090, RX 7900 XTX) runs 32B Q4 with an 8–16K context. At 32K context you're right at the edge.</li>
+        <li><strong>Q8_0 (~32 GB)</strong> – beyond consumer cards; needs a 32 GB card or cloud.</li>
       </ul>
       <p>
         A 16 GB card can run a 30B Q4 with <strong>partial offload</strong> if you have 16–32 GB
-        of system RAM — it works, but generation drops to a crawl (often 5–15 tok/s).
+        of system RAM – it works, but generation drops to a crawl (often 5–15 tok/s).
       </p>
 
       <h2>Context length is the hidden variable</h2>
       <p>
         Doubling context roughly doubles the KV cache. At 128K context, KV cache alone can be
-        3–6 GB — that's a whole quantization tier's worth of memory. If you're planning long
+        3–6 GB – that's a whole quantization tier's worth of memory. If you're planning long
         documents, buy the bigger card or shorten your context.
       </p>
 
@@ -143,7 +143,7 @@
       <h3>Can I run a model with less VRAM than the weights need?</h3>
       <p>Only by offloading some layers to system RAM. It works, but every offloaded layer slows generation. More RAM helps; it doesn't replace VRAM.</p>
       <h3>Does CPU or GPU speed matter for the numbers above?</h3>
-      <p>Not for the fit — VRAM is about capacity. Speed matters separately for tokens/sec.</p>
+      <p>Not for the fit – VRAM is about capacity. Speed matters separately for tokens/sec.</p>
       <h3>What's the minimum usable setup?</h3>
       <p>8 GB VRAM + 16 GB system RAM gets you a decent 7B Q4 local assistant. From there, VRAM is the upgrade that matters.</p>
 
@@ -156,7 +156,7 @@
 
       <div class="tool-callout">
         <div class="tool-callout-title">🔧 Get the exact number for your model</div>
-        <p>LLM VRAM Calculator — weights + KV cache + fit verdict. Then see how fast it'll run with the GPU AI Performance Calculator.</p>
+        <p>LLM VRAM Calculator – weights + KV cache + fit verdict. Then see how fast it'll run with the GPU AI Performance Calculator.</p>
         <a class="btn btn-primary" href="llm-vram-calculator.html">Open calculator →</a>
       </div>
     </div>

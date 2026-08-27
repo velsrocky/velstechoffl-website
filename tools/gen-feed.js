@@ -16,7 +16,7 @@ const now = new Date().toISOString();
 let xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>VelsTech</title>
-  <subtitle>Modern tech, built simple — AI, hardware, OS, networking, security, and programming notes.</subtitle>
+  <subtitle>Practical AI, hardware &amp; Linux — guides, experiments, benchmarks and free tools for people who build and run things.</subtitle>
   <id>${SITE}/</id>
   <link rel="alternate" href="${SITE}/" />
   <link rel="self" href="${SITE}/feed.xml" />

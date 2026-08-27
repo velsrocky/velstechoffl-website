@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>VelsTech</title>
-  <subtitle>Modern tech, built simple — AI, hardware, OS, networking, security, and programming notes.</subtitle>
+  <subtitle>Practical AI, hardware &amp; Linux — guides, experiments, benchmarks and free tools for people who build and run things.</subtitle>
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-27T16:40:20.914Z</updated>
+  <updated>2026-08-27T17:06:02.829Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>

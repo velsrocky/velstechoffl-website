@@ -110,9 +110,6 @@ const PAGES = [
   { href: "os.html", label: "Linux", page: "os.html" },
   { href: "index.html#lab", label: "Lab", page: "__lab__" },
   { href: "tools.html", label: "Tools", page: "tools.html" },
-  { href: "programming.html", label: "Development", page: "programming.html" },
-  { href: "networking.html", label: "Networking", page: "networking.html" },
-  { href: "security.html", label: "Security", page: "security.html" },
   { href: "tags.html", label: "Tags", page: "tags.html" },
 ];
 
@@ -320,6 +317,12 @@ const footerHTML =
   '<a href="terms.html">Terms</a>' +
   '<a href="privacy.html">Privacy</a>' +
   '<a href="mailto:hello@velstech.net">Contact</a>' +
+  "</nav>" +
+  '<nav class="footer-links" style="margin-top:10px; opacity:0.9">' +
+  '<a href="networking.html">Networking</a>' +
+  '<a href="security.html">Security</a>' +
+  '<a href="programming.html">Development</a>' +
+  '<a href="tutorials.html">Tutorials</a>' +
   "</nav>" +
   '<p class="footer-note">Content on this site is generated with the assistance of AI and is for informational purposes only.</p>' +
   '<p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p>' +

@@ -6,7 +6,7 @@ const ARTICLES = [
     updated: "2026-08-27",
     category: "Hardware",
     featured: true,
-    tags: ["GPU", "LLM", "Local AI", "Benchmarks"],
+    tags: ["GPU", "LLM", "Local AI", "Benchmarks", "VelsTech Lab"],
     description: "The best GPUs for running LLMs locally in 2026 – RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.",
   },
   {
@@ -15,7 +15,7 @@ const ARTICLES = [
     date: "2026-08-27",
     updated: "2026-08-27",
     category: "AI & ML",
-    tags: ["VRAM", "LLM", "GPU", "Quantization"],
+    tags: ["VRAM", "LLM", "GPU", "Quantization", "VelsTech Lab"],
     description: "VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table.",
   },
   {
@@ -24,7 +24,7 @@ const ARTICLES = [
     date: "2026-08-27",
     updated: "2026-08-27",
     category: "Hardware",
-    tags: ["GPU", "Budget", "India", "Local AI"],
+    tags: ["GPU", "Budget", "India", "Local AI", "VelsTech Lab"],
     description: "The best GPUs for AI under ₹50,000 in India – which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.",
   },
   {
@@ -34,7 +34,7 @@ const ARTICLES = [
     updated: "2026-08-27",
     category: "Hardware",
     featured: true,
-    tags: ["AI Hardware", "NPU", "Mini PC"],
+    tags: ["AI Hardware", "NPU", "Mini PC", "VelsTech Lab"],
     description: "Xiaomi's AI Cube is a small desktop with a big NPU – made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.",
   },
   {

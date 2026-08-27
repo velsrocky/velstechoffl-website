@@ -1109,6 +1109,7 @@ a.tag:hover {
 }
 
 .flow-link.flow-next {
+  grid-column: 2;
   text-align: right;
 }
 
@@ -1131,6 +1132,7 @@ a.tag:hover {
     grid-template-columns: 1fr;
   }
   .flow-link.flow-next {
+    grid-column: auto;
     text-align: left;
   }
 }

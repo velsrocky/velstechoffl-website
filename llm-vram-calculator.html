@@ -58,7 +58,7 @@
             <select id="model" class="input"></select>
           </label>
 
-          <div id="custom-model" class="calc-subgrid" hidden>
+          <div id="custom-model" class="calc-subgrid">
             <label class="field">
               <span>Parameters (B)</span>
               <input id="c-params" class="input" type="number" min="0.1" step="0.1" value="8" />
@@ -211,20 +211,21 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
       quantSel.appendChild(o);
     });
 
-    const customBox = document.getElementById("custom-model");
-    function isCustom() {
-      return modelSel.value === String(MODELS.length - 1);
+    function syncModelFields() {
+      const m = MODELS[modelSel.value];
+      if (!m) return;
+      document.getElementById("c-params").value = m.params;
+      document.getElementById("c-layers").value = m.layers;
+      document.getElementById("c-kv").value = m.kv;
+      document.getElementById("c-hd").value = m.hd;
     }
     function currentModel() {
-      if (isCustom()) {
-        return {
-          params: parseFloat(document.getElementById("c-params").value) || 1,
-          layers: parseInt(document.getElementById("c-layers").value, 10) || 32,
-          kv: parseInt(document.getElementById("c-kv").value, 10) || 8,
-          hd: parseInt(document.getElementById("c-hd").value, 10) || 128,
-        };
-      }
-      return MODELS[modelSel.value];
+      return {
+        params: parseFloat(document.getElementById("c-params").value) || 1,
+        layers: parseInt(document.getElementById("c-layers").value, 10) || 32,
+        kv: parseInt(document.getElementById("c-kv").value, 10) || 8,
+        hd: parseInt(document.getElementById("c-hd").value, 10) || 128,
+      };
     }
 
     const giB = 1073741824;
@@ -274,7 +275,7 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
     }
 
     modelSel.addEventListener("change", () => {
-      customBox.hidden = !isCustom();
+      syncModelFields();
       calc();
     });
     ["c-params", "c-layers", "c-kv", "c-hd", "ctx", "batch", "vram", "ram", quantSel.id]
@@ -283,6 +284,7 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
         if (el) el.addEventListener("input", calc);
       });
 
+    syncModelFields();
     calc();
   </script>
 

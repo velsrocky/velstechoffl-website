@@ -580,6 +580,55 @@ const CAT_URL = {
   "Tutorials": "tutorials.html",
 };
 
+/* Reading order for the "Continue reading" flow – mirrors the order each
+   category page is curated in. Lab-tagged posts use the Lab series. */
+const SERIES = {
+  "AI": [
+    "better-prompts.html",
+    "what-is-an-llm.html",
+    "what-is-machine-learning.html",
+    "local-vs-cloud-ai.html",
+    "qwen3-8-flash-next.html",
+    "glm-5-3.html",
+  ],
+  "Hardware": [
+    "first-pc-build.html",
+    "cpu-vs-gpu.html",
+    "ssd-vs-hdd.html",
+    "new-mac-desktops.html",
+  ],
+  "Operating Systems": [
+    "omarchy.html",
+    "linux-beginners.html",
+    "terminal-commands.html",
+    "windows-vs-linux.html",
+  ],
+  "Networking": [
+    "how-internet-works.html",
+    "setup-domain.html",
+    "self-hosting-101.html",
+  ],
+  "Security & Privacy": [
+    "security-habits.html",
+    "password-managers.html",
+    "spotting-phishing.html",
+  ],
+  "Programming & Web": [
+    "learn-to-code.html",
+    "html-css-js.html",
+    "git-beginners.html",
+  ],
+  "VelsTech Lab": [
+    "moe-vs-dense-rx6800m-16k-vs-262k.html",
+    "ornith-35b-moe-262k-rocm-vs-vulkan.html",
+    "qwen-27b-ridge-rocm-vs-vulkan.html",
+    "how-much-vram-for-llm.html",
+    "best-gpu-for-local-llm.html",
+    "best-gpu-ai-under-50000.html",
+    "xiaomi-ai-cube.html",
+  ],
+};
+
 function initProgressBar() {
   const bar = document.createElement("div");
   bar.className = "progress-bar";
@@ -662,6 +711,42 @@ function addCategoryPill() {
   meta.insertBefore(pill, meta.firstChild);
 }
 
+/* "Continue reading" flow – next/previous article in the same series. */
+function initArticleFlow() {
+  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  if (!cur) return;
+  const nav = document.querySelector(".article-nav");
+  if (!nav) return;
+
+  const list = (cur.tags && cur.tags.includes("VelsTech Lab") && SERIES["VelsTech Lab"])
+    ? SERIES["VelsTech Lab"]
+    : SERIES[cur.category] || null;
+
+  let prev, next;
+  if (list) {
+    const idx = list.indexOf(cur.url);
+    if (idx >= 0) {
+      prev = idx > 0 ? ARTICLES.find((a) => a.url === list[idx - 1]) : null;
+      next = idx < list.length - 1 ? ARTICLES.find((a) => a.url === list[idx + 1]) : null;
+    }
+  }
+  if (!prev && !next) return;
+
+  const flow = document.createElement("div");
+  flow.className = "article-flow";
+  flow.innerHTML =
+    '<p class="flow-heading">Continue reading</p>' +
+    '<div class="flow-row">' +
+    (prev
+      ? '<a class="flow-link flow-prev" href="' + prev.url + '"><span class="flow-label">← Previous</span><span class="flow-title">' + esc(prev.title) + '</span></a>'
+      : "") +
+    (next
+      ? '<a class="flow-link flow-next" href="' + next.url + '"><span class="flow-label">Next →</span><span class="flow-title">' + esc(next.title) + '</span></a>'
+      : "") +
+    "</div>";
+  nav.parentNode.insertBefore(flow, nav);
+}
+
 function initHotTopic() {
   const container = document.getElementById("hot-topic-list");
   if (!container) return;
@@ -693,6 +778,7 @@ initNewsletter();
 initTagsPage();
 initCopyButtons();
 addCategoryPill();
+initArticleFlow();
 initProgressBar();
 initReveal();
 initCategoryColors();

@@ -1068,6 +1068,73 @@ a.tag:hover {
   font-size: 0.9rem;
 }
 
+/* Continue reading – prev/next within the same series */
+.article-flow {
+  margin: 36px 0 8px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.flow-heading {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.flow-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.flow-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.flow-link:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.flow-link.flow-next {
+  text-align: right;
+}
+
+.flow-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.flow-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+@media (max-width: 560px) {
+  .flow-row {
+    grid-template-columns: 1fr;
+  }
+  .flow-link.flow-next {
+    text-align: left;
+  }
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

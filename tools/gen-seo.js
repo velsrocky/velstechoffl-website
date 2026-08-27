@@ -46,7 +46,7 @@ const TOOLS_META = {
 };
 
 const CATEGORY_META = {
-  "ai.html": { title: "AI & ML | VelsTech", desc: "AI and machine learning notes — LLMs, tools, prompting, and trends." },
+  "ai.html": { title: "AI | VelsTech", desc: "AI and machine learning notes — LLMs, tools, prompting, and trends." },
   "hardware.html": { title: "Hardware | VelsTech", desc: "Hardware notes — PC builds, components, GPUs, and performance." },
   "os.html": { title: "Operating Systems | VelsTech", desc: "Operating system notes — Linux, Windows, and macOS guides." },
   "networking.html": { title: "Networking | VelsTech", desc: "Networking notes — DNS, routers, self-hosting, and how the internet works." },

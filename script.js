@@ -364,7 +364,7 @@ function injectChat() {
   const link = document.createElement("link");
   link.id = "vt-chat-link";
   link.rel = "stylesheet";
-  link.href = "chat.css?v=5";
+  link.href = "chat.css?v=6";
   document.head.appendChild(link);
 
   if (document.getElementById("vt-chat-script")) return;

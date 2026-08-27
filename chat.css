@@ -148,15 +148,13 @@
 }
 .vt-error { color: #f87171; }
 
-.vt-dots,
-.vt-dots::after { content: "…"; }
-.vt-dots {
+.vt-dots::before {
+  content: "…";
   display: inline-block;
   width: 18px;
   text-align: left;
   animation: vt-pulse 1.2s infinite;
 }
-.vt-dots::after { content: ""; animation: none; }
 @keyframes vt-pulse {
   0%, 20% { opacity: 0; }
   50% { opacity: 1; }

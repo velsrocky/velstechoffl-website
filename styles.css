@@ -425,6 +425,18 @@ a {
   white-space: nowrap;
 }
 
+.latest-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 14px;
+}
+
+.latest-filters .tag-btn {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
+
 /* Theme controls */
 .controls {
   display: flex;

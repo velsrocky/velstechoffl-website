@@ -8,15 +8,15 @@
   <title>VelsTech Solutions</title>
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="VelsTech" />
-                                          <meta property="og:url" content="https://velstech.net/" />
+                                              <meta property="og:url" content="https://velstech.net/" />
   <meta property="og:title" content="VelsTech Solutions" />
-                              <meta property="og:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
+                                  <meta property="og:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="VelsTech Solutions" />
-                              <meta name="twitter:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
+                                  <meta name="twitter:description" content="VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
     <link rel="canonical" href="https://velstech.net/" />
   <script type="application/ld+json">
@@ -60,7 +60,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=21" />
 </head>
 <body>
   <main>
@@ -135,6 +135,13 @@
     <section id="latest" class="section">
       <h2>Latest from VelsTech</h2>
       <p>Fresh guides, experiments and notes — newest first. <span style="color:var(--muted); font-size:0.88rem">32 articles and counting.</span></p>
+      <div class="latest-filters" id="latest-filters" role="tablist" aria-label="Filter articles by topic">
+        <button class="tag-btn active" data-filter="All" role="tab" aria-selected="true">All</button>
+        <button class="tag-btn" data-filter="AI" role="tab" aria-selected="false">AI</button>
+        <button class="tag-btn" data-filter="Hardware" role="tab" aria-selected="false">Hardware</button>
+        <button class="tag-btn" data-filter="Software" role="tab" aria-selected="false">Software</button>
+        <button class="tag-btn" data-filter="Lab" role="tab" aria-selected="false">🧪 Lab</button>
+      </div>
       <div id="latest-list" class="latest-list">
         <a class="latest-item featured" href="moe-vs-dense-rx6800m-16k-vs-262k.html"><span class="latest-title">MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K — VelsTech Lab<span class="latest-badge">Featured</span></span><span class="latest-meta">AI & ML · Aug 27, 2026</span></a>
         <a class="latest-item featured" href="ornith-35b-moe-262k-rocm-vs-vulkan.html"><span class="latest-title">Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab<span class="latest-badge">Featured</span></span><span class="latest-meta">AI & ML · Aug 27, 2026</span></a>
@@ -168,6 +175,7 @@
           <span class="lab-cta">Browse tools →</span>
         </a>
       </div>
+      <p style="text-align:center; margin-top:18px"><a href="lab.html">View all Lab experiments →</a></p>
     </section>
 
     <section id="tools" class="section">
@@ -259,6 +267,6 @@
   </main>
 
   <script src="articles.js?v=6"></script>
-  <script src="script.js?v=25"></script>
+  <script src="script.js?v=27"></script>
 </body>
 </html>

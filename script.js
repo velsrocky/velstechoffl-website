@@ -108,7 +108,7 @@ const PAGES = [
   { href: "ai.html", label: "AI", page: "ai.html" },
   { href: "hardware.html", label: "Hardware", page: "hardware.html" },
   { href: "os.html", label: "Software", page: "os.html" },
-  { href: "index.html#lab", label: "Lab", page: "__lab__" },
+  { href: "lab.html", label: "Lab", page: "lab.html" },
   { href: "tools.html", label: "Tools", page: "tools.html" },
   { href: "tags.html", label: "Tags", page: "tags.html" },
 ];
@@ -221,22 +221,53 @@ function initSearch() {
 function initWhatsNew() {
   const list = document.getElementById("latest-list");
   if (!list) return;
-  const latest = [...ARTICLES]
-    .sort((a, b) => {
+  const filters = document.getElementById("latest-filters");
+  const filterBtns = filters ? filters.querySelectorAll(".tag-btn") : [];
+
+  function matchesFilter(a, filter) {
+    if (filter === "All") return true;
+    if (filter === "AI") return a.category.includes("AI");
+    if (filter === "Hardware") return a.category === "Hardware";
+    if (filter === "Software") return ["Operating Systems", "Programming & Web", "Tutorials"].includes(a.category);
+    if (filter === "Lab") return a.tags.includes("VelsTech Lab") || a.tags.includes("Benchmark");
+    return true;
+  }
+
+  function render(filter) {
+    const f = filter || "All";
+    const filtered = ARTICLES.filter((a) => matchesFilter(a, f));
+    const sorted = [...filtered].sort((a, b) => {
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
       return b.updated.localeCompare(a.updated);
-    })
-    .slice(0, 5);
-  list.innerHTML = latest
-    .map(
-      (a) =>
-        '<a class="latest-item' + (a.featured ? " featured" : "") + '" href="' + a.url + '">' +
-        '<span class="latest-title">' + esc(a.title) + (a.featured ? '<span class="latest-badge">Featured</span>' : "") + "</span>" +
-        '<span class="latest-meta">' + esc(a.category) + " · " + fmtDate(a.updated) + "</span>" +
-        "</a>"
-    )
-    .join("");
+    }).slice(0, 5);
+    if (!sorted.length) {
+      list.innerHTML = '<p class="tool-note">No articles in this filter yet — try All.</p>';
+      return;
+    }
+    list.innerHTML = sorted.map((a) =>
+      '<a class="latest-item' + (a.featured ? " featured" : "") + '" href="' + a.url + '">' +
+      '<span class="latest-title">' + esc(a.title) + (a.featured ? '<span class="latest-badge">Featured</span>' : "") + "</span>" +
+      '<span class="latest-meta">' + esc(a.category) + " · " + fmtDate(a.updated) + "</span>" +
+      "</a>"
+    ).join("");
+    if (filters) {
+      filterBtns.forEach((b) => {
+        const active = b.dataset.filter === f;
+        b.classList.toggle("active", active);
+        b.setAttribute("aria-selected", String(active));
+      });
+    }
+  }
+
+  if (filters) {
+    filters.addEventListener("click", (e) => {
+      const btn = e.target.closest(".tag-btn");
+      if (!btn) return;
+      render(btn.dataset.filter);
+    });
+  }
+  render("All");
 }
 
 function initArticleMeta() {

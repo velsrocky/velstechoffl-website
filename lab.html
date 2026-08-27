@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5002392377660300" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." />
+  <title>VelsTech Lab — Benchmarks & Experiments | VelsTech</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/lab.html" />
+  <meta property="og:title" content="VelsTech Lab — Benchmarks & Experiments | VelsTech" />
+  <meta property="og:description" content="VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VelsTech Lab — Benchmarks & Experiments | VelsTech" />
+  <meta name="twitter:description" content="VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+    <link rel="canonical" href="https://velstech.net/lab.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://velstech.net/lab.html#webpage",
+  "url": "https://velstech.net/lab.html",
+  "name": "VelsTech Lab — Benchmarks & Experiments | VelsTech",
+  "description": "VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures.",
+  "inLanguage": "en"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/lab.html" />
+  <meta property="og:title" content="VelsTech Lab — Benchmarks & Experiments | VelsTech" />
+  <meta property="og:description" content="VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VelsTech Lab — Benchmarks & Experiments | VelsTech" />
+  <meta name="twitter:description" content="VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=21" />
+</head>
+<body>
+  <main>
+    <header class="page-hero">
+      <p class="breadcrumb"><a href="index.html">Home</a> / VelsTech Lab</p>
+      <p class="eyebrow">🧪 VelsTech Lab</p>
+      <h1>Benchmarks • Experiments • Tools</h1>
+      <p>
+        Practical tests on real hardware — not press releases. Every Lab post lists <strong>prerequisites, hardware/software specs, method, raw results and what broke</strong> — including failures.
+      </p>
+      <p class="tool-note" style="margin-top:12px"><a href="#experiments">All experiments</a> · <a href="llm-vram-calculator.html">VRAM Calculator</a> · <a href="gpu-ai-calculator.html">GPU Performance</a> · <a href="index.html#lab">Lab overview</a></p>
+    </header>
+
+    <section id="experiments" class="article-grid">
+      <article class="article" style="border-color: var(--accent)">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <span class="tested-badge">🧪 Lab</span>
+          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(61,220,151,0.12);border:1px solid rgba(61,220,151,0.4)">✓ Completed</span>
+          <span style="font-size:0.75rem;color:var(--muted)">Aug 27, 2026</span>
+        </div>
+        <h3><a href="moe-vs-dense-rx6800m-16k-vs-262k.html">MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K</a></h3>
+        <p>Same 12GB RX 6800M — Ornith MoE (3B active, 262K) vs Qwen dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head. When MoE wins and when it doesn’t.</p>
+        <div class="tags"><span class="tag">MoE vs Dense</span><span class="tag">RX 6800M</span><span class="tag">Benchmark</span></div>
+        <span class="date">ROCm 25.6 vs 19.6 tok/s (Ornith) · Vulkan 21.8 vs 18.1 (Qwen)</span>
+      </article>
+
+      <article class="article">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <span class="tested-badge">🧪 Lab</span>
+          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(61,220,151,0.12);border:1px solid rgba(61,220,151,0.4)">✓ Completed</span>
+          <span style="font-size:0.75rem;color:var(--muted)">Aug 27, 2026</span>
+        </div>
+        <h3><a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan</a></h3>
+        <p>35B-A3B (3B active) Q5/Q4 mix at 262K q8 KV, 28 CPU experts — ROCm 25.6 tok/s vs Vulkan 19.6, 83 tok/s prompt. Huge context, sparse decode.</p>
+        <div class="tags"><span class="tag">MoE</span><span class="tag">Ornith 35B</span><span class="tag">RX 6800M</span></div>
+        <span class="date">12GB · q8 KV · --n-cpu-moe 28 · kv_unified=false</span>
+      </article>
+
+      <article class="article">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <span class="tested-badge">🧪 Lab</span>
+          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(61,220,151,0.12);border:1px solid rgba(61,220,151,0.4)">✓ Completed</span>
+          <span style="font-size:0.75rem;color:var(--muted)">Aug 27, 2026</span>
+        </div>
+        <h3><a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K</a></h3>
+        <p>27B at 3.7bpw (~12.5GB) at 16K q8 KV — ROCm 18.12 tok/s vs Vulkan 21.84, 217 vs 149 tok/s prompt. First Lab with raw logs.</p>
+        <div class="tags"><span class="tag">Qwen</span><span class="tag">RX 6800M</span><span class="tag">3.7bpw</span></div>
+        <span class="date">12GB · q8 KV · -ngl 999 (fit abort) · blk.64 nextn</span>
+      </article>
+
+      <article class="article" style="opacity:0.9; border-style:dashed">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <span class="tested-badge" style="background:var(--accent-soft);">🧪 Lab — Next</span>
+          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.4)">◷ Planned</span>
+        </div>
+        <h3>Qwen 27B without -ngl 999: let --fit choose + --load-mode none for MoE</h3>
+        <p>Re-run both models without forced <code>-ngl 999</code> (log fitted layers) and with <code>--load-mode none</code> for 28 CPU experts — will the +30% ROCm at 262K hold?</p>
+        <div class="tags"><span class="tag">Next</span><span class="tag">ROCm</span><span class="tag">Vulkan</span></div>
+        <span class="date">Status: planned — same RX 6800M, same prompts</span>
+      </article>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <h2>How Lab posts are structured</h2>
+      <p>Every Lab follows the same format so you can compare runs:</p>
+      <ol style="margin:14px 0 14px 24px; line-height:1.7; color:var(--text)">
+        <li><strong>Prerequisites:</strong> model file, quant, GPU, driver (ROCm/Vulkan), llama.cpp commit</li>
+        <li><strong>Hardware/Software Specs:</strong> exact card, VRAM, CPU, RAM, OS, ROCm/Vulkan, cache type, context, threads</li>
+        <li><strong>Method:</strong> full <code>llama-server</code> command, prompt tokens, slots, KV settings</li>
+        <li><strong>Results:</strong> raw <code>print_timing</code> table — prompt eval ms/tok & tok/s, decode tg, graphs reused, total time (no smoothing)</li>
+        <li><strong>What broke:</strong> warnings like <code>failed to fit params</code> / <code>tensor overrides to CPU with mmap</code> / <code>blk.64 unused nextn</code> and the fix</li>
+        <li><strong>Calculator mapping:</strong> how <a href="llm-vram-calculator.html">VRAM</a> + <a href="gpu-ai-calculator.html">GPU Performance</a> bounds explain the gap</li>
+      </ol>
+      <p class="tool-note">Failures are valuable content — we log them. If a run OOMs or offloads, that’s the result.</p>
+    </section>
+  </main>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=27"></script>
+</body>
+</html>

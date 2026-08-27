@@ -17,6 +17,7 @@ const STATIC_META = {
     title: "VelsTech Solutions",
     desc: "VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming.",
   },
+  "lab.html": { title: "VelsTech Lab — Benchmarks & Experiments | VelsTech", desc: "VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." },
   "terms.html": { title: "Terms of Use | VelsTech", desc: "Terms of use and disclaimer for VelsTech." },
   "privacy.html": { title: "Privacy Policy | VelsTech", desc: "Privacy policy for VelsTech." },
   "tags.html": { title: "Tags | VelsTech", desc: "Browse all VelsTech articles by tag — Linux, AI, security, and more." },

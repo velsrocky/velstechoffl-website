@@ -57,7 +57,7 @@
             <select id="cpu" class="input"></select>
           </label>
 
-          <div id="custom-cpu" class="calc-subgrid" hidden>
+          <div id="custom-cpu" class="calc-subgrid">
             <label class="field">
               <span>CPU TDP (W)</span>
               <input id="c-cpu-w" class="input" type="number" min="1" step="1" value="100" />
@@ -69,7 +69,7 @@
             <select id="gpu" class="input"></select>
           </label>
 
-          <div id="custom-gpu" class="calc-subgrid" hidden>
+          <div id="custom-gpu" class="calc-subgrid">
             <label class="field">
               <span>GPU TDP (W)</span>
               <input id="c-gpu-w" class="input" type="number" min="0" step="1" value="250" />
@@ -200,7 +200,6 @@
 
     const cpuSel = document.getElementById("cpu");
     const gpuSel = document.getElementById("gpu");
-    const cpus = CPUS.length, gpus = GPUS.length;
     CPUS.forEach((c, i) => {
       const o = document.createElement("option");
       o.value = i; o.textContent = c.name; cpuSel.appendChild(o);
@@ -210,17 +209,18 @@
       o.value = i; o.textContent = g.name; gpuSel.appendChild(o);
     });
 
-    const cpuCustom = document.getElementById("custom-cpu");
-    const gpuCustom = document.getElementById("custom-gpu");
-    function isCustom(id) { return id.value === String(id === cpuSel ? cpus - 1 : gpus - 1); }
+    function syncCpuFields() {
+      const c = CPUS[cpuSel.value];
+      if (c) document.getElementById("c-cpu-w").value = c.w;
+    }
+    function syncGpuFields() {
+      const g = GPUS[gpuSel.value];
+      if (g) document.getElementById("c-gpu-w").value = g.w;
+    }
 
     function calc() {
-      const cpuW = isCustom(cpuSel)
-        ? parseFloat(document.getElementById("c-cpu-w").value) || 1
-        : CPUS[cpuSel.value].w;
-      const gpuW = isCustom(gpuSel)
-        ? parseFloat(document.getElementById("c-gpu-w").value) || 0
-        : GPUS[gpuSel.value].w;
+      const cpuW = parseFloat(document.getElementById("c-cpu-w").value) || 1;
+      const gpuW = parseFloat(document.getElementById("c-gpu-w").value) || 0;
 
       const ramW = (parseInt(document.getElementById("ram").value, 10) || 0) * 3;
       const ssdW = (parseInt(document.getElementById("ssd").value, 10) || 0) * 3;
@@ -249,14 +249,16 @@
       }
     }
 
-    cpuSel.addEventListener("change", () => { cpuCustom.hidden = !isCustom(cpuSel); calc(); });
-    gpuSel.addEventListener("change", () => { gpuCustom.hidden = !isCustom(gpuSel); calc(); });
+    cpuSel.addEventListener("change", () => { syncCpuFields(); calc(); });
+    gpuSel.addEventListener("change", () => { syncGpuFields(); calc(); });
     ["c-cpu-w", "c-gpu-w", "ram", "ssd", "hdd", "fans", "aio", "rgb", "usb", "age"]
       .forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.addEventListener("input", calc);
       });
 
+    syncCpuFields();
+    syncGpuFields();
     calc();
   </script>
 

@@ -59,7 +59,7 @@
             <select id="gpu" class="input"></select>
           </label>
 
-          <div id="custom-gpu" class="calc-subgrid" hidden>
+          <div id="custom-gpu" class="calc-subgrid">
             <label class="field">
               <span>VRAM (GB)</span>
               <input id="c-vram" class="input" type="number" min="1" step="1" value="12" />
@@ -208,19 +208,19 @@ gen_time = answer_tokens / decode_tok/s</pre>
       quantSel.appendChild(o);
     });
 
-    const customBox = document.getElementById("custom-gpu");
-    function isCustom() {
-      return gpuSel.value === String(GPUS.length - 1);
+    function syncGpuFields() {
+      const g = GPUS[gpuSel.value];
+      if (!g) return;
+      document.getElementById("c-vram").value = g.vram;
+      document.getElementById("c-tf").value = g.tf;
+      document.getElementById("c-bw").value = g.bw;
     }
     function currentGpu() {
-      if (isCustom()) {
-        return {
-          vram: parseFloat(document.getElementById("c-vram").value) || 1,
-          tf: parseFloat(document.getElementById("c-tf").value) || 1,
-          bw: parseFloat(document.getElementById("c-bw").value) || 1,
-        };
-      }
-      return GPUS[gpuSel.value];
+      return {
+        vram: parseFloat(document.getElementById("c-vram").value) || 1,
+        tf: parseFloat(document.getElementById("c-tf").value) || 1,
+        bw: parseFloat(document.getElementById("c-bw").value) || 1,
+      };
     }
 
     const giB = 1073741824;
@@ -272,7 +272,7 @@ gen_time = answer_tokens / decode_tok/s</pre>
     }
 
     gpuSel.addEventListener("change", () => {
-      customBox.hidden = !isCustom();
+      syncGpuFields();
       calc();
     });
     ["c-vram", "c-tf", "c-bw", "params", "ctx", "prompt", "answer", quantSel.id]
@@ -281,6 +281,7 @@ gen_time = answer_tokens / decode_tok/s</pre>
         if (el) el.addEventListener("input", calc);
       });
 
+    syncGpuFields();
     calc();
   </script>
 

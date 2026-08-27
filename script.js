@@ -33,19 +33,21 @@ function affiliateHref(key) {
   return url || null;
 }
 
-/* Google AdSense — leave empty until approved. Once approved, set your
-   client ID ("ca-pub-XXXXXXXX") and slot ID; the script loads automatically
-   and a responsive ad slot is inserted into article pages. */
-const ADSENSE_CLIENT = "";
+/* Google AdSense — client ID is live (Auto Ads). Setting ADSENSE_SLOT additionally
+   inserts a manual responsive unit before .article-nav; leave empty to let Google
+   auto-place ads. Ads only serve after AdSense approval. */
+const ADSENSE_CLIENT = "ca-pub-5002392377660300";
 const ADSENSE_SLOT = "";
 
 function initAdsense() {
-  if (!ADSENSE_CLIENT || !ADSENSE_SLOT) return;
+  if (!ADSENSE_CLIENT) return;
   const s = document.createElement("script");
   s.async = true;
   s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + ADSENSE_CLIENT;
   s.crossOrigin = "anonymous";
   document.head.appendChild(s);
+
+  if (!ADSENSE_SLOT) return; // Auto Ads mode — Google decides placement
 
   const slot = document.createElement("ins");
   slot.className = "adsbygoogle";

@@ -99,23 +99,24 @@ To get the **canonical tracked link**, use Amazon's SiteStripe:
 Brevo → **Automation** → trigger a welcome email on signup. For now, web3forms collects and
 you import manually — add this once the list is a steady flow.
 
-## 4. AdSense (prepared, dormant)
+## 4. AdSense (client ID live — Auto Ads)
 
-Code is ready in `script.js` — dormant until you add two values:
+Client ID is set in `script.js` and the AdSense loader is injected on every page
+(**Auto Ads** mode — Google decides placement; ads only serve once AdSense approves
+the site):
 
 ```js
-const ADSENSE_CLIENT = "";   // e.g. "ca-pub-1234567890123456"
-const ADSENSE_SLOT = "";     // the ad unit slot ID from AdSense
+const ADSENSE_CLIENT = "ca-pub-5002392377660300"; // live
+const ADSENSE_SLOT = "";                            // optional manual ad unit
 ```
 
-When filled, `initAdsense()` automatically:
-- Loads `adsbygoogle.js` with your client ID
-- Inserts a responsive `<ins class="adsbygoogle">` slot before the `.article-nav` on article pages
-  (and at the end of `<main>` elsewhere)
+Optionally, create an ad unit in AdSense → paste its slot ID into `ADSENSE_SLOT`; then
+`initAdsense()` also inserts a responsive unit before `.article-nav` on article pages.
 
-Timing: per the plan, **do this after traffic is meaningful**. Apply for AdSense when the
-site has enough indexed content (it does — 59 URLs) and steady traffic. Until approved, keep
-both values empty.
+Checklist once approved:
+- Confirm ads render (incognito, since ad-blockers hide them).
+- Ensure affiliate/adsense pages (disclosure.html, privacy.html) stay live and linked —
+  AdSense policy requires transparency.
 
 ---
 
@@ -126,4 +127,4 @@ both values empty.
 | 1 | Software affiliates (cash-per-sale) | ✅ `AFFILIATE_LINKS` + `data-aff` links | Sign up for Hostinger, NordVPN, Kit, Brevo → paste URLs into `script.js` |
 | 2 | Amazon Business | ✅ card placed | Generate canonical link via SiteStripe, replace href |
 | 3 | Newsletter | ✅ DNS + Brevo compliant + draft HTML | Create sender, import subscribers, send |
-| 4 | AdSense | ✅ `ADSENSE_CLIENT`/`ADSENSE_SLOT` hooks | Apply + fill IDs once approved |
+| 4 | AdSense | ✅ client ID live (Auto Ads) | Await approval; optional manual slot ID |

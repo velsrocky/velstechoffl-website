@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5002392377660300" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tested Ornith 1.5 35B-A3B MoE (Q5_K/Q4_K) at 262K context on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV." />
+  <title>Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab | VelsTech</title>
+    <link rel="canonical" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html#article",
+  "headline": "Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab",
+  "description": "Tested Ornith 1.5 35B-A3B MoE (Q5_K/Q4_K) at 262K context on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.",
+  "url": "https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html",
+  "datePublished": "2026-08-27T00:00:00Z",
+  "dateModified": "2026-08-27T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og-image.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+  <meta property="og:title" content="Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab | VelsTech" />
+  <meta property="og:description" content="Tested Ornith 1.5 35B-A3B MoE (Q5_K/Q4_K) at 262K context on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="Tested Ornith 1.5 35B-A3B MoE (Q5_K/Q4_K) at 262K context on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=20" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / <a href="index.html#lab">VelsTech Lab</a> / This experiment</p>
+    <h1 class="title">Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">MoE</span>
+      <span class="tag">Ornith 35B</span>
+      <span class="tag">RX 6800M</span>
+      <span>Aug 27, 2026</span>
+      <span>· 6 min read</span>
+      <span>· Updated Aug 27, 2026</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab</span> Second measured Lab: same 12GB RX 6800M, same q8 KV, but a 35B MoE with 28 CPU experts and a 262K context window. Tiny prompt, huge KV reservation.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 Does this fit your GPU?</div>
+        <p><a href="llm-vram-calculator.html">LLM VRAM Calculator</a> — weights + KV at 262K for your quantization · <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> — tok/s upper bound before offload.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">Open calculators →</a>
+      </div>
+
+      <h2>What we tested</h2>
+      <ul>
+        <li><strong>GPU:</strong> RX 6800M 12GB (RDNA2, ~384 GB/s) — same card as <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B 16K test</a>, so MoE vs dense is apples-to-apples on hardware</li>
+        <li><strong>Model:</strong> <code>Ornith-1.5-35B-A3B-AD-Q5_K-Q4_K.gguf</code> — 35B total, 3B active (A3B MoE), Q5_K + Q4_K mixed quant</li>
+        <li><strong>MoE CPU offload:</strong> <code>--n-cpu-moe 28</code> — 28 experts forced to CPU (hence <code>tensor overrides to CPU with mmap</code> warning)</li>
+        <li><strong>Context:</strong> <code>-c 262144 -fa on --cache-type-k q8_0 --cache-type-v q8_0</code>, <code>n_slots=1, kv_unified=false</code> — one slot, 262K KV pool reserved</li>
+        <li><strong>Other:</strong> <code>-ngl 999 --jinja --reasoning-preserve --parallel 1 --temp 0.6 --top-p 0.95 --top-k 20</code>, <code>n_threads=8</code></li>
+        <li><strong>Builds:</strong> Run 1 — <code>llama.cpp/build/bin/llama-server</code> (ROCm); Run 2 — <code>llama.cpp_vulkan/build-vulkan/bin/llama-server</code> (Vulkan)</li>
+      </ul>
+
+      <h2>How we ran it</h2>
+      <pre>llama-server \
+ -m Ornith-1.5-35B-A3B-AD-Q5_K-Q4_K.gguf \
+ -ngl 999 --n-cpu-moe 28 \
+ --cache-type-k q8_0 --cache-type-v q8_0 \
+ -c 262144 -fa on --jinja --reasoning-preserve \
+ --parallel 1 --temp 0.6 --top-p 0.95 --top-k 20</pre>
+      <p>Same 335-token prompt both runs (<code>progress 322→331</code>), generate ~274 vs 307 tokens. Server: <code>listening on 127.0.0.1:8080</code>, <code>llama threadpool n_threads=8</code>.</p>
+
+      <h2>What we measured</h2>
+      <pre>Run            Prompt eval                 Decode (tg)                 Total          Graphs
+─────────────────────────────────────────────────────────────────────────────────────────────
+ROCm           3995 ms /335 tok = 11.93 ms/tok = 83.84 tok/s   100:25.16 179:25.52 257:25.60 → 25.62 tok/s   14.65s /609 tok  272
+Vulkan         4029 ms /335 tok = 12.03 ms/tok = 83.13 tok/s   100:19.65 160:19.66 219:19.65 → 19.66 tok/s   19.59s /642 tok  305</pre>
+      <p><strong>Takeaway:</strong> At 262K + MoE, <strong>ROCm is ~30% faster at decode</strong> (25.62 vs 19.66). Prompt eval is tied ~83 tok/s — 335 tokens is trivial vs 262K capacity, so prefill doesn’t stress context. Total wall time reflects decode: ROCm 14.65s vs Vulkan 19.59s for ~600 tok.</p>
+
+      <h2>What the logs actually said — and what broke</h2>
+      <ol>
+        <li><code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> (ROCm run) — same as Qwen: you forced <code>-ngl 999</code> so <code>--fit</code> is ignored. <strong>Fix: drop <code>-ngl 999</code> and log fitted layers, or explicitly set <code>-ngl 60</code> and <code>--n-cpu-moe</code> together.</strong></li>
+        <li><code>W llama_model_loader: tensor overrides to CPU are used with mmap enabled - consider using --load-mode none for better performance</code> — with <code>--n-cpu-moe 28</code> you’re mmap’ing tensors that immediately get copied to CPU RAM. Add <code>--load-mode none</code> for MoE CPU offload.</li>
+        <li><code>kv_unified=false, n_slots=1, n_ctx_slot=262144</code> — one slot, 262K KV pool <em>reserved</em> even though prompt is 335 tokens. That reservation is why you need q8 KV — f16 at 262K would be ~2× larger and likely OOM. Decode speed here is with the pool reserved, not filled.</li>
+      </ol>
+
+      <h2>How this maps to the calculators</h2>
+      <p>Weights ~35B mixed Q5/Q4 ≈ 13–14 GB (Q5 0.66 + Q4 0.61 averaged). KV q8 at 262K for a MoE is not the simple <code>2×layers×kv_heads×head_dim×2×context</code> — MoE shares KV per token, so our <a href="llm-vram-calculator.html">VRAM Calculator</a> overestimates if you enter 35B; enter <code>3B active</code> + <code>28 CPU experts</code> separately or use custom model with reduced KV. Even at 3B active, 262K q8 is ~262K × ~0.5KB → ~130 GB if fully resident — you’re <strong>not resident</strong>, you’re MoE-sparse + q8 + CPU offload, hence 19–25 tok/s is plausible, not 60 tok/s bound from <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> which assumes full VRAM.</p>
+
+      <details class="calc-method">
+        <summary>How we calculate — the formulas behind the numbers</summary>
+        <div class="calc-method-body">
+          <h4>VRAM: <a href="llm-vram-calculator.html">LLM VRAM Calculator</a></h4>
+          <pre>weights = params × bytes_per_weight / GiB
+kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes (f16) or ×1 (q8)
+kv_cache = kv_per_token × context × batch / GiB</pre>
+          <p>For MoE at 262K, use active params for KV per token, not total 35B, or toggle custom model.</p>
+          <h4>Speed: <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a></h4>
+          <pre>decode_tok/s ≈ (memory_BW × 0.8) / bytes_per_token</pre>
+          <p>MoE decodes fewer bytes per token (active 3B, not 35B), so bound is higher than a 35B dense would be. Your 25 tok/s is ~40% of the bound — the gap is CPU MoE + PCIe.</p>
+        </div>
+      </details>
+
+      <h2>Bottom line</h2>
+      <p>Ornith 35B MoE at 262K <strong>does run on 12GB</strong> with q8 KV + 28 CPU experts, but you pay in decode: ROCm 25.6 tok/s is usable for short answers, Vulkan 19.6 is slower here (inverse of Qwen 16K). Both need <code>--load-mode none</code> and no <code>-ngl 999</code> for optimal. Next Lab will be <strong>MoE vs dense on the same RX 6800M</strong>: this Ornith 35B-A3B (3B active) vs <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B dense 16K</a> — active params vs context trade, same card, both engines.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 VelsTech Lab — MoE vs dense next</div>
+        <p>We’ll compare Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) on the same RX 6800M — ROCm vs Vulkan, q8 vs f16 KV, with fitted layers logged.</p>
+        <a class="btn btn-primary" href="qwen-27b-ridge-rocm-vs-vulkan.html">Read Qwen 27B 16K test →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B vs Ornith 35B — compare</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=6"></script>
+  <script src="script.js?v=25"></script>
+</body>
+</html>

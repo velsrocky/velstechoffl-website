@@ -275,6 +275,16 @@ const ARTICLES = [
     tags: ["VelsTech Lab", "Qwen", "RX 6800M", "ROCm", "Vulkan", "Benchmark"],
     description: "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.",
   },
+  {
+    title: "Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab",
+    url: "ornith-35b-moe-262k-rocm-vs-vulkan.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "AI & ML",
+    featured: true,
+    tags: ["VelsTech Lab", "MoE", "Ornith 35B", "RX 6800M", "ROCm", "Vulkan", "Benchmark"],
+    description: "Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.",
+  },
 ];
 
 if (typeof module !== "undefined" && module.exports) {

@@ -166,6 +166,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/os.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

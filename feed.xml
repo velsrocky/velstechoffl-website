@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>VelsTech</title>
-  <subtitle>Hands-on tech — AI, hardware and Software — guides, experiments, benchmarks and free tools for builders.</subtitle>
+  <subtitle>Hands-on tech: AI, hardware and Software — guides, experiments, benchmarks and free tools for builders.</subtitle>
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-27T17:40:42.934Z</updated>
+  <updated>2026-08-27T18:01:03.178Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>
@@ -70,6 +70,15 @@
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
     <summary>Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.</summary>
+  </entry>
+  <entry>
+    <title>Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan — VelsTech Lab</title>
+    <link rel="alternate" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+    <id>https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M — ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.</summary>
   </entry>
   <entry>
     <title>Omarchy: the beautiful, opinionated Linux distro everyone's talking about</title>

@@ -265,6 +265,16 @@ const ARTICLES = [
     featured: true,
     description: "Apple's compact desktops land on 22 September — the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.",
   },
+  {
+    title: "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab",
+    url: "qwen-27b-ridge-rocm-vs-vulkan.html",
+    date: "2026-08-27",
+    updated: "2026-08-27",
+    category: "AI & ML",
+    featured: true,
+    tags: ["VelsTech Lab", "Qwen", "RX 6800M", "ROCm", "Vulkan", "Benchmark"],
+    description: "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.",
+  },
 ];
 
 if (typeof module !== "undefined" && module.exports) {

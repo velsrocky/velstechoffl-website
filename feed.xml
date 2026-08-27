@@ -5,7 +5,7 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-27T17:31:54.813Z</updated>
+  <updated>2026-08-27T17:40:42.934Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>
@@ -61,6 +61,15 @@
     <updated>2026-08-27T00:00:00Z</updated>
     <category term="AI &amp; ML" />
     <summary>GLM 5.3 is Zhipu AI's newest update — stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.</summary>
+  </entry>
+  <entry>
+    <title>Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K — VelsTech Lab</title>
+    <link rel="alternate" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+    <id>https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html</id>
+    <published>2026-08-27T00:00:00Z</published>
+    <updated>2026-08-27T00:00:00Z</updated>
+    <category term="AI &amp; ML" />
+    <summary>Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M — ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.</summary>
   </entry>
   <entry>
     <title>Omarchy: the beautiful, opinionated Linux distro everyone's talking about</title>

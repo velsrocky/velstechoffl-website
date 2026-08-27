@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>VelsTech</title>
-  <subtitle>Hands-on tech: AI, hardware and Software – guides, experiments, benchmarks and free tools for builders.</subtitle>
+  <subtitle>Hands-on tech: AI, hardware and Software — guides, experiments, benchmarks and free tools for builders.</subtitle>
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-27T19:10:21.225Z</updated>
+  <updated>2026-08-27T19:23:35.476Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>

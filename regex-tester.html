@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
   <meta name="description" content="Free regex tester – paste a regular expression and test string to see every match, capture group, and match position highlighted inline." />
   <title>Regex Tester | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/regex-tester.html" />
@@ -32,7 +33,7 @@
   <meta name="twitter:description" content="Test regular expressions live – paste a pattern and test string to see every match, capture group, and position highlighted inline." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=25" />
 </head>
 <body>
   <main class="article-page">
@@ -70,7 +71,7 @@ Sales is sales@velstech.com.</textarea>
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
           <div class="tool-out" id="highlight"></div>
-          <h3 style="font-size:1rem;margin:16px 0 8px">Matches</h3>
+          <h3 class="subheading">Matches</h3>
           <div class="result-rows" id="match-list"></div>
         </div>
       </div>
@@ -143,7 +144,7 @@ Sales is sales@velstech.com.</textarea>
             const groupHtml = match.groups.map((g, gi) => {
               return g === null ? "" : '<span class="match-grp">' + esc(g) + "</span>";
             }).join(" ");
-            return '<div class="result-row" style="font-family:var(--mono, monospace)">' +
+            return '<div class="result-row" class="mono-list">' +
               "<span>#"+ (i+1) + " @ " + match.index + " – " + (groupHtml || "<em>no capture groups</em>") + "</span>" +
               "</div>";
           }).join("")
@@ -161,6 +162,6 @@ Sales is sales@velstech.com.</textarea>
   </script>
 
   <script src="articles.js?v=7"></script>
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=30"></script>
 </body>
 </html>

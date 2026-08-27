@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
   <meta name="description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs, VRAM fit, and why -ngl 999 breaks --fit." />
   <title>Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
@@ -48,7 +49,7 @@
   <meta name="twitter:description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=25" />
 </head>
 <body>
   <main class="article-page">
@@ -141,6 +142,6 @@ kv_cache = kv_per_token × context × batch / GiB</pre>
   </main>
 
   <script src="articles.js?v=7"></script>
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=30"></script>
 </body>
 </html>

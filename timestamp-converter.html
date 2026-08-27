@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
   <meta name="description" content="Free Unix timestamp converter – convert between epoch seconds, milliseconds, and human-readable dates, with relative time. Copy the current timestamp instantly." />
   <title>Unix Timestamp Converter | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/timestamp-converter.html" />
@@ -32,7 +33,7 @@
   <meta name="twitter:description" content="Convert between Unix timestamps (seconds or milliseconds) and human-readable dates with relative time. Copy the current timestamp instantly." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=25" />
 </head>
 <body>
   <main class="article-page">
@@ -51,17 +52,17 @@
 
       <div class="calc">
         <div class="calc-grid">
-          <label class="field" style="grid-column:1/-1">
+          <label class="field full">
             <span>Unix timestamp (seconds or milliseconds)</span>
             <input id="ts" class="input" type="text" spellcheck="false" placeholder="1724697600 or 1724697600000" />
           </label>
-          <label class="field" style="grid-column:1/-1">
+          <label class="field full">
             <span>Human date (e.g. 2026-08-27 14:30 or 08/27/2026 2:30 PM)</span>
             <input id="date" class="input" type="text" spellcheck="false" placeholder="2026-08-27 14:30" />
           </label>
         </div>
 
-        <div class="tool-btn-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <div class="tool-btn-row" class="btn-row">
           <button class="btn btn-primary" id="btn-now" type="button" title="Copy current Unix timestamp (seconds) to clipboard" aria-label="Copy current timestamp">Copy current timestamp</button>
         </div>
 
@@ -180,6 +181,6 @@
   </script>
 
   <script src="articles.js?v=7"></script>
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=30"></script>
 </body>
 </html>

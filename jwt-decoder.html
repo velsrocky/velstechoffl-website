@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
   <meta name="description" content="Free JWT decoder – paste a JSON Web Token to inspect the header, payload, and signature. Decodes base64 URL and shows claims like exp, iat, iss, and sub." />
   <title>JWT Decoder | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/jwt-decoder.html" />
@@ -32,7 +33,7 @@
   <meta name="twitter:description" content="Decode and inspect a JSON Web Token – header, payload, claims like exp/iat/iss, and signature. All data stays in your browser." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=25" />
 </head>
 <body>
   <main class="article-page">
@@ -56,17 +57,17 @@
         <div class="calc-results" id="results" hidden>
           <div class="result-verdict" id="verdict"></div>
 
-          <h3 style="font-size:1rem;margin:16px 0 8px">Header</h3>
+          <h3 class="subheading">Header</h3>
           <div class="tool-out" id="header-out"></div>
 
-          <h3 style="font-size:1rem;margin:16px 0 8px">Payload</h3>
+          <h3 class="subheading">Payload</h3>
           <div class="tool-out" id="payload-out"></div>
 
-          <h3 style="font-size:1rem;margin:16px 0 8px">Claims</h3>
+          <h3 class="subheading">Claims</h3>
           <div class="result-rows" id="claims-list"></div>
 
-          <h3 style="font-size:1rem;margin:16px 0 8px">Signature</h3>
-          <div class="tool-out" id="sig-out" style="word-break:break-all"></div>
+          <h3 class="subheading">Signature</h3>
+          <div class="tool-out" id="sig-out" class="break-all"></div>
         </div>
       </div>
 
@@ -211,6 +212,6 @@
   </script>
 
   <script src="articles.js?v=7"></script>
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=30"></script>
 </body>
 </html>

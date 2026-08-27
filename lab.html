@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
   <meta name="description" content="VelsTech Lab – benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results – including failures." />
   <title>VelsTech Lab – Benchmarks & Experiments | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/lab.html" />
@@ -30,7 +31,7 @@
   <meta name="twitter:description" content="VelsTech Lab – benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results – including failures." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=25" />
 </head>
 <body>
   <main>
@@ -46,10 +47,10 @@
 
     <section id="experiments" class="article-grid">
       <article class="article" style="border-color: var(--accent)">
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div class="lab-meta">
           <span class="tested-badge">🧪 Lab</span>
-          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(61,220,151,0.12);border:1px solid rgba(61,220,151,0.4)">✓ Completed</span>
-          <span style="font-size:0.75rem;color:var(--muted)">Aug 27, 2026</span>
+          <span class="status-done">✓ Completed</span>
+          <span class="meta-date">Aug 27, 2026</span>
         </div>
         <h3><a href="moe-vs-dense-rx6800m-16k-vs-262k.html">MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K</a></h3>
         <p>Same 12GB RX 6800M – Ornith MoE (3B active, 262K) vs Qwen dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head. When MoE wins and when it doesn’t.</p>
@@ -58,10 +59,10 @@
       </article>
 
       <article class="article">
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div class="lab-meta">
           <span class="tested-badge">🧪 Lab</span>
-          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(61,220,151,0.12);border:1px solid rgba(61,220,151,0.4)">✓ Completed</span>
-          <span style="font-size:0.75rem;color:var(--muted)">Aug 27, 2026</span>
+          <span class="status-done">✓ Completed</span>
+          <span class="meta-date">Aug 27, 2026</span>
         </div>
         <h3><a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan</a></h3>
         <p>35B-A3B (3B active) Q5/Q4 mix at 262K q8 KV, 28 CPU experts – ROCm 25.6 tok/s vs Vulkan 19.6, 83 tok/s prompt. Huge context, sparse decode.</p>
@@ -70,10 +71,10 @@
       </article>
 
       <article class="article">
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div class="lab-meta">
           <span class="tested-badge">🧪 Lab</span>
-          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(61,220,151,0.12);border:1px solid rgba(61,220,151,0.4)">✓ Completed</span>
-          <span style="font-size:0.75rem;color:var(--muted)">Aug 27, 2026</span>
+          <span class="status-done">✓ Completed</span>
+          <span class="meta-date">Aug 27, 2026</span>
         </div>
         <h3><a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K</a></h3>
         <p>27B at 3.7bpw (~12.5GB) at 16K q8 KV – ROCm 18.12 tok/s vs Vulkan 21.84, 217 vs 149 tok/s prompt. First Lab with raw logs.</p>
@@ -82,10 +83,10 @@
       </article>
 
       <article class="article">
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div class="lab-meta">
           <span class="tested-badge">🧪 Lab</span>
-          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(61,220,151,0.12);border:1px solid rgba(61,220,151,0.4)">✓ Completed</span>
-          <span style="font-size:0.75rem;color:var(--muted)">Aug 27, 2026</span>
+          <span class="status-done">✓ Completed</span>
+          <span class="meta-date">Aug 27, 2026</span>
         </div>
         <h3><a href="how-much-vram-for-llm.html">How much VRAM do you need for 7B, 14B, and 32B models?</a></h3>
         <p>VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table you can bookmark.</p>
@@ -93,10 +94,10 @@
         <span class="date">Guide · pairs with the <a href="llm-vram-calculator.html">VRAM calculator</a></span>
       </article>
 
-      <article class="article" style="opacity:0.9; border-style:dashed">
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+      <article class="article planned">
+        <div class="lab-meta">
           <span class="tested-badge" style="background:var(--accent-soft);">🧪 Lab – Next</span>
-          <span style="font-size:0.75rem;padding:3px 10px;border-radius:999px;background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.4)">◷ Planned</span>
+          <span class="status-planned">◷ Planned</span>
         </div>
         <h3>Qwen 27B without -ngl 999: let --fit choose + --load-mode none for MoE</h3>
         <p>Re-run both models without forced <code>-ngl 999</code> (log fitted layers) and with <code>--load-mode none</code> for 28 CPU experts – will the +30% ROCm at 262K hold?</p>
@@ -105,7 +106,7 @@
       </article>
     </section>
 
-    <section class="section" style="padding-top:0">
+    <section class="section pt-0">
       <h2>Buying guides</h2>
       <p>Practical picks for running local AI, based on the benchmarks above:</p>
       <div class="article-grid" style="padding:0">
@@ -130,10 +131,10 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
+    <section class="section pt-0">
       <h2>How Lab posts are structured</h2>
       <p>Every Lab follows the same format so you can compare runs:</p>
-      <ol style="margin:14px 0 14px 24px; line-height:1.7; color:var(--text)">
+      <ol class="method-list">
         <li><strong>Prerequisites:</strong> model file, quant, GPU, driver (ROCm/Vulkan), llama.cpp commit</li>
         <li><strong>Hardware/Software Specs:</strong> exact card, VRAM, CPU, RAM, OS, ROCm/Vulkan, cache type, context, threads</li>
         <li><strong>Method:</strong> full <code>llama-server</code> command, prompt tokens, slots, KV settings</li>
@@ -146,6 +147,6 @@
   </main>
 
   <script src="articles.js?v=7"></script>
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=30"></script>
 </body>
 </html>

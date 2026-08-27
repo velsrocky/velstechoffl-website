@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
   <meta name="description" content="Free Docker Compose generator – pick a service image, ports, volumes, environment variables, and restart policy to get a copy-paste ready docker-compose.yml." />
   <title>Docker Compose Generator | VelsTech</title>
   <link rel="canonical" href="https://velstech.net/docker-compose-generator.html" />
@@ -32,7 +33,7 @@
   <meta name="twitter:description" content="Generate a copy-paste ready docker-compose.yml – pick an image, ports, volumes, environment variables, and restart policy." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=25" />
 </head>
 <body>
   <main class="article-page">
@@ -67,7 +68,7 @@
               <option value="ubuntu:24.04"></option>
             </datalist>
           </label>
-          <label class="field" style="grid-column:1/-1">
+          <label class="field full">
             <span>Restart policy</span>
             <select id="restart" class="input">
               <option value="unless-stopped">unless-stopped</option>
@@ -77,19 +78,19 @@
             </select>
           </label>
 
-          <label class="field" style="grid-column:1/-1">
+          <label class="field full">
             <span>Ports (host:container)</span>
             <div class="kv-list" id="ports-list"></div>
             <button class="btn btn-ghost add-btn" id="add-port" type="button" title="Add another port mapping" aria-label="Add port">+ Add port</button>
           </label>
 
-          <label class="field" style="grid-column:1/-1">
+          <label class="field full">
             <span>Volumes (host:container)</span>
             <div class="kv-list" id="vols-list"></div>
             <button class="btn btn-ghost add-btn" id="add-vol" type="button" title="Add another volume mount" aria-label="Add volume">+ Add volume</button>
           </label>
 
-          <label class="field" style="grid-column:1/-1">
+          <label class="field full">
             <span>Environment variables (KEY=value)</span>
             <div class="kv-list" id="env-list"></div>
             <button class="btn btn-ghost add-btn" id="add-env" type="button" title="Add another environment variable" aria-label="Add variable">+ Add variable</button>
@@ -218,6 +219,6 @@
   </script>
 
   <script src="articles.js?v=7"></script>
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=30"></script>
 </body>
 </html>

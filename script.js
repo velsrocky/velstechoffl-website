@@ -103,17 +103,13 @@ const esc = (s) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-const PAGES = [
-  { href: "index.html", label: "Home", page: "index.html" },
+const TOPICS = [
   { href: "ai.html", label: "AI", page: "ai.html" },
   { href: "hardware.html", label: "Hardware", page: "hardware.html" },
   { href: "os.html", label: "Software", page: "os.html" },
   { href: "networking.html", label: "Networking", page: "networking.html" },
   { href: "security.html", label: "Security", page: "security.html" },
   { href: "programming.html", label: "Development", page: "programming.html" },
-  { href: "lab.html", label: "Lab", page: "lab.html" },
-  { href: "tools.html", label: "Tools", page: "tools.html" },
-  { href: "tags.html", label: "Tags", page: "tags.html" },
 ];
 
 const currentPage = location.pathname.split("/").pop() || "index.html";
@@ -144,9 +140,9 @@ const paletteColors = [
 ];
 
 function navHTML() {
-  const links = PAGES.map(
-    (p) =>
-      `<a class="nav-link${p.page === currentPage ? " active" : ""}" href="${p.href}">${p.label}</a>`
+  const inTopic = TOPICS.some((t) => t.page === currentPage);
+  const topicLinks = TOPICS.map(
+    (t) => `<a class="dropdown-link${t.page === currentPage ? " active" : ""}" href="${t.href}">${t.label}</a>`
   ).join("");
 
   const dots = paletteColors
@@ -160,7 +156,16 @@ function navHTML() {
     '<input id="search-input" class="search-input" type="search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off" />' +
     '<div id="search-results" class="search-results" hidden></div>' +
     "</div>" +
-    '<nav class="links">' + links + "</nav>" +
+    '<nav class="links">' +
+    '<a class="nav-link' + (currentPage === "index.html" ? " active" : "") + '" href="index.html">Home</a>' +
+    '<div class="nav-dropdown" id="topics-dropdown">' +
+    '<button type="button" class="nav-link dropdown-toggle' + (inTopic ? " active" : "") + '" id="topics-toggle" aria-haspopup="true" aria-expanded="false">Topics <span class="dropdown-caret">▾</span></button>' +
+    '<div class="dropdown-menu" id="topics-menu">' + topicLinks + "</div>" +
+    "</div>" +
+    '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html">Lab</a>' +
+    '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html">Tools</a>' +
+    '<a class="nav-link' + (currentPage === "tags.html" ? " active" : "") + '" href="tags.html">Tags</a>' +
+    "</nav>" +
     '<div class="controls">' +
     '<button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme"></button>' +
     '<div class="palette-wrap">' +
@@ -168,6 +173,26 @@ function navHTML() {
     '<div class="palette" id="palette" hidden>' + dots + "</div>" +
     "</div></div></header>"
   );
+}
+
+function initNavDropdown() {
+  const dd = document.getElementById("topics-dropdown");
+  const toggle = document.getElementById("topics-toggle");
+  if (!dd || !toggle) return;
+  const open = (o) => {
+    dd.classList.toggle("open", o);
+    toggle.setAttribute("aria-expanded", String(o));
+  };
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    open(!dd.classList.contains("open"));
+  });
+  document.addEventListener("click", (e) => {
+    if (!dd.contains(e.target)) open(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") open(false);
+  });
 }
 
 function initSearch() {
@@ -750,6 +775,21 @@ function initArticleFlow() {
   nav.parentNode.insertBefore(flow, nav);
 }
 
+function initBackToTop() {
+  const btn = document.createElement("button");
+  btn.className = "back-to-top";
+  btn.type = "button";
+  btn.setAttribute("aria-label", "Back to top");
+  btn.title = "Back to top";
+  btn.textContent = "↑";
+  document.body.appendChild(btn);
+
+  const toggle = () => btn.classList.toggle("visible", window.scrollY > 600);
+  window.addEventListener("scroll", toggle, { passive: true });
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  toggle();
+}
+
 function initHotTopic() {
   const container = document.getElementById("hot-topic-list");
   if (!container) return;
@@ -774,6 +814,7 @@ function initHotTopic() {
 }
 
 initSearch();
+initNavDropdown();
 initWhatsNew();
 initArticleMeta();
 initContactForm();
@@ -782,6 +823,7 @@ initTagsPage();
 initCopyButtons();
 addCategoryPill();
 initArticleFlow();
+initBackToTop();
 initProgressBar();
 initReveal();
 initCategoryColors();

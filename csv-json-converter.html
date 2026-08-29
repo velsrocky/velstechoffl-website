@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Free CSV to JSON converter – paste any CSV and get clean JSON in one click. Also supports converting JSON arrays back to CSV." />
+  <title>CSV ↔ JSON Converter | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/csv-json-converter.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/csv-json-converter.html#webapp",
+  "name": "CSV ↔ JSON Converter | VelsTech",
+  "description": "Paste CSV and get clean JSON, or paste a JSON array and get CSV back. No server uploads – runs in your browser.",
+  "url": "https://velstech.net/csv-json-converter.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/csv-json-converter.html" />
+  <meta property="og:title" content="CSV ↔ JSON Converter | VelsTech" />
+  <meta property="og:description" content="Paste CSV and get clean JSON, or paste a JSON array and get CSV back. No server uploads – runs in your browser." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSV ↔ JSON Converter | VelsTech" />
+  <meta name="twitter:description" content="Paste CSV and get clean JSON, or paste a JSON array and get CSV back. No server uploads – runs in your browser." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=30" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / CSV ↔ JSON Converter</p>
+    <h1 class="title">CSV ↔ JSON Converter</h1>
+    <div class="meta">
+      <span>Convert between CSV and JSON · header row required · runs in your browser</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Paste a CSV (comma, tab, or pipe-separated) and instantly get a clean JSON
+        array. Works the other way too: paste a JSON array of objects and get CSV. No
+        data is sent to any server — everything runs locally in your browser.
+      </p>
+
+      <div class="calc">
+        <div class="tool-radio-row">
+          <label><input type="radio" name="mode" value="csv-to-json" checked /> CSV → JSON</label>
+          <label><input type="radio" name="mode" value="json-to-csv" /> JSON → CSV</label>
+        </div>
+
+        <label class="field" style="margin-top:14px">
+          <span>Input</span>
+          <textarea id="input" class="tool-textarea" rows="6" spellcheck="false"></textarea>
+        </label>
+
+        <label class="field" style="margin-top:14px">
+          <span>Output</span>
+          <textarea id="output" class="tool-textarea" rows="6" spellcheck="false" readonly></textarea>
+        </label>
+
+        <div class="tool-btn-row">
+          <button class="btn btn-primary" id="btn-copy" type="button" title="Copy output to clipboard" aria-label="Copy output">Copy output</button>
+          <button class="btn btn-ghost" id="btn-swap" type="button" title="Swap input and output and flip mode" aria-label="Swap input and output">Swap input ↔ output</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+        </div>
+      </div>
+
+      <h2>Related tools</h2>
+      <ul>
+        <li><a href="json-formatter.html">JSON Formatter &amp; Validator</a></li>
+        <li><a href="url-encoder-decoder.html">URL Encoder / Decoder</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+    const verdict = document.getElementById("verdict");
+    const results = document.getElementById("results");
+    const csvToJson = document.querySelector('input[name="mode"][value="csv-to-json"]');
+    const jsonToCsv = document.querySelector('input[name="mode"][value="json-to-csv"]');
+
+    function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+    function parseCSV(text) {
+      const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+      if (!lines.length) return null;
+      const delim = lines[0].includes("\t") ? "\t" : lines[0].includes("|") ? "|" : ",";
+      const headers = lines[0].split(delim).map(h => h.trim());
+      const rows = lines.slice(1).map(l => {
+        const vals = l.split(delim).map(v => v.trim());
+        const row = {};
+        headers.forEach((h, i) => { row[h] = vals[i] || ""; });
+        return row;
+      });
+      return { rows, headers };
+    }
+
+    function render() {
+      const raw = input.value;
+      if (!raw) { results.hidden = true; output.value = ""; return; }
+      results.hidden = false;
+
+      try {
+        if (csvToJson.checked) {
+          const parsed = parseCSV(raw);
+          if (!parsed || !parsed.rows.length) throw new Error("No data rows found");
+          const json = JSON.stringify(parsed.rows, null, 2);
+          output.value = json;
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Converted " + parsed.rows.length + " row" + (parsed.rows.length === 1 ? "" : "s") + " with " + parsed.headers.length + " columns.";
+        } else {
+          const arr = JSON.parse(raw);
+          if (!Array.isArray(arr)) throw new Error("Input must be a JSON array");
+          if (!arr.length) throw new Error("Array is empty");
+          const headers = Object.keys(arr[0]);
+          const lines = arr.map(obj => headers.map(h => String(obj[h] || "")).join(","));
+          output.value = headers.join(",") + "\n" + lines.join("\n");
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Converted " + arr.length + " object" + (arr.length === 1 ? "" : "s") + " to CSV.";
+        }
+      } catch (e) {
+        output.value = "";
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>" + esc(e.message) + "</strong>";
+      }
+    }
+
+    [csvToJson, jsonToCsv].forEach((r) => r.addEventListener("change", render));
+    input.addEventListener("input", render);
+
+    document.getElementById("btn-copy").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(output.value); } catch { output.select(); document.execCommand("copy"); }
+      const btn = document.getElementById("btn-copy");
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = "Copy output"; }, 1500);
+    });
+
+    document.getElementById("btn-swap").addEventListener("click", () => {
+      const tmp = input.value;
+      input.value = output.value;
+      output.value = tmp;
+      const wasCsv = csvToJson.checked;
+      csvToJson.checked = !wasCsv;
+      jsonToCsv.checked = wasCsv;
+      render();
+    });
+
+    input.value = "name,role,years\nAlice,Engineer,5\nBob,Designer,3\nCharlie,PM,4";
+    render();
+  </script>
+
+  <script src="articles.js?v=8"></script>
+  <script src="script.js?v=31"></script>
+</body>
+</html>

@@ -38,6 +38,7 @@ const STATIC_META = {
   "disclosure.html": { title: "Affiliate Disclosure | VelsTech", desc: "How affiliate links on VelsTech work — when we earn a commission and why it never costs you anything extra." },
   "resources.html": { title: "Recommended Tools | VelsTech", desc: "VelsTech's recommended tools — the AI apps, developer tools, cloud services, hosting, and security software we actually use." },
   "advertise.html": { title: "Advertise | VelsTech", desc: "Advertise on VelsTech — sponsored tutorials, product reviews, newsletter sponsorships, and display advertising for AI, hardware, Linux, and developer tools." },
+  "linux-cheat-sheet.html": { title: "Linux Command Cheat Sheet (Free) | VelsTech", desc: "Every Linux command you need – files, permissions, processes, networking, and package management. Free printable cheat sheet." },
 };
 
 const TOOLS_META = {
@@ -47,6 +48,8 @@ const TOOLS_META = {
   "psu-calculator.html": { title: "PC Power Supply Calculator | VelsTech", desc: "Estimate your build's peak power draw and get a recommended PSU wattage with headroom." },
   "cidr-calculator.html": { title: "CIDR / Subnet Calculator | VelsTech", desc: "Enter an IPv4 address and prefix to get the network address, usable host range, broadcast address, subnet mask, and wildcard mask." },
   "chmod-calculator.html": { title: "chmod Calculator | VelsTech", desc: "Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run." },
+  "cron-generator.html": { title: "Cron Generator | VelsTech", desc: "Pick a schedule in plain English and get the cron expression plus next run times. No more memorizing cron syntax." },
+  "csv-json-converter.html": { title: "CSV ↔ JSON Converter | VelsTech", desc: "Paste CSV and get clean JSON, or paste a JSON array and get CSV back. No server uploads – runs in your browser." },
   "docker-compose-generator.html": { title: "Docker Compose Generator | VelsTech", desc: "Generate a copy-paste ready docker-compose.yml — pick an image, ports, volumes, environment variables, and restart policy." },
   "ffmpeg-command-generator.html": { title: "FFmpeg Command Generator | VelsTech", desc: "Build a correct ffmpeg command for converting, compressing, and trimming media — container, codec, quality, scale, and audio settings." },
   "json-formatter.html": { title: "JSON Formatter & Validator | VelsTech", desc: "Format, minify, validate, and check the size of JSON with syntax highlighting. Runs entirely in your browser." },
@@ -57,6 +60,9 @@ const TOOLS_META = {
   "color-converter.html": { title: "Color Converter (HEX / RGB / HSL) | VelsTech", desc: "Convert colors between HEX, RGB, and HSL with a live swatch and copy-ready CSS values. Runs entirely in your browser." },
   "text-diff-checker.html": { title: "Text Diff Checker | VelsTech", desc: "Compare two versions of text with added and removed lines highlighted. A simple line-based diff, no server involved." },
   "url-encoder-decoder.html": { title: "URL Encoder / Decoder | VelsTech", desc: "Percent-encode and decode URL components with UTF-8 support. Runs entirely in your browser." },
+  "csv-json-converter.html": { title: "CSV to JSON Converter | VelsTech", desc: "Paste CSV and get clean JSON, or paste a JSON array and get CSV back. Runs entirely in your browser." },
+  "hash-generator.html": { title: "Hash Generator (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech", desc: "Compute MD5, SHA-1, SHA-256, and SHA-512 hashes of any text instantly. Runs entirely in your browser." },
+  "cron-generator.html": { title: "Cron Generator | VelsTech", desc: "Pick a schedule in plain English and get the cron expression plus next run times. No more memorizing cron syntax." },
 };
 
 const CATEGORY_META = {

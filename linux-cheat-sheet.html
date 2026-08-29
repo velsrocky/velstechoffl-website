@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="The VelsTech Linux command cheat sheet – every command you need for files, permissions, processes, networking, and package management. Free, printable, no email required." />
+  <title>Linux Command Cheat Sheet (Free PDF) | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/linux-cheat-sheet.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://velstech.net/linux-cheat-sheet.html#webpage",
+  "url": "https://velstech.net/linux-cheat-sheet.html",
+  "name": "Linux Command Cheat Sheet (Free PDF) | VelsTech",
+  "description": "Every Linux command you need – files, permissions, processes, networking, package management. Free printable cheat sheet.",
+  "inLanguage": "en"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/linux-cheat-sheet.html" />
+  <meta property="og:title" content="Linux Command Cheat Sheet (Free PDF) | VelsTech" />
+  <meta property="og:description" content="Every Linux command you need – files, permissions, processes, networking, package management. Free printable cheat sheet." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Linux Command Cheat Sheet (Free PDF) | VelsTech" />
+  <meta name="twitter:description" content="Every Linux command you need – files, permissions, processes, networking, package management. Free printable cheat sheet." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=30" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Linux Command Cheat Sheet</p>
+    <h1 class="title">Linux Command Cheat Sheet</h1>
+    <div class="meta">
+      <span>Free download · printable · the commands you'll actually use</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        The commands below cover 95% of daily Linux use — navigation, files,
+        permissions, processes, networking, and package management. Bookmark this
+        page, or <a href="#" onclick="window.print();return false;">print it (Ctrl+P / Cmd+P)
+        to keep a copy on your desk</a>.
+      </p>
+
+      <h2>🖥️ Navigation &amp; files</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>pwd</code><span>Print current directory</span></div>
+        <div class="cheat-item"><code>ls</code><span>List files</span></div>
+        <div class="cheat-item"><code>ls -la</code><span>List all files with details &amp; hidden files</span></div>
+        <div class="cheat-item"><code>cd dir</code><span>Change to directory</span></div>
+        <div class="cheat-item"><code>cd ~</code><span>Go to home directory</span></div>
+        <div class="cheat-item"><code>cd ..</code><span>Go up one level</span></div>
+        <div class="cheat-item"><code>mkdir dir</code><span>Create directory</span></div>
+        <div class="cheat-item"><code>rm file</code><span>Delete file (careful — no undo)</span></div>
+        <div class="cheat-item"><code>rm -r dir</code><span>Delete directory recursively</span></div>
+        <div class="cheat-item"><code>cp a b</code><span>Copy a → b</span></div>
+        <div class="cheat-item"><code>mv a b</code><span>Move / rename a → b</span></div>
+        <div class="cheat-item"><code>touch file</code><span>Create empty file</span></div>
+        <div class="cheat-item"><code>cat file</code><span>Print file contents</span></div>
+        <div class="cheat-item"><code>less file</code><span>View file (scroll, q to quit)</span></div>
+        <div class="cheat-item"><code>head / tail file</code><span>First / last 10 lines</span></div>
+        <div class="cheat-item"><code>tail -f file</code><span>Watch file grow (logs)</span></div>
+        <div class="cheat-item"><code>grep pattern file</code><span>Search lines matching pattern</span></div>
+        <div class="cheat-item"><code>find . -name "*.txt"</code><span>Find files by name</span></div>
+      </div>
+
+      <h2>🔐 Permissions &amp; ownership</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>chmod 755 file</code><span>Set permissions (rwxr-xr-x)</span></div>
+        <div class="cheat-item"><code>chmod +x file</code><span>Make executable</span></div>
+        <div class="cheat-item"><code>chown user file</code><span>Change owner</span></div>
+        <div class="cheat-item"><code>chown -R user dir</code><span>Change owner recursively</span></div>
+        <div class="cheat-item"><code>ls -l</code><span>Show permissions</span></div>
+        <div class="cheat-item"><code>sudo command</code><span>Run as administrator</span></div>
+      </div>
+
+      <h2>📦 Package management (apt — Debian/Ubuntu)</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>sudo apt update</code><span>Refresh package list</span></div>
+        <div class="cheat-item"><code>sudo apt upgrade</code><span>Upgrade installed packages</span></div>
+        <div class="cheat-item"><code>sudo apt install pkg</code><span>Install a package</span></div>
+        <div class="cheat-item"><code>sudo apt remove pkg</code><span>Remove a package</span></div>
+        <div class="cheat-item"><code>apt search term</code><span>Search available packages</span></div>
+        <div class="cheat-item"><code>dpkg -l</code><span>List installed packages</span></div>
+      </div>
+
+      <h2>⚙️ Processes &amp; system</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ps aux</code><span>List running processes</span></div>
+        <div class="cheat-item"><code>top / htop</code><span>Live system monitor</span></div>
+        <div class="cheat-item"><code>kill PID</code><span>End a process</span></div>
+        <div class="cheat-item"><code>kill -9 PID</code><span>Force-end a process</span></div>
+        <div class="cheat-item"><code>systemctl status svc</code><span>Service status</span></div>
+        <div class="cheat-item"><code>systemctl start/stop svc</code><span>Start / stop a service</span></div>
+        <div class="cheat-item"><code>systemctl enable svc</code><span>Start service on boot</span></div>
+        <div class="cheat-item"><code>df -h</code><span>Disk usage</span></div>
+        <div class="cheat-item"><code>du -sh dir</code><span>Directory size</span></div>
+        <div class="cheat-item"><code>free -h</code><span>Memory usage</span></div>
+        <div class="cheat-item"><code>uname -a</code><span>Kernel info</span></div>
+      </div>
+
+      <h2>🌐 Networking</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ping host</code><span>Check connectivity</span></div>
+        <div class="cheat-item"><code>ip addr</code><span>Show IP addresses</span></div>
+        <div class="cheat-item"><code>curl URL</code><span>Fetch a URL</span></div>
+        <div class="cheat-item"><code>wget URL</code><span>Download a file</span></div>
+        <div class="cheat-item"><code>ssh user@host</code><span>Connect via SSH</span></div>
+        <div class="cheat-item"><code>scp f user@h:/path</code><span>Copy file over SSH</span></div>
+        <div class="cheat-item"><code>netstat -tulpn</code><span>Show open ports</span></div>
+        <div class="cheat-item"><code>dig domain</code><span>DNS lookup</span></div>
+      </div>
+
+      <h2>🧰 Handy shortcuts &amp; tricks</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>Tab</code><span>Auto-complete</span></div>
+        <div class="cheat-item"><code>↑ / ↓</code><span>Command history</span></div>
+        <div class="cheat-item"><code>Ctrl + C</code><span>Cancel current command</span></div>
+        <div class="cheat-item"><code>Ctrl + D</code><span>Exit shell / EOF</span></div>
+        <div class="cheat-item"><code>Ctrl + R</code><span>Search history</span></div>
+        <div class="cheat-item"><code>command | grep x</code><span>Pipe output into search</span></div>
+        <div class="cheat-item"><code>command &gt; file</code><span>Save output to file</span></div>
+        <div class="cheat-item"><code>!!</code><span>Repeat last command</span></div>
+        <div class="cheat-item"><code>man command</code><span>Manual / help</span></div>
+      </div>
+
+      <h2>📬 Want more like this?</h2>
+      <p>
+        Join the <strong>VelsTech Weekly</strong> — five useful things a week: one AI
+        find, one tool, one hardware insight, one Linux trick, and a genuinely good deal.
+        No spam, unsubscribe anytime.
+      </p>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
+        <input type="hidden" name="subject" value="VelsTech newsletter signup (cheat sheet)" />
+        <label class="sr-only" for="newsletter-email">Email</label>
+        <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" required />
+        <button class="btn btn-primary" type="submit">Get the weekly letter</button>
+        <p class="form-status" id="newsletter-status" hidden></p>
+      </form>
+    </div>
+
+    <div class="article-nav">
+      <a href="linux-beginners.html">← Linux for beginners</a>
+      <a href="terminal-commands.html">Terminal commands →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=8"></script>
+  <script src="script.js?v=31"></script>
+</body>
+</html>

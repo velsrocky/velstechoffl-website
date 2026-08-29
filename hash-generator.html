@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Free hash generator – compute MD5, SHA-1, SHA-256, and SHA-512 checksums of any text instantly. Runs entirely in your browser." />
+  <title>Hash Generator (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/hash-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/hash-generator.html#webapp",
+  "name": "Hash Generator | VelsTech",
+  "description": "Compute MD5, SHA-1, SHA-256, and SHA-512 hashes of any text instantly. No server uploads – runs in your browser.",
+  "url": "https://velstech.net/hash-generator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/hash-generator.html" />
+  <meta property="og:title" content="Hash Generator (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech" />
+  <meta property="og:description" content="Compute MD5, SHA-1, SHA-256, and SHA-512 hashes of any text instantly. No server uploads – runs in your browser." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hash Generator (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech" />
+  <meta name="twitter:description" content="Compute MD5, SHA-1, SHA-256, and SHA-512 hashes of any text instantly. No server uploads – runs in your browser." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=30" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Hash Generator</p>
+    <h1 class="title">Hash Generator</h1>
+    <div class="meta">
+      <span>MD5 · SHA-1 · SHA-256 · SHA-512 · runs in your browser</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Type or paste any text and instantly get its <strong>MD5, SHA-1, SHA-256, and
+        SHA-512</strong> hashes. Handy for checking downloaded files, testing configs, or
+        learning how hashing works. Everything is computed locally — your input never leaves
+        your device.
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>Input text</span>
+          <textarea id="input" class="tool-textarea" rows="4" spellcheck="false"></textarea>
+        </label>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows">
+            <div class="result-row"><span>MD5</span><strong id="r-md5" class="hash-val">–</strong></div>
+            <div class="result-row"><span>SHA-1</span><strong id="r-sha1" class="hash-val">–</strong></div>
+            <div class="result-row"><span>SHA-256</span><strong id="r-sha256" class="hash-val">–</strong></div>
+            <div class="result-row"><span>SHA-512</span><strong id="r-sha512" class="hash-val">–</strong></div>
+          </div>
+          <p class="tool-note">
+            Want to hash a file instead of a line of text? Use the terminal —
+            <code>md5sum file</code>, <code>sha1sum file</code>, or
+            <code>sha256sum file</code> on Linux and macOS.
+          </p>
+        </div>
+      </div>
+
+      <h2>Why hashing matters</h2>
+      <p>
+        Hashes are one-way fingerprints. The same input always produces the same hash, but
+        you can't reverse the hash to get the input. That's why downloads ship checksums —
+        if the file's hash matches, the file wasn't corrupted or tampered with during
+        transfer.
+      </p>
+      <p>
+        <strong>Important:</strong> MD5 and SHA-1 are fast but <em>not</em> secure for
+        password storage or integrity against attackers. Prefer <strong>SHA-256</strong> or
+        a purpose-built password hasher like bcrypt for anything security-related.
+      </p>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="password-managers.html">Password managers: why you need one</a></li>
+        <li><a href="security-habits.html">The only 5 security habits you really need</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="security.html">Security notes</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const out = { md5: document.getElementById("r-md5"), sha1: document.getElementById("r-sha1"), sha256: document.getElementById("r-sha256"), sha512: document.getElementById("r-sha512") };
+
+    function hex(buf) {
+      return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function render() {
+      const raw = input.value;
+      const results = document.getElementById("results");
+      if (!raw) {
+        Object.values(out).forEach((el) => { el.textContent = "–"; });
+        results.style.opacity = "0.5";
+        return;
+      }
+      results.style.opacity = "1";
+      const enc = new TextEncoder().encode(raw);
+      out.sha1.textContent = hex(await crypto.subtle.digest("SHA-1", enc));
+      out.sha256.textContent = hex(await crypto.subtle.digest("SHA-256", enc));
+      out.sha512.textContent = hex(await crypto.subtle.digest("SHA-512", enc));
+      out.md5.textContent = md5(raw);
+    }
+
+    let raf = null;
+    input.addEventListener("input", () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(render);
+    });
+
+    /* MD5 – pure JS implementation (Web Crypto doesn't offer MD5) */
+    function md5(str) {
+      function rotl(x, n) { return (x << n) | (x >>> (32 - n)); }
+      function add32(a, b) { return (a + b) & 0xffffffff; }
+      const K = [];
+      for (let i = 0; i < 64; i++) K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 4294967296);
+      const bytes = [];
+      for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i);
+        bytes.push(c & 0xff, (c >> 8) & 0xff);
+      }
+      const origLen = bytes.length;
+      bytes.push(0x80);
+      while (bytes.length % 64 !== 56) bytes.push(0);
+      const bitLen = origLen * 8;
+      bytes.push(bitLen & 0xff, (bitLen >>> 8) & 0xff, (bitLen >>> 16) & 0xff, (bitLen >>> 24) & 0xff, 0, 0, 0, 0);
+      let a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
+      const S = [7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+      for (let i = 0; i < bytes.length; i += 64) {
+        const M = [];
+        for (let j = 0; j < 16; j++) M[j] = (bytes[i + j * 4]) | (bytes[i + j * 4 + 1] << 8) | (bytes[i + j * 4 + 2] << 16) | (bytes[i + j * 4 + 3] << 24);
+        let A = a0, B = b0, C = c0, D = d0;
+        for (let j = 0; j < 64; j++) {
+          let F, g;
+          if (j < 16) { F = (B & C) | (~B & D); g = j; }
+          else if (j < 32) { F = (D & B) | (~D & C); g = (5 * j + 1) % 16; }
+          else if (j < 48) { F = B ^ C ^ D; g = (3 * j + 5) % 16; }
+          else { F = C ^ (B | ~D); g = (7 * j) % 16; }
+          F = add32(F, add32(add32(A, K[j]), M[g]));
+          const temp = D; D = C; C = B;
+          B = add32(B, rotl(F, S[j]));
+          A = temp;
+        }
+        a0 = add32(a0, A); b0 = add32(b0, B); c0 = add32(c0, C); d0 = add32(d0, D);
+      }
+      const endian = (x) => [x & 0xff, (x >>> 8) & 0xff, (x >>> 16) & 0xff, (x >>> 24) & 0xff].map((b) => b.toString(16).padStart(2, "0")).join("");
+      return endian(a0) + endian(b0) + endian(c0) + endian(d0);
+    }
+
+    input.value = "VelsTech";
+    render();
+  </script>
+
+  <script src="articles.js?v=8"></script>
+  <script src="script.js?v=31"></script>
+</body>
+</html>

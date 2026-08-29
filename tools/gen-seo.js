@@ -10,12 +10,26 @@ const esc = (s) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
+/* Google Search Console verification – paste the token from Search Console
+   (Settings → Ownership verification → HTML tag) here, then re-run gen-seo.js.
+   Leave empty to skip. */
+const GSC_VERIFICATION = "";
+
+/* Social profile URLs – added to the Organization schema (sameAs) on the
+   homepage. Leave any empty to skip it. Keep in sync with script.js SOCIAL_LINKS. */
+const GITHUB_URL = "https://github.com/velsrocky";
+const YOUTUBE_URL = "";
+const X_URL = "";
+const REDDIT_URL = "";
+const MASTODON_URL = "";
+const LINKEDIN_URL = "";
+
 const files = fs.readdirSync(path.join(__dirname, "..")).filter((f) => f.endsWith(".html"));
 
 const STATIC_META = {
   "index.html": {
     title: "VelsTech Solutions",
-    desc: "VelsTech — practical tech notes on AI, hardware, operating systems, networking, security, and programming.",
+    desc: "Technology explained for everyone – plain-language guides, free tools and real experiments: choosing a first PC, staying safe online, understanding AI, and more.",
   },
   "lab.html": { title: "VelsTech Lab — Benchmarks & Experiments | VelsTech", desc: "VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." },
   "terms.html": { title: "Terms of Use | VelsTech", desc: "Terms of use and disclaimer for VelsTech." },
@@ -71,10 +85,19 @@ function pageUrl(file) {
 function jsonLd(file, meta) {
   const url = pageUrl(file);
   const art = ARTICLES.find((a) => a.url === file);
-  let schema;
+  const blocks = [];
 
   if (file === "index.html") {
-    schema = {
+    const org = {
+      "@type": "Organization",
+      "@id": `${SITE}/#organization`,
+      name: "VelsTech",
+      url: `${SITE}/`,
+      logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
+    };
+    const socials = [GITHUB_URL, YOUTUBE_URL, X_URL, REDDIT_URL, MASTODON_URL, LINKEDIN_URL].filter(Boolean);
+    if (socials.length) org.sameAs = socials;
+    blocks.push({
       "@context": "https://schema.org",
       "@graph": [
         {
@@ -91,17 +114,11 @@ function jsonLd(file, meta) {
             "query-input": "required name=search_term_string",
           },
         },
-        {
-          "@type": "Organization",
-          "@id": `${SITE}/#organization`,
-          name: "VelsTech",
-          url: `${SITE}/`,
-          logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
-        },
+        org,
       ],
-    };
+    });
   } else if (art) {
-    schema = {
+    blocks.push({
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "@id": `${url}#article`,
@@ -120,9 +137,21 @@ function jsonLd(file, meta) {
         logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
       },
       mainEntityOfPage: url,
-    };
+    });
+    if (art.faq && art.faq.length) {
+      blocks.push({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: art.faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      });
+    }
   } else if (CATEGORY_META[file]) {
-    schema = {
+    blocks.push({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "@id": `${url}#webpage`,
@@ -130,9 +159,9 @@ function jsonLd(file, meta) {
       name: meta.title,
       description: meta.desc,
       inLanguage: "en",
-    };
+    });
   } else if (TOOLS_META[file]) {
-    schema = {
+    blocks.push({
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "@id": `${url}#webapp`,
@@ -142,9 +171,9 @@ function jsonLd(file, meta) {
       inLanguage: "en",
       applicationCategory: "UtilitiesApplication",
       operatingSystem: "Web",
-    };
+    });
   } else {
-    schema = {
+    blocks.push({
       "@context": "https://schema.org",
       "@type": "WebPage",
       "@id": `${url}#webpage`,
@@ -152,10 +181,12 @@ function jsonLd(file, meta) {
       name: meta.title,
       description: meta.desc,
       inLanguage: "en",
-    };
+    });
   }
 
-  return `  <script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n  </script>`;
+  return blocks
+    .map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s, null, 2)}\n  </script>`)
+    .join("\n");
 }
 
 let injected = 0;
@@ -166,6 +197,7 @@ for (const file of files) {
   let html = fs.readFileSync(fp, "utf8");
 
   const url = pageUrl(file);
+  const art = ARTICLES.find((a) => a.url === file);
   const og = `
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="VelsTech" />
@@ -182,18 +214,31 @@ for (const file of files) {
 
   const canonical = `  <link rel="canonical" href="${url}" />`;
   const ld = jsonLd(file, meta);
+  const gsc = GSC_VERIFICATION
+    ? `  <meta name="google-site-verification" content="${esc(GSC_VERIFICATION)}" />`
+    : "";
 
-  const seoBlock = [canonical, ld.trim(), og.trim()].join("\n  ");
+  const seoBlock = [canonical, gsc, ld.trim(), og.trim()].filter(Boolean).join("\n  ");
 
   if (!html.includes('rel="canonical"')) {
     html = html.replace('<link rel="icon"', seoBlock + '\n  <link rel="icon"');
     injected++;
   } else {
-    // Canonical already present — just refresh OG url/desc on index (idempotent).
+    // Canonical already present — refresh idempotently (no reordering).
+    if (GSC_VERIFICATION && !html.includes("google-site-verification")) {
+      html = html.replace('<link rel="canonical"', '<link rel="canonical"\n' + gsc);
+    }
     if (file === "index.html") {
-      html = html.replace(/<meta property="og:url" content="[^"]*" \/>/, `  <meta property="og:url" content="${url}" />`);
-      html = html.replace(/<meta property="og:description" content="[^"]*" \/>/, `  <meta property="og:description" content="${esc(meta.desc)}" />`);
-      html = html.replace(/<meta name="twitter:description" content="[^"]*" \/>/, `  <meta name="twitter:description" content="${esc(meta.desc)}" />`);
+      html = html.replace(/(\s*)<meta property="og:description" content="[^"]*" \/>/, `$1<meta property="og:description" content="${esc(meta.desc)}" />`);
+      html = html.replace(/(\s*)<meta name="twitter:description" content="[^"]*" \/>/, `$1<meta name="twitter:description" content="${esc(meta.desc)}" />`);
+    }
+    if (file === "index.html" || art) {
+      // Refresh JSON-LD in place: drop any existing ld+json blocks (including
+      // leading indentation), then re-insert the regenerated block(s) right
+      // after the canonical link so output stays byte-stable on re-runs.
+      html = html.replace(/^[ \t]*<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/gm, "");
+      const newLd = jsonLd(file, meta);
+      html = html.replace(/(<link rel="canonical"[^>]*\/>)(\n)/, `$1\n${newLd}$2`);
     }
   }
   fs.writeFileSync(fp, html);

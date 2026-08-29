@@ -39,6 +39,22 @@ function affiliateHref(key) {
 const ADSENSE_CLIENT = "ca-pub-5002392377660300";
 const ADSENSE_SLOT = "";
 
+/* Cloudflare Web Analytics – free, cookieless, privacy-friendly page analytics.
+   Get a token at Cloudflare dashboard → Analytics → Web Analytics → Add a site,
+   then paste it below. Leave empty ("") to disable. */
+const CF_WEB_ANALYTICS_TOKEN = "";
+
+/* Social profiles – shown in the footer and added to the Organization schema.
+   Leave any key empty to hide it. Reach audience where it already is. */
+const SOCIAL_LINKS = {
+  github: "https://github.com/velsrocky",
+  youtube: "",
+  x: "",
+  reddit: "",
+  mastodon: "",
+  linkedin: "",
+};
+
 function initAdsense() {
   if (!ADSENSE_CLIENT) return;
   if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
@@ -66,6 +82,16 @@ function initAdsense() {
   if (nav) main.insertBefore(slot, nav);
   else main.appendChild(slot);
   (adsbygoogle = window.adsbygoogle || []).push({});
+}
+
+function initWebAnalytics() {
+  if (!CF_WEB_ANALYTICS_TOKEN) return;
+  if (document.querySelector('script[data-cf-beacon]')) return;
+  const s = document.createElement("script");
+  s.defer = true;
+  s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+  s.setAttribute("data-cf-beacon", JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN, spa: true }));
+  document.head.appendChild(s);
 }
 
 function initAmazonLinks() {
@@ -364,7 +390,150 @@ function renderRelated(cur) {
   else main.appendChild(section);
 }
 
+/* Share buttons – injected on article pages. Uses the Web Share API where
+   available and falls back to X / WhatsApp / LinkedIn / copy-link. */
+const shareIcon = (path) =>
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + path + "</svg>";
+
+const SHARE_NETWORKS = {
+  x: {
+    label: "Share on X",
+    svg: '<path d="M4 4l16 16M20 4L4 20"/>',
+    href: (u, t) => "https://twitter.com/intent/tweet?url=" + encodeURIComponent(u) + "&text=" + encodeURIComponent(t),
+  },
+  whatsapp: {
+    label: "Share on WhatsApp",
+    svg: '<path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2-5.6A8.5 8.5 0 1 1 21 11.5z"/><path d="M9.5 10a.5.5 0 0 0 .8.7 2.5 2.5 0 0 0 3 3 .5.5 0 0 0 .7-.8"/>',
+    href: (u, t) => "https://wa.me/?text=" + encodeURIComponent(t + " " + u),
+  },
+  linkedin: {
+    label: "Share on LinkedIn",
+    svg: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A5.98 5.98 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+    href: (u) => "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(u),
+  },
+  mail: {
+    label: "Share via email",
+    svg: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+    href: (u, t) => "mailto:?subject=" + encodeURIComponent(t) + "&body=" + encodeURIComponent(u),
+  },
+};
+
+function initShareBar() {
+  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  if (!cur) return;
+  const main = document.querySelector(".article-page");
+  if (!main) return;
+
+  const url = location.origin + location.pathname;
+  const title = cur.title;
+
+  const nets = Object.keys(SHARE_NETWORKS)
+    .map((k) => {
+      const n = SHARE_NETWORKS[k];
+      return '<a class="share-btn" href="' + n.href(url, title) + '" target="_blank" rel="noopener nofollow" aria-label="' + n.label + '" title="' + n.label + '">' + shareIcon(n.svg) + "</a>";
+    })
+    .join("");
+
+  const bar = document.createElement("div");
+  bar.className = "share-bar";
+  bar.innerHTML =
+    '<span class="share-label">Share</span>' + nets +
+    '<button type="button" class="share-btn share-copy" aria-label="Copy link" title="Copy link">' +
+    shareIcon('<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>') +
+    "</button>";
+
+  if (navigator.share) {
+    const native = bar.querySelector("a");
+    if (native) {
+      native.style.display = "inline-flex";
+      native.setAttribute("href", "javascript:void(0)");
+      native.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigator.share({ title: title, url: url });
+      });
+    }
+  }
+
+  bar.querySelector(".share-copy").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      const btn = bar.querySelector(".share-copy");
+      btn.classList.add("copied");
+      btn.title = "Copied!";
+      setTimeout(() => { btn.classList.remove("copied"); btn.title = "Copy link"; }, 2000);
+    } catch { /* clipboard unavailable */ }
+  });
+
+  const meta = main.querySelector(".meta");
+  if (meta) meta.parentNode.insertBefore(bar, meta.nextSibling);
+  else main.insertBefore(bar, main.firstChild);
+}
+
+/* Author box – small E-E-A-T signal. Shown on article pages only. */
+function initAuthorBox() {
+  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  if (!cur) return;
+  const main = document.querySelector(".article-page");
+  if (!main) return;
+
+  const box = document.createElement("div");
+  box.className = "author-box";
+  box.innerHTML =
+    '<div class="author-avatar">VT</div>' +
+    '<div class="author-info">' +
+    '<span class="author-name">VelsTech</span>' +
+    '<p>Technology explained for everyone – practical guides, free tools and real experiments. Written by a developer who tests it on real hardware first.</p>' +
+    '<a class="author-link" href="lab.html">Visit the Lab →</a>' +
+    "</div>";
+  main.appendChild(box);
+}
+
+/* FAQ section – renders the article's FAQ visibly on the page (matches the
+   FAQPage JSON-LD injected by gen-seo.js). */
+function initFaq() {
+  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  if (!cur || !cur.faq || !cur.faq.length) return;
+  const main = document.querySelector(".article-page");
+  if (!main) return;
+
+  const details = cur.faq
+    .map(
+      (f, i) =>
+        '<details class="faq-item"' + (i === 0 ? ' open' : "") + ">" +
+        "<summary>" + esc(f.q) + "</summary>" +
+        "<p>" + esc(f.a) + "</p>" +
+        "</details>"
+    )
+    .join("");
+
+  const section = document.createElement("section");
+  section.className = "faq-section";
+  section.innerHTML =
+    '<h2 class="faq-heading">Frequently asked questions</h2>' +
+    details;
+
+  const nav = main.querySelector(".article-nav");
+  if (nav) main.insertBefore(section, nav);
+  else main.appendChild(section);
+}
+
 const rssIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>';
+
+const socialHTML = () => {
+  const entries = Object.entries(SOCIAL_LINKS).filter(([, v]) => v);
+  if (!entries.length) return "";
+  const icons = {
+    github: '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+    x: '<path d="M4 4l16 16M20 4L4 20"/>',
+    youtube: '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>',
+    reddit: '<circle cx="12" cy="12" r="10"/><path d="M8 14a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-4 2a2 2 0 0 0-2 2h4a2 2 0 0 0-2-2z"/><path d="M12 7c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/><path d="M12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8z" fill="none"/>',
+    mastodon: '<path d="M21.59 10.95c-.15-1.26-.83-2.33-1.56-3.1-.73-.76-2.25-1.4-5.18-1.58l-.12-1.44c-.05-.6-.35-1.1-.8-1.42-.46-.32-1.07-.47-1.7-.42-.96.08-1.73.8-1.8 1.76l-.12 1.44c-2.93.18-4.45.82-5.18 1.57-.73.78-1.41 1.85-1.56 3.1-.3 2.5-.3 5.5.3 8.5.3 1.5 1.5 2.8 2.8 3.3 1.5.5 3.1.8 4.9.8s3.4-.3 4.9-.8c1.3-.5 2.5-1.8 2.8-3.3.6-3 .6-6 .3-8.5z"/><path d="M12.5 8.5v4.5"/><path d="M12.5 10.5c-1.5 0-2.5-1-2.5-2"/>',
+    linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A5.98 5.98 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+  };
+  return '<nav class="footer-links social-links" aria-label="Social profiles">' +
+    entries.map(([k, v]) => '<a href="' + v + '" target="_blank" rel="noopener" aria-label="' + k + '">' + shareIcon(icons[k] || "") + " " + k + "</a>").join("") +
+    "</nav>";
+};
 
 const footerHTML =
   '<footer class="footer">' +
@@ -377,12 +546,13 @@ const footerHTML =
   '<a href="privacy.html">Privacy</a>' +
   '<a href="mailto:hello@velstech.net">Contact</a>' +
   "</nav>" +
-  '<nav class="footer-links" style="margin-top:10px; opacity:0.9">' +
+  "<nav class=\"footer-links\" style=\"margin-top:10px; opacity:0.9\">" +
   '<a href="networking.html">Networking</a>' +
   '<a href="security.html">Security</a>' +
   '<a href="programming.html">Development</a>' +
   '<a href="tutorials.html">Tutorials</a>' +
   "</nav>" +
+  socialHTML() +
   '<p class="footer-note">Content on this site is generated with the assistance of AI and is for informational purposes only.</p>' +
   '<p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p>' +
   "</footer>";
@@ -830,6 +1000,10 @@ initCategoryColors();
 initHotTopic();
 initAmazonLinks();
 initAdsense();
+initWebAnalytics();
+initShareBar();
+initAuthorBox();
+initFaq();
 
 /* Theme + palette */
 const themeToggle = document.getElementById("theme-toggle");

@@ -36,6 +36,31 @@
   "mainEntityOfPage": "https://velstech.net/how-much-vram-for-llm.html"
 }
   </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/how-much-vram-for-llm.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does quantization mean for VRAM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Quantization lowers the precision of the model's weights (e.g. from 16-bit to 4-bit), which shrinks the memory footprint. A 7B model at 4-bit takes roughly half the VRAM it does at 16-bit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a longer context window need more VRAM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The KV cache grows with context length, so a 32K context can add several GB of VRAM on top of the weights. Use a tool like the LLM VRAM calculator to check your exact setup."
+      }
+    }
+  ]
+}
+  </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/how-much-vram-for-llm.html" />
@@ -49,7 +74,7 @@
   <meta name="twitter:description" content="VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=28" />
+  <link rel="stylesheet" href="styles.css?v=29" />
 </head>
 <body>
   <main class="article-page">
@@ -168,7 +193,7 @@
     </div>
   </main>
 
-  <script src="articles.js?v=7"></script>
-  <script src="script.js?v=30"></script>
+  <script src="articles.js?v=8"></script>
+  <script src="script.js?v=31"></script>
 </body>
 </html>

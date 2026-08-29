@@ -8,6 +8,20 @@ const ARTICLES = [
     featured: true,
     tags: ["GPU", "LLM", "Local AI", "Benchmarks", "VelsTech Lab"],
     description: "The best GPUs for running LLMs locally in 2026 – RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.",
+    faq: [
+      {
+        q: "How much VRAM do I need to run an LLM locally?",
+        a: "For a 7B model at 4-bit quantization you want 8 GB; for 13–14B models 12–16 GB; and for 32B models 24 GB or more if you want to fit weights plus the KV cache in memory.",
+      },
+      {
+        q: "NVIDIA or AMD GPU for local LLMs?",
+        a: "NVIDIA (CUDA) has the smoothest setup with llama.cpp and Ollama. AMD (ROCm/Vulkan) works well too and often gives more VRAM per rupee, but needs slightly more tinkering.",
+      },
+      {
+        q: "Is CPU-only inference worth it?",
+        a: "For occasional use, yes – modern CPUs can run 7B models at a few tokens per second. For daily use, a GPU with 12 GB+ of VRAM is a much better experience.",
+      },
+    ],
   },
   {
     title: "How much VRAM do you need for 7B, 14B, and 32B models?",
@@ -17,6 +31,16 @@ const ARTICLES = [
     category: "AI",
     tags: ["VRAM", "LLM", "GPU", "Quantization", "VelsTech Lab"],
     description: "VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table.",
+    faq: [
+      {
+        q: "What does quantization mean for VRAM?",
+        a: "Quantization lowers the precision of the model's weights (e.g. from 16-bit to 4-bit), which shrinks the memory footprint. A 7B model at 4-bit takes roughly half the VRAM it does at 16-bit.",
+      },
+      {
+        q: "Does a longer context window need more VRAM?",
+        a: "Yes. The KV cache grows with context length, so a 32K context can add several GB of VRAM on top of the weights. Use a tool like the LLM VRAM calculator to check your exact setup.",
+      },
+    ],
   },
   {
     title: "Best GPU for AI under ₹50,000 (India, 2026)",

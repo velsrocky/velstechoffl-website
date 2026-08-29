@@ -39,11 +39,10 @@ function affiliateHref(key) {
 const ADSENSE_CLIENT = "ca-pub-5002392377660300";
 const ADSENSE_SLOT = "";
 
-/* Cloudflare Web Analytics – free, cookieless, privacy-friendly page analytics.
-   Get a token at Cloudflare dashboard → Analytics → Web Analytics → Add a site,
-   then paste it below. Leave empty ("") to disable. */
-const CF_WEB_ANALYTICS_TOKEN = "";
-
+/* Cloudflare Web Analytics – enabled via Automatic Setup in the Cloudflare
+   dashboard (Analytics → Web Analytics → Add a site → select the zone → Automatic
+   Setup). Because velstech.net is proxied through Cloudflare, the beacon is
+   injected at the edge – no code or token needed here. */
 /* Social profiles – shown in the footer and added to the Organization schema.
    Leave any key empty to hide it. Reach audience where it already is. */
 const SOCIAL_LINKS = {
@@ -82,16 +81,6 @@ function initAdsense() {
   if (nav) main.insertBefore(slot, nav);
   else main.appendChild(slot);
   (adsbygoogle = window.adsbygoogle || []).push({});
-}
-
-function initWebAnalytics() {
-  if (!CF_WEB_ANALYTICS_TOKEN) return;
-  if (document.querySelector('script[data-cf-beacon]')) return;
-  const s = document.createElement("script");
-  s.defer = true;
-  s.src = "https://static.cloudflareinsights.com/beacon.min.js";
-  s.setAttribute("data-cf-beacon", JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN, spa: true }));
-  document.head.appendChild(s);
 }
 
 function initAmazonLinks() {
@@ -1000,7 +989,6 @@ initCategoryColors();
 initHotTopic();
 initAmazonLinks();
 initAdsense();
-initWebAnalytics();
 initShareBar();
 initAuthorBox();
 initFaq();

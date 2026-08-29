@@ -9,45 +9,41 @@ The site uses **Cloudflare Web Analytics** for aggregate page-view metrics. It i
 cookie-free and privacy-friendly, so it doesn't need a consent banner and stays
 consistent with the [Privacy Policy](https://velstech.net/privacy.html).
 
-### How it works
+### How it works (Automatic Setup)
+
+Because `velstech.net` is **proxied through Cloudflare** (orange cloud on the A
+records), Web Analytics uses **Automatic Setup**: Cloudflare injects the beacon at
+the edge automatically. **No code, no token, no script tag on the pages.**
 
 ```
-browser  →  beacon.min.js (Cloudflare edge)  →  Cloudflare Web Analytics dashboard
-```
-
-The beacon is injected by `script.js` only when a token is set:
-
-```js
-// script.js
-const CF_WEB_ANALYTICS_TOKEN = "";  // ← paste your token here
+browser  →  Cloudflare edge (beacon injected automatically)  →  Web Analytics dashboard
 ```
 
 ### Enabling it
 
 1. Cloudflare dashboard → **Analytics → Web Analytics → Add a site**.
-2. Choose the **JavaScript snippet** method, copy the token.
-3. Paste the token into `CF_WEB_ANALYTICS_TOKEN` in `script.js`.
-4. Re-run `node tools/gen-seo.js` to bump the `?v=` cache-busting version across
-   all pages (or bump `script.js?v=` manually on every page).
-5. Commit and push; the feed workflow re-generates `feed.xml` automatically.
+2. Select the `velstech.net` zone and choose **Automatic Setup** (the no-snippet option).
+3. Done. No changes to the repo are needed.
 
-No cookies are set, and no personal data is collected, so nothing else changes.
+> Old approach (manual JS beacon) was removed from `script.js` — a manual beacon
+> would double-count page views alongside Automatic Setup.
 
-## 2. Google Search Console (do this next)
+## 2. Google Search Console (verified — via DNS TXT)
 
 Search is the #1 audience source for a blog like this. Google Search Console tells
 you which queries you rank for, how many clicks you get, and which pages need work.
 
-### Verify ownership
+### Verification status
 
-The site is verified by an **HTML meta tag** injected by `tools/gen-seo.js`:
+The domain is **already verified** via a DNS TXT record on `velstech.net`:
 
-```js
-// tools/gen-seo.js
-const GSC_VERIFICATION = "";  // ← paste the token, e.g. "abc123..."
+```
+google-site-verification=mFigNsr934Nj3-XUaf0I8avjT1KTtycR_m54Dw0KOiI
 ```
 
-Steps:
+So `GSC_VERIFICATION` in `tools/gen-seo.js` can stay empty — the meta-tag method is
+only needed if the TXT record is ever removed. If you ever re-verify with the HTML
+tag method instead:
 
 1. [Google Search Console](https://search.google.com/search-console) → **Add property**
    → **Domain** (`velstech.net`) or **URL prefix** (`https://velstech.net/`).
@@ -56,9 +52,6 @@ Steps:
 4. Re-run `node tools/gen-seo.js` — it injects
    `<meta name="google-site-verification" content="...">` into every page.
 5. Commit and push; then click **Verify** in Search Console.
-
-> Alternative: verify via DNS TXT at the Cloudflare zone — no code change needed,
-> but then nothing is documented in the repo. The meta-tag method keeps it here.
 
 ### Submit the sitemap
 

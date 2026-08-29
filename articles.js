@@ -50,6 +50,16 @@ const ARTICLES = [
     category: "Hardware",
     tags: ["GPU", "Budget", "India", "Local AI", "VelsTech Lab"],
     description: "The best GPUs for AI under ₹50,000 in India – which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.",
+    faq: [
+      {
+        q: "Can I run a local LLM on a GPU under ₹50,000?",
+        a: "Yes. A 12 GB card in that budget (like a used Radeon RX 6800 XT or an RTX 3060 12GB) can run 7B–13B models comfortably at 4-bit quantization, and lighter 32B models with CPU offload.",
+      },
+      {
+        q: "Should I buy new or used for the best VRAM per rupee?",
+        a: "Used Radeon cards often win on raw VRAM per rupee, but check warranty and mining history. For the smoothest setup with the least tinkering, an NVIDIA card is usually easier to get working.",
+      },
+    ],
   },
   {
     title: "Xiaomi AI Cube: the mini desktop built for local AI",
@@ -60,6 +70,16 @@ const ARTICLES = [
     featured: true,
     tags: ["AI Hardware", "NPU", "Mini PC", "VelsTech Lab"],
     description: "Xiaomi's AI Cube is a small desktop with a big NPU – made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.",
+    faq: [
+      {
+        q: "What is an NPU and why does it matter?",
+        a: "An NPU is a dedicated chip for AI workloads like running LLMs. It does what a GPU can but far more efficiently for inference, which is why the AI Cube can run models locally in a small, quiet, low-power desktop.",
+      },
+      {
+        q: "Can I run AI on it without an internet connection?",
+        a: "Yes – that's the point. Because the model runs on the device's NPU, you get private, offline AI with no data leaving your machine.",
+      },
+    ],
   },
   {
     title: "Qwen3.8 Flash Next: Alibaba's new fast reasoning model",
@@ -106,6 +126,16 @@ const ARTICLES = [
     category: "AI",
     tags: ["LLM", "Basics"],
     description: "A plain-language look at how LLMs work under the hood – tokens, context, and probabilities – without the jargon.",
+    faq: [
+      {
+        q: "Is a large language model the same as artificial intelligence?",
+        a: "No. An LLM is one kind of AI – a model trained to predict the next word. 'AI' is a much bigger umbrella that includes vision, robotics, and more.",
+      },
+      {
+        q: "Do LLMs actually understand what they're saying?",
+        a: "They don't reason the way a human does. They compute the most likely next token based on patterns in their training data, which often looks a lot like understanding.",
+      },
+    ],
   },
   {
     title: "How to write better prompts",
@@ -115,6 +145,16 @@ const ARTICLES = [
     category: "AI",
     tags: ["Prompting", "Tools"],
     description: "Practical prompting patterns that get better answers from ChatGPT, Claude, and similar tools.",
+    faq: [
+      {
+        q: "Why is being specific in a prompt important?",
+        a: "LLMs answer based on the words you give them. Clear, specific instructions narrow the answer space, so you get relevant output instead of a generic guess.",
+      },
+      {
+        q: "What if the model ignores my instructions?",
+        a: "Try breaking the request into steps, giving an example of the format you want, or asking it to work through the problem before answering.",
+      },
+    ],
   },
   {
     title: "Local vs cloud AI: which should you choose?",
@@ -160,6 +200,16 @@ const ARTICLES = [
     category: "Operating Systems",
     tags: ["Linux", "Beginners"],
     description: "Picking a distro, installing it, and surviving your first week without breaking anything.",
+    faq: [
+      {
+        q: "Which Linux distro should a beginner choose?",
+        a: "Ubuntu or Linux Mint are the most beginner-friendly – huge communities, tons of tutorials, and software that installs easily. Start there before trying Arch-based distros.",
+      },
+      {
+        q: "Do I need to know how to use the terminal to use Linux?",
+        a: "No. Modern distros work fine with a graphical interface. The terminal is a power tool you can learn gradually – grab the free Linux command cheat sheet to speed that up.",
+      },
+    ],
   },
   {
     title: "Essential terminal commands everyone should know",
@@ -214,6 +264,16 @@ const ARTICLES = [
     category: "Security & Privacy",
     tags: ["Basics", "Passwords"],
     description: "Passwords, two-factor authentication, updates, backups, and skepticism – the checklist that covers most risks.",
+    faq: [
+      {
+        q: "What is the single most effective security habit?",
+        a: "Use a password manager with unique passwords for every account, and turn on two-factor authentication everywhere it's available. That covers most real-world attacks.",
+      },
+      {
+        q: "Is two-factor authentication really necessary?",
+        a: "Yes. Even if a password leaks, a second factor like an authenticator app or security key stops most account takeovers cold.",
+      },
+    ],
   },
   {
     title: "Password managers: why you need one",

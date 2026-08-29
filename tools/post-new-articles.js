@@ -140,6 +140,54 @@ function postToWebhook(article) {
   });
 }
 
+/* ---------- Bluesky (AT Protocol) ---------- */
+
+function bskyRequest(path, token, body) {
+  return new Promise((resolve, reject) => {
+    const payload = body ? JSON.stringify(body) : null;
+    const u = new URL("https://bsky.social" + path);
+    const req = https.request(u, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": payload ? Buffer.byteLength(payload) : 0,
+        ...(token ? { Authorization: "Bearer " + token } : {}),
+      },
+    }, (res) => {
+      let data = "";
+      res.on("data", (c) => (data += c));
+      res.on("end", () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) resolve(JSON.parse(data || "{}"));
+        else reject(new Error("Bluesky " + res.statusCode + ": " + data.slice(0, 300)));
+      });
+    });
+    req.on("error", reject);
+    if (payload) req.write(payload);
+    req.end();
+  });
+}
+
+function postToBluesky(text) {
+  const handle = process.env.BLUESKY_HANDLE;
+  const appPassword = process.env.BLUESKY_APP_PASSWORD;
+  if (!handle || !appPassword) return null;
+  return bskyRequest("/xrpc/com.atproto.server.createSession", null, {
+    identifier: handle,
+    password: appPassword,
+  }).then((session) => {
+    const { accessJwt, did } = session;
+    return bskyRequest("/xrpc/com.atproto.repo.createRecord", accessJwt, {
+      repo: did,
+      collection: "app.bsky.feed.post",
+      record: {
+        $type: "app.bsky.feed.post",
+        text: text,
+        createdAt: new Date().toISOString(),
+      },
+    }).then(() => "posted");
+  });
+}
+
 /* ---------- Main ---------- */
 
 function compose(article) {
@@ -159,8 +207,8 @@ function compose(article) {
 
   for (const article of fresh) {
     const text = compose(article);
-    const results = await Promise.allSettled([postToX(text), postToMastodon(text), postToWebhook(article)]);
-    const labels = ["X", "Mastodon", "webhook"];
+    const results = await Promise.allSettled([postToX(text), postToMastodon(text), postToBluesky(text), postToWebhook(article)]);
+    const labels = ["X", "Mastodon", "Bluesky", "webhook"];
     results.forEach((r, i) => {
       if (r.status === "fulfilled" && r.value) console.log(`  [${labels[i]}] ${r.value}`);
       else if (r.status === "rejected") console.error(`  [${labels[i]}] failed: ${r.reason.message}`);

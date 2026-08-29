@@ -63,6 +63,9 @@ const TOOLS_META = {
   "csv-json-converter.html": { title: "CSV to JSON Converter | VelsTech", desc: "Paste CSV and get clean JSON, or paste a JSON array and get CSV back. Runs entirely in your browser." },
   "hash-generator.html": { title: "Hash Generator (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech", desc: "Compute MD5, SHA-1, SHA-256, and SHA-512 hashes of any text instantly. Runs entirely in your browser." },
   "cron-generator.html": { title: "Cron Generator | VelsTech", desc: "Pick a schedule in plain English and get the cron expression plus next run times. No more memorizing cron syntax." },
+  "password-generator.html": { title: "Password Generator | VelsTech", desc: "Generate strong random passwords with adjustable length and character sets. Runs entirely in your browser." },
+  "text-case-converter.html": { title: "Text Case Converter | VelsTech", desc: "Convert text to uppercase, lowercase, title case, sentence case, or camelCase instantly. Runs entirely in your browser." },
+  "uuid-generator.html": { title: "UUID Generator | VelsTech", desc: "Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser." },
 };
 
 const CATEGORY_META = {

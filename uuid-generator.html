@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Free UUID generator – generate UUID v4 (random) and v7 (time-ordered) identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser." />
+  <title>UUID Generator | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/uuid-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/uuid-generator.html#webapp",
+  "name": "UUID Generator | VelsTech",
+  "description": "Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser.",
+  "url": "https://velstech.net/uuid-generator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/uuid-generator.html" />
+  <meta property="og:title" content="UUID Generator | VelsTech" />
+  <meta property="og:description" content="Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="UUID Generator | VelsTech" />
+  <meta name="twitter:description" content="Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=30" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / UUID Generator</p>
+    <h1 class="title">UUID Generator</h1>
+    <div class="meta">
+      <span>UUID v4 · UUID v7 · bulk mode · copy to clipboard</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Generate one or many UUIDs in a click. Supports <strong>UUID v4</strong>
+        (random) and <strong>UUID v7</strong> (time-ordered, good for database
+        indexes). All generated using your browser's secure random generator —
+        nothing is sent to any server.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Version</span>
+            <select id="version" class="input">
+              <option value="v4">UUID v4 (random)</option>
+              <option value="v7">UUID v7 (time-ordered)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Count</span>
+            <select id="count" class="input">
+              <option value="1">1</option>
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field" style="margin-top:14px">
+          <span>Generated UUIDs</span>
+          <textarea id="output" class="tool-textarea" rows="6" spellcheck="false" readonly></textarea>
+        </label>
+
+        <div class="tool-btn-row">
+          <button class="btn btn-primary" id="btn-copy" type="button" title="Copy all UUIDs" aria-label="Copy all UUIDs">Copy all</button>
+          <button class="btn btn-ghost" id="btn-generate" type="button" title="Generate new UUIDs" aria-label="Generate new UUIDs">Regenerate</button>
+        </div>
+      </div>
+
+      <h2>UUID v4 vs v7 — which one do you need?</h2>
+      <p>
+        <strong>UUID v4</strong> is purely random — 122 bits of randomness. Great for
+        identifiers where you don't care about order, but can cause index fragmentation
+        in databases.
+      </p>
+      <p>
+        <strong>UUID v7</strong> encodes the current timestamp in the first bits, then
+        fills the rest with randomness. This makes UUIDs roughly time-ordered, which
+        means better database index performance (B-tree nodes stay compact). Newer
+        applications often prefer v7 for primary keys.
+      </p>
+
+      <h2>Related tools</h2>
+      <ul>
+        <li><a href="hash-generator.html">Hash Generator (MD5 / SHA)</a></li>
+        <li><a href="json-formatter.html">JSON Formatter &amp; Validator</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="programming.html">Programming notes</a>
+    </div>
+  </main>
+
+  <script>
+    const versionEl = document.getElementById("version");
+    const countEl = document.getElementById("count");
+    const output = document.getElementById("output");
+
+    function hex(n) { return n.toString(16).padStart(2, "0"); }
+
+    function randomBytes(n) {
+      const buf = new Uint8Array(n);
+      crypto.getRandomValues(buf);
+      return buf;
+    }
+
+    function uuidV4() {
+      const b = randomBytes(16);
+      b[6] = (b[6] & 0x0f) | 0x40; // version 4
+      b[8] = (b[8] & 0x3f) | 0x80; // variant
+      let s = "";
+      for (let i = 0; i < 16; i++) {
+        s += hex(b[i]);
+        if (i === 3 || i === 5 || i === 7 || i === 9) s += "-";
+      }
+      return s;
+    }
+
+    function uuidV7() {
+      const now = Date.now();
+      const b = randomBytes(16);
+      // 48-bit timestamp (milliseconds since epoch)
+      b[0] = (now >>> 40) & 0xff;
+      b[1] = (now >>> 32) & 0xff;
+      b[2] = (now >>> 24) & 0xff;
+      b[3] = (now >>> 16) & 0xff;
+      b[4] = (now >>> 8) & 0xff;
+      b[5] = now & 0xff;
+      b[6] = (b[6] & 0x0f) | 0x70; // version 7
+      b[8] = (b[8] & 0x3f) | 0x80; // variant
+      let s = "";
+      for (let i = 0; i < 16; i++) {
+        s += hex(b[i]);
+        if (i === 3 || i === 5 || i === 7 || i === 9) s += "-";
+      }
+      return s;
+    }
+
+    function generate() {
+      const n = parseInt(countEl.value, 10);
+      const fn = versionEl.value === "v7" ? uuidV7 : uuidV4;
+      const uuids = [];
+      for (let i = 0; i < n; i++) uuids.push(fn());
+      output.value = uuids.join("\n");
+    }
+
+    versionEl.addEventListener("change", generate);
+    countEl.addEventListener("change", generate);
+    document.getElementById("btn-generate").addEventListener("click", generate);
+
+    document.getElementById("btn-copy").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(output.value); } catch { output.select(); document.execCommand("copy"); }
+      const btn = document.getElementById("btn-copy");
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = "Copy all"; }, 1500);
+    });
+
+    generate();
+  </script>
+
+  <script src="articles.js?v=9"></script>
+  <script src="script.js?v=31"></script>
+</body>
+</html>

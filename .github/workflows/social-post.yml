@@ -26,5 +26,8 @@ jobs:
           # Mastodon
           MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          # Bluesky (handle + app password from Settings → App Passwords)
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           # Generic webhook (n8n / Zapier / Buffer / Make)
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}

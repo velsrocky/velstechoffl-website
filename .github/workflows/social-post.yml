@@ -21,11 +21,8 @@ jobs:
       - name: Detect and post new articles
         run: node tools/post-new-articles.js
         env:
-          # X / Twitter (API v2) – set in repo Settings → Secrets and variables → Actions
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          # X / Twitter (API v2, OAuth 2.0 Bearer token) – set in repo Settings → Secrets and variables → Actions
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
           # Mastodon
           MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}

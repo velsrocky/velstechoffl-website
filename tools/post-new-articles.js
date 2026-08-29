@@ -54,50 +54,21 @@ function newArticles() {
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
-/* ---------- X / Twitter (API v2, OAuth 1.0a) ---------- */
-
-function percentEncode(str) {
-  return encodeURIComponent(str).replace(/[!'()*]/g, (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase());
-}
-
-function oauthHeader(method, url, params, token) {
-  const oauth = {
-    oauth_consumer_key: token.apiKey,
-    oauth_nonce: crypto.randomBytes(16).toString("hex"),
-    oauth_signature_method: "HMAC-SHA1",
-    oauth_timestamp: Math.floor(Date.now() / 1000).toString(),
-    oauth_token: token.accessToken,
-    oauth_version: "1.0",
-  };
-  const all = { ...oauth, ...params };
-  const baseStr = Object.keys(all)
-    .sort()
-    .map((k) => percentEncode(k) + "=" + percentEncode(String(all[k])))
-    .join("&");
-  const signingKey = percentEncode(token.apiSecret) + "&" + percentEncode(token.accessSecret);
-  const signature = crypto.createHmac("sha1", signingKey).update(method + "&" + percentEncode(url) + "&" + percentEncode(baseStr)).digest("base64");
-  oauth.oauth_signature = signature;
-  return "OAuth " + Object.keys(oauth)
-    .sort()
-    .map((k) => percentEncode(k) + '="' + percentEncode(oauth[k]) + '"')
-    .join(", ");
-}
+/* ---------- X / Twitter (API v2, OAuth 2.0 Bearer token) ---------- */
 
 function postToX(text) {
-  const token = {
-    apiKey: process.env.TWITTER_API_KEY,
-    apiSecret: process.env.TWITTER_API_SECRET,
-    accessToken: process.env.TWITTER_ACCESS_TOKEN,
-    accessSecret: process.env.TWITTER_ACCESS_SECRET,
-  };
-  if (!token.apiKey || !token.apiSecret || !token.accessToken || !token.accessSecret) return null;
+  const token = process.env.TWITTER_ACCESS_TOKEN || process.env.TWITTER_BEARER_TOKEN;
+  if (!token) return null;
   const url = "https://api.twitter.com/2/tweets";
   const body = JSON.stringify({ text });
-  const header = oauthHeader("POST", url, {}, token);
   return new Promise((resolve, reject) => {
     const req = https.request(url, {
       method: "POST",
-      headers: { Authorization: header, "Content-Type": "application/json", "Content-Length": Buffer.byteLength(body) },
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(body),
+      },
     }, (res) => {
       let data = "";
       res.on("data", (c) => (data += c));

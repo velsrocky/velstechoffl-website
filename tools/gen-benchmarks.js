@@ -111,8 +111,8 @@ function page(b, bk) {
     </div>
   </main>
 
-  <script src="../articles.js?v=10"></script>
-  <script src="../script.js?v=32"></script>
+  <script src="../articles.js?v=11"></script>
+  <script src="../script.js?v=33"></script>
 </body>
 </html>`;
 }

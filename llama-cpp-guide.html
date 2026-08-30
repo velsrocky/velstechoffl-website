@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="llama.cpp guide – how to run GGUF models locally on Linux, macOS, and Windows. Install, configure, run, and benchmark models with the engine behind Ollama." />
+  <title>llama.cpp guide: run GGUF models locally | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/llama-cpp-guide.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/llama-cpp-guide.html#article",
+  "headline": "llama.cpp guide: run GGUF models locally",
+  "description": "Complete guide to llama.cpp – install it, run GGUF models, enable GPU acceleration, and read the benchmark output. The engine behind Ollama, explained.",
+  "url": "https://velstech.net/llama-cpp-guide.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/llama-cpp-guide.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/llama-cpp-guide.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/llama-cpp-guide.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need llama.cpp if I use Ollama?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — Ollama wraps llama.cpp and handles installation, downloads, and GPU detection for you. Learning llama.cpp is useful for benchmarking and fine-tuning, but not required to run local AI."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I speed up llama.cpp?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Offload more layers to your GPU with -ngl 999 if VRAM allows, make sure you built with the right backend (CUDA/ROCm/Vulkan), and use the highest quantization that still fits in memory."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/llama-cpp-guide.html" />
+  <meta property="og:title" content="llama.cpp guide: run GGUF models locally | VelsTech" />
+  <meta property="og:description" content="Complete guide to llama.cpp – install, run GGUF models, configure GPU acceleration, and benchmark performance on your hardware." />
+  <meta property="og:image" content="https://velstech.net/og/llama-cpp-guide.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="llama.cpp guide: run GGUF models locally | VelsTech" />
+  <meta name="twitter:description" content="Complete guide to llama.cpp – install, run GGUF models, configure GPU acceleration, and benchmark performance on your hardware." />
+  <meta name="twitter:image" content="https://velstech.net/og/llama-cpp-guide.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">llama.cpp guide: run GGUF models locally</h1>
+    <div class="meta">
+      <span class="tag">llama.cpp</span>
+      <span class="tag">GGUF</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        llama.cpp is the engine that Ollama, LM Studio, and most other local AI tools run
+        on under the hood. It's a C++ library that loads GGUF models and runs them on your
+        CPU, GPU, or both, with support for NVIDIA CUDA, AMD ROCm, and Vulkan.
+      </p>
+      <p>
+        This guide covers the basics: how to install it, how to run a model, how to enable
+        your GPU, and how to read the benchmark output. By the end you'll know exactly what
+        <code>1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s</code> means (and whether it's
+        fast enough).
+      </p>
+
+      <h2>Installation</h2>
+      <p>
+        The easiest way to get llama.cpp is to build it from source. You need a C++ compiler
+        and <code>cmake</code>:
+      </p>
+      <pre>git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+mkdir build && cd build
+cmake .. -DLLAMA_METAL=OFF
+make -j$(nproc)</pre>
+      <p>
+        For GPU acceleration, add the right flag:
+      </p>
+      <ul>
+        <li><strong>NVIDIA CUDA:</strong> <code>cmake .. -DLLAMA_CUDA=ON</code></li>
+        <li><strong>AMD ROCm:</strong> <code>cmake .. -DLLAMA_HIPBLAS=ON</code></li>
+        <li><strong>Vulkan:</strong> <code>cmake .. -DLLAMA_VULKAN=ON</code></li>
+        <li><strong>Apple Metal:</strong> <code>cmake .. -DLLAMA_METAL=ON</code></li>
+      </ul>
+      <p>
+        If you're on Ubuntu with an AMD card, the
+        <a href="install-rocm-ubuntu.html">ROCm installation guide</a> covers the prerequisites.
+      </p>
+
+      <h2>Running a model</h2>
+      <p>
+        Download a GGUF file (see <a href="gguf-explained.html">GGUF explained</a> for which
+        one to pick), then run:
+      </p>
+      <pre>./build/bin/llama-cli -m path/to/model.q4_k_m.gguf -p "Hello, who are you?" -n 256</pre>
+      <p>
+        This loads the model, runs the prompt, and generates 256 tokens. The output includes
+        timing information that tells you how fast it ran:
+      </p>
+      <pre>1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s
+eval time = 1713 ms / 373 tok (4.60 ms/tok, 217.6 tok/s)</pre>
+      <p>
+        The first number is <strong>prompt eval</strong> (how fast the model reads your
+        question). The second is <strong>decode</strong> (how fast it generates the answer).
+        For chat, decode speed is what matters — it's the stream of text you see. For long
+        documents, prompt eval matters more.
+      </p>
+
+      <h2>GPU acceleration</h2>
+      <p>
+        By default llama.cpp runs on CPU. To offload layers to your GPU, use the
+        <code>-ngl</code> flag (number of GPU layers):
+      </p>
+      <pre>./build/bin/llama-cli -m model.gguf -p "Hello" -n 256 -ngl 999</pre>
+      <p>
+        <code>-ngl 999</code> offloads all layers to the GPU. If you have limited VRAM, use
+        <code>-ngl N</code> where N is the number of layers that fit. The
+        <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> can help estimate.
+      </p>
+      <p>
+        For AMD GPUs with ROCm, you may need <code>--load-mode none</code> to avoid splitting
+        weights across GPU and CPU. The <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen
+        ROCm vs Vulkan benchmark</a> shows how this plays out in practice.
+      </p>
+
+      <h2>Benchmarking your own hardware</h2>
+      <p>
+        llama.cpp's built-in timing output is all you need. To compare against known results,
+        use the same parameters (model, quantization, context, backend) and note the decode
+        tok/s. Then check the <a href="benchmarks/index.html">VelsTech benchmark database</a>
+        to see how your hardware stacks up.
+      </p>
+
+      <h2>Key flags cheat sheet</h2>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Flag</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-m</code></td><td>Path to GGUF model file</td></tr>
+            <tr><td><code>-p</code></td><td>Prompt text</td></tr>
+            <tr><td><code>-n</code></td><td>Number of tokens to generate</td></tr>
+            <tr><td><code>-c</code></td><td>Context size (e.g. <code>-c 16384</code> for 16K)</td></tr>
+            <tr><td><code>-ngl</code></td><td>Layers to offload to GPU (999 = all)</td></tr>
+            <tr><td><code>-t</code></td><td>Thread count (default: all cores)</td></tr>
+            <tr><td><code>--repeat-penalty</code></td><td>Penalize repetition (default 1.1)</td></tr>
+            <tr><td><code>--temp</code></td><td>Sampling temperature (0.0 = deterministic, 1.0 = creative)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Next steps</h2>
+      <p>
+        llama.cpp is the foundation. Most people never use it directly — they use Ollama,
+        which wraps it in a user-friendly CLI and API. But knowing how llama.cpp works helps
+        you understand what Ollama is doing, and it's essential for
+        <a href="benchmarks/index.html">benchmarking</a> and fine-tuning. If you're new to
+        local AI, start with the <a href="how-to-get-started-local-ai.html">getting started</a>
+        guide — it uses Ollama, which is built on llama.cpp.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="gguf-explained.html">GGUF explained →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=11"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

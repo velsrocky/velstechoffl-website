@@ -5,9 +5,27 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-30T06:40:33.478Z</updated>
+  <updated>2026-08-30T07:59:52.535Z</updated>
   <author><name>VelsTech</name></author>
 
+  <entry>
+    <title>GGUF explained: the format that makes local LLMs work</title>
+    <link rel="alternate" href="https://velstech.net/gguf-explained.html" />
+    <id>https://velstech.net/gguf-explained.html</id>
+    <published>2026-08-30T00:00:00Z</published>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <category term="AI" />
+    <summary>GGUF is the file format that makes running LLMs locally possible. Here's what it is, what quantization levels mean, and how to pick the right one for your hardware.</summary>
+  </entry>
+  <entry>
+    <title>llama.cpp guide: run GGUF models locally</title>
+    <link rel="alternate" href="https://velstech.net/llama-cpp-guide.html" />
+    <id>https://velstech.net/llama-cpp-guide.html</id>
+    <published>2026-08-30T00:00:00Z</published>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <category term="AI" />
+    <summary>Complete guide to llama.cpp – install it, run GGUF models, enable GPU acceleration, and read the benchmark output. The engine behind Ollama, explained.</summary>
+  </entry>
   <entry>
     <title>How to get started with local AI (2026)</title>
     <link rel="alternate" href="https://velstech.net/how-to-get-started-local-ai.html" />

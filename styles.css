@@ -2573,6 +2573,91 @@ summary:focus-visible,
   line-height: 1.4;
 }
 
+/* Topic hub (learning progression) */
+.hub {
+  margin-top: 28px;
+}
+
+.hub-tier {
+  margin-bottom: 34px;
+}
+
+.hub-tier-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.hub-tier-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.hub-tier-title {
+  font-size: 1.3rem;
+  letter-spacing: -0.3px;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.hub-card {
+  display: block;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.1s;
+}
+
+.hub-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.hub-card h4 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  line-height: 1.35;
+}
+
+.hub-card p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.hub-card .hub-meta {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.hub-card.soon {
+  opacity: 0.55;
+  border-style: dashed;
+  cursor: default;
+}
+
+.hub-card.soon:hover {
+  border-color: var(--border);
+  transform: none;
+}
+
 /* Buying guides hub */
 .buy-grid {
   display: grid;

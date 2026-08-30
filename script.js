@@ -282,9 +282,11 @@ function initWhatsNew() {
     const f = filter || "All";
     const filtered = ARTICLES.filter((a) => matchesFilter(a, f));
     const sorted = [...filtered].sort((a, b) => {
+      const d = b.updated.localeCompare(a.updated);
+      if (d !== 0) return d;
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
-      return b.updated.localeCompare(a.updated);
+      return 0;
     }).slice(0, 5);
     if (!sorted.length) {
       list.innerHTML = '<p class="tool-note">No articles in this filter yet – try All.</p>';

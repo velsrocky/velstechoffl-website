@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="GGUF explained – the file format that makes running LLMs locally possible. What GGUF is, what quantization levels mean, and how to pick the right one for your hardware." />
+  <title>GGUF explained: the format that makes local LLMs work | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/gguf-explained.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/gguf-explained.html#article",
+  "headline": "GGUF explained: the format that makes local LLMs work",
+  "description": "GGUF is the file format that makes running LLMs locally possible. Here's what it is, what quantization levels mean, and how to pick the right one for your hardware.",
+  "url": "https://velstech.net/gguf-explained.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/gguf-explained.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/gguf-explained.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/gguf-explained.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a GGUF file?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GGUF is a container format for quantized LLMs — it packs a model's weights, tokenizer, and metadata into one file that llama.cpp, Ollama, and LM Studio can load directly. The quantization is what shrinks a model enough to run on consumer hardware."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which GGUF quantization should I download?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Q4_K_M is the safe default — the best quality-per-gigabyte. If you have spare RAM, try Q5_K_M for noticeably sharper output. Drop to Q3 or Q2 only if the model doesn't fit."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/gguf-explained.html" />
+  <meta property="og:title" content="GGUF explained: the format that makes local LLMs work | VelsTech" />
+  <meta property="og:description" content="What GGUF is, what quantization levels mean, and how to pick the right one for your hardware." />
+  <meta property="og:image" content="https://velstech.net/og/gguf-explained.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GGUF explained: the format that makes local LLMs work | VelsTech" />
+  <meta name="twitter:description" content="What GGUF is, what quantization levels mean, and how to pick the right one for your hardware." />
+  <meta name="twitter:image" content="https://velstech.net/og/gguf-explained.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">GGUF explained: the format that makes local LLMs work</h1>
+    <div class="meta">
+      <span class="tag">GGUF</span>
+      <span class="tag">Quantization</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 5 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        If you've downloaded a model to run locally — with Ollama, llama.cpp, or anything
+        else — you've almost certainly run into the letters <strong>GGUF</strong>.
+        It's the file extension on most open-weight models you can actually run yourself:
+        <code>llama-3.2-3b.Q4_K_M.gguf</code>, <code>qwen2.5-7b.Q5_K_M.gguf</code>, and so on.
+      </p>
+      <p>
+        GGUF is the reason local AI is possible at all. Here's what it actually is, what those
+        <code>Q4_K_M</code> labels mean, and how to pick the right one for your hardware.
+      </p>
+
+      <h2>What is GGUF?</h2>
+      <p>
+        GGUF is a <strong>file format for storing quantized LLMs</strong> — a container that
+        packs a model's weights, tokenizer, and metadata into a single file that llama.cpp and
+        its derivatives (Ollama, LM Studio, etc.) can load directly. It's the successor to
+        GGML, and it's become the de facto standard for running models on consumer hardware.
+      </p>
+      <p>
+        The clever part is what "quantized" means. A model's weights are normally stored as
+        16-bit floating-point numbers. GGUF files store them at far lower precision — 8-bit,
+        4-bit, even 2-bit — which shrinks the file dramatically. That's what lets a 27-billion
+        parameter model fit in 12 GB of VRAM instead of needing 50+ GB.
+      </p>
+
+      <h2>The trade-off: size vs quality</h2>
+      <p>
+        Quantization is a compression with a price. Lower precision = smaller file + faster
+        inference + lower quality. Higher precision = bigger file + slower + better quality.
+        The skill is finding the sweet spot where quality holds up but the model fits your
+        hardware.
+      </p>
+      <p>
+        GGUF files encode this in their name. Take <code>qwen2.5-7b.Q4_K_M.gguf</code>:
+      </p>
+      <ul>
+        <li><strong>Q4</strong> — 4-bit quantization (the "Q" stands for quantization).</li>
+        <li><strong>K</strong> — "k-quant" (k-quantization), a smarter scheme that uses fewer bits on less important weights.</li>
+        <li><strong>M</strong> — the size: <code>S</code> (small), <code>M</code> (medium), <code>L</code> (large). Larger = closer to full quality.</li>
+      </ul>
+      <p>
+        So <code>Q4_K_M</code> means "4-bit k-quant, medium" — the most popular all-rounder,
+        and the default recommendation for most people.
+      </p>
+
+      <h2>Common quantization levels</h2>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Level</th><th>Approx. size vs full</th><th>Quality</th><th>When to use it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Q2_K</td><td>~25%</td><td>Poor</td><td>Only when you must squeeze into tiny RAM</td></tr>
+            <tr><td>Q3_K</td><td>~32%</td><td>Meh</td><td>Very tight budgets</td></tr>
+            <tr><td>Q4_K_S / Q4_K_M</td><td>~40–44%</td><td>Good</td><td><strong>Default choice</strong> — best size/quality balance</td></tr>
+            <tr><td>Q5_K_M</td><td>~49%</td><td>Very good</td><td>When you have headroom; notably sharper</td></tr>
+            <tr><td>Q6_K</td><td>~58%</td><td>Near original</td><td>Plenty of RAM, want quality</td></tr>
+            <tr><td>Q8_0</td><td>~78%</td><td>~Indistinguishable</td><td>Only for the KV cache or when size is no object</td></tr>
+            <tr><td>F16 / F32</td><td>100%</td><td>Original</td><td>Rarely needed for inference; huge files</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Which one should you download?</h2>
+      <p>
+        The rule of thumb is simple: <strong>start with Q4_K_M.</strong> It's the best
+        quality-per-gigabyte, runs on most hardware, and for most tasks the quality difference
+        from Q5 or Q6 is hard to notice. If the model runs comfortably and you have spare RAM,
+        try Q5_K_M and see if you can tell the difference. If it's too slow or doesn't fit,
+        drop to Q4_K_S or Q3_K_M.
+      </p>
+      <p>
+        To figure out exactly what fits your card, run the numbers through the
+        <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> — it accounts for weights,
+        KV cache, and quantization so you know before you download.
+      </p>
+
+      <h2>GGUF + llama.cpp</h2>
+      <p>
+        GGUF files are designed to be run by llama.cpp — the engine underneath Ollama and
+        LM Studio. You rarely interact with GGUF files directly if you use Ollama (it handles
+        the download and format for you), but the concepts are identical: you're always
+        choosing a model size and quantization. See the
+        <a href="llama-cpp-guide.html">llama.cpp guide</a> for the command-line details.
+      </p>
+
+      <h2>Bottom line</h2>
+      <p>
+        GGUF is the container that makes local AI practical. The letters in the filename tell
+        you everything: <code>Q4_K_M</code> is the safe default, <code>Q5_K_M</code> is a
+        worthwhile upgrade if you have headroom, and anything smaller is for squeezing into
+        tight hardware. Pick Q4_K_M, check it against the
+        <a href="llm-vram-calculator.html">VRAM calculator</a>, and you'll have a local model
+        running in minutes.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="llama-cpp-guide.html">llama.cpp guide →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=11"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

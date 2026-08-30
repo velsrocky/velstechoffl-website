@@ -1,5 +1,43 @@
 const ARTICLES = [
   {
+    title: "GGUF explained: the format that makes local LLMs work",
+    url: "gguf-explained.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["GGUF", "Quantization", "Local AI"],
+    description: "GGUF is the file format that makes running LLMs locally possible. Here's what it is, what quantization levels mean, and how to pick the right one for your hardware.",
+    faq: [
+      {
+        q: "What is a GGUF file?",
+        a: "GGUF is a container format for quantized LLMs — it packs a model's weights, tokenizer, and metadata into one file that llama.cpp, Ollama, and LM Studio can load directly. The quantization is what shrinks a model enough to run on consumer hardware.",
+      },
+      {
+        q: "Which GGUF quantization should I download?",
+        a: "Q4_K_M is the safe default — the best quality-per-gigabyte. If you have spare RAM, try Q5_K_M for noticeably sharper output. Drop to Q3 or Q2 only if the model doesn't fit.",
+      },
+    ],
+  },
+  {
+    title: "llama.cpp guide: run GGUF models locally",
+    url: "llama-cpp-guide.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["llama.cpp", "GGUF", "Local AI"],
+    description: "Complete guide to llama.cpp – install it, run GGUF models, enable GPU acceleration, and read the benchmark output. The engine behind Ollama, explained.",
+    faq: [
+      {
+        q: "Do I need llama.cpp if I use Ollama?",
+        a: "No — Ollama wraps llama.cpp and handles installation, downloads, and GPU detection for you. Learning llama.cpp is useful for benchmarking and fine-tuning, but not required to run local AI.",
+      },
+      {
+        q: "How do I speed up llama.cpp?",
+        a: "Offload more layers to your GPU with -ngl 999 if VRAM allows, make sure you built with the right backend (CUDA/ROCm/Vulkan), and use the highest quantization that still fits in memory.",
+      },
+    ],
+  },
+  {
     title: "How to get started with local AI (2026)",
     url: "how-to-get-started-local-ai.html",
     date: "2026-08-29",

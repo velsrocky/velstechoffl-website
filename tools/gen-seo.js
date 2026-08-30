@@ -137,7 +137,7 @@ function jsonLd(file, meta) {
       datePublished: `${art.date}T00:00:00Z`,
       dateModified: `${art.updated}T00:00:00Z`,
       inLanguage: "en",
-      image: `${SITE}/og-image.png`,
+      image: `${SITE}/og/${art.url.replace(/\.html$/, "")}.png`,
       author: { "@type": "Person", name: "VelsTech", url: `${SITE}/` },
       publisher: {
         "@type": "Organization",
@@ -207,19 +207,20 @@ for (const file of files) {
 
   const url = pageUrl(file);
   const art = ARTICLES.find((a) => a.url === file);
+  const ogImage = art ? `${SITE}/og/${art.url.replace(/\.html$/, "")}.png` : `${SITE}/og-image.png`;
   const og = `
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="${art ? "article" : "website"}" />
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="${url}" />
   <meta property="og:title" content="${esc(meta.title)}" />
   <meta property="og:description" content="${esc(meta.desc)}" />
-  <meta property="og:image" content="${SITE}/og-image.png" />
+  <meta property="og:image" content="${ogImage}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${esc(meta.title)}" />
   <meta name="twitter:description" content="${esc(meta.desc)}" />
-  <meta name="twitter:image" content="${SITE}/og-image.png" />`;
+  <meta name="twitter:image" content="${ogImage}" />`;
 
   const canonical = `  <link rel="canonical" href="${url}" />`;
   const ld = jsonLd(file, meta);
@@ -240,6 +241,11 @@ for (const file of files) {
     if (file === "index.html") {
       html = html.replace(/(\s*)<meta property="og:description" content="[^"]*" \/>/, `$1<meta property="og:description" content="${esc(meta.desc)}" />`);
       html = html.replace(/(\s*)<meta name="twitter:description" content="[^"]*" \/>/, `$1<meta name="twitter:description" content="${esc(meta.desc)}" />`);
+    }
+    if (art) {
+      // Point og:image / twitter:image at the per-article OG image.
+      html = html.replace(/(\s*)<meta property="og:image" content="[^"]*" \/>/, `$1<meta property="og:image" content="${ogImage}" />`);
+      html = html.replace(/(\s*)<meta name="twitter:image" content="[^"]*" \/>/, `$1<meta name="twitter:image" content="${ogImage}" />`);
     }
     if (file === "index.html" || art) {
       // Refresh JSON-LD in place: drop any existing ld+json blocks (including

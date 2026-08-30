@@ -2573,3 +2573,34 @@ summary:focus-visible,
   line-height: 1.4;
 }
 
+/* Spec comparison table (article) */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.spec-table th,
+.spec-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.spec-table th {
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.spec-table td:first-child {
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.spec-table tbody tr:last-child td {
+  border-bottom: none;
+}
+

@@ -1,5 +1,28 @@
 const ARTICLES = [
   {
+    title: "DGX Spark vs RTX Spark vs Ryzen AI Halo: the 2026 local-AI desktop showdown",
+    url: "dgx-spark-rtx-spark-ryzen-ai-halo.html",
+    date: "2026-08-29",
+    updated: "2026-08-29",
+    category: "Hardware",
+    tags: ["AI Hardware", "GPU", "Local AI", "NVIDIA", "AMD"],
+    description: "NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) — three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.",
+    faq: [
+      {
+        q: "Can these run AI models without an internet connection?",
+        a: "Yes. That's the whole point of unified memory and on-device compute — models run locally with no cloud dependency and your data never leaves the machine.",
+      },
+      {
+        q: "How much VRAM do they have?",
+        a: "None in the traditional sense. All three use unified memory (up to 128 GB) shared between CPU and GPU, so the full memory is available for the model — far more than any consumer GPU's dedicated VRAM.",
+      },
+      {
+        q: "Which is the best value for local AI?",
+        a: "For price per gigabyte of unified memory, AMD's Ryzen AI Max (Strix Halo) mini PCs win at roughly ₹70k–1.1 lakh. NVIDIA's RTX Spark offers the best blend of performance, Windows compatibility, and gaming. DGX Spark is the most powerful but the most expensive.",
+      },
+    ],
+  },
+  {
     title: "Best GPU for running LLMs locally (2026)",
     url: "best-gpu-for-local-llm.html",
     date: "2026-08-27",

@@ -5,9 +5,18 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-30T04:03:11.876Z</updated>
+  <updated>2026-08-30T04:17:55.027Z</updated>
   <author><name>VelsTech</name></author>
 
+  <entry>
+    <title>DGX Spark vs RTX Spark vs Ryzen AI Halo: the 2026 local-AI desktop showdown</title>
+    <link rel="alternate" href="https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.html" />
+    <id>https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.html</id>
+    <published>2026-08-29T00:00:00Z</published>
+    <updated>2026-08-29T00:00:00Z</updated>
+    <category term="Hardware" />
+    <summary>NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) — three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.</summary>
+  </entry>
   <entry>
     <title>Best GPU for running LLMs locally (2026)</title>
     <link rel="alternate" href="https://velstech.net/best-gpu-for-local-llm.html" />

@@ -5,7 +5,7 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-30T18:45:03.238Z</updated>
+  <updated>2026-08-30T18:50:19.908Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>
@@ -42,7 +42,7 @@
     <published>2026-08-30T00:00:00Z</published>
     <updated>2026-08-30T00:00:00Z</updated>
     <category term="AI" />
-    <summary>How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI.</summary>
+    <summary>How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI.</summary>
   </entry>
   <entry>
     <title>KV cache explained: why context windows eat memory</title>
@@ -60,7 +60,7 @@
     <published>2026-08-30T00:00:00Z</published>
     <updated>2026-08-30T00:00:00Z</updated>
     <category term="AI" />
-    <summary>How Flash Attention and speculative decoding make LLMs faster and use less memory — and why they matter for running models locally.</summary>
+    <summary>How Flash Attention and speculative decoding make LLMs faster and use less memory – and why they matter for running models locally.</summary>
   </entry>
   <entry>
     <title>GGUF explained: the format that makes local LLMs work</title>
@@ -96,7 +96,7 @@
     <published>2026-08-29T00:00:00Z</published>
     <updated>2026-08-29T00:00:00Z</updated>
     <category term="Hardware" />
-    <summary>NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) — three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.</summary>
+    <summary>NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) – three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.</summary>
   </entry>
   <entry>
     <title>Best GPU for running LLMs locally (2026)</title>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Free AI API cost calculator – compare per-token pricing across OpenAI, Anthropic, Google, and local inference costs. Estimate the break-even point for running your own hardware." />
+  <title>AI API Cost Calculator | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/ai-api-cost-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/ai-api-cost-calculator.html#webapp",
+  "name": "AI API Cost Calculator | VelsTech",
+  "description": "Compare per-token pricing across OpenAI, Anthropic, Google, and local inference costs. Estimate the break-even point for running your own hardware.",
+  "url": "https://velstech.net/ai-api-cost-calculator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/ai-api-cost-calculator.html" />
+  <meta property="og:title" content="AI API Cost Calculator | VelsTech" />
+  <meta property="og:description" content="Compare per-token pricing across OpenAI, Anthropic, Google, and local inference costs." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI API Cost Calculator | VelsTech" />
+  <meta name="twitter:description" content="Compare per-token pricing across OpenAI, Anthropic, Google, and local inference costs." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=34" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / AI API Cost Calculator</p>
+    <h1 class="title">AI API Cost Calculator</h1>
+    <div class="meta">
+      <span>Compare cloud API costs vs local inference</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        How much does it cost to run your workload through a cloud API vs on your own hardware?
+        Enter your daily token usage and see monthly costs for OpenAI, Anthropic, Google, and
+        the estimated electricity cost of running locally.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Daily input tokens</span>
+            <input type="number" id="in-tok" class="input" value="100000" min="0" step="10000" />
+          </label>
+          <label class="field">
+            <span>Daily output tokens</span>
+            <input type="number" id="out-tok" class="input" value="50000" min="0" step="10000" />
+          </label>
+          <label class="field">
+            <span>Local GPU power (W)</span>
+            <input type="number" id="watts" class="input" value="150" min="0" step="10" />
+          </label>
+          <label class="field">
+            <span>Electricity cost (₹/kWh)</span>
+            <input type="number" id="rate" class="input" value="8" min="0" step="0.5" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-rows" id="body"></div>
+        </div>
+
+        <p class="tool-note">
+          Prices are approximate and change frequently. API pricing from each provider's
+          published rates. Local cost assumes 100% GPU utilization. See the
+          <a href="local-vs-cloud-ai.html">local vs cloud AI</a> guide for the full comparison.
+        </p>
+      </div>
+
+      <h2>Related</h2>
+      <ul>
+        <li><a href="local-vs-cloud-ai.html">Local vs cloud AI: which should you choose?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for running LLMs locally</a></li>
+        <li><a href="benchmarks/index.html">Benchmark database</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="local-vs-cloud-ai.html">Local vs cloud AI →</a>
+    </div>
+  </main>
+
+  <script>
+    const inTok = document.getElementById("in-tok");
+    const outTok = document.getElementById("out-tok");
+    const watts = document.getElementById("watts");
+    const rate = document.getElementById("rate");
+    const body = document.getElementById("body");
+    const results = document.getElementById("results");
+
+    const PROVIDERS = [
+      { name: "OpenAI GPT-4o", inPrice: 2.5, outPrice: 10 },
+      { name: "Anthropic Claude 3.5 Sonnet", inPrice: 3, outPrice: 15 },
+      { name: "Google Gemini 1.5 Pro", inPrice: 1.25, outPrice: 5 },
+      { name: "OpenAI GPT-4o mini", inPrice: 0.15, outPrice: 0.6 },
+      { name: "Local (electricity only)", inPrice: 0, outPrice: 0 },
+    ];
+
+    function render() {
+      const i = parseFloat(inTok.value) || 0;
+      const o = parseFloat(outTok.value) || 0;
+      const w = parseFloat(watts.value) || 150;
+      const r = parseFloat(rate.value) || 8;
+      results.hidden = false;
+
+      body.innerHTML = PROVIDERS.map((p) => {
+        let monthly;
+        if (p.inPrice === 0) {
+          const hours = 730; // avg hours per month running 24/7
+          monthly = (w * hours * r) / 1000;
+          monthly = monthly.toFixed(0);
+          return '<div class="result-row"><span>' + p.name + '</span><strong>₹' + monthly + '/mo (electricity)</strong></div>';
+        } else {
+          const daily = (i * p.inPrice / 1e6) + (o * p.outPrice / 1e6);
+          monthly = (daily * 30).toFixed(1);
+          return '<div class="result-row"><span>' + p.name + '</span><strong>$' + monthly + '/mo</strong></div>';
+        }
+      }).join("");
+    }
+
+    [inTok, outTok, watts, rate].forEach((el) => el.addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

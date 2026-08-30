@@ -33,7 +33,7 @@
   <meta name="twitter:description" content="Free practical tools – an LLM VRAM calculator, a GPU AI performance calculator, and a PC power supply calculator." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="icon" href="logo.svg" />
-  <link rel="stylesheet" href="styles.css?v=33" />
+  <link rel="stylesheet" href="styles.css?v=34" />
 </head>
 <body>
   <main class="article-page">
@@ -45,158 +45,192 @@
 
     <div class="article-body">
       <p>
-        Practical calculators and utilities for the kind of questions this site keeps
-        answering: <em>how much VRAM does that model need?</em>, <em>how fast will my GPU
-        run it?</em>, and <em>what power supply do I actually need?</em> No sign-up, no
-        tracking, no data leaves your browser.
+        Practical calculators and utilities that solve annoying problems — for AI, hardware,
+        networking, development, and security. No sign-up, no tracking, no data leaves your
+        browser. Every tool links to a related guide so you can learn while you compute.
       </p>
 
+      <div class="tool-cat-nav">
+        <a href="#ai">🤖 AI</a>
+        <a href="#hardware">🖥️ Hardware</a>
+        <a href="#networking">🌐 Networking</a>
+        <a href="#developer">👨‍💻 Developer</a>
+        <a href="#security">🔐 Security</a>
+      </div>
+
+      <h2 id="ai" class="tool-cat-heading">🤖 AI</h2>
       <div class="tool-grid">
         <a class="tool-card" href="llm-vram-calculator.html">
           <span class="tool-card-icon">🤖</span>
           <h3>LLM VRAM Calculator</h3>
-          <p>Estimate how much GPU memory a model needs at a given quantization and context length – weights, KV cache, and a verdict for your GPU.</p>
+          <p>How much GPU memory a model needs at your quantization and context — weights, KV cache, and a verdict.</p>
           <span class="tool-card-cta">Open calculator →</span>
         </a>
-
         <a class="tool-card" href="gpu-ai-calculator.html">
           <span class="tool-card-icon">⚡</span>
           <h3>GPU AI Performance Calculator</h3>
-          <p>Estimate tokens/sec, time to first token, and generation speed for running a model on a specific GPU.</p>
+          <p>Estimate tokens/sec and time to first token for running an LLM on a specific GPU.</p>
           <span class="tool-card-cta">Open calculator →</span>
         </a>
+        <a class="tool-card" href="context-length-calculator.html">
+          <span class="tool-card-icon">📏</span>
+          <h3>Context Length &amp; Memory Calculator</h3>
+          <p>How much VRAM different context windows use — at q8, q4, and f16 KV cache.</p>
+          <span class="tool-card-cta">Open calculator →</span>
+        </a>
+        <a class="tool-card" href="gguf-size-calculator.html">
+          <span class="tool-card-icon">💾</span>
+          <h3>GGUF Size Calculator</h3>
+          <p>Estimate file size at every quantization (Q2–Q8) before you download a model.</p>
+          <span class="tool-card-cta">Open calculator →</span>
+        </a>
+        <a class="tool-card" href="ai-api-cost-calculator.html">
+          <span class="tool-card-icon">💰</span>
+          <h3>AI API Cost Calculator</h3>
+          <p>Compare cloud API pricing vs the electricity cost of running locally.</p>
+          <span class="tool-card-cta">Open calculator →</span>
+        </a>
+      </div>
 
+      <h2 id="hardware" class="tool-cat-heading">🖥️ Hardware</h2>
+      <div class="tool-grid">
         <a class="tool-card" href="psu-calculator.html">
           <span class="tool-card-icon">🔌</span>
           <h3>PC Power Supply Calculator</h3>
-          <p>Work out peak power draw for your build and get a recommended PSU wattage with safe headroom.</p>
+          <p>Peak power draw for your build and a recommended PSU wattage with safe headroom.</p>
           <span class="tool-card-cta">Open calculator →</span>
         </a>
-
-        <a class="tool-card" href="cidr-calculator.html">
-          <span class="tool-card-icon">🌐</span>
-          <h3>CIDR / Subnet Calculator</h3>
-          <p>Enter an IP and prefix to get the network address, usable host range, broadcast, and masks.</p>
-          <span class="tool-card-cta">Open calculator →</span>
-        </a>
-
-        <a class="tool-card" href="csv-json-converter.html">
-          <span class="tool-card-icon">🔁</span>
-          <h3>CSV ↔ JSON Converter</h3>
-          <p>Paste CSV and get clean JSON, or paste a JSON array and get CSV back — no uploads.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
-        <a class="tool-card" href="hash-generator.html">
+        <a class="tool-card" href="chmod-calculator.html">
           <span class="tool-card-icon">🔐</span>
-          <h3>Hash Generator</h3>
-          <p>Compute MD5, SHA-1, SHA-256, and SHA-512 checksums of any text instantly.</p>
-          <span class="tool-card-cta">Open tool →</span>
+          <h3>chmod Calculator</h3>
+          <p>Toggle read/write/execute and get the numeric mode (755) and the command to run.</p>
+          <span class="tool-card-cta">Open calculator →</span>
         </a>
-
         <a class="tool-card" href="cron-generator.html">
           <span class="tool-card-icon">⏱️</span>
           <h3>Cron Generator</h3>
           <p>Pick a schedule in plain English and get the cron expression plus next run times.</p>
           <span class="tool-card-cta">Open generator →</span>
         </a>
+      </div>
 
-        <a class="tool-card" href="password-generator.html">
-          <span class="tool-card-icon">🔑</span>
-          <h3>Password Generator</h3>
-          <p>Strong random passwords with adjustable length, uppercase, lowercase, numbers, and symbols.</p>
-          <span class="tool-card-cta">Open generator →</span>
-        </a>
-
-        <a class="tool-card" href="chmod-calculator.html">
-          <span class="tool-card-icon">🔐</span>
-          <h3>chmod Calculator</h3>
-          <p>Toggle read/write/execute and instantly get the numeric mode (755) and the command to run.</p>
+      <h2 id="networking" class="tool-cat-heading">🌐 Networking</h2>
+      <div class="tool-grid">
+        <a class="tool-card" href="cidr-calculator.html">
+          <span class="tool-card-icon">🌐</span>
+          <h3>CIDR / Subnet Calculator</h3>
+          <p>Network address, usable host range, broadcast, and masks from an IP and prefix.</p>
           <span class="tool-card-cta">Open calculator →</span>
         </a>
-
-        <a class="tool-card" href="docker-compose-generator.html">
-          <span class="tool-card-icon">🐳</span>
-          <h3>Docker Compose Generator</h3>
-          <p>Pick an image, ports, volumes, and env vars to get a copy-paste ready docker-compose.yml.</p>
-          <span class="tool-card-cta">Open generator →</span>
-        </a>
-
-        <a class="tool-card" href="ffmpeg-command-generator.html">
-          <span class="tool-card-icon">🎞️</span>
-          <h3>FFmpeg Command Generator</h3>
-          <p>Build a correct ffmpeg command for converting, compressing, and trimming media without memorizing flags.</p>
-          <span class="tool-card-cta">Open generator →</span>
-        </a>
-
-        <a class="tool-card" href="json-formatter.html">
-          <span class="tool-card-icon">🧾</span>
-          <h3>JSON Formatter &amp; Validator</h3>
-          <p>Format, minify, and validate JSON with syntax highlighting and size info.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
-        <a class="tool-card" href="regex-tester.html">
-          <span class="tool-card-icon">🔍</span>
-          <h3>Regex Tester</h3>
-          <p>Test regular expressions live with inline match highlighting and capture groups.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
-        <a class="tool-card" href="jwt-decoder.html">
-          <span class="tool-card-icon">🔑</span>
-          <h3>JWT Decoder</h3>
-          <p>Decode and inspect a JSON Web Token – header, payload, claims, and expiration.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
-        <a class="tool-card" href="base64-encoder-decoder.html">
-          <span class="tool-card-icon">🔢</span>
-          <h3>Base64 Encoder / Decoder</h3>
-          <p>Convert text to and from base64 with proper UTF-8 support.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
-        <a class="tool-card" href="timestamp-converter.html">
-          <span class="tool-card-icon">⏰</span>
-          <h3>Timestamp Converter</h3>
-          <p>Convert Unix timestamps (seconds or ms) to dates and back, with relative time.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
-        <a class="tool-card" href="color-converter.html">
-          <span class="tool-card-icon">🎨</span>
-          <h3>Color Converter</h3>
-          <p>Convert between HEX, RGB, and HSL with a live swatch and copy-ready CSS values.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
-        <a class="tool-card" href="text-diff-checker.html">
-          <span class="tool-card-icon">⇄</span>
-          <h3>Text Diff Checker</h3>
-          <p>Compare two versions of text with added and removed lines highlighted.</p>
-          <span class="tool-card-cta">Open tool →</span>
-        </a>
-
         <a class="tool-card" href="url-encoder-decoder.html">
           <span class="tool-card-icon">🔗</span>
           <h3>URL Encoder / Decoder</h3>
           <p>Percent-encode and decode URL components with UTF-8 support.</p>
           <span class="tool-card-cta">Open tool →</span>
         </a>
+      </div>
 
+      <h2 id="developer" class="tool-cat-heading">👨‍💻 Developer</h2>
+      <div class="tool-grid">
+        <a class="tool-card" href="json-formatter.html">
+          <span class="tool-card-icon">🧾</span>
+          <h3>JSON Formatter &amp; Validator</h3>
+          <p>Format, minify, and validate JSON with syntax highlighting and size info.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
+        <a class="tool-card" href="regex-tester.html">
+          <span class="tool-card-icon">🔍</span>
+          <h3>Regex Tester</h3>
+          <p>Test regular expressions live with inline match highlighting and capture groups.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
+        <a class="tool-card" href="jwt-decoder.html">
+          <span class="tool-card-icon">🔑</span>
+          <h3>JWT Decoder</h3>
+          <p>Decode and inspect a JSON Web Token – header, payload, claims, and expiration.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
+        <a class="tool-card" href="base64-encoder-decoder.html">
+          <span class="tool-card-icon">🔢</span>
+          <h3>Base64 Encoder / Decoder</h3>
+          <p>Convert text to and from base64 with proper UTF-8 support.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
+        <a class="tool-card" href="timestamp-converter.html">
+          <span class="tool-card-icon">⏰</span>
+          <h3>Timestamp Converter</h3>
+          <p>Convert Unix timestamps (seconds or ms) to dates and back, with relative time.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
+        <a class="tool-card" href="color-converter.html">
+          <span class="tool-card-icon">🎨</span>
+          <h3>Color Converter</h3>
+          <p>Convert between HEX, RGB, and HSL with a live swatch and copy-ready CSS values.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
+        <a class="tool-card" href="text-diff-checker.html">
+          <span class="tool-card-icon">⇄</span>
+          <h3>Text Diff Checker</h3>
+          <p>Compare two versions of text with added and removed lines highlighted.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
         <a class="tool-card" href="text-case-converter.html">
           <span class="tool-card-icon">🔤</span>
           <h3>Text Case Converter</h3>
           <p>Uppercase, lowercase, Title Case, sentence case, and camelCase — all at once.</p>
           <span class="tool-card-cta">Open tool →</span>
         </a>
-
+        <a class="tool-card" href="csv-json-converter.html">
+          <span class="tool-card-icon">🔁</span>
+          <h3>CSV ↔ JSON Converter</h3>
+          <p>Paste CSV and get JSON, or paste a JSON array and get CSV back.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
         <a class="tool-card" href="uuid-generator.html">
           <span class="tool-card-icon">🆔</span>
           <h3>UUID Generator</h3>
           <p>Generate UUID v4 and v7 identifiers — one or many, ready to copy.</p>
           <span class="tool-card-cta">Open generator →</span>
+        </a>
+        <a class="tool-card" href="docker-compose-generator.html">
+          <span class="tool-card-icon">🐳</span>
+          <h3>Docker Compose Generator</h3>
+          <p>Pick an image, ports, volumes, and env vars to get a copy-paste ready docker-compose.yml.</p>
+          <span class="tool-card-cta">Open generator →</span>
+        </a>
+        <a class="tool-card" href="ffmpeg-command-generator.html">
+          <span class="tool-card-icon">🎞️</span>
+          <h3>FFmpeg Command Generator</h3>
+          <p>Build a correct ffmpeg command for converting, compressing, and trimming media.</p>
+          <span class="tool-card-cta">Open generator →</span>
+        </a>
+      </div>
+
+      <h2 id="security" class="tool-cat-heading">🔐 Security</h2>
+      <div class="tool-grid">
+        <a class="tool-card" href="password-generator.html">
+          <span class="tool-card-icon">🔑</span>
+          <h3>Password Generator</h3>
+          <p>Strong random passwords with adjustable length, uppercase, lowercase, numbers, and symbols.</p>
+          <span class="tool-card-cta">Open generator →</span>
+        </a>
+        <a class="tool-card" href="password-strength-checker.html">
+          <span class="tool-card-icon">🛡️</span>
+          <h3>Password Strength Checker</h3>
+          <p>Entropy, estimated crack time, and what's dragging your password down.</p>
+          <span class="tool-card-cta">Open tool →</span>
+        </a>
+        <a class="tool-card" href="random-secret-generator.html">
+          <span class="tool-card-icon">🎲</span>
+          <h3>Random Secret Generator</h3>
+          <p>Secure tokens for API keys, salts, and sessions with a chosen length and character set.</p>
+          <span class="tool-card-cta">Open generator →</span>
+        </a>
+        <a class="tool-card" href="hash-generator.html">
+          <span class="tool-card-icon">🔐</span>
+          <h3>Hash Generator</h3>
+          <p>Compute MD5, SHA-1, SHA-256, and SHA-512 checksums of any text instantly.</p>
+          <span class="tool-card-cta">Open tool →</span>
         </a>
       </div>
 
@@ -204,7 +238,8 @@
       <p>
         Articles give you the reasoning; tools give you the number for <em>your</em> exact
         setup. Each calculator links back to related guides, so you can read up before you
-        buy or build.
+        buy or build — and the <a href="benchmarks/index.html">benchmark database</a> shows
+        the real-world numbers.
       </p>
     </div>
 

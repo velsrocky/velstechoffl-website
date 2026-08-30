@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Free GGUF file size calculator – estimate how big a model will be at any quantization (Q2–Q8) before you download. Works for any parameter count." />
+  <title>GGUF Size Calculator | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/gguf-size-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/gguf-size-calculator.html#webapp",
+  "name": "GGUF Size Calculator | VelsTech",
+  "description": "Estimate how much disk space a quantized model will take at Q2 through Q8 before you download it.",
+  "url": "https://velstech.net/gguf-size-calculator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/gguf-size-calculator.html" />
+  <meta property="og:title" content="GGUF Size Calculator | VelsTech" />
+  <meta property="og:description" content="Estimate how much disk space a quantized model will take at Q2 through Q8 before you download it." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GGUF Size Calculator | VelsTech" />
+  <meta name="twitter:description" content="Estimate how much disk space a quantized model will take at Q2 through Q8 before you download it." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=34" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / GGUF Size Calculator</p>
+    <h1 class="title">GGUF Size Calculator</h1>
+    <div class="meta">
+      <span>Estimate GGUF file size before you download</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Wondering how much disk space a model will take at Q4_K_M vs Q8? Enter the parameter
+        count and this shows the estimated file size for every common quantization level —
+        no need to check model pages one by one.
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>Parameters (billions)</span>
+          <input type="number" id="params" class="input" value="7" min="1" max="500" step="1" />
+        </label>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows" id="results-body"></div>
+        </div>
+
+        <p class="tool-note">
+          Estimates assume ~1.25 bytes per parameter overhead for the tokenizer and metadata.
+          Real sizes vary by model architecture. See the <a href="gguf-explained.html">GGUF explained</a>
+          guide for what each quantization level means.
+        </p>
+      </div>
+
+      <h2>Related</h2>
+      <ul>
+        <li><a href="gguf-explained.html">GGUF explained: the format that makes local LLMs work</a></li>
+        <li><a href="quantization-deep-dive.html">Quantization deep dive: how Q4, Q5, and Q8 change quality</a></li>
+        <li><a href="llm-vram-calculator.html">LLM VRAM Calculator</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="gguf-explained.html">GGUF explained →</a>
+    </div>
+  </main>
+
+  <script>
+    const QUANTS = [
+      { label: "Q2_K", bits: 2.6 },
+      { label: "Q3_K", bits: 3.4 },
+      { label: "Q4_K_S", bits: 4.1 },
+      { label: "Q4_K_M", bits: 4.3 },
+      { label: "Q5_K_M", bits: 4.8 },
+      { label: "Q6_K", bits: 6.0 },
+      { label: "Q8_0", bits: 8.0 },
+      { label: "F16", bits: 16 },
+    ];
+
+    const params = document.getElementById("params");
+    const body = document.getElementById("results-body");
+
+    function render() {
+      const p = parseFloat(params.value) || 7;
+      const overhead = 0.1;
+      body.innerHTML = QUANTS.map((q) => {
+        const gb = (p * q.bits / 8 + overhead).toFixed(1);
+        return '<div class="result-row"><span>' + q.label + '</span><strong>' + gb + ' GB</strong></div>';
+      }).join("");
+    }
+
+    params.addEventListener("input", render);
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

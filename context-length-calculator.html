@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Free LLM context length & memory calculator – estimate how much VRAM your context window will use at different lengths and KV cache quantizations." />
+  <title>Context Length & Memory Calculator | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/context-length-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/context-length-calculator.html#webapp",
+  "name": "Context Length & Memory Calculator | VelsTech",
+  "description": "Estimate VRAM usage for different context window sizes and KV cache quantizations on your GPU.",
+  "url": "https://velstech.net/context-length-calculator.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/context-length-calculator.html" />
+  <meta property="og:title" content="Context Length & Memory Calculator | VelsTech" />
+  <meta property="og:description" content="Estimate VRAM usage for different context window sizes and KV cache quantizations on your GPU." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Context Length & Memory Calculator | VelsTech" />
+  <meta name="twitter:description" content="Estimate VRAM usage for different context window sizes and KV cache quantizations on your GPU." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=34" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Context Length Calculator</p>
+    <h1 class="title">Context Length &amp; Memory Calculator</h1>
+    <div class="meta">
+      <span>KV cache VRAM by context size · estimate before you run</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        The KV cache grows with every token of context. This calculator shows how much memory
+        the cache will use at different context lengths and quantizations, so you know what
+        fits your GPU before you run the model.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Model parameters (B)</span>
+            <input type="number" id="params" class="input" value="7" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>Layers</span>
+            <input type="number" id="layers" class="input" value="32" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>KV heads</span>
+            <input type="number" id="heads" class="input" value="8" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>Head dim</span>
+            <input type="number" id="dim" class="input" value="128" min="1" step="1" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows" id="body"></div>
+        </div>
+
+        <p class="tool-note">
+          Rough estimate: <code>layers × kv_heads × head_dim × 2 × bytes_per_value × context</code>.
+          For precise numbers including model weights, use the
+          <a href="llm-vram-calculator.html">LLM VRAM Calculator</a>.
+          See the <a href="kv-cache-explained.html">KV cache guide</a> for how to reduce it.
+        </p>
+      </div>
+
+      <h2>Related</h2>
+      <ul>
+        <li><a href="kv-cache-explained.html">KV cache explained: why context windows eat memory</a></li>
+        <li><a href="llm-vram-calculator.html">LLM VRAM Calculator</a></li>
+        <li><a href="llama-cpp-guide.html">llama.cpp guide: run GGUF models</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="kv-cache-explained.html">KV cache explained →</a>
+    </div>
+  </main>
+
+  <script>
+    const params = document.getElementById("params");
+    const layers = document.getElementById("layers");
+    const heads = document.getElementById("heads");
+    const dim = document.getElementById("dim");
+    const body = document.getElementById("body");
+
+    const CONTEXTS = [2048, 4096, 8192, 16384, 32768, 65536, 131072];
+    const BYTES = { "q8": 1, "q4": 0.5, "f16": 2 };
+
+    function render() {
+      const p = parseFloat(params.value) || 7;
+      const l = parseInt(layers.value) || 32;
+      const h = parseInt(heads.value) || 8;
+      const d = parseInt(dim.value) || 128;
+      body.innerHTML = "";
+      const header = '<div class="result-row" style="font-weight:600;border-bottom:2px solid var(--border)"><span>Context</span><strong>q8</strong><strong>q4</strong><strong>f16</strong></div>';
+      body.innerHTML = header + CONTEXTS.map((ctx) => {
+        const base = l * h * d * 2 * ctx;
+        return '<div class="result-row"><span>' + (ctx >= 1024 ? (ctx / 1024).toFixed(0) + "K" : ctx) + '</span>' +
+          '<strong>' + (base * BYTES.q8 / 1e9).toFixed(2) + ' GB</strong>' +
+          '<strong>' + (base * BYTES.q4 / 1e9).toFixed(2) + ' GB</strong>' +
+          '<strong>' + (base * BYTES.f16 / 1e9).toFixed(2) + ' GB</strong></div>';
+      }).join("");
+    }
+
+    [params, layers, heads, dim].forEach((el) => el.addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

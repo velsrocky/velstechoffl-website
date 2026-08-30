@@ -29,6 +29,7 @@ const ARTICLES = [
     date: "2026-08-29",
     updated: "2026-08-29",
     category: "Hardware",
+    featured: true,
     tags: ["AI Hardware", "GPU", "Local AI", "NVIDIA", "AMD"],
     description: "NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) — three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.",
     faq: [

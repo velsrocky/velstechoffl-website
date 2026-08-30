@@ -1,5 +1,39 @@
 const root = document.documentElement;
 
+// i18n helpers – uses i18n.js if loaded, otherwise falls back to English
+function getLang() {
+  try {
+    if (window.VelsI18n && window.VelsI18n.getLang) return window.VelsI18n.getLang();
+    const s = localStorage.getItem("vt-lang");
+    if (s && ["en","ta","hi"].includes(s)) return s;
+  } catch {}
+  return "en";
+}
+function t(key) {
+  try {
+    if (window.VelsI18n && window.VelsI18n.t) return window.VelsI18n.t(key);
+  } catch {}
+  return key;
+}
+function setLang(lang) {
+  if (window.VelsI18n && window.VelsI18n.setLang) window.VelsI18n.setLang(lang);
+  else try { localStorage.setItem("vt-lang", lang); document.documentElement.setAttribute("lang", lang); } catch {}
+  // Apply immediately without full reload for instant feedback
+  try { applyLang(lang); } catch {}
+  // Persist and reload to ensure all server-rendered strings update cleanly
+  setTimeout(() => location.reload(), 120);
+}
+function applyLang(lang) {
+  // Update html lang and selector state
+  try { document.documentElement.setAttribute("lang", lang); } catch {}
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
+  // Update a few dynamic placeholders without reload
+  const sInput = document.getElementById("search-input");
+  if (sInput) sInput.placeholder = t("search_placeholder");
+  const footerNote = document.querySelector(".footer-note");
+  if (footerNote) footerNote.textContent = t("footer_note");
+}
+
 /* Amazon Associates tracking ID – ONE place to change it site-wide.
    Every <a data-amazon="search query"> is rewritten to an Amazon.in
    keyword link carrying this tag. */
@@ -164,29 +198,38 @@ function navHTML() {
     .map((c) => `<button class="dot" data-accent="${c.accent}" style="--c: ${c.color}" aria-label="${c.accent}"></button>`)
     .join("");
 
+  const curLang = getLang();
+  const langSwitch =
+    '<div class="lang-switch" role="group" aria-label="Language">' +
+    '<button class="lang-btn' + (curLang==="en"?" active":"") + '" data-lang="en" aria-label="English">EN</button>' +
+    '<button class="lang-btn' + (curLang==="ta"?" active":"") + '" data-lang="ta" aria-label="Tamil">TA</button>' +
+    '<button class="lang-btn' + (curLang==="hi"?" active":"") + '" data-lang="hi" aria-label="Hindi">HI</button>' +
+    "</div>";
+
   return (
     '<header class="nav">' +
     '<a class="brand" href="index.html">' + brandSVG + '<span class="brand-name">VelsTech<span class="brand-sub">Solutions</span></span></a>' +
     '<div class="search-wrap">' +
-    '<input id="search-input" class="search-input" type="search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off" />' +
+    '<input id="search-input" class="search-input" type="search" placeholder="' + t("search_placeholder") + '" aria-label="Search articles" autocomplete="off" />' +
     '<div id="search-results" class="search-results" hidden></div>' +
     "</div>" +
     '<nav class="links">' +
-    '<a class="nav-link' + (currentPage === "index.html" ? " active" : "") + '" href="index.html">Home</a>' +
-    '<a class="nav-link' + (currentPage === "start-here.html" ? " active" : "") + '" href="start-here.html">Get Started</a>' +
+    '<a class="nav-link' + (currentPage === "index.html" ? " active" : "") + '" href="index.html">' + t("nav_home") + '</a>' +
+    '<a class="nav-link' + (currentPage === "start-here.html" ? " active" : "") + '" href="start-here.html">' + t("nav_getstarted") + '</a>' +
     '<div class="nav-dropdown" id="topics-dropdown">' +
-    '<button type="button" class="nav-link dropdown-toggle' + (inTopic ? " active" : "") + '" id="topics-toggle" aria-haspopup="true" aria-expanded="false">Topics <span class="dropdown-caret">▾</span></button>' +
+    '<button type="button" class="nav-link dropdown-toggle' + (inTopic ? " active" : "") + '" id="topics-toggle" aria-haspopup="true" aria-expanded="false">' + t("nav_topics") + ' <span class="dropdown-caret">▾</span></button>' +
     '<div class="dropdown-menu" id="topics-menu">' + topicLinks + "</div>" +
     "</div>" +
-    '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html">Lab</a>' +
-    '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html">Benchmarks</a>' +
-    '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html">Tools</a>' +
-    '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="buying-guides.html">Guides</a>' +
+    '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html">' + t("nav_lab") + '</a>' +
+    '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html">' + t("nav_benchmarks") + '</a>' +
+    '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html">' + t("nav_tools") + '</a>' +
+    '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="buying-guides.html">' + t("nav_guides") + '</a>' +
     "</nav>" +
     '<div class="controls">' +
-    '<button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme"></button>' +
+    langSwitch +
+    '<button class="icon-btn" id="theme-toggle" aria-label="' + t("theme_toggle") + '" title="' + t("theme_toggle") + '"></button>' +
     '<div class="palette-wrap">' +
-    '<button class="icon-btn" id="palette-btn" aria-label="Accent color" title="Accent color" aria-expanded="false">' + paintIcon + "</button>" +
+    '<button class="icon-btn" id="palette-btn" aria-label="' + t("accent_toggle") + '" title="' + t("accent_toggle") + '" aria-expanded="false">' + paintIcon + "</button>" +
     '<div class="palette" id="palette" hidden>' + dots + "</div>" +
     "</div></div></header>"
   );
@@ -212,6 +255,18 @@ function initNavDropdown() {
   });
 }
 
+function initLangSwitch() {
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lang = btn.dataset.lang;
+      if (lang && lang !== getLang()) setLang(lang);
+    });
+  });
+  window.addEventListener("vt-lang-change", (e) => {
+    document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.lang === e.detail));
+  });
+}
+
 function initSearch() {
   const input = document.getElementById("search-input");
   const results = document.getElementById("search-results");
@@ -231,7 +286,10 @@ function initSearch() {
     ).slice(0, 8);
 
     if (!hits.length) {
-      results.innerHTML = '<div class="search-empty">No results for "' + esc(q) + '"</div>';
+      const lang = getLang();
+      if (lang === "ta") results.innerHTML = '<div class="search-empty">"' + esc(q) + '" – முடிவுகள் இல்லை</div>';
+      else if (lang === "hi") results.innerHTML = '<div class="search-empty">"' + esc(q) + '" – कोई परिणाम नहीं</div>';
+      else results.innerHTML = '<div class="search-empty">No results for "' + esc(q) + '"</div>';
       results.hidden = false;
       return;
     }
@@ -339,7 +397,7 @@ function initArticleMeta() {
 
   if (cur.updated !== cur.date) {
     const span = document.createElement("span");
-    span.textContent = "· Updated " + fmtDate(cur.updated);
+    span.textContent = t("tag_updated") + fmtDate(cur.updated);
     meta.appendChild(span);
   }
 
@@ -365,7 +423,7 @@ function renderRelated(cur) {
   const section = document.createElement("section");
   section.className = "related-section";
   section.innerHTML =
-    '<h2 class="related-heading">Related articles</h2>' +
+    '<h2 class="related-heading">' + t("related_heading") + '</h2>' +
     '<div class="related-list">' +
     scored
       .map(
@@ -430,8 +488,8 @@ function initShareBar() {
   const bar = document.createElement("div");
   bar.className = "share-bar";
   bar.innerHTML =
-    '<span class="share-label">Share</span>' + nets +
-    '<button type="button" class="share-btn share-copy" aria-label="Copy link" title="Copy link">' +
+    '<span class="share-label">' + t("share_label") + '</span>' + nets +
+    '<button type="button" class="share-btn share-copy" aria-label="' + t("copy_title") + '" title="' + t("copy_title") + '">' +
     shareIcon('<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>') +
     "</button>";
 
@@ -452,8 +510,8 @@ function initShareBar() {
       await navigator.clipboard.writeText(url);
       const btn = bar.querySelector(".share-copy");
       btn.classList.add("copied");
-      btn.title = "Copied!";
-      setTimeout(() => { btn.classList.remove("copied"); btn.title = "Copy link"; }, 2000);
+      btn.title = t("copied");
+      setTimeout(() => { btn.classList.remove("copied"); btn.title = t("copy_title"); }, 2000);
     } catch { /* clipboard unavailable */ }
   });
 
@@ -476,7 +534,7 @@ function initAuthorBox() {
     '<div class="author-info">' +
     '<span class="author-name">VelsTech</span>' +
     '<p>Technology explained for everyone – practical guides, free tools and real experiments. Written by a developer who tests it on real hardware first.</p>' +
-    '<a class="author-link" href="lab.html">Visit the Lab →</a>' +
+    '<a class="author-link" href="lab.html">' + t("author_visit") + '</a>' +
     "</div>";
   main.appendChild(box);
 }
@@ -502,7 +560,7 @@ function initFaq() {
   const section = document.createElement("section");
   section.className = "faq-section";
   section.innerHTML =
-    '<h2 class="faq-heading">Frequently asked questions</h2>' +
+    '<h2 class="faq-heading">' + t("faq_heading") + '</h2>' +
     details;
 
   const nav = main.querySelector(".article-nav");
@@ -528,27 +586,30 @@ const socialHTML = () => {
     "</nav>";
 };
 
-const footerHTML =
-  '<footer class="footer">' +
-  '<nav class="footer-links">' +
-  '<a href="feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' Subscribe</a>' +
-  '<a href="resources.html">Resources</a>' +
-  '<a href="advertise.html">Advertise</a>' +
-  '<a href="disclosure.html">Affiliate Disclosure</a>' +
-  '<a href="terms.html">Terms</a>' +
-  '<a href="privacy.html">Privacy</a>' +
-  '<a href="mailto:hello@velstech.net">Contact</a>' +
-  "</nav>" +
-  "<nav class=\"footer-links\" style=\"margin-top:10px; opacity:0.9\">" +
-  '<a href="networking.html">Networking</a>' +
-  '<a href="security.html">Security</a>' +
-  '<a href="programming.html">Development</a>' +
-  '<a href="tutorials.html">Tutorials</a>' +
-  "</nav>" +
-  socialHTML() +
-  '<p class="footer-note">Content on this site is generated with the assistance of AI and is for informational purposes only.</p>' +
-  '<p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p>' +
-  "</footer>";
+function footerHTML() {
+  return (
+    '<footer class="footer">' +
+    '<nav class="footer-links">' +
+    '<a href="feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' ' + t("footer_subscribe") + '</a>' +
+    '<a href="resources.html">' + t("footer_resources") + '</a>' +
+    '<a href="advertise.html">' + t("footer_advertise") + '</a>' +
+    '<a href="disclosure.html">' + t("footer_disclosure") + '</a>' +
+    '<a href="terms.html">' + t("footer_terms") + '</a>' +
+    '<a href="privacy.html">' + t("footer_privacy") + '</a>' +
+    '<a href="mailto:hello@velstech.net">' + t("footer_contact") + '</a>' +
+    "</nav>" +
+    "<nav class=\"footer-links\" style=\"margin-top:10px; opacity:0.9\">" +
+    '<a href="networking.html">' + t("footer_networking") + '</a>' +
+    '<a href="security.html">' + t("footer_security") + '</a>' +
+    '<a href="programming.html">' + t("footer_development") + '</a>' +
+    '<a href="tutorials.html">' + t("footer_tutorials") + '</a>' +
+    "</nav>" +
+    socialHTML() +
+    '<p class="footer-note">' + t("footer_note") + '</p>' +
+    '<p>&copy; <span id="year"></span> VelsTech. ' + t("footer_rights") + '</p>' +
+    "</footer>"
+  );
+}
 
 function injectGlossary() {
   if (!document.querySelector(".article-body")) return;
@@ -574,7 +635,7 @@ function injectDefine() {
   if (document.getElementById("vt-define-js")) return;
   const d = document.createElement("script");
   d.id = "vt-define-js";
-  d.src = "define.js?v=3";
+  d.src = "define.js?v=4";
   d.onerror = () => console.error("[VelsTech] Failed to load define");
   document.head.appendChild(d);
 }
@@ -589,13 +650,13 @@ function injectChat() {
   if (document.getElementById("vt-chat-script")) return;
   const s = document.createElement("script");
   s.id = "vt-chat-script";
-  s.src = "chat.js?v=15";
+  s.src = "chat.js?v=16";
   s.onerror = () => console.error("[VelsTech] Failed to load chat widget");
   document.head.appendChild(s);
 }
 
 document.body.insertAdjacentHTML("afterbegin", navHTML());
-document.body.insertAdjacentHTML("beforeend", footerHTML);
+document.body.insertAdjacentHTML("beforeend", footerHTML());
 injectChat();
 injectGlossary();
 
@@ -739,16 +800,16 @@ function initCopyButtons() {
     const btn = document.createElement("button");
     btn.className = "copy-btn";
     btn.type = "button";
-    btn.textContent = "Copy";
-    btn.setAttribute("aria-label", "Copy code");
-    btn.title = "Copy code to clipboard";
+    btn.textContent = t("copy");
+    btn.setAttribute("aria-label", t("copy_aria"));
+    btn.title = t("copy_title");
     wrap.appendChild(btn);
 
     btn.addEventListener("click", async () => {
       const text = pre.innerText;
       try {
         await navigator.clipboard.writeText(text);
-        btn.textContent = "Copied!";
+        btn.textContent = t("copied");
         btn.classList.add("copied");
       } catch {
         const ta = document.createElement("textarea");
@@ -757,11 +818,11 @@ function initCopyButtons() {
         ta.select();
         document.execCommand("copy");
         ta.remove();
-        btn.textContent = "Copied!";
+        btn.textContent = t("copied");
         btn.classList.add("copied");
       }
       setTimeout(() => {
-        btn.textContent = "Copy";
+        btn.textContent = t("copy");
         btn.classList.remove("copied");
       }, 2000);
     });
@@ -1007,6 +1068,7 @@ function initHotTopic() {
 
 initSearch();
 initNavDropdown();
+initLangSwitch();
 initWhatsNew();
 initArticleMeta();
 initContactForm();

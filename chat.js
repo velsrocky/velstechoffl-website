@@ -45,9 +45,28 @@
   // Active model (defaults to CHAT_MODEL; kept simple – no runtime picker).
   let activeModel = CHAT_MODEL;
 
+  // i18n helpers for chat – uses i18n.js if loaded
+  function getChatLang() {
+    try {
+      if (window.VelsI18n && window.VelsI18n.getLang) return window.VelsI18n.getLang();
+      const s = localStorage.getItem("vt-lang");
+      if (s && ["en","ta","hi"].includes(s)) return s;
+    } catch {}
+    return "en";
+  }
+  function tChat(key) {
+    try {
+      if (window.VelsI18n && window.VelsI18n.t) return window.VelsI18n.t(key);
+    } catch {}
+    return key;
+  }
+  function chatLangName(lang) {
+    return lang === "ta" ? "Tamil (தமிழ்)" : lang === "hi" ? "Hindi (हिन्दी)" : "English";
+  }
+
   // System prompt (scoped, safe-by-design). Sent as a `system` message in both
   // local and proxy modes.
-  const CHAT_GUIDANCE =
+  const CHAT_GUIDANCE_BASE =
     "You are the VelsTech assistant – a helpful, friendly, plain-language helper for a " +
     "personal technology blog (velstech.net) aimed at tech-curious beginners and intermediate users.\n" +
     "You can usually answer any question directly. Treat the blog content below as OPTIONAL " +
@@ -62,6 +81,11 @@
     "- Typography: use en dash – with spaces for dashes, never em dash —. Example: 'X – Y' not 'X — Y'.\n" +
     "- If you don't know or the blog doesn't cover it, say so honestly instead of guessing.\n" +
     "- Glossary skill: when user asks 'what is X', 'define X', 'full form of X', or 'explain X in context', ALWAYS start with the full form on line 1 as 'X – Full Form', then 1-sentence definition + 1-2 sentence contextual note from Current page content if present. Example: 'GGUF – GGML Universal File: single-file container for quantized LLMs...'. Never omit the expansion for acronyms (GPU, VRAM, GGUF, RAG, KV cache, etc.). Keep under 80 words unless asked for more.";
+  function getChatGuidance() {
+    const lang = getChatLang();
+    if (lang === "en") return CHAT_GUIDANCE_BASE;
+    return CHAT_GUIDANCE_BASE + "\n- Language: respond in " + chatLangName(lang) + ". Keep the same concise, plain-language style but in that language. If the user wrote in another language, still reply in " + chatLangName(lang) + ".";
+  }
 
   // Expose programmatic API for glossary/term clicks and selection chip
   // Usage: VelsChat.ask('Explain GPU in context...', {forcePage:true})
@@ -151,8 +175,9 @@
     if (document.getElementById("vt-chat-root")) return;
     const root = document.createElement("div");
     root.id = "vt-chat-root";
+    const _t = (k) => { try { if (window.VelsI18n) return window.VelsI18n.t(k); } catch {} return k; };
     root.innerHTML = `
-      <button id="vt-chat-bubble" class="vt-bubble" aria-label="Open AI assistant" aria-expanded="false">
+      <button id="vt-chat-bubble" class="vt-bubble" aria-label="${_t("chat_open")}" aria-expanded="false">
         <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M4 5h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 4V5z"/>
           <circle cx="9" cy="12" r="1"/><circle cx="13" cy="12" r="1"/><circle cx="17" cy="12" r="1"/>
@@ -164,28 +189,28 @@
           <div class="vt-header-title">
             <span class="vt-logo" aria-hidden="true">◆</span>
             <div>
-              <h4 class="vt-title">VelsChat</h4>
-              <span class="vt-sub">AI · answers from the blog + general</span>
+              <h4 class="vt-title">${_t("chat_title")}</h4>
+              <span class="vt-sub">${_t("chat_sub")}</span>
             </div>
           </div>
           <div class="vt-header-controls">
-            <button id="vt-chat-close" class="vt-ico" aria-label="Close">
+            <button id="vt-chat-close" class="vt-ico" aria-label="${_t("chat_close")}">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>
         </header>
         <div id="vt-page-bar" class="vt-page-bar" hidden>
-          <button id="vt-page-explain" class="vt-page-btn" type="button">✨ Explain this page</button>
-          <span class="vt-page-hint">Summarize what this page says</span>
+          <button id="vt-page-explain" class="vt-page-btn" type="button">${_t("chat_explain_page")}</button>
+          <span class="vt-page-hint">${_t("chat_explain_hint")}</span>
         </div>
         <div id="vt-chat-messages" class="vt-messages"></div>
         <form id="vt-chat-form" class="vt-form" autocomplete="off">
-          <textarea id="vt-chat-input" class="vt-input" rows="1" placeholder="Ask about the blog or anything else…" aria-label="Message"></textarea>
-          <button id="vt-chat-send" type="submit" class="vt-send" aria-label="Send">
+          <textarea id="vt-chat-input" class="vt-input" rows="1" placeholder="${_t("chat_placeholder")}" aria-label="Message"></textarea>
+          <button id="vt-chat-send" type="submit" class="vt-send" aria-label="${_t("chat_send")}">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </form>
-        <p class="vt-disclaimer">AI can make mistakes. Check important facts.</p>
+        <p class="vt-disclaimer">${_t("chat_disclaimer")}</p>
       </div>`;
     document.body.appendChild(root);
   }
@@ -242,7 +267,7 @@
     // Build messages: a scoped system prompt (guidance + retrieved blog
     // snippets + optional current-page content) followed by the user's question.
     // Works identically for local and proxy backends.
-    const systemParts = [CHAT_GUIDANCE];
+    const systemParts = [getChatGuidance()];
     if (pageContext) {
       systemParts.push("Current page content:\n" + pageContext);
       // show subtle indicator in the typing bubble
@@ -374,9 +399,8 @@
     });
 
     // Welcome message
-    const w = addMessage("assistant",
-      '👋 Hi – I\'m the VelsTech assistant. Ask me about articles on this site ' +
-      '(AI, hardware, Linux, security…) or anything else.<br><span style="opacity:.7;font-size:12px">Tip: try “Explain this page” when viewing an article.</span>');
+    const welcome = tChat("chat_welcome");
+    const w = addMessage("assistant", welcome);
   }
 
   if (document.readyState === "loading") {

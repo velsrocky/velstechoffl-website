@@ -166,17 +166,21 @@
   let hideTimer = null;
   let showTimer = null;
 
+  function tDef(k) {
+    try { if (window.VelsI18n && window.VelsI18n.t) return window.VelsI18n.t(k); } catch {}
+    return k;
+  }
   function renderPopover(termKey) {
     const entry = GLOSSARY[termKey];
     if (!entry) return "";
     const link = entry.link
-      ? `<a class="vt-pop-link" href="${entry.link}">Read guide →</a>`
+      ? `<a class="vt-pop-link" href="${entry.link}">${tDef("read_guide")}</a>`
       : "";
     return `
       <div class="vt-pop-head">${termKey} <span>– ${entry.fullForm}</span></div>
       <p class="vt-pop-short">${entry.short}</p>
       <div class="vt-pop-actions">
-        <button class="vt-pop-ask" type="button" data-ask="${termKey}">Ask VelsChat →</button>
+        <button class="vt-pop-ask" type="button" data-ask="${termKey}">${tDef("ask_velschat")}</button>
         ${link}
       </div>
     `;
@@ -363,7 +367,11 @@
 
   function showChip(text, rect) {
     lastSelectionText = text;
-    chip.querySelector("span").textContent = `Ask about “${text.slice(0, 28)}${text.length > 28 ? "…" : ""}”`;
+    const lang = (window.VelsI18n && window.VelsI18n.getLang && window.VelsI18n.getLang()) || "en";
+    const ask = tDef("ask_about");
+    const short = text.slice(0, 28) + (text.length > 28 ? "…" : "");
+    if (lang === "ta" || lang === "hi") chip.querySelector("span").textContent = `“${short}” ${ask}`;
+    else chip.querySelector("span").textContent = `${ask} “${short}”`;
     chip.hidden = false;
     // position above selection
     requestAnimationFrame(() => {

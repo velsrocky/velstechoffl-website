@@ -48,7 +48,7 @@ Once a URL is set, the `data-aff` link automatically gets:
 
 ### After filling the map
 - Bump the cache-buster: `script.js?v=N` → next number across all `*.html`
-  (`sed -i 's/script\.js?v=15/script.js?v=16/g' -- *.html`).
+  (`perl -pi -e 's/script\.js\?v=N/script.js?v=N+1/' -- *.html`).
 - Test: click each linked card on resources.html → should open the referral URL in a new tab.
 
 ## 2. Amazon Business link (verify via SiteStripe)

@@ -1,93 +1,70 @@
-# VelsTech Analytics & Search Console — Setup Guide
+# VelsTech Analytics & Search Console — Current State
 
-How the site measures traffic and how to connect it to Google / Bing search so you
-can see what's working and grow the audience.
+Everything below is **already set up and live** — this document records the current
+configuration for future reference and shows what to do if something breaks or changes.
 
-## 1. Cloudflare Web Analytics (live — cookieless, no consent banner)
+## 1. Cloudflare Web Analytics (live — Automatic Setup)
 
-The site uses **Cloudflare Web Analytics** for aggregate page-view metrics. It is
-cookie-free and privacy-friendly, so it doesn't need a consent banner and stays
-consistent with the [Privacy Policy](https://velstech.net/privacy.html).
+- **Method:** Automatic Setup. Because `velstech.net` is proxied through Cloudflare
+  (orange cloud on the A records), Cloudflare injects the analytics beacon at the edge.
+  **No code, no token, no consent banner.**
+- **What it gives you:** cookieless aggregate page-view metrics (top pages, referrers).
+- **Privacy:** no cookies, no fingerprinting, no cross-site tracking — consistent with
+  the [Privacy Policy](https://velstech.net/privacy.html).
 
-### How it works (Automatic Setup)
+**If it stops working:**
+1. Cloudflare dashboard → **Analytics → Web Analytics** → confirm the `velstech.net` site
+   still exists.
+2. Confirm the A records for `velstech.net` are still **proxied** (orange cloud), not
+   grey (DNS-only).
+3. Nothing in the repo needs to change — there is no manual beacon in `script.js`.
 
-Because `velstech.net` is **proxied through Cloudflare** (orange cloud on the A
-records), Web Analytics uses **Automatic Setup**: Cloudflare injects the beacon at
-the edge automatically. **No code, no token, no script tag on the pages.**
+> Legacy note: an earlier approach used a manual `CF_WEB_ANALYTICS_TOKEN` JS beacon in
+> `script.js`. This was removed because it would double-count page views alongside
+> Automatic Setup. Do not re-add it.
 
-```
-browser  →  Cloudflare edge (beacon injected automatically)  →  Web Analytics dashboard
-```
+## 2. Google Search Console (verified — DNS TXT)
 
-### Enabling it
+- **Property type:** URL prefix → `https://velstech.net/`
+- **Verification method:** DNS TXT record on the zone (in Cloudflare):
+  ```
+  google-site-verification=mFigNsr934Nj3-XUaf0I8avjT1KTtycR_m54Dw0KOiI
+  ```
+- **Sitemap:** `https://velstech.net/sitemap.xml` submitted and being crawled.
 
-1. Cloudflare dashboard → **Analytics → Web Analytics → Add a site**.
-2. Select the `velstech.net` zone and choose **Automatic Setup** (the no-snippet option).
-3. Done. No changes to the repo are needed.
+**If you ever lose verification:**
+1. GSC → Settings → Ownership verification → note the required TXT value.
+2. Cloudflare → DNS → add/update the `google-site-verification` TXT record for `@`.
+3. Click **Verify** in GSC.
 
-> Old approach (manual JS beacon) was removed from `script.js` — a manual beacon
-> would double-count page views alongside Automatic Setup.
+> Alternative: re-verify with the HTML tag method by pasting the token into
+> `GSC_VERIFICATION` at the top of `tools/gen-seo.js`, running
+> `node tools/gen-seo.js` (injects the meta tag into every page), committing, and
+> pushing. The TXT method is preferred since it needs no code change.
 
-## 2. Google Search Console (verified — via DNS TXT)
-
-Search is the #1 audience source for a blog like this. Google Search Console tells
-you which queries you rank for, how many clicks you get, and which pages need work.
-
-### Verification status
-
-The domain is **already verified** via a DNS TXT record on `velstech.net`:
-
-```
-google-site-verification=mFigNsr934Nj3-XUaf0I8avjT1KTtycR_m54Dw0KOiI
-```
-
-So `GSC_VERIFICATION` in `tools/gen-seo.js` can stay empty — the meta-tag method is
-only needed if the TXT record is ever removed. If you ever re-verify with the HTML
-tag method instead:
-
-1. [Google Search Console](https://search.google.com/search-console) → **Add property**
-   → **Domain** (`velstech.net`) or **URL prefix** (`https://velstech.net/`).
-2. In the verification screen choose the **HTML tag** method and copy the token.
-3. Paste it into `GSC_VERIFICATION` in `tools/gen-seo.js`.
-4. Re-run `node tools/gen-seo.js` — it injects
-   `<meta name="google-site-verification" content="...">` into every page.
-5. Commit and push; then click **Verify** in Search Console.
-
-### Submit the sitemap
-
-After verification:
-
-1. Search Console → **Sitemaps** → `https://velstech.net/sitemap.xml` → Submit.
-2. Request indexing of `https://velstech.net/` via the **URL Inspection** tool.
-3. Check **Pages** → **Indexing** weekly to find pages that aren't indexed and why.
-
-The sitemap is regenerated automatically by `node tools/gen-seo.js`.
-
-## 3. Bing Webmaster Tools (already verified)
+## 3. Bing Webmaster Tools (verified)
 
 `BingSiteAuth.xml` exists at the site root, so Bing is verified and crawling.
-You can also **import from Google Search Console** in Bing Webmaster Tools to copy
-over the verified property, then submit the sitemap there too.
+Sitemap is shared with Google via `robots.txt`.
 
 ## 4. Keeping it all in sync
 
 `tools/gen-seo.js` is the single source of truth for:
-
 - canonical URLs, OG/Twitter cards, JSON-LD (BlogPosting, WebApplication, FAQPage)
 - `sitemap.xml` and `robots.txt`
-- GSC verification meta tag
+- optional GSC HTML-tag verification meta
 
-Run it whenever you change metadata, add a page, or change the token:
+Run it whenever you change metadata, add a page, or change a token:
 
 ```sh
 node tools/gen-seo.js
 ```
 
-## What to look at weekly
+## What to check weekly
 
-- **Search Console → Performance**: impressions vs clicks per query. Any query with
-  many impressions but few clicks is a title/description fix.
-- **Search Console → Pages**: pages not indexed → fix and request indexing.
-- **Cloudflare Web Analytics → Top pages**: which articles/tools actually pull traffic.
-- **Cloudflare Web Analytics → Referrers**: which sites (e.g. Reddit, HN) send visitors;
+- **Search Console → Performance:** impressions vs clicks per query. Many impressions,
+  few clicks → fix the title/description.
+- **Search Console → Pages:** pages not indexed → fix and request indexing.
+- **Cloudflare Web Analytics → Top pages:** which articles/tools actually pull traffic.
+- **Cloudflare Web Analytics → Referrers:** which sites (e.g. Reddit, HN) send visitors;
   double down where it works.

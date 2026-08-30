@@ -37,5 +37,6 @@ jobs:
           if ! git diff --quiet tools/posted-articles.json; then
             git add tools/posted-articles.json
             git commit -m "chore: mark posted articles"
+            git pull --rebase origin main || true
             git push
           fi

@@ -43,6 +43,15 @@
   border: 2px solid var(--vt-chat-bg);
 }
 .vt-bubble svg { fill: none; }
+.vt-bubble-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,.85));
+  animation: vt-bulbPulse 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
 .vt-bulb {
   filter: drop-shadow(0 0 4px rgba(255,255,255,.9)) drop-shadow(0 0 8px var(--vt-accent));
   animation: vt-bulbPulse 2.4s ease-in-out infinite;

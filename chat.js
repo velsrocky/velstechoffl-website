@@ -178,24 +178,14 @@
     const _t = (k) => { try { if (window.VelsI18n) return window.VelsI18n.t(k); } catch {} return k; };
     root.innerHTML = `
       <button id="vt-chat-bubble" class="vt-bubble" aria-label="${_t("chat_open")}" aria-expanded="false">
-        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <!-- antenna -->
+        <img src="/robot-bulb.png" alt="" width="34" height="34" class="vt-bubble-img" aria-hidden="true" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"/>
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
           <line x1="12" y1="8.6" x2="12" y2="6.4" />
-          <!-- bulb (glowing) -->
-          <g class="vt-bulb">
-            <circle cx="12" cy="4.2" r="2" fill="white" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M11 4.2 L11.4 5.0 L12 4.2 L12.6 5.0 L13 4.2" fill="none" stroke="#06121f" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-          <!-- robot head -->
+          <g class="vt-bulb"><circle cx="12" cy="4.2" r="2" fill="white" stroke="currentColor" stroke-width="1.4"/><path d="M11 4.2 L11.4 5.0 L12 4.2 L12.6 5.0 L13 4.2" fill="none" stroke="#06121f" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/></g>
           <rect x="6.5" y="9.2" width="11" height="9.2" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/>
-          <!-- eyes -->
-          <circle cx="9.6" cy="13.2" r="1" fill="currentColor" stroke="none"/>
-          <circle cx="14.4" cy="13.2" r="1" fill="currentColor" stroke="none"/>
-          <!-- mouth / chin -->
+          <circle cx="9.6" cy="13.2" r="1" fill="currentColor" stroke="none"/><circle cx="14.4" cy="13.2" r="1" fill="currentColor" stroke="none"/>
           <path d="M10 15.6 H14" stroke="currentColor" stroke-width="1" />
-          <!-- side notches -->
-          <path d="M6.5 12.2 H5.2 A1 1 0 0 0 6.5 14" fill="none" stroke="currentColor" stroke-width="1.2"/>
-          <path d="M17.5 12.2 H18.8 A1 1 0 0 1 17.5 14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6.5 12.2 H5.2 A1 1 0 0 0 6.5 14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M17.5 12.2 H18.8 A1 1 0 0 1 17.5 14" fill="none" stroke="currentColor" stroke-width="1.2"/>
         </svg>
         <span class="vt-bubble-dot" aria-hidden="true"></span>
       </button>

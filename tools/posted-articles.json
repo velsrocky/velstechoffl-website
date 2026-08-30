@@ -1,4 +1,5 @@
 [
+  "apple-silicon-llm-guide.html",
   "best-gpu-ai-under-50000.html",
   "best-gpu-for-local-llm.html",
   "better-prompts.html",
@@ -28,6 +29,8 @@
   "quantization-deep-dive.html",
   "qwen-27b-ridge-rocm-vs-vulkan.html",
   "qwen3-8-flash-next.html",
+  "rag-from-scratch.html",
+  "rocm-vulkan-amd-guide.html",
   "security-habits.html",
   "self-hosting-101.html",
   "setup-domain.html",

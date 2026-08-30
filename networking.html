@@ -37,34 +37,85 @@
   <main>
     <header class="page-hero">
       <p class="breadcrumb"><a href="index.html">Home</a> / Networking</p>
-      <h1>Networking</h1>
+      <h1>VelsTech Networking</h1>
       <p>
-        DNS, routers, IP addresses, and self-hosting – understanding the parts
-        of the internet that matter when you set up your own services.
+        How the internet works, how to put your own services online, and how to run things at
+        home — a learning path from the basics to self-hosting.
       </p>
-      <p class="tool-note" style="margin-top:12px"><a href="cidr-calculator.html">CIDR / Subnet calculator</a> · <a href="how-internet-works.html">How the internet works</a> · <a href="setup-domain.html">Setting up a domain</a></p>
     </header>
 
-    <section class="article-grid">
-      <article class="article">
-        <h3><a href="how-internet-works.html">How does the internet actually work?</a></h3>
-        <p>A straightforward walkthrough of IP addresses, DNS, and routing – the basics that make the internet tick.</p>
-        <div class="tags"><span class="tag">Basics</span><span class="tag">DNS</span></div>
-        <span class="date">Aug 24, 2026</span>
-      </article>
-      <article class="article">
-        <h3><a href="setup-domain.html">Setting up a domain and pointing it anywhere</a></h3>
-        <p>How to buy a domain, configure DNS records, and connect it to GitHub Pages, a VPS, or a home server.</p>
-        <div class="tags"><span class="tag">DNS</span><span class="tag">Self-hosting</span></div>
-        <span class="date">Aug 24, 2026</span>
-      </article>
-      <article class="article">
-        <h3><a href="self-hosting-101.html">Self-hosting 101: what can you run at home?</a></h3>
-        <p>From a media server to a personal cloud – services you can run on a Raspberry Pi or old laptop.</p>
-        <div class="tags"><span class="tag">Self-hosting</span><span class="tag">Projects</span></div>
-        <span class="date">Aug 24, 2026</span>
-      </article>
-    </section>
+    <div class="hub">
+
+      <section class="hub-tier">
+        <div class="hub-tier-head">
+          <span class="hub-tier-label">Start here</span>
+          <h2 class="hub-tier-title">Understand the internet</h2>
+        </div>
+        <div class="hub-grid">
+          <a class="hub-card" href="how-internet-works.html">
+            <h4>How does the internet actually work?</h4>
+            <p>IP addresses, DNS, and routing — the basics that make the internet tick.</p>
+            <span class="hub-meta">Start here →</span>
+          </a>
+          <a class="hub-card" href="setup-domain.html">
+            <h4>Setting up a domain</h4>
+            <p>Buy a domain, configure DNS, and point it at GitHub Pages, a VPS, or a home server.</p>
+            <span class="hub-meta">Get online →</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="hub-tier">
+        <div class="hub-tier-head">
+          <span class="hub-tier-label">Run your own services</span>
+          <h2 class="hub-tier-title">Self-hosting</h2>
+        </div>
+        <div class="hub-grid">
+          <a class="hub-card" href="self-hosting-101.html">
+            <h4>Self-hosting 101</h4>
+            <p>From a media server to a personal cloud — what you can run on a Raspberry Pi or old laptop.</p>
+            <span class="hub-meta">Start here →</span>
+          </a>
+          <a class="hub-card" href="tutorials.html">
+            <h4>Networking tutorials</h4>
+            <p>Step-by-step guides for getting services online and keeping them running.</p>
+            <span class="hub-meta">Browse tutorials →</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="hub-tier">
+        <div class="hub-tier-head">
+          <span class="hub-tier-label">Free tools</span>
+          <h2 class="hub-tier-title">Crunch your own numbers</h2>
+        </div>
+        <div class="hub-grid">
+          <a class="hub-card" href="cidr-calculator.html">
+            <h4>CIDR / Subnet Calculator</h4>
+            <p>Network address, usable host range, broadcast, and masks from an IP and prefix.</p>
+            <span class="hub-meta">Open calculator →</span>
+          </a>
+          <a class="hub-card" href="url-encoder-decoder.html">
+            <h4>URL Encoder / Decoder</h4>
+            <p>Percent-encode and decode URL components with UTF-8 support.</p>
+            <span class="hub-meta">Open tool →</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="hub-tier">
+        <div class="hub-tier-head">
+          <span class="hub-tier-label">Coming soon</span>
+          <h2 class="hub-tier-title">On the roadmap</h2>
+        </div>
+        <div class="hub-grid">
+          <div class="hub-card soon"><h4>Routers &amp; Wi-Fi explained</h4><p>What your router actually does and how to make your network faster.</p></div>
+          <div class="hub-card soon"><h4>Port forwarding guide</h4><p>How to reach services on your home network from outside.</p></div>
+          <div class="hub-card soon"><h4>Home lab starter pack</h4><p>Cheap hardware and first projects for a home server.</p></div>
+        </div>
+      </section>
+
+    </div>
   </main>
 
   <script src="articles.js?v=11"></script>

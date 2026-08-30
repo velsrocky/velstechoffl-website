@@ -550,6 +550,34 @@ const footerHTML =
   '<p>&copy; <span id="year"></span> VelsTech. All rights reserved.</p>' +
   "</footer>";
 
+function injectGlossary() {
+  if (!document.querySelector(".article-body")) return;
+  if (!document.getElementById("vt-glossary-css")) {
+    const l = document.createElement("link");
+    l.id = "vt-glossary-css";
+    l.rel = "stylesheet";
+    l.href = "glossary.css?v=2";
+    document.head.appendChild(l);
+  }
+  if (!document.getElementById("vt-glossary-js")) {
+    const g = document.createElement("script");
+    g.id = "vt-glossary-js";
+    g.src = "glossary.js?v=2";
+    g.onload = injectDefine;
+    g.onerror = () => console.error("[VelsTech] Failed to load glossary");
+    document.head.appendChild(g);
+  } else {
+    injectDefine();
+  }
+}
+function injectDefine() {
+  if (document.getElementById("vt-define-js")) return;
+  const d = document.createElement("script");
+  d.id = "vt-define-js";
+  d.src = "define.js?v=3";
+  d.onerror = () => console.error("[VelsTech] Failed to load define");
+  document.head.appendChild(d);
+}
 function injectChat() {
   if (document.getElementById("vt-chat-link")) return;
   const link = document.createElement("link");
@@ -561,7 +589,7 @@ function injectChat() {
   if (document.getElementById("vt-chat-script")) return;
   const s = document.createElement("script");
   s.id = "vt-chat-script";
-  s.src = "chat.js?v=12";
+  s.src = "chat.js?v=14";
   s.onerror = () => console.error("[VelsTech] Failed to load chat widget");
   document.head.appendChild(s);
 }
@@ -569,6 +597,7 @@ function injectChat() {
 document.body.insertAdjacentHTML("afterbegin", navHTML());
 document.body.insertAdjacentHTML("beforeend", footerHTML);
 injectChat();
+injectGlossary();
 
 const feedLink = document.createElement("link");
 feedLink.rel = "alternate";

@@ -60,9 +60,26 @@ function toAnthropicMessages(messages) {
   return { system, messages: chatMessages };
 }
 
+function getCorsOrigin(request, env) {
+  const reqOrigin = request.headers.get("Origin") || "";
+  const primary = env.ALLOWED_ORIGIN || DEFAULTS.ORIGIN;
+  // Allow primary + localhost for preview + any velstech.net subdomain
+  if (!reqOrigin) return primary;
+  if (reqOrigin === primary) return primary;
+  if (reqOrigin.startsWith("http://localhost:") || reqOrigin.startsWith("http://127.0.0.1:")) return reqOrigin;
+  if (reqOrigin.endsWith(".velstech.net") || reqOrigin === "https://velstech.net") return reqOrigin;
+  // Allow configured origin's http/https variants
+  try {
+    const u = new URL(reqOrigin);
+    const p = new URL(primary);
+    if (u.hostname === p.hostname) return reqOrigin;
+  } catch {}
+  return primary;
+}
+
 export default {
   async fetch(request, env) {
-    const origin = env.ALLOWED_ORIGIN || DEFAULTS.ORIGIN;
+    const origin = getCorsOrigin(request, env);
     const provider = env.AI_PROVIDER || DEFAULTS.AI_PROVIDER;
     const model = env.AI_MODEL || DEFAULTS.AI_MODEL;
     const limit = parseInt(env.RATE_LIMIT || String(DEFAULTS.RATE_LIMIT), 10);
@@ -76,6 +93,7 @@ export default {
           "Access-Control-Allow-Methods": "POST, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type",
           "Access-Control-Max-Age": "86400",
+          "Vary": "Origin",
         },
       });
     }

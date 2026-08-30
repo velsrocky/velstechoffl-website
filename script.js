@@ -598,12 +598,6 @@ function footerHTML() {
     '<a href="privacy.html">' + t("footer_privacy") + '</a>' +
     '<a href="mailto:hello@velstech.net">' + t("footer_contact") + '</a>' +
     "</nav>" +
-    "<nav class=\"footer-links\" style=\"margin-top:10px; opacity:0.9\">" +
-    '<a href="networking.html">' + t("footer_networking") + '</a>' +
-    '<a href="security.html">' + t("footer_security") + '</a>' +
-    '<a href="programming.html">' + t("footer_development") + '</a>' +
-    '<a href="tutorials.html">' + t("footer_tutorials") + '</a>' +
-    "</nav>" +
     socialHTML() +
     '<p class="footer-note">' + t("footer_note") + '</p>' +
     '<p>&copy; <span id="year"></span> VelsTech. ' + t("footer_rights") + '</p>' +

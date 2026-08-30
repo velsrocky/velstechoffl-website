@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="बड़े भाषा मॉडल कैसे काम करते हैं इसकी सरल भाषा में व्याख्या – टोकन, संदर्भ, और संभावनाएँ।" />
+  <title>एक बड़ा भाषा मॉडल वास्तव में क्या है? | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/what-is-an-llm.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/what-is-an-llm.html#article",
+  "headline": "एक बड़ा भाषा मॉडल वास्तव में क्या है?",
+  "description": "LLMs के अंदरूनी कामकाज की सरल भाषा में व्याख्या – टोकन, संदर्भ, और संभावनाएँ – बिना तकनीकी शब्दावली के।",
+  "url": "https://velstech.net/what-is-an-llm.html",
+  "datePublished": "2026-08-24T00:00:00Z",
+  "dateModified": "2026-08-24T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/what-is-an-llm.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/what-is-an-llm.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/what-is-an-llm.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "क्या एक बड़ा भाषा मॉडल और कृत्रिम बुद्धिमत्ता एक ही चीज़ हैं?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "नहीं। LLM एक प्रकार का AI है – एक मॉडल जो अगले शब्द का अनुमान लगाने के लिए प्रशिक्षित है। 'AI' एक बहुत बड़ी छतरी है जिसमें दृष्टि, रोबोटिक्स, और बहुत कुछ शामिल है।"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "क्या LLMs वास्तव में समझते हैं कि वे क्या कह रहे हैं?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "वे मनुष्य की तरह तर्क नहीं करते। वे अपने प्रशिक्षण डेटा में पैटर्न के आधार पर सबसे संभावित अगला टोकन की गणना करते हैं, जो अक्सर समझने जैसा दिखता है।"
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/what-is-an-llm.html" />
+  <meta property="og:title" content="एक बड़ा भाषा मॉडल वास्तव में क्या है? | VelsTech" />
+  <meta property="og:description" content="LLMs के अंदरूनी कामकाज की सरल भाषा में व्याख्या – टोकन, संदर्भ, और संभावनाएँ – बिना तकनीकी शब्दावली के।" />
+  <meta property="og:image" content="https://velstech.net/og/what-is-an-llm.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="एक बड़ा भाषा मॉडल वास्तव में क्या है? | VelsTech" />
+  <meta name="twitter:description" content="LLMs के अंदरूनी कामकाज की सरल भाषा में व्याख्या – टोकन, संदर्भ, और संभावनाएँ – बिना तकनीकी शब्दावली के।" />
+  <meta name="twitter:image" content="https://velstech.net/og/what-is-an-llm.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="ai.html">AI &amp; ML</a> / यह लेख</p>
+    <h1 class="title">एक बड़ा भाषा मॉडल वास्तव में क्या है?</h1>
+    <div class="meta">
+      <span class="tag">LLM</span>
+      <span class="tag">बुनियादी बातें</span>
+      <span>Aug 24, 2026</span>
+      <span>· 6 मिनट का पठन</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        आपने शायद ChatGPT, Claude, Gemini से बात की होगी। लेकिन जब कोई कहता है
+        "बड़ा भाषा मॉडल", तो वास्तव में अंदर क्या है? यहाँ तकनीकी शब्दावली के बिना,
+        मशीनरी का एक सरल भाषा में परिचय है।
+      </p>
+
+      <h2>तीन शब्द, विस्तार से</h2>
+      <p>
+        <strong>भाषा मॉडल</strong> – एक प्रोग्राम जो एक अनुक्रम में अगले शब्द का अनुमान लगाने के लिए प्रशिक्षित है।
+        बस इतना ही। न "सोचना", न "समझना" मानवीय अर्थ में। यह एक अगला-शब्द मशीन है।
+        बाकी सब कुछ उस एक काम को अद्भुत रूप से करने का परिणाम है।
+      </p>
+      <p>
+        <strong>बड़ा</strong> – मॉडल में अरबों समायोज्य संख्याएँ (पैरामीटर) हैं और इसे
+        इंटरनेट के एक बड़े हिस्से पर प्रशिक्षित किया गया है। यह पैमाना ही "अगला शब्द
+        अनुमान लगाओ" को कुछ ऐसा बनाता है जो सवालों का जवाब दे सकता है, निबंध लिख सकता है, और कोड को डीबग कर सकता है।
+      </p>
+
+      <h2>टोकन: असली वर्णमाला</h2>
+      <p>
+        मॉडल अक्षरों या शब्दों को सीधे नहीं पढ़ते – वे <strong>टोकन</strong> पढ़ते हैं। टोकन एक
+        छोटा पाठ खंड है जो आमतौर पर कुछ वर्ण लंबा होता है। उदाहरण के लिए:
+      </p>
+      <pre>"VelsTech writes about tech"
+  -> "Vels" | "Tech" | " writes" | " about" | " tech"</pre>
+      <p>
+        मॉडल एक बार में एक टोकन का अनुमान लगाता है, और प्रत्येक अनुमानित टोकन को अगले की भविष्यवाणी
+        करने से पहले इनपुट में जोड़ दिया जाता है। यही कारण है कि लंबे उत्तर अधिक समय लेते हैं: हर शब्द एक नई
+        भविष्यवाणी है।
+      </p>
+
+      <h2>वह कैसे सीखता है</h2>
+      <p>
+        प्रशिक्षण के दौरान, मॉडल बहुत बड़ी मात्रा में पाठ पढ़ता है और बार-बार अगला टोकन अनुमान
+        लगाने का प्रयास करता है। जब वह गलत होता है, तो उसके आंतरिक संख्याओं को थोड़ा समायोजित किया जाता है
+        ताकि वह अगली बार थोड़ा कम गलत हो। इसे कुछ खरबों बार दोहराएँ और आपको एक ऐसा मॉडल मिलता है
+        जिसने व्याकरण, तथ्यों, तर्क और शैली के पैटर्न को आत्मसात कर लिया है – इसलिए नहीं कि उसने उन्हें
+        याद किया है, बल्कि इसलिए कि वे पैटर्न हैं जो पाठ का सबसे अच्छा अनुमान लगाते हैं।
+      </p>
+      <blockquote>
+        एक उपयोगी मानसिक मॉडल: LLM ने मानव पाठ की "आकृति" सीखी है – विचार कैसे
+        आमतौर पर जुड़ते हैं – और उस आकृति का अनुसरण करके उत्पन्न करता है।
+      </blockquote>
+
+      <h2>संदर्भ: यह क्या "देखता" है</h2>
+      <p>
+        जब आप एक प्रॉम्प्ट भेजते हैं, तो आपके द्वारा लिखी गई हर चीज़ – साथ ही उसी बातचीत में मॉडल
+        द्वारा उत्पन्न सब कुछ – <strong>कॉन्टेक्स्ट विंडो</strong> बन जाता है। मॉडल केवल उस विंडो में
+        मौजूद चीज़ों को ही जानता है। उसे पिछली चैट का कोई स्मृति नहीं है, और वह लाइव वेब को ब्राउज़
+        नहीं करता जब तक कोई टूल उसे ऐसा करने के लिए न कहे।
+      </p>
+      <p>
+        यही कारण है कि एक ही प्रश्न के अलग-अलग उत्तर मिल सकते हैं: मॉडल कोई "विशिष्ट" उत्तर
+        याद नहीं कर रहा है, बल्कि वह <em>आपके विशिष्ट संदर्भ</em> के आधार पर सबसे संभावित
+        निरंतरता उत्पन्न कर रहा है।
+      </p>
+
+      <h2>तापमान: रचनात्मकता का डायल</h2>
+      <p>
+        प्रत्येक चरण में मॉडल केवल एक अगला टोकन नहीं चुनता – वह कई को probability
+        देता है और उनसे sample लेता है। <strong>तापमान</strong> सेटिंग उस sampling की
+        randomness को नियंत्रित करती है:
+      </p>
+      <ul>
+        <li><strong>निम्न (0–0.3):</strong> अनुमानित, निश्चित उत्तर। कोड और गणित के लिए उत्कृष्ट।</li>
+        <li><strong>मध्यम (0.7):</strong> संतुलित, प्राकृतिक बातचीत।</li>
+        <li><strong>उच्च (1+):</strong> रचनात्मक, विविध, कभी-कभी अर्थहीन। विचार-विमर्श के लिए अच्छा।</li>
+      </ul>
+
+      <h2>क्यों यह अभी भी गलतियाँ करता है</h2>
+      <p>
+        क्योंकि यह पाठ का अनुमान लगा रहा है, तथ्यों की जांच नहीं कर रहा है, एक LLM
+        आत्मविश्वास से गलत – या पूरी तरह से काल्पनिक (जिसे अक्सर <strong>hallucination</strong> कहा जाता है)
+        कथन बना सकता है। यह झूठ नहीं बोल रहा है; यह बस कुछ ऐसा लिखने में बहुत चतुर है
+        जो <em>सही</em> दिखता है।
+      </p>
+      <p>
+        व्यावहारिक निष्कर्ष: LLMs को तेज़ पहला ड्राफ्ट, एक शिक्षक, या कोडिंग सहायक के रूप में
+        उपयोग करें – लेकिन किसी भी महत्वपूर्ण चीज़ की पुष्टि करने से पहले उस पर भरोसा न करें।
+      </p>
+
+      <h2>सारांश</h2>
+      <p>
+        एक बड़ा भाषा मॉडल एक अगला-शब्द अनुमानक है। इसे अरबों
+        पैरामीटरों के साथ बड़ा किया जाता है और विशाल मात्रा में पाठ पर प्रशिक्षित किया जाता है। यह सब कुछ – लेखन,
+        तर्क, उत्तर देना – उस एक सरल कार्य से उत्पन्न होता है।
+      </p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 VelsTech LLM VRAM कैलकुलेटर आज़माएँ</div>
+        <p>सोच रहे हैं कि आपके क्वांटाइज़ेशन और कॉन्टेक्स्ट लंबाई पर एक मॉडल को कितनी GPU मेमोरी चाहिए? सेकंडों में आकार + फिट अनुमान प्राप्त करें।</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">कैलकुलेटर खोलें →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI &amp; ML पर वापस जाएँ</a>
+      <a href="index.html">गृह</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=41"></script>
+</body>
+</html>

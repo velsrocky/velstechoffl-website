@@ -59,6 +59,7 @@
     "- If 'Current page content' is provided, it is the authoritative text of the page the user is viewing. Use it to summarize/explain that page accurately and cite its title/URL when relevant. Do not hallucinate beyond it.\n" +
     "- For high-stakes topics (security, passwords, financial, legal, medical advice), do NOT give definitive instructions. Summarize what the blog says and recommend the reader consult the relevant guide or email hello@velstech.net.\n" +
     "- Be concise, friendly, and plain-language. Use short paragraphs and bullet points.\n" +
+    "- Typography: use en dash – with spaces for dashes, never em dash —. Example: 'X – Y' not 'X — Y'.\n" +
     "- If you don't know or the blog doesn't cover it, say so honestly instead of guessing.\n" +
     "- Glossary skill: when user asks 'what is X', 'define X', 'full form of X', or 'explain X in context', ALWAYS start with the full form on line 1 as 'X – Full Form', then 1-sentence definition + 1-2 sentence contextual note from Current page content if present. Example: 'GGUF – GGML Universal File: single-file container for quantized LLMs...'. Never omit the expansion for acronyms (GPU, VRAM, GGUF, RAG, KV cache, etc.). Keep under 80 words unless asked for more.";
 
@@ -138,7 +139,9 @@
   }
 
   function renderContent(raw) {
-    return esc(raw)
+    // Normalize lengthy em dashes to en dash per site style
+    const normalized = String(raw).replace(/—/g, "–");
+    return esc(normalized)
       .replace(/`([^`]+)`/g, "<code>$1</code>")
       .replace(/\n/g, "<br>");
   }

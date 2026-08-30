@@ -1,4 +1,4 @@
-# VelsTech Monetization — Setup Manual
+# VelsTech Monetization – Setup Manual
 
 Step-by-step actions required to turn on the four monetization streams. Everything that
 needs an account/approval is manual; the code side is already in place and documented below.
@@ -10,7 +10,7 @@ share) over credit-based referral programs. All plumbing is done via `data-aff="
 in `resources.html`; you only need to sign up and paste referral URLs into `AFFILIATE_LINKS`
 in `script.js` (~lines 12–27).
 
-### Priority — cash-per-sale (verified)
+### Priority – cash-per-sale (verified)
 
 | Key | Program | Verified payout | Sign up / where to find your link |
 |-----|---------|-----------------|-----------------------------------|
@@ -19,10 +19,10 @@ in `script.js` (~lines 12–27).
 | `kit` | Kit / ConvertKit (email) | **50% of first 12 months** per referred customer + **10–20% recurring** (tiered) | https://kit.com/affiliates |
 | `brevo` | Brevo (email/CRM) | affiliate program, reward per referred signup | https://www.brevo.com/partners → Affiliate Program |
 
-> You're already a Brevo customer and run a newsletter — Kit and Brevo both fit the
+> You're already a Brevo customer and run a newsletter – Kit and Brevo both fit the
 > audience naturally. These four are the ones to wire up **first**.
 
-### Secondary — credit-based referral programs
+### Secondary – credit-based referral programs
 
 | Key | Program | Payout model |
 |-----|---------|--------------|
@@ -39,7 +39,7 @@ in `script.js` (~lines 12–27).
 ### Action
 1. Sign up for the four cash-per-sale programs above.
 2. Paste each referral URL into `AFFILIATE_LINKS` in `script.js`.
-3. For the credit-based programs, set them only if the effort is trivial — they earn
+3. For the credit-based programs, set them only if the effort is trivial – they earn
    credits, not revenue. If a program doesn't exist, delete the `data-aff="key"` attribute
    from the link in `resources.html` (the card keeps its plain link).
 
@@ -61,13 +61,13 @@ To get the **canonical tracked link**, use Amazon's SiteStripe:
 1. Install the **SiteStripe** bookmarklet (Amazon Associates → Tools → SiteStripe) in your browser.
 2. Browse to `https://www.amazon.in/business` (or the Business signup/registration page).
 3. Click the SiteStripe bookmarklet while on that page.
-4. Choose the link type and copy the generated URL — it will carry your `tag=velstechoffl-21`
+4. Choose the link type and copy the generated URL – it will carry your `tag=velstechoffl-21`
    and any business-bounty parameters Amazon adds.
 5. Replace the `href` on the Amazon Business card in `resources.html` with the SiteStripe URL
    (keep `target="_blank"` and `rel="sponsored nofollow noopener"`).
 
 > The Amazon Business bounty (e.g. ₹200 for qualifying registrations) is tracked only through
-> a properly-generated link — the best-guess URL may not earn it. Use SiteStripe to be safe.
+> a properly-generated link – the best-guess URL may not earn it. Use SiteStripe to be safe.
 
 ## 3. Brevo: create sender, import subscribers, send
 
@@ -92,17 +92,17 @@ To get the **canonical tracked link**, use Amazon's SiteStripe:
 1. Brevo → **Campaigns → Email → Create**.
 2. Paste the HTML from `newsletter/issue-001.html` (email-safe, table layout, inline styles).
 3. Add the Deal-of-the-week affiliate link (already templated with `tag=velstechoffl-21`).
-4. Sender: `newsletter@velstech.net` · Subject: e.g. "VelsTech Weekly #1 — GPUs for local AI, VRAM guide, 15 free tools".
+4. Sender: `newsletter@velstech.net` · Subject: e.g. "VelsTech Weekly #1 – GPUs for local AI, VRAM guide, 15 free tools".
 5. Send a **test** to yourself first, then to the full list.
 
 ### Automation (later)
 Brevo → **Automation** → trigger a welcome email on signup. For now, web3forms collects and
-you import manually — add this once the list is a steady flow.
+you import manually – add this once the list is a steady flow.
 
-## 4. AdSense (client ID live — Auto Ads)
+## 4. AdSense (client ID live – Auto Ads)
 
 Client ID is set in `script.js` and the AdSense loader is injected on every page
-(**Auto Ads** mode — Google decides placement; ads only serve once AdSense approves
+(**Auto Ads** mode – Google decides placement; ads only serve once AdSense approves
 the site):
 
 ```js
@@ -115,7 +115,7 @@ Optionally, create an ad unit in AdSense → paste its slot ID into `ADSENSE_SLO
 
 Checklist once approved:
 - Confirm ads render (incognito, since ad-blockers hide them).
-- Ensure affiliate/adsense pages (disclosure.html, privacy.html) stay live and linked —
+- Ensure affiliate/adsense pages (disclosure.html, privacy.html) stay live and linked –
   AdSense policy requires transparency.
 
 ---

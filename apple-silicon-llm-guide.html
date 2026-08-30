@@ -47,7 +47,7 @@
       "name": "Can a Mac run LLMs?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes — and often better than a PC at the same price, because unified memory means the entire system RAM is available for the model. A 16 GB Mac is a solid local-AI daily driver."
+        "text": "Yes – and often better than a PC at the same price, because unified memory means the entire system RAM is available for the model. A 16 GB Mac is a solid local-AI daily driver."
       }
     },
     {
@@ -55,7 +55,7 @@
       "name": "How much RAM do I need for local AI on a Mac?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Roughly: 16 GB runs 7B–9B models at Q4, 24 GB runs 13B–14B, 32 GB runs 27B–30B, and 64 GB runs 70B. Buy the RAM you'll want in a few years — it's soldered."
+        "text": "Roughly: 16 GB runs 7B–9B models at Q4, 24 GB runs 13B–14B, 32 GB runs 27B–30B, and 64 GB runs 70B. Buy the RAM you'll want in a few years – it's soldered."
       }
     }
   ]
@@ -90,7 +90,7 @@
 
     <div class="article-body">
       <p>
-        Apple Silicon Macs — M1, M2, M3, and M4 — are quietly some of the best local-AI
+        Apple Silicon Macs – M1, M2, M3, and M4 – are quietly some of the best local-AI
         machines you can buy. Not because the GPU is the fastest, but because of
         <strong>unified memory</strong>: the same RAM is shared by CPU and GPU, which is
         exactly what running an LLM wants. A Mac with enough RAM can hold models that would
@@ -104,7 +104,7 @@
       <h2>Why Macs are good at local AI</h2>
       <p>
         An LLM's speed is mostly limited by how fast you can feed its weights to the compute
-        units — that's memory bandwidth. Apple Silicon's unified memory means:
+        units – that's memory bandwidth. Apple Silicon's unified memory means:
       </p>
       <ul>
         <li><strong>No VRAM wall.</strong> On a PC you're capped by GPU VRAM (12–24 GB typically). On a Mac, the entire system RAM is usable for the model. A 64 GB M-series Mac runs models a 24 GB PC GPU can't.</li>
@@ -136,7 +136,7 @@
         </table>
       </div>
       <p>
-        Memory bandwidth also matters for speed — the M-series Pro/Max chips have more
+        Memory bandwidth also matters for speed – the M-series Pro/Max chips have more
         bandwidth than the base M-series, so a "same RAM, bigger chip" Mac runs faster.
       </p>
 
@@ -149,7 +149,7 @@ ollama pull llama3.2:3b
 ollama run llama3.2:3b</pre>
       <p>
         Ollama uses your Mac's GPU out of the box. For more control, build llama.cpp with
-        Metal and use it directly — same concept as the
+        Metal and use it directly – same concept as the
         <a href="llama-cpp-guide.html">llama.cpp guide</a>, just with the Metal backend.
       </p>
       <p>
@@ -160,10 +160,10 @@ ollama run llama3.2:3b</pre>
       <h2>Performance expectations</h2>
       <p>
         Expect <strong>5–20 tok/s</strong> decode on an M-series Mac with a model that fits
-        comfortably — usable for chat, not instant. The exact number depends on your chip,
+        comfortably – usable for chat, not instant. The exact number depends on your chip,
         RAM, model size, and quantization. Compare against real results in the
         <a href="benchmarks/index.html">benchmark database</a> (we test Radeon, but the
-        decode formula — bandwidth ÷ bytes per token — applies the same way).
+        decode formula – bandwidth ÷ bytes per token – applies the same way).
       </p>
       <p>
         Use the <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> to estimate whether
@@ -173,15 +173,15 @@ ollama run llama3.2:3b</pre>
       <h2>Practical tips</h2>
       <ul>
         <li><strong>Buy RAM over storage.</strong> Storage is cheap to add externally; soldered RAM is forever.</li>
-        <li><strong>Close other apps</strong> when running big models — the model competes with them for the same unified memory.</li>
+        <li><strong>Close other apps</strong> when running big models – the model competes with them for the same unified memory.</li>
         <li><strong>Prefer Q4_K_M</strong> to fit bigger models; see the <a href="quantization-deep-dive.html">quantization deep dive</a> for the quality trade-off.</li>
         <li><strong>Pro/Max chips run faster</strong> at the same RAM due to more memory bandwidth.</li>
       </ul>
 
       <h2>Bottom line</h2>
       <p>
-        Apple Silicon is one of the most practical local-AI platforms: quiet, low-power, and —
-        thanks to unified memory — able to run models that would choke a PC GPU with half the
+        Apple Silicon is one of the most practical local-AI platforms: quiet, low-power, and –
+        thanks to unified memory – able to run models that would choke a PC GPU with half the
         RAM. A 16 GB Mac is a genuine daily-driver local-AI machine; a 32 GB+ one is a serious
         workstation. The key decision is buying enough RAM upfront.
       </p>

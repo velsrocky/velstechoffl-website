@@ -31,15 +31,15 @@ const STATIC_META = {
     title: "VelsTech Solutions",
     desc: "Technology explained for everyone – plain-language guides, free tools and real experiments: choosing a first PC, staying safe online, understanding AI, and more.",
   },
-  "lab.html": { title: "VelsTech Lab — Benchmarks & Experiments | VelsTech", desc: "VelsTech Lab — benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results — including failures." },
+  "lab.html": { title: "VelsTech Lab – Benchmarks & Experiments | VelsTech", desc: "VelsTech Lab – benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results – including failures." },
   "terms.html": { title: "Terms of Use | VelsTech", desc: "Terms of use and disclaimer for VelsTech." },
   "privacy.html": { title: "Privacy Policy | VelsTech", desc: "Privacy policy for VelsTech." },
-  "tags.html": { title: "Tags | VelsTech", desc: "Browse all VelsTech articles by tag — Linux, AI, security, and more." },
-  "disclosure.html": { title: "Affiliate Disclosure | VelsTech", desc: "How affiliate links on VelsTech work — when we earn a commission and why it never costs you anything extra." },
-  "resources.html": { title: "Recommended Tools | VelsTech", desc: "VelsTech's recommended tools — the AI apps, developer tools, cloud services, hosting, and security software we actually use." },
-  "advertise.html": { title: "Advertise | VelsTech", desc: "Advertise on VelsTech — sponsored tutorials, product reviews, newsletter sponsorships, and display advertising for AI, hardware, Linux, and developer tools." },
+  "tags.html": { title: "Tags | VelsTech", desc: "Browse all VelsTech articles by tag – Linux, AI, security, and more." },
+  "disclosure.html": { title: "Affiliate Disclosure | VelsTech", desc: "How affiliate links on VelsTech work – when we earn a commission and why it never costs you anything extra." },
+  "resources.html": { title: "Recommended Tools | VelsTech", desc: "VelsTech's recommended tools – the AI apps, developer tools, cloud services, hosting, and security software we actually use." },
+  "advertise.html": { title: "Advertise | VelsTech", desc: "Advertise on VelsTech – sponsored tutorials, product reviews, newsletter sponsorships, and display advertising for AI, hardware, Linux, and developer tools." },
   "linux-cheat-sheet.html": { title: "Linux Command Cheat Sheet (Free) | VelsTech", desc: "Every Linux command you need – files, permissions, processes, networking, and package management. Free printable cheat sheet." },
-  "benchmarks/index.html": { title: "LLM & GPU Benchmark Database | VelsTech Lab", desc: "Real tokens/sec for LLMs on real GPUs — filter by GPU, model, quantization, context, and backend. RX 6800M, RTX 4090, RX 7900 XTX and more." },
+  "benchmarks/index.html": { title: "LLM & GPU Benchmark Database | VelsTech Lab", desc: "Real tokens/sec for LLMs on real GPUs – filter by GPU, model, quantization, context, and backend. RX 6800M, RTX 4090, RX 7900 XTX and more." },
   "buying-guides.html": { title: "What Should I Buy? – Tech Buying Guides | VelsTech", desc: "Decision-focused tech buying guides – best laptop under ₹50,000, best GPU for local AI, best mini PC for Linux, best SSD for developers, and more. Tested or research-backed picks." },
   "start-here.html": { title: "Start Here – choose your learning path | VelsTech", desc: "New to VelsTech? Pick an interest – AI, PCs, Linux, or Programming – and follow a step-by-step learning path built from our plain-language guides." },
   "best-laptop-under-50000.html": { title: "Best laptop under ₹50,000 in India (2026) | VelsTech", desc: "Best laptops under ₹50,000 in India (2026) – what to look for, what to skip, and which specs matter most at this price. Ryzen 5, 16 GB RAM, and more." },
@@ -48,19 +48,19 @@ const STATIC_META = {
 };
 
 const TOOLS_META = {
-  "tools.html": { title: "Tools | VelsTech", desc: "Free practical tools — an LLM VRAM calculator, a GPU AI performance calculator, and a PC power supply calculator." },
-  "llm-vram-calculator.html": { title: "LLM VRAM Calculator | VelsTech", desc: "Estimate how much GPU memory an LLM needs — model weights plus KV cache at your quantization and context length — and see if it fits your GPU." },
+  "tools.html": { title: "Tools | VelsTech", desc: "Free practical tools – an LLM VRAM calculator, a GPU AI performance calculator, and a PC power supply calculator." },
+  "llm-vram-calculator.html": { title: "LLM VRAM Calculator | VelsTech", desc: "Estimate how much GPU memory an LLM needs – model weights plus KV cache at your quantization and context length – and see if it fits your GPU." },
   "gpu-ai-calculator.html": { title: "GPU AI Performance Calculator | VelsTech", desc: "Estimate tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU." },
   "psu-calculator.html": { title: "PC Power Supply Calculator | VelsTech", desc: "Estimate your build's peak power draw and get a recommended PSU wattage with headroom." },
   "cidr-calculator.html": { title: "CIDR / Subnet Calculator | VelsTech", desc: "Enter an IPv4 address and prefix to get the network address, usable host range, broadcast address, subnet mask, and wildcard mask." },
   "chmod-calculator.html": { title: "chmod Calculator | VelsTech", desc: "Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run." },
   "cron-generator.html": { title: "Cron Generator | VelsTech", desc: "Pick a schedule in plain English and get the cron expression plus next run times. No more memorizing cron syntax." },
   "csv-json-converter.html": { title: "CSV ↔ JSON Converter | VelsTech", desc: "Paste CSV and get clean JSON, or paste a JSON array and get CSV back. No server uploads – runs in your browser." },
-  "docker-compose-generator.html": { title: "Docker Compose Generator | VelsTech", desc: "Generate a copy-paste ready docker-compose.yml — pick an image, ports, volumes, environment variables, and restart policy." },
-  "ffmpeg-command-generator.html": { title: "FFmpeg Command Generator | VelsTech", desc: "Build a correct ffmpeg command for converting, compressing, and trimming media — container, codec, quality, scale, and audio settings." },
+  "docker-compose-generator.html": { title: "Docker Compose Generator | VelsTech", desc: "Generate a copy-paste ready docker-compose.yml – pick an image, ports, volumes, environment variables, and restart policy." },
+  "ffmpeg-command-generator.html": { title: "FFmpeg Command Generator | VelsTech", desc: "Build a correct ffmpeg command for converting, compressing, and trimming media – container, codec, quality, scale, and audio settings." },
   "json-formatter.html": { title: "JSON Formatter & Validator | VelsTech", desc: "Format, minify, validate, and check the size of JSON with syntax highlighting. Runs entirely in your browser." },
-  "regex-tester.html": { title: "Regex Tester | VelsTech", desc: "Test regular expressions live — paste a pattern and test string to see every match, capture group, and position highlighted inline." },
-  "jwt-decoder.html": { title: "JWT Decoder | VelsTech", desc: "Decode and inspect a JSON Web Token — header, payload, claims like exp/iat/iss, and signature. All data stays in your browser." },
+  "regex-tester.html": { title: "Regex Tester | VelsTech", desc: "Test regular expressions live – paste a pattern and test string to see every match, capture group, and position highlighted inline." },
+  "jwt-decoder.html": { title: "JWT Decoder | VelsTech", desc: "Decode and inspect a JSON Web Token – header, payload, claims like exp/iat/iss, and signature. All data stays in your browser." },
   "base64-encoder-decoder.html": { title: "Base64 Encoder / Decoder | VelsTech", desc: "Convert text to and from base64 with proper UTF-8 support. Runs entirely in your browser." },
   "timestamp-converter.html": { title: "Unix Timestamp Converter | VelsTech", desc: "Convert between Unix timestamps (seconds or milliseconds) and human-readable dates with relative time. Copy the current timestamp instantly." },
   "color-converter.html": { title: "Color Converter (HEX / RGB / HSL) | VelsTech", desc: "Convert colors between HEX, RGB, and HSL with a live swatch and copy-ready CSS values. Runs entirely in your browser." },
@@ -80,13 +80,13 @@ const TOOLS_META = {
 };
 
 const CATEGORY_META = {
-  "ai.html": { title: "AI | VelsTech", desc: "AI and machine learning notes — LLMs, tools, prompting, and trends." },
-  "hardware.html": { title: "Hardware | VelsTech", desc: "Hardware notes — PC builds, components, GPUs, and performance." },
-  "os.html": { title: "Operating Systems | VelsTech", desc: "Operating system notes — Linux, Windows, and macOS guides." },
-  "networking.html": { title: "Networking | VelsTech", desc: "Networking notes — DNS, routers, self-hosting, and how the internet works." },
-  "security.html": { title: "Security & Privacy | VelsTech", desc: "Security and privacy basics — passwords, backups, and safe habits." },
-  "programming.html": { title: "Programming & Web | VelsTech", desc: "Programming and web development — learning to code and building websites." },
-  "tutorials.html": { title: "Tutorials | VelsTech", desc: "Step-by-step tutorials and practical guides — build, set up, and learn with clear instructions." },
+  "ai.html": { title: "AI | VelsTech", desc: "AI and machine learning notes – LLMs, tools, prompting, and trends." },
+  "hardware.html": { title: "Hardware | VelsTech", desc: "Hardware notes – PC builds, components, GPUs, and performance." },
+  "os.html": { title: "Operating Systems | VelsTech", desc: "Operating system notes – Linux, Windows, and macOS guides." },
+  "networking.html": { title: "Networking | VelsTech", desc: "Networking notes – DNS, routers, self-hosting, and how the internet works." },
+  "security.html": { title: "Security & Privacy | VelsTech", desc: "Security and privacy basics – passwords, backups, and safe habits." },
+  "programming.html": { title: "Programming & Web | VelsTech", desc: "Programming and web development – learning to code and building websites." },
+  "tutorials.html": { title: "Tutorials | VelsTech", desc: "Step-by-step tutorials and practical guides – build, set up, and learn with clear instructions." },
 };
 
 function getMeta(file) {
@@ -245,7 +245,7 @@ for (const file of files) {
     html = html.replace('<link rel="icon"', seoBlock + '\n  <link rel="icon"');
     injected++;
   } else {
-    // Canonical already present — refresh idempotently (no reordering).
+    // Canonical already present – refresh idempotently (no reordering).
     if (GSC_VERIFICATION && !html.includes("google-site-verification")) {
       html = html.replace('<link rel="canonical"', '<link rel="canonical"\n' + gsc);
     }

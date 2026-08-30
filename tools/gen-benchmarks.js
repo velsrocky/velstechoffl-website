@@ -18,7 +18,7 @@ function page(b, bk) {
   const slug = b.id + "-" + bk.name.toLowerCase();
   const url = `${SITE}/benchmarks/${slug}.html`;
   const title = `${b.gpu} · ${b.model} · ${b.quant} · ${bk.name} · ${b.context}`;
-  const desc = `Benchmark: ${b.gpu} (${b.gpu_vram}) running ${b.model} (${b.params}) at ${b.quant} / ${b.context} / ${b.kv_quant} on ${bk.name} — ${bk.decode} tok/s decode. ${b.tested ? "Tested in the VelsTech Lab." : "Estimated from the GPU AI Performance Calculator."}`;
+  const desc = `Benchmark: ${b.gpu} (${b.gpu_vram}) running ${b.model} (${b.params}) at ${b.quant} / ${b.context} / ${b.kv_quant} on ${bk.name} – ${bk.decode} tok/s decode. ${b.tested ? "Tested in the VelsTech Lab." : "Estimated from the GPU AI Performance Calculator."}`;
   const tested = b.tested ? "🧪 Tested" : "📐 Estimated";
   return `<!DOCTYPE html>
 <html lang="en">
@@ -93,7 +93,7 @@ function page(b, bk) {
       <p>
         ${b.tested
           ? 'This result was <strong>tested in the VelsTech Lab</strong> on real hardware. <a href="../' + b.source_article + '">Read the full Lab report →</a>'
-          : 'This result is <strong>estimated</strong> from the <a href="../gpu-ai-calculator.html">GPU AI Performance Calculator</a> — expect variation on real hardware.'}
+          : 'This result is <strong>estimated</strong> from the <a href="../gpu-ai-calculator.html">GPU AI Performance Calculator</a> – expect variation on real hardware.'}
       </p>
 
       <h2>Related</h2>

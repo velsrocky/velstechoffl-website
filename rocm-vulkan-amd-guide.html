@@ -55,7 +55,7 @@
       "name": "Does my AMD GPU support ROCm?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "ROCm officially supports a specific list of cards. If yours isn't on it, Vulkan is almost always the working option — it's the simpler, broader-compatibility backend."
+        "text": "ROCm officially supports a specific list of cards. If yours isn't on it, Vulkan is almost always the working option – it's the simpler, broader-compatibility backend."
       }
     }
   ]
@@ -93,8 +93,8 @@
         If you run local AI on an AMD Radeon card, you'll hit two competing backends:
         <strong>ROCm</strong> and <strong>Vulkan</strong>. Which one you use changes your
         tokens-per-second, your setup effort, and how many GPUs are supported. This guide
-        explains the difference, how to set each up, and — based on our
-        <a href="benchmarks/index.html">RX 6800M benchmarks</a> — which to pick.
+        explains the difference, how to set each up, and – based on our
+        <a href="benchmarks/index.html">RX 6800M benchmarks</a> – which to pick.
       </p>
 
       <h2>What's the difference?</h2>
@@ -104,7 +104,7 @@
         it differently:
       </p>
       <ul>
-        <li><strong>ROCm</strong> is AMD's CUDA equivalent — a purpose-built compute stack with HIP (AMD's CUDA-like language). It's what AMD pushes for AI and HPC.</li>
+        <li><strong>ROCm</strong> is AMD's CUDA equivalent – a purpose-built compute stack with HIP (AMD's CUDA-like language). It's what AMD pushes for AI and HPC.</li>
         <li><strong>Vulkan</strong> is a cross-vendor graphics and compute API. It's lower-level and more general, but llama.cpp's Vulkan backend works broadly because it doesn't depend on AMD-specific driver quirks.</li>
       </ul>
       <p>
@@ -125,7 +125,7 @@
       </ul>
       <p>
         Why the flip? The bottleneck changes. On a dense model that's partially offloaded,
-        the slower part is feeding bytes to the GPU — where Vulkan's simpler path wins. On a
+        the slower part is feeding bytes to the GPU – where Vulkan's simpler path wins. On a
         huge-context MoE with many CPU experts, the constraint moves elsewhere and ROCm's
         compute advantage shows. The full numbers are in the
         <a href="benchmarks/index.html">benchmark database</a> and the
@@ -136,7 +136,7 @@
       <p>
         ROCm is the more involved install. On Ubuntu, you use AMD's installer, choosing the
         right GPU version flag for your card. Our step-by-step
-        <a href="install-rocm-ubuntu.html">ROCm on Ubuntu guide</a> covers the full flow —
+        <a href="install-rocm-ubuntu.html">ROCm on Ubuntu guide</a> covers the full flow –
         from the apt repo to <code>rocminfo</code> verifying your GPU is seen. The short
         version:
       </p>
@@ -181,7 +181,7 @@ make -j$(nproc)</pre>
       <p>
         The safest advice: <strong>try both and benchmark</strong>. Building both backends and
         running the same prompt through each takes minutes, and the winner genuinely depends
-        on your exact card and model. Our Lab does exactly this — see the
+        on your exact card and model. Our Lab does exactly this – see the
         <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B ROCm vs Vulkan test</a> and
         <a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B ROCm vs Vulkan test</a>.
       </p>
@@ -191,7 +191,7 @@ make -j$(nproc)</pre>
         ROCm and Vulkan both run local AI on AMD, and neither is universally better. ROCm
         targets supported cards for max compute; Vulkan covers everything else and often wins
         on chat-speed. Start with the simplest backend that works on your card (usually
-        Vulkan), and don't be afraid to benchmark the other — the numbers, not the marketing,
+        Vulkan), and don't be afraid to benchmark the other – the numbers, not the marketing,
         should decide.
       </p>
       <p>

@@ -13,7 +13,7 @@
   "@type": "BlogPosting",
   "@id": "https://velstech.net/quantization-deep-dive.html#article",
   "headline": "Quantization deep dive: how Q4, Q5, and Q8 change quality and speed",
-  "description": "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI.",
+  "description": "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI.",
   "url": "https://velstech.net/quantization-deep-dive.html",
   "datePublished": "2026-08-30T00:00:00Z",
   "dateModified": "2026-08-30T00:00:00Z",
@@ -47,7 +47,7 @@
       "name": "Is Q4 much worse than Q8?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "For most tasks — chat, summarization, code generation — the difference between Q4_K_M and Q8 is imperceptible. The gap only shows in hard reasoning, math, or factual recall where a single wrong token cascades."
+        "text": "For most tasks – chat, summarization, code generation – the difference between Q4_K_M and Q8 is imperceptible. The gap only shows in hard reasoning, math, or factual recall where a single wrong token cascades."
       }
     },
     {
@@ -65,13 +65,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/quantization-deep-dive.html" />
   <meta property="og:title" content="Quantization deep dive: how Q4, Q5, and Q8 change quality and speed | VelsTech" />
-  <meta property="og:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI." />
+  <meta property="og:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI." />
   <meta property="og:image" content="https://velstech.net/og/quantization-deep-dive.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Quantization deep dive: how Q4, Q5, and Q8 change quality and speed | VelsTech" />
-  <meta name="twitter:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI." />
+  <meta name="twitter:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI." />
   <meta name="twitter:image" content="https://velstech.net/og/quantization-deep-dive.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=35" />
@@ -91,7 +91,7 @@
     <div class="article-body">
       <p>
         When you see a file like <code>model.Q4_K_M.gguf</code>, the <code>Q4</code> is doing
-        a lot of work. It's the quantization level — the knob that trades model size and speed
+        a lot of work. It's the quantization level – the knob that trades model size and speed
         against answer quality. In <a href="gguf-explained.html">GGUF explained</a> we covered
         what the letters mean. Here's the deeper version: what quantization actually does to
         the model, how much quality you give up, and how it shows up in real speed numbers.
@@ -99,13 +99,13 @@
 
       <h2>What quantization actually does</h2>
       <p>
-        A neural network's weights are numbers — normally stored as 16-bit floating point
+        A neural network's weights are numbers – normally stored as 16-bit floating point
         (or even 32-bit). Quantization stores those numbers at lower precision. Instead of
         a weight being <code>0.7321024…</code>, it becomes something like
         <code>0.73</code>, or gets snapped to one of 16 possible values (4 bits).
       </p>
       <p>
-        That sounds destructive, and it is — but the trick is that <strong>models are
+        That sounds destructive, and it is – but the trick is that <strong>models are
         extremely robust to it</strong>. Neural networks have enormous redundancy, so you can
         throw away most of the precision in the weights before the model's behaviour meaningfully
         degrades. That's why a 4-bit model can still be remarkably good.
@@ -128,10 +128,10 @@
             <tr><th>Level</th><th>Bits per weight</th><th>Relative size</th><th>Quality</th></tr>
           </thead>
           <tbody>
-            <tr><td>Q2_K</td><td>~2.6</td><td>~25%</td><td>Poor — only for tiny budgets</td></tr>
-            <tr><td>Q3_K</td><td>~3.4</td><td>~32%</td><td>Mediocre — visible degradation</td></tr>
-            <tr><td>Q4_K_M</td><td>~4.3</td><td>~42%</td><td><strong>Good — the default</strong></td></tr>
-            <tr><td>Q5_K_M</td><td>~4.8</td><td>~49%</td><td>Very good — noticeably sharper</td></tr>
+            <tr><td>Q2_K</td><td>~2.6</td><td>~25%</td><td>Poor – only for tiny budgets</td></tr>
+            <tr><td>Q3_K</td><td>~3.4</td><td>~32%</td><td>Mediocre – visible degradation</td></tr>
+            <tr><td>Q4_K_M</td><td>~4.3</td><td>~42%</td><td><strong>Good – the default</strong></td></tr>
+            <tr><td>Q5_K_M</td><td>~4.8</td><td>~49%</td><td>Very good – noticeably sharper</td></tr>
             <tr><td>Q6_K</td><td>~6.0</td><td>~58%</td><td>Near-original</td></tr>
             <tr><td>Q8_0</td><td>~8.0</td><td>~78%</td><td>Indistinguishable</td></tr>
             <tr><td>F16</td><td>16</td><td>100%</td><td>Original weights</td></tr>
@@ -140,7 +140,7 @@
       </div>
       <p>
         <strong>Important nuance:</strong> the differences between Q4, Q5, Q6, and Q8 are
-        mostly visible in <em>difficult</em> tasks — long reasoning chains, complex code,
+        mostly visible in <em>difficult</em> tasks – long reasoning chains, complex code,
         math, or factual recall where a single wrong token cascades. For casual chat and
         summarization, you'll struggle to tell Q4 from Q6. This is why Q4_K_M is the default
         for everyone: for most real use, the quality gap is imperceptible.
@@ -148,18 +148,18 @@
 
       <h2>How it shows up in speed</h2>
       <p>
-        Smaller weights mean faster inference, because the bottleneck is memory bandwidth —
+        Smaller weights mean faster inference, because the bottleneck is memory bandwidth –
         how fast the GPU can feed bytes to the compute units. Decode speed is roughly:
       </p>
       <pre>decode_tok/s ≈ (memory_bandwidth × 0.8) / bytes_per_token</pre>
       <p>
         A 7B model at Q4 needs ~0.5 bytes/weight × 7B ≈ 3.5 GB per token pass. At Q8 it's
-        ~7 GB. So <strong>Q4 is roughly twice as fast as Q8 at decode, all else equal</strong> —
+        ~7 GB. So <strong>Q4 is roughly twice as fast as Q8 at decode, all else equal</strong> –
         and about 4× faster than F16. That's why a quantized model feels so much snappier.
       </p>
       <p>
         You can see this effect in the <a href="benchmarks/index.html">VelsTech benchmark
-        database</a> — our tested Qwen 27B at 3.7bpw ran at ~18–22 tok/s on a 12 GB RX 6800M,
+        database</a> – our tested Qwen 27B at 3.7bpw ran at ~18–22 tok/s on a 12 GB RX 6800M,
         and that's with partial offload. A bigger quantization would fit less and run slower.
       </p>
 
@@ -168,7 +168,7 @@
         Older quantizations applied the same bit width to every weight. K-quantization is
         smarter: it <strong>applies fewer bits to less-important weights</strong> and more bits
         to the ones that matter, grouped per block of weights. The result is that a "4-bit"
-        k-quant file is often <em>better</em> than a naive 4-bit file of the same size —
+        k-quant file is often <em>better</em> than a naive 4-bit file of the same size –
         and sometimes even beats a slightly larger naive quantization.
       </p>
       <p>
@@ -180,7 +180,7 @@
 
       <h2>When to go higher (and when not to)</h2>
       <ul>
-        <li><strong>Stay at Q4_K_M</strong> for general chat, writing, and most coding — the default, and the best size/quality balance.</li>
+        <li><strong>Stay at Q4_K_M</strong> for general chat, writing, and most coding – the default, and the best size/quality balance.</li>
         <li><strong>Step up to Q5_K_M or Q6_K</strong> when the model is for reasoning-heavy or factual work, and you have the RAM/VRAM to spare.</li>
         <li><strong>Skip Q8/F16</strong> unless you're benchmarking or have huge memory. The quality gain over Q6 is minimal and you pay double the size and speed cost.</li>
         <li><strong>Drop to Q3 only</strong> when the model won't fit at Q4 and you need it to work at all.</li>

@@ -47,7 +47,7 @@
       "name": "What is RAG?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "RAG (Retrieval-Augmented Generation) lets an LLM answer questions using your own documents. It retrieves the few relevant chunks for a question, then has the model answer using only that context — no retraining needed."
+        "text": "RAG (Retrieval-Augmented Generation) lets an LLM answer questions using your own documents. It retrieves the few relevant chunks for a question, then has the model answer using only that context – no retraining needed."
       }
     },
     {
@@ -90,7 +90,7 @@
 
     <div class="article-body">
       <p>
-        An LLM knows what it was trained on — but not your notes, your PDFs, your code, or
+        An LLM knows what it was trained on – but not your notes, your PDFs, your code, or
         your company's docs. <strong>RAG</strong> (Retrieval-Augmented Generation) fixes that
         by letting a model answer questions using <em>your</em> documents, without retraining.
         It's how "chat with your PDF" apps work, and you can build it entirely on your own
@@ -103,13 +103,13 @@
 
       <h2>The four parts of RAG</h2>
       <ol>
-        <li><strong>Load</strong> — read your documents (PDF, markdown, text) into chunks of text.</li>
-        <li><strong>Embed</strong> — turn each chunk into a vector (a list of numbers that captures its meaning) using an embedding model.</li>
-        <li><strong>Retrieve</strong> — when a question comes in, embed it too and find the chunks whose vectors are closest to it.</li>
-        <li><strong>Generate</strong> — give the LLM the retrieved chunks plus the question, and let it answer using only that context.</li>
+        <li><strong>Load</strong> – read your documents (PDF, markdown, text) into chunks of text.</li>
+        <li><strong>Embed</strong> – turn each chunk into a vector (a list of numbers that captures its meaning) using an embedding model.</li>
+        <li><strong>Retrieve</strong> – when a question comes in, embed it too and find the chunks whose vectors are closest to it.</li>
+        <li><strong>Generate</strong> – give the LLM the retrieved chunks plus the question, and let it answer using only that context.</li>
       </ol>
       <p>
-        That's the whole trick. The LLM never sees your whole document set — only the few
+        That's the whole trick. The LLM never sees your whole document set – only the few
         relevant chunks, which it uses as grounded context. That's why answers are accurate
         and why you don't need to retrain anything.
       </p>
@@ -131,7 +131,7 @@ chunks = [text[i:i+500] for i in range(0, len(text), 400)]  # 500 chars, 100 ove
 
       <h2>Step 2: Embed</h2>
       <p>
-        An embedding model converts text into a vector — a fixed-size list of numbers — where
+        An embedding model converts text into a vector – a fixed-size list of numbers – where
         similar meaning lands near each other. A tiny embedding model runs fast on any CPU, so
         this is cheap. Ollama has several, e.g. <code>nomic-embed-text</code>:
       </p>
@@ -144,7 +144,7 @@ chunks = [text[i:i+500] for i in range(0, len(text), 400)]  # 500 chars, 100 ove
       <h2>Step 3: Retrieve</h2>
       <p>
         When someone asks a question, embed it with the same model, then find the chunks whose
-        vectors are most similar. "Similarity" is usually cosine similarity — smaller angle
+        vectors are most similar. "Similarity" is usually cosine similarity – smaller angle
         between vectors means more related meaning. Pick the top 3–5 chunks:
       </p>
       <pre>import numpy as np
@@ -152,7 +152,7 @@ chunks = [text[i:i+500] for i in range(0, len(text), 400)]  # 500 chars, 100 ove
 scores = emb(chunks) @ emb(q) / (norms * norm_q)   # cosine sim
 top = np.argsort(scores)[::-1][:5]                  # top 5 chunk indices</pre>
       <p>
-        If the question and a chunk contain similar words or concepts, they'll rank highly —
+        If the question and a chunk contain similar words or concepts, they'll rank highly –
         that's how RAG finds the right passages without the LLM seeing everything.
       </p>
 
@@ -181,7 +181,7 @@ Question: What did the notes say about X?</pre>
       <p>
         If you don't want to write the code, <a href="https://openwebui.com" target="_blank" rel="noopener">Open WebUI</a>
         has RAG built in: upload a document, and it chunks, embeds, and retrieves for you
-        automatically against your local Ollama models. It's the fastest way to try RAG —
+        automatically against your local Ollama models. It's the fastest way to try RAG –
         the "from scratch" version above is how it works under the hood.
       </p>
 
@@ -199,7 +199,7 @@ Question: What did the notes say about X?</pre>
 
       <h2>Bottom line</h2>
       <p>
-        RAG is load, embed, retrieve, generate — four steps you can run entirely locally. It
+        RAG is load, embed, retrieve, generate – four steps you can run entirely locally. It
         turns a general LLM into one that genuinely knows your documents, with grounded,
         citable answers and no retraining. Whether you use a library or the raw steps above,
         the concept is the same, and it's one of the most useful things you can build on top

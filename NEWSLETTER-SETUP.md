@@ -1,4 +1,4 @@
-# VelsTech Newsletter — Setup & Operations
+# VelsTech Newsletter – Setup & Operations
 
 Everything needed to send the VelsTech Weekly via **Brevo** from your own domain.
 
@@ -37,7 +37,7 @@ Zone: `velstech.net`. All records were added/verified via the `cf` CLI on 2026-0
 `velstech.net` already had Cloudflare Email Routing's SPF on `@`:
 `v=spf1 include:_spf.mx.cloudflare.net ~all`
 
-**Do NOT add a second SPF record** — multiple SPF records break email for both systems.
+**Do NOT add a second SPF record** – multiple SPF records break email for both systems.
 Instead, keep the existing one merged:
 
 ```

@@ -1,4 +1,4 @@
-# AI Chat — Setup Guide
+# AI Chat – Setup Guide
 
 The site now has a floating AI chat assistant (bottom-right) that can answer
 **general questions** *and* questions about **this blog's articles**.
@@ -10,17 +10,17 @@ browser widget  →  Cloudflare Worker proxy (chat-proxy.js)
    (chat.js)         https://chat.velstech.net   (public)
 ```
 
-- **`chat.js`** — the widget. Does lightweight client-side retrieval over
+- **`chat.js`** – the widget. Does lightweight client-side retrieval over
   `ARTICLES` (in `articles.js`) and uses the most relevant snippets as context.
-- **`chat.css`** — widget styling (matches your design tokens).
-- **`chat-proxy.js`** — the Cloudflare Worker that forwards requests to the
+- **`chat.css`** – widget styling (matches your design tokens).
+- **`chat-proxy.js`** – the Cloudflare Worker that forwards requests to the
   configured AI provider (default: **Cloudflare Workers AI**).
 
-## Production backend (default — live)
+## Production backend (default – live)
 
 `CHAT_BACKEND = "proxy"` in `chat.js` calls the deployed Worker at
 `CHAT_PROXY_URL` (`https://chat.velstech.net`), which forwards to **Cloudflare
-Workers AI** — no API key needed on the client.
+Workers AI** – no API key needed on the client.
 
 Config in `chat.js`:
 
@@ -75,7 +75,7 @@ const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";  // API is at /v1
 > will not work for fetch calls.
 >
 > In local mode, use a specific provider model (any `claude-*`, `gemini-*`,
-> `deepseek-*`, `qwen-*` under a provider prefix). Avoid `auto/*` combos — they
+> `deepseek-*`, `qwen-*` under a provider prefix). Avoid `auto/*` combos – they
 > force tool-calling and can come back with no text. The widget retries a small
 > fallback list if the primary returns nothing.
 
@@ -91,7 +91,7 @@ const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";  // API is at /v1
 ## Notes
 
 - Retrieval is keyword-scoring over each article's title, description, category,
-  and tags — no vector DB needed. It's good for "what does the blog say about X".
+  and tags – no vector DB needed. It's good for "what does the blog say about X".
 - To strengthen blog answers, add fuller summaries to the `description` fields
   in `articles.js`.
 - The proxy is **locked down by default**: CORS is restricted to `ALLOWED_ORIGIN`

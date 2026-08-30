@@ -1,6 +1,6 @@
 # VelsTech Website
 
-Static site at **velstech.net** — plain-language tech guides, free tools, real hardware benchmarks, and buying guides, with a focus on **local AI, Linux, hardware, and India-market tech**.
+Static site at **velstech.net** – plain-language tech guides, free tools, real hardware benchmarks, and buying guides, with a focus on **local AI, Linux, hardware, and India-market tech**.
 
 ## Quick start
 
@@ -20,7 +20,7 @@ node --check tools/*.js
 | Path | What |
 |---|---|
 | `*.html` | Articles, tools, category pages, static pages |
-| `articles.js` | **Content source of truth** — all article metadata |
+| `articles.js` | **Content source of truth** – all article metadata |
 | `benchmarks/data.json` | Benchmark results (tested + estimated) |
 | `benchmarks/*.html` | Generated benchmark detail pages |
 | `og/*.png` | Per-article OG images (1200×630) |
@@ -62,7 +62,7 @@ generates a detail page per backend (e.g. ROCm and Vulkan).
 Standalone decision-oriented pages at `/buying-guides.html`, wired with `data-amazon` affiliate links.
 
 ### Category hubs (6 pages)
-`ai.html`, `hardware.html`, `os.html`, `networking.html`, `security.html`, `programming.html` — each rebuilt as a learning-progression hub with tiers (Start here → Go deeper → Tools → Roadmap).
+`ai.html`, `hardware.html`, `os.html`, `networking.html`, `security.html`, `programming.html` – each rebuilt as a learning-progression hub with tiers (Start here → Go deeper → Tools → Roadmap).
 
 ## Generators
 
@@ -92,25 +92,25 @@ On every push to `main` that changes `articles.js`, the social-post workflow:
 2. Posts any new articles to configured platforms:
    - **Mastodon** ✅ live (`@velstech@mastodon.social`)
    - **X / Twitter** ⏸️ wired but needs $100/mo Basic plan
-   - **Bluesky** 🟢 ready — needs handle + app password in secrets
-   - **Webhook** 🟢 ready — needs `WEBHOOK_URL` secret
+   - **Bluesky** 🟢 ready – needs handle + app password in secrets
+   - **Webhook** 🟢 ready – needs `WEBHOOK_URL` secret
 3. Updates `posted-articles.json` and commits it back
 
 ### Secrets (repo → Settings → Secrets and variables → Actions)
-- `TWITTER_ACCESS_TOKEN` — OAuth 2.0 Bearer token for X
-- `MASTODON_INSTANCE` — `https://mastodon.social`
-- `MASTODON_TOKEN` — Mastodon access token
-- `BLUESKY_HANDLE` — Bluesky handle
-- `BLUESKY_APP_PASSWORD` — Bluesky app password
-- `WEBHOOK_URL` — Generic webhook URL
+- `TWITTER_ACCESS_TOKEN` – OAuth 2.0 Bearer token for X
+- `MASTODON_INSTANCE` – `https://mastodon.social`
+- `MASTODON_TOKEN` – Mastodon access token
+- `BLUESKY_HANDLE` – Bluesky handle
+- `BLUESKY_APP_PASSWORD` – Bluesky app password
+- `WEBHOOK_URL` – Generic webhook URL
 
 ## Version bumping convention
 
 Cache-busting query strings on static assets use `?v=N` and must be bumped when the file changes:
 
-- `script.js?v=N` — bump when `script.js` changes
-- `styles.css?v=N` — bump when `styles.css` changes
-- `articles.js?v=N` — bump when `articles.js` changes (always)
+- `script.js?v=N` – bump when `script.js` changes
+- `styles.css?v=N` – bump when `styles.css` changes
+- `articles.js?v=N` – bump when `articles.js` changes (always)
 
 ```sh
 # Bump across all HTML pages (including benchmarks/)
@@ -136,13 +136,13 @@ See `MONETIZATION-SETUP.md` for sign-up instructions.
 
 ## Tech stack
 
-- **Static HTML** — no framework, no build step
-- **CSS** — single `styles.css` with CSS custom properties, dark/light theme, multiple accent colors
-- **JS** — single `script.js` (nav, theme, search, article rendering, share buttons, analytics)
-- **Python 3** — OG image generation (Pillow)
-- **Node.js** — SEO, feed, benchmark generators (built-in modules only)
-- **GitHub Actions** — feed regeneration, social auto-posting, stale checks
-- **Cloudflare Workers** — AI chat proxy
-- **Cloudflare** — DNS, proxying, Web Analytics
-- **GitHub Pages** — hosting
-- **Mastodon** — social auto-posting
+- **Static HTML** – no framework, no build step
+- **CSS** – single `styles.css` with CSS custom properties, dark/light theme, multiple accent colors
+- **JS** – single `script.js` (nav, theme, search, article rendering, share buttons, analytics)
+- **Python 3** – OG image generation (Pillow)
+- **Node.js** – SEO, feed, benchmark generators (built-in modules only)
+- **GitHub Actions** – feed regeneration, social auto-posting, stale checks
+- **Cloudflare Workers** – AI chat proxy
+- **Cloudflare** – DNS, proxying, Web Analytics
+- **GitHub Pages** – hosting
+- **Mastodon** – social auto-posting

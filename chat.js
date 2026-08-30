@@ -60,7 +60,7 @@
     "- For high-stakes topics (security, passwords, financial, legal, medical advice), do NOT give definitive instructions. Summarize what the blog says and recommend the reader consult the relevant guide or email hello@velstech.net.\n" +
     "- Be concise, friendly, and plain-language. Use short paragraphs and bullet points.\n" +
     "- If you don't know or the blog doesn't cover it, say so honestly instead of guessing.\n" +
-    "- Glossary skill: when user asks 'what is X', 'define X', 'full form of X', or 'explain X in context', ALWAYS start with the full form on line 1 as 'X — Full Form', then 1-sentence definition + 1-2 sentence contextual note from Current page content if present. Example: 'GGUF — GGML Universal File: single-file container for quantized LLMs...'. Never omit the expansion for acronyms (GPU, VRAM, GGUF, RAG, KV cache, etc.). Keep under 80 words unless asked for more.";
+    "- Glossary skill: when user asks 'what is X', 'define X', 'full form of X', or 'explain X in context', ALWAYS start with the full form on line 1 as 'X – Full Form', then 1-sentence definition + 1-2 sentence contextual note from Current page content if present. Example: 'GGUF – GGML Universal File: single-file container for quantized LLMs...'. Never omit the expansion for acronyms (GPU, VRAM, GGUF, RAG, KV cache, etc.). Keep under 80 words unless asked for more.";
 
   // Expose programmatic API for glossary/term clicks and selection chip
   // Usage: VelsChat.ask('Explain GPU in context...', {forcePage:true})

@@ -6,7 +6,7 @@
 const GLOSSARY = {
   "LLM": {
     fullForm: "Large Language Model",
-    short: "AI model trained to predict the next token — powers ChatGPT, Claude, etc.",
+    short: "AI model trained to predict the next token – powers ChatGPT, Claude, etc.",
     link: "what-is-an-llm.html"
   },
   "GPU": {
@@ -16,7 +16,7 @@ const GLOSSARY = {
   },
   "CPU": {
     fullForm: "Central Processing Unit",
-    short: "General-purpose processor — handles system tasks, fewer but faster cores than GPU.",
+    short: "General-purpose processor – handles system tasks, fewer but faster cores than GPU.",
     link: "cpu-vs-gpu.html"
   },
   "VRAM": {
@@ -36,12 +36,12 @@ const GLOSSARY = {
   },
   "SSD": {
     fullForm: "Solid State Drive",
-    short: "Fast flash storage — makes any PC feel new vs a hard drive.",
+    short: "Fast flash storage – makes any PC feel new vs a hard drive.",
     link: "ssd-vs-hdd.html"
   },
   "HDD": {
     fullForm: "Hard Disk Drive",
-    short: "Spinning-disk storage — cheaper per TB, much slower than SSD.",
+    short: "Spinning-disk storage – cheaper per TB, much slower than SSD.",
     link: "ssd-vs-hdd.html"
   },
   "ROCm": {
@@ -56,12 +56,12 @@ const GLOSSARY = {
   },
   "CUDA": {
     fullForm: "Compute Unified Device Architecture",
-    short: "NVIDIA's GPU compute platform — smoothest setup for llama.cpp/Ollama.",
+    short: "NVIDIA's GPU compute platform – smoothest setup for llama.cpp/Ollama.",
     link: "best-gpu-for-local-llm.html"
   },
   "GGUF": {
     fullForm: "GGML Universal File",
-    short: "Single-file container for quantized LLMs (successor to GGML) used by llama.cpp and Ollama — packs weights, tokenizer, and metadata so models run on consumer hardware.",
+    short: "Single-file container for quantized LLMs (successor to GGML) used by llama.cpp and Ollama – packs weights, tokenizer, and metadata so models run on consumer hardware.",
     link: "gguf-explained.html"
   },
   "Quantization": {
@@ -86,7 +86,7 @@ const GLOSSARY = {
   },
   "KV cache": {
     fullForm: "Key-Value Cache",
-    short: "Memory that grows with context length — reason long prompts eat VRAM.",
+    short: "Memory that grows with context length – reason long prompts eat VRAM.",
     link: "kv-cache-explained.html"
   },
   "Context window": {
@@ -111,17 +111,17 @@ const GLOSSARY = {
   },
   "Hallucination": {
     fullForm: "Hallucination",
-    short: "Confident but wrong output — model predicting plausible text, not checking facts.",
+    short: "Confident but wrong output – model predicting plausible text, not checking facts.",
     link: "what-is-an-llm.html"
   },
   "RAG": {
     fullForm: "Retrieval-Augmented Generation",
-    short: "Answer questions using your own documents — retrieve chunks, then generate.",
+    short: "Answer questions using your own documents – retrieve chunks, then generate.",
     link: "rag-from-scratch.html"
   },
   "MoE": {
     fullForm: "Mixture of Experts",
-    short: "Only a few expert sub-networks run per token — large total size, small active cost.",
+    short: "Only a few expert sub-networks run per token – large total size, small active cost.",
     link: "moe-vs-dense-rx6800m-16k-vs-262k.html"
   },
   "Embeddings": {
@@ -131,17 +131,17 @@ const GLOSSARY = {
   },
   "Flash Attention": {
     fullForm: "Flash Attention",
-    short: "Faster, memory-efficient attention — enabled automatically on supported GPUs.",
+    short: "Faster, memory-efficient attention – enabled automatically on supported GPUs.",
     link: "flash-attention-guide.html"
   },
   "Speculative decoding": {
     fullForm: "Speculative Decoding",
-    short: "Draft model guesses, big model verifies — same output, faster.",
+    short: "Draft model guesses, big model verifies – same output, faster.",
     link: "flash-attention-guide.html"
   },
   "Ollama": {
     fullForm: "Ollama",
-    short: "One-command local LLM runner — wraps llama.cpp, handles GPU detection.",
+    short: "One-command local LLM runner – wraps llama.cpp, handles GPU detection.",
     link: "how-to-get-started-local-ai.html"
   },
   "llama.cpp": {
@@ -151,7 +151,7 @@ const GLOSSARY = {
   },
   "PSU": {
     fullForm: "Power Supply Unit",
-    short: "Powers all components — wattage and quality matter for stability.",
+    short: "Powers all components – wattage and quality matter for stability.",
     link: "psu-calculator.html"
   },
   "DNS": {
@@ -186,7 +186,7 @@ const GLOSSARY = {
   },
   "2FA": {
     fullForm: "Two-Factor Authentication",
-    short: "Second login step (authenticator app/security key) — best single habit.",
+    short: "Second login step (authenticator app/security key) – best single habit.",
     link: "security-habits.html"
   },
   "Phishing": {
@@ -196,7 +196,7 @@ const GLOSSARY = {
   },
   "Git": {
     fullForm: "Git",
-    short: "Version control — tracks changes, lets you undo and collaborate.",
+    short: "Version control – tracks changes, lets you undo and collaborate.",
     link: "git-beginners.html"
   }
 };

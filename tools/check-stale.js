@@ -21,7 +21,7 @@ function setOutput(name, value) {
 
 if (stale.length) {
   const lines = stale.map(
-    (a) => `- [${a.title}](${a.url}) — last updated ${a.updated}`
+    (a) => `- [${a.title}](${a.url}) – last updated ${a.updated}`
   );
   const body = [
     "The following articles haven't been updated in more than 6 months. Review each and decide whether it needs a refresh:",

@@ -173,7 +173,7 @@
       ? `<a class="vt-pop-link" href="${entry.link}">Read guide →</a>`
       : "";
     return `
-      <div class="vt-pop-head">${termKey} <span>— ${entry.fullForm}</span></div>
+      <div class="vt-pop-head">${termKey} <span>– ${entry.fullForm}</span></div>
       <p class="vt-pop-short">${entry.short}</p>
       <div class="vt-pop-actions">
         <button class="vt-pop-ask" type="button" data-ask="${termKey}">Ask VelsChat →</button>
@@ -258,8 +258,8 @@
       if (para) ctx = para.innerText.slice(0, 600);
     }
     const prompt = entry
-      ? `Explain "${key}" — full form "${entry.fullForm}" — in the context of this article "${title}". Start your answer exactly with "${key} — ${entry.fullForm}:" on line 1, then ${entry.short}. ${ctx ? "Surrounding text: " + ctx : ""} Keep 2-3 sentences, plain language, and say when it matters.`
-      : `What does "${key}" mean (include full form if it's an acronym) in the context of this article "${title}"? Start with "TERM — Full Form:" if applicable.`;
+      ? `Explain "${key}" – full form "${entry.fullForm}" – in the context of this article "${title}". Start your answer exactly with "${key} – ${entry.fullForm}:" on line 1, then ${entry.short}. ${ctx ? "Surrounding text: " + ctx : ""} Keep 2-3 sentences, plain language, and say when it matters.`
+      : `What does "${key}" mean (include full form if it's an acronym) in the context of this article "${title}"? Start with "TERM – Full Form:" if applicable.`;
 
     if (window.VelsChat && typeof window.VelsChat.ask === "function") {
       window.VelsChat.ask(prompt, { forcePage: true });
@@ -439,9 +439,9 @@
     }
     let prompt;
     if (gloss) {
-      prompt = `Explain "${gloss.key}" — full form "${gloss.entry.fullForm}" — in the context of this article "${title}". Start exactly with "${gloss.key} — ${gloss.entry.fullForm}:" then ${gloss.entry.short}. ${ctx ? "Context: " + ctx : ""}`;
+      prompt = `Explain "${gloss.key}" – full form "${gloss.entry.fullForm}" – in the context of this article "${title}". Start exactly with "${gloss.key} – ${gloss.entry.fullForm}:" then ${gloss.entry.short}. ${ctx ? "Context: " + ctx : ""}`;
     } else {
-      prompt = `Explain "${text}" as used in this article "${title}" (if it's an acronym, include its full form on line 1 as "TERM — Full Form:"). ${ctx ? "Context: " + ctx : ""} Keep 2-3 sentences, plain language.`;
+      prompt = `Explain "${text}" as used in this article "${title}" (if it's an acronym, include its full form on line 1 as "TERM – Full Form:"). ${ctx ? "Context: " + ctx : ""} Keep 2-3 sentences, plain language.`;
     }
     if (window.VelsChat && typeof window.VelsChat.ask === "function") {
       window.VelsChat.ask(prompt, { forcePage: true });

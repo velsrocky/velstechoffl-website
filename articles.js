@@ -14,7 +14,7 @@ const ARTICLES = [
       },
       {
         q: "Does my AMD GPU support ROCm?",
-        a: "ROCm officially supports a specific list of cards. If yours isn't on it, Vulkan is almost always the working option — it's the simpler, broader-compatibility backend.",
+        a: "ROCm officially supports a specific list of cards. If yours isn't on it, Vulkan is almost always the working option – it's the simpler, broader-compatibility backend.",
       },
     ],
   },
@@ -29,11 +29,11 @@ const ARTICLES = [
     faq: [
       {
         q: "Can a Mac run LLMs?",
-        a: "Yes — and often better than a PC at the same price, because unified memory means the entire system RAM is available for the model. A 16 GB Mac is a solid local-AI daily driver.",
+        a: "Yes – and often better than a PC at the same price, because unified memory means the entire system RAM is available for the model. A 16 GB Mac is a solid local-AI daily driver.",
       },
       {
         q: "How much RAM do I need for local AI on a Mac?",
-        a: "Roughly: 16 GB runs 7B–9B models at Q4, 24 GB runs 13B–14B, 32 GB runs 27B–30B, and 64 GB runs 70B. Buy the RAM you'll want in a few years — it's soldered.",
+        a: "Roughly: 16 GB runs 7B–9B models at Q4, 24 GB runs 13B–14B, 32 GB runs 27B–30B, and 64 GB runs 70B. Buy the RAM you'll want in a few years – it's soldered.",
       },
     ],
   },
@@ -48,7 +48,7 @@ const ARTICLES = [
     faq: [
       {
         q: "What is RAG?",
-        a: "RAG (Retrieval-Augmented Generation) lets an LLM answer questions using your own documents. It retrieves the few relevant chunks for a question, then has the model answer using only that context — no retraining needed.",
+        a: "RAG (Retrieval-Augmented Generation) lets an LLM answer questions using your own documents. It retrieves the few relevant chunks for a question, then has the model answer using only that context – no retraining needed.",
       },
       {
         q: "Can RAG run entirely locally?",
@@ -63,11 +63,11 @@ const ARTICLES = [
     updated: "2026-08-30",
     category: "AI",
     tags: ["Quantization", "GGUF", "Local AI"],
-    description: "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI.",
+    description: "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI.",
     faq: [
       {
         q: "Is Q4 much worse than Q8?",
-        a: "For most tasks — chat, summarization, code generation — the difference between Q4_K_M and Q8 is imperceptible. The gap only shows in hard reasoning, math, or factual recall where a single wrong token cascades.",
+        a: "For most tasks – chat, summarization, code generation – the difference between Q4_K_M and Q8 is imperceptible. The gap only shows in hard reasoning, math, or factual recall where a single wrong token cascades.",
       },
       {
         q: "Which quantization should I use?",
@@ -86,7 +86,7 @@ const ARTICLES = [
     faq: [
       {
         q: "Does the KV cache affect speed?",
-        a: "Yes — a larger KV cache means more data to read per token, which slows decode. Quantizing the KV cache (q8, q4) helps both memory and speed.",
+        a: "Yes – a larger KV cache means more data to read per token, which slows decode. Quantizing the KV cache (q8, q4) helps both memory and speed.",
       },
       {
         q: "How much memory does the KV cache use?",
@@ -101,15 +101,15 @@ const ARTICLES = [
     updated: "2026-08-30",
     category: "AI",
     tags: ["Flash Attention", "Speculative Decoding", "Local AI"],
-    description: "How Flash Attention and speculative decoding make LLMs faster and use less memory — and why they matter for running models locally.",
+    description: "How Flash Attention and speculative decoding make LLMs faster and use less memory – and why they matter for running models locally.",
     faq: [
       {
         q: "Do I need to configure Flash Attention?",
-        a: "No — it's enabled automatically by llama.cpp, Ollama, and LM Studio on supported GPUs. You just benefit silently.",
+        a: "No – it's enabled automatically by llama.cpp, Ollama, and LM Studio on supported GPUs. You just benefit silently.",
       },
       {
         q: "Does speculative decoding change the output?",
-        a: "No. The big model verifies the draft's guesses, so the final output is identical to running the big model alone — just faster.",
+        a: "No. The big model verifies the draft's guesses, so the final output is identical to running the big model alone – just faster.",
       },
     ],
   },
@@ -124,11 +124,11 @@ const ARTICLES = [
     faq: [
       {
         q: "What is a GGUF file?",
-        a: "GGUF is a container format for quantized LLMs — it packs a model's weights, tokenizer, and metadata into one file that llama.cpp, Ollama, and LM Studio can load directly. The quantization is what shrinks a model enough to run on consumer hardware.",
+        a: "GGUF is a container format for quantized LLMs – it packs a model's weights, tokenizer, and metadata into one file that llama.cpp, Ollama, and LM Studio can load directly. The quantization is what shrinks a model enough to run on consumer hardware.",
       },
       {
         q: "Which GGUF quantization should I download?",
-        a: "Q4_K_M is the safe default — the best quality-per-gigabyte. If you have spare RAM, try Q5_K_M for noticeably sharper output. Drop to Q3 or Q2 only if the model doesn't fit.",
+        a: "Q4_K_M is the safe default – the best quality-per-gigabyte. If you have spare RAM, try Q5_K_M for noticeably sharper output. Drop to Q3 or Q2 only if the model doesn't fit.",
       },
     ],
   },
@@ -143,7 +143,7 @@ const ARTICLES = [
     faq: [
       {
         q: "Do I need llama.cpp if I use Ollama?",
-        a: "No — Ollama wraps llama.cpp and handles installation, downloads, and GPU detection for you. Learning llama.cpp is useful for benchmarking and fine-tuning, but not required to run local AI.",
+        a: "No – Ollama wraps llama.cpp and handles installation, downloads, and GPU detection for you. Learning llama.cpp is useful for benchmarking and fine-tuning, but not required to run local AI.",
       },
       {
         q: "How do I speed up llama.cpp?",
@@ -183,15 +183,15 @@ const ARTICLES = [
     category: "Hardware",
     featured: true,
     tags: ["AI Hardware", "GPU", "Local AI", "NVIDIA", "AMD"],
-    description: "NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) — three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.",
+    description: "NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) – three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.",
     faq: [
       {
         q: "Can these run AI models without an internet connection?",
-        a: "Yes. That's the whole point of unified memory and on-device compute — models run locally with no cloud dependency and your data never leaves the machine.",
+        a: "Yes. That's the whole point of unified memory and on-device compute – models run locally with no cloud dependency and your data never leaves the machine.",
       },
       {
         q: "How much VRAM do they have?",
-        a: "None in the traditional sense. All three use unified memory (up to 128 GB) shared between CPU and GPU, so the full memory is available for the model — far more than any consumer GPU's dedicated VRAM.",
+        a: "None in the traditional sense. All three use unified memory (up to 128 GB) shared between CPU and GPU, so the full memory is available for the model – far more than any consumer GPU's dedicated VRAM.",
       },
       {
         q: "Which is the best value for local AI?",

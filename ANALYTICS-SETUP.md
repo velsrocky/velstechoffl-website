@@ -1,15 +1,15 @@
-# VelsTech Analytics & Search Console — Current State
+# VelsTech Analytics & Search Console – Current State
 
-Everything below is **already set up and live** — this document records the current
+Everything below is **already set up and live** – this document records the current
 configuration for future reference and shows what to do if something breaks or changes.
 
-## 1. Cloudflare Web Analytics (live — Automatic Setup)
+## 1. Cloudflare Web Analytics (live – Automatic Setup)
 
 - **Method:** Automatic Setup. Because `velstech.net` is proxied through Cloudflare
   (orange cloud on the A records), Cloudflare injects the analytics beacon at the edge.
   **No code, no token, no consent banner.**
 - **What it gives you:** cookieless aggregate page-view metrics (top pages, referrers).
-- **Privacy:** no cookies, no fingerprinting, no cross-site tracking — consistent with
+- **Privacy:** no cookies, no fingerprinting, no cross-site tracking – consistent with
   the [Privacy Policy](https://velstech.net/privacy.html).
 
 **If it stops working:**
@@ -17,13 +17,13 @@ configuration for future reference and shows what to do if something breaks or c
    still exists.
 2. Confirm the A records for `velstech.net` are still **proxied** (orange cloud), not
    grey (DNS-only).
-3. Nothing in the repo needs to change — there is no manual beacon in `script.js`.
+3. Nothing in the repo needs to change – there is no manual beacon in `script.js`.
 
 > Legacy note: an earlier approach used a manual `CF_WEB_ANALYTICS_TOKEN` JS beacon in
 > `script.js`. This was removed because it would double-count page views alongside
 > Automatic Setup. Do not re-add it.
 
-## 2. Google Search Console (verified — DNS TXT)
+## 2. Google Search Console (verified – DNS TXT)
 
 - **Property type:** URL prefix → `https://velstech.net/`
 - **Verification method:** DNS TXT record on the zone (in Cloudflare):

@@ -47,7 +47,7 @@
       "name": "Does the KV cache affect speed?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes — a larger KV cache means more data to read per token, which slows decode. Quantizing the KV cache (q8, q4) helps both memory and speed."
+        "text": "Yes – a larger KV cache means more data to read per token, which slows decode. Quantizing the KV cache (q8, q4) helps both memory and speed."
       }
     },
     {
@@ -90,7 +90,7 @@
 
     <div class="article-body">
       <p>
-        "This model supports 128K context" sounds great — until you try to run it and wonder
+        "This model supports 128K context" sounds great – until you try to run it and wonder
         where all your memory went. The culprit is the <strong>KV cache</strong>: the part of
         an LLM that grows with every token of context, and the reason a big context window
         costs real gigabytes.
@@ -102,14 +102,14 @@
 
       <h2>What the KV cache is</h2>
       <p>
-        When an LLM processes a token, it does a lot of computation — and crucially, it needs
+        When an LLM processes a token, it does a lot of computation – and crucially, it needs
         the results from <em>earlier</em> tokens to make sense of the later ones. Each token's
         attention to the past is computed from two things per layer: a <strong>key</strong>
         (what this token offers) and a <strong>value</strong> (what it contains).
       </p>
       <p>
         Rather than recomputing those keys and values for every previous token on every new
-        token — which would make generation quadratically slow — the model stores them. That
+        token – which would make generation quadratically slow – the model stores them. That
         store is the <strong>KV cache</strong>. Every token in the context adds a fixed amount
         to it, across every layer and every attention head.
       </p>
@@ -137,9 +137,9 @@
         couple of worked examples:
       </p>
       <ul>
-        <li>A 7B model at Q4 with <strong>8K context</strong>: KV cache is roughly 1 GB — a small slice of the ~4 GB total.</li>
+        <li>A 7B model at Q4 with <strong>8K context</strong>: KV cache is roughly 1 GB – a small slice of the ~4 GB total.</li>
         <li>The same model at <strong>32K context</strong>: KV cache jumps to ~4 GB, now matching the weights.</li>
-        <li>A 32B model at Q4 with <strong>64K context</strong>: the KV cache alone can be 8–12 GB — more than many GPUs have.</li>
+        <li>A 32B model at Q4 with <strong>64K context</strong>: the KV cache alone can be 8–12 GB – more than many GPUs have.</li>
       </ul>
       <p>
         That's why "runs at 8K context" and "runs at 128K context" are completely different
@@ -151,10 +151,10 @@
         If the KV cache is eating your memory, you have a few levers:
       </p>
       <ul>
-        <li><strong>Lower the context window (<code>-c</code>)</strong> — the single biggest lever. Use the context you need, not the maximum the model supports.</li>
-        <li><strong>Quantize the KV cache (<code>q8_0</code>, <code>q4_0</code>)</strong> — storing keys/values at 8-bit or 4-bit roughly halves or quarters the cache, with minimal quality loss for most tasks.</li>
-        <li><strong>Use MoE or long-context-optimized models</strong> — MoE models like the <a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B</a> share KV across tokens, making the cache smaller than a dense model's.</li>
-        <li><strong>Offload</strong> — llama.cpp can keep part of the KV cache in system RAM, at the cost of speed.</li>
+        <li><strong>Lower the context window (<code>-c</code>)</strong> – the single biggest lever. Use the context you need, not the maximum the model supports.</li>
+        <li><strong>Quantize the KV cache (<code>q8_0</code>, <code>q4_0</code>)</strong> – storing keys/values at 8-bit or 4-bit roughly halves or quarters the cache, with minimal quality loss for most tasks.</li>
+        <li><strong>Use MoE or long-context-optimized models</strong> – MoE models like the <a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B</a> share KV across tokens, making the cache smaller than a dense model's.</li>
+        <li><strong>Offload</strong> – llama.cpp can keep part of the KV cache in system RAM, at the cost of speed.</li>
       </ul>
       <p>
         You can see the q8 KV effect in our <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen
@@ -165,7 +165,7 @@
       <h2>MoE vs dense (why they differ)</h2>
       <p>
         A dense model processes every token through all its parameters. An MoE model routes
-        each token through only a few "expert" layers — but the KV cache is a different story.
+        each token through only a few "expert" layers – but the KV cache is a different story.
         Because attention is shared across tokens regardless of which experts handled them,
         MoE models can keep a <em>smaller</em> KV cache per token in some configurations.
         That's one reason a 35B MoE can run at 262K context where a 35B dense model never could.
@@ -178,7 +178,7 @@
         The KV cache is the hidden memory cost of LLMs, and it grows with every token of
         context. When a model says it "supports 128K," that's an upper limit, not a
         recommendation. Use the context you actually need, quantize the KV cache, and check
-        the <a href="llm-vram-calculator.html">VRAM calculator</a> before you commit — and
+        the <a href="llm-vram-calculator.html">VRAM calculator</a> before you commit – and
         your model will run in a fraction of the memory.
       </p>
     </div>

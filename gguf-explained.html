@@ -47,7 +47,7 @@
       "name": "What is a GGUF file?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "GGUF is a container format for quantized LLMs — it packs a model's weights, tokenizer, and metadata into one file that llama.cpp, Ollama, and LM Studio can load directly. The quantization is what shrinks a model enough to run on consumer hardware."
+        "text": "GGUF is a container format for quantized LLMs – it packs a model's weights, tokenizer, and metadata into one file that llama.cpp, Ollama, and LM Studio can load directly. The quantization is what shrinks a model enough to run on consumer hardware."
       }
     },
     {
@@ -55,7 +55,7 @@
       "name": "Which GGUF quantization should I download?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Q4_K_M is the safe default — the best quality-per-gigabyte. If you have spare RAM, try Q5_K_M for noticeably sharper output. Drop to Q3 or Q2 only if the model doesn't fit."
+        "text": "Q4_K_M is the safe default – the best quality-per-gigabyte. If you have spare RAM, try Q5_K_M for noticeably sharper output. Drop to Q3 or Q2 only if the model doesn't fit."
       }
     }
   ]
@@ -90,8 +90,8 @@
 
     <div class="article-body">
       <p>
-        If you've downloaded a model to run locally — with Ollama, llama.cpp, or anything
-        else — you've almost certainly run into the letters <strong>GGUF</strong>.
+        If you've downloaded a model to run locally – with Ollama, llama.cpp, or anything
+        else – you've almost certainly run into the letters <strong>GGUF</strong>.
         It's the file extension on most open-weight models you can actually run yourself:
         <code>llama-3.2-3b.Q4_K_M.gguf</code>, <code>qwen2.5-7b.Q5_K_M.gguf</code>, and so on.
       </p>
@@ -102,15 +102,15 @@
 
       <h2>What is GGUF?</h2>
       <p>
-        GGUF is a <strong>file format for storing quantized LLMs</strong> — a container that
+        GGUF is a <strong>file format for storing quantized LLMs</strong> – a container that
         packs a model's weights, tokenizer, and metadata into a single file that llama.cpp and
         its derivatives (Ollama, LM Studio, etc.) can load directly. It's the successor to
         GGML, and it's become the de facto standard for running models on consumer hardware.
       </p>
       <p>
         The clever part is what "quantized" means. A model's weights are normally stored as
-        16-bit floating-point numbers. GGUF files store them at far lower precision — 8-bit,
-        4-bit, even 2-bit — which shrinks the file dramatically. That's what lets a 27-billion
+        16-bit floating-point numbers. GGUF files store them at far lower precision – 8-bit,
+        4-bit, even 2-bit – which shrinks the file dramatically. That's what lets a 27-billion
         parameter model fit in 12 GB of VRAM instead of needing 50+ GB.
       </p>
 
@@ -125,12 +125,12 @@
         GGUF files encode this in their name. Take <code>qwen2.5-7b.Q4_K_M.gguf</code>:
       </p>
       <ul>
-        <li><strong>Q4</strong> — 4-bit quantization (the "Q" stands for quantization).</li>
-        <li><strong>K</strong> — "k-quant" (k-quantization), a smarter scheme that uses fewer bits on less important weights.</li>
-        <li><strong>M</strong> — the size: <code>S</code> (small), <code>M</code> (medium), <code>L</code> (large). Larger = closer to full quality.</li>
+        <li><strong>Q4</strong> – 4-bit quantization (the "Q" stands for quantization).</li>
+        <li><strong>K</strong> – "k-quant" (k-quantization), a smarter scheme that uses fewer bits on less important weights.</li>
+        <li><strong>M</strong> – the size: <code>S</code> (small), <code>M</code> (medium), <code>L</code> (large). Larger = closer to full quality.</li>
       </ul>
       <p>
-        So <code>Q4_K_M</code> means "4-bit k-quant, medium" — the most popular all-rounder,
+        So <code>Q4_K_M</code> means "4-bit k-quant, medium" – the most popular all-rounder,
         and the default recommendation for most people.
       </p>
 
@@ -143,7 +143,7 @@
           <tbody>
             <tr><td>Q2_K</td><td>~25%</td><td>Poor</td><td>Only when you must squeeze into tiny RAM</td></tr>
             <tr><td>Q3_K</td><td>~32%</td><td>Meh</td><td>Very tight budgets</td></tr>
-            <tr><td>Q4_K_S / Q4_K_M</td><td>~40–44%</td><td>Good</td><td><strong>Default choice</strong> — best size/quality balance</td></tr>
+            <tr><td>Q4_K_S / Q4_K_M</td><td>~40–44%</td><td>Good</td><td><strong>Default choice</strong> – best size/quality balance</td></tr>
             <tr><td>Q5_K_M</td><td>~49%</td><td>Very good</td><td>When you have headroom; notably sharper</td></tr>
             <tr><td>Q6_K</td><td>~58%</td><td>Near original</td><td>Plenty of RAM, want quality</td></tr>
             <tr><td>Q8_0</td><td>~78%</td><td>~Indistinguishable</td><td>Only for the KV cache or when size is no object</td></tr>
@@ -162,13 +162,13 @@
       </p>
       <p>
         To figure out exactly what fits your card, run the numbers through the
-        <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> — it accounts for weights,
+        <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> – it accounts for weights,
         KV cache, and quantization so you know before you download.
       </p>
 
       <h2>GGUF + llama.cpp</h2>
       <p>
-        GGUF files are designed to be run by llama.cpp — the engine underneath Ollama and
+        GGUF files are designed to be run by llama.cpp – the engine underneath Ollama and
         LM Studio. You rarely interact with GGUF files directly if you use Ollama (it handles
         the download and format for you), but the concepts are identical: you're always
         choosing a model size and quantization. See the

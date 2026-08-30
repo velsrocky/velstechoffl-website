@@ -8,15 +8,13 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   post:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
 
       - name: Detect and post new articles
         run: node tools/post-new-articles.js
@@ -31,3 +29,13 @@ jobs:
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           # Generic webhook (n8n / Zapier / Buffer / Make)
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+
+      - name: Commit posted-state back
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet tools/posted-articles.json; then
+            git add tools/posted-articles.json
+            git commit -m "chore: mark posted articles"
+            git push
+          fi

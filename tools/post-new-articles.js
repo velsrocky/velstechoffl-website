@@ -1,16 +1,16 @@
 /* Post-new-articles script.
  *
- * Detects newly added articles (by URL) between the previous commit and the
- * current one, then posts a short announcement to each configured platform.
+ * Detects newly added articles against a persistent state file
+ * (tools/posted-articles.json), posts announcements to configured
+ * platforms, then updates the state file with the newly posted URLs.
  *
- * Runs from .github/workflows/social-post.yml on every push to main. Uses only
- * Node built-ins (crypto, https) so it needs no npm install.
+ * Run from .github/workflows/social-post.yml on every push to main.
+ * The workflow commits the state file back after each run so the
+ * detection is reliable across any number of commits.
  *
  * Platforms (each is optional – configure via repo secrets):
  *
- *   X / Twitter      TWITTER_API_KEY, TWITTER_API_SECRET,
- *                    TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET
- *                    (API v2 POST /2/tweets, OAuth 1.0a)
+ *   X / Twitter      TWITTER_ACCESS_TOKEN (OAuth 2.0 Bearer)
  *
  *   Mastodon         MASTODON_INSTANCE (e.g. https://mastodon.social),
  *                    MASTODON_TOKEN (access token)
@@ -24,22 +24,21 @@
 const { execSync } = require("child_process");
 const crypto = require("crypto");
 const https = require("https");
+const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
 const SITE = "https://velstech.net";
+const STATE_FILE = path.join(__dirname, "posted-articles.json");
 
 function currentArticles() {
   const ARTICLES = require(path.join(ROOT, "articles.js"));
   return ARTICLES;
 }
 
-function previousArticles() {
+function postedUrls() {
   try {
-    const out = execSync("git show HEAD~1:articles.js", { cwd: ROOT, maxBuffer: 4 * 1024 * 1024 }).toString();
-    const mod = { exports: {} };
-    new Function("module", "exports", out)(mod, mod.exports);
-    return mod.exports || [];
+    return JSON.parse(fs.readFileSync(STATE_FILE, "utf8"));
   } catch {
     return [];
   }
@@ -47,11 +46,17 @@ function previousArticles() {
 
 function newArticles() {
   const cur = currentArticles();
-  const prev = previousArticles();
-  const prevUrls = new Set(prev.map((a) => a.url));
+  const posted = new Set(postedUrls());
   return cur
-    .filter((a) => !prevUrls.has(a.url))
+    .filter((a) => !posted.has(a.url))
     .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+function writeState(urls) {
+  const existing = postedUrls();
+  const merged = [...new Set([...existing, ...urls])];
+  merged.sort();
+  fs.writeFileSync(STATE_FILE, JSON.stringify(merged, null, 2) + "\n");
 }
 
 /* ---------- X / Twitter (API v2, OAuth 2.0 Bearer token) ---------- */
@@ -205,6 +210,7 @@ function compose(article) {
   }
   console.log("New articles: " + fresh.map((a) => a.url).join(", "));
 
+  const postedNow = [];
   for (const article of fresh) {
     const text = compose(article);
     const results = await Promise.allSettled([postToX(text), postToMastodon(text), postToBluesky(text), postToWebhook(article)]);
@@ -214,5 +220,8 @@ function compose(article) {
       else if (r.status === "rejected") console.error(`  [${labels[i]}] failed: ${r.reason.message}`);
       else console.log(`  [${labels[i]}] skipped (not configured)`);
     });
+    postedNow.push(article.url);
   }
+  writeState(postedNow);
+  console.log("State updated with: " + postedNow.join(", "));
 })();

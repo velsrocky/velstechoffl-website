@@ -1,5 +1,62 @@
 const ARTICLES = [
   {
+    title: "Quantization deep dive: how Q4, Q5, and Q8 change quality and speed",
+    url: "quantization-deep-dive.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["Quantization", "GGUF", "Local AI"],
+    description: "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI.",
+    faq: [
+      {
+        q: "Is Q4 much worse than Q8?",
+        a: "For most tasks — chat, summarization, code generation — the difference between Q4_K_M and Q8 is imperceptible. The gap only shows in hard reasoning, math, or factual recall where a single wrong token cascades.",
+      },
+      {
+        q: "Which quantization should I use?",
+        a: "Q4_K_M is the default for everyone. Step up to Q5_K_M if you have headroom and want the best quality. Drop to Q3 only if the model won't fit at Q4.",
+      },
+    ],
+  },
+  {
+    title: "KV cache explained: why context windows eat memory",
+    url: "kv-cache-explained.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["KV Cache", "VRAM", "Local AI"],
+    description: "Why longer context windows eat memory, how the key-value cache grows with tokens, and how to calculate it for your own GPU.",
+    faq: [
+      {
+        q: "Does the KV cache affect speed?",
+        a: "Yes — a larger KV cache means more data to read per token, which slows decode. Quantizing the KV cache (q8, q4) helps both memory and speed.",
+      },
+      {
+        q: "How much memory does the KV cache use?",
+        a: "It depends on the model architecture and context. For a 7B model at 8K context, roughly 1 GB. At 32K, about 4 GB. At 128K, it can be 12 GB or more.",
+      },
+    ],
+  },
+  {
+    title: "Flash Attention & speculative decoding: making LLMs faster",
+    url: "flash-attention-guide.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["Flash Attention", "Speculative Decoding", "Local AI"],
+    description: "How Flash Attention and speculative decoding make LLMs faster and use less memory — and why they matter for running models locally.",
+    faq: [
+      {
+        q: "Do I need to configure Flash Attention?",
+        a: "No — it's enabled automatically by llama.cpp, Ollama, and LM Studio on supported GPUs. You just benefit silently.",
+      },
+      {
+        q: "Does speculative decoding change the output?",
+        a: "No. The big model verifies the draft's guesses, so the final output is identical to running the big model alone — just faster.",
+      },
+    ],
+  },
+  {
     title: "GGUF explained: the format that makes local LLMs work",
     url: "gguf-explained.html",
     date: "2026-08-30",

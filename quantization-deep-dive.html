@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Quantization deep dive – how Q4, Q5, and Q8 quantization changes LLM quality and speed, with real numbers. Why it matters for running models locally on your GPU." />
+  <title>Quantization deep dive: how Q4, Q5, and Q8 change quality and speed | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/quantization-deep-dive.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/quantization-deep-dive.html#article",
+  "headline": "Quantization deep dive: how Q4, Q5, and Q8 change quality and speed",
+  "description": "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI.",
+  "url": "https://velstech.net/quantization-deep-dive.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/quantization-deep-dive.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/quantization-deep-dive.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/quantization-deep-dive.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Q4 much worse than Q8?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For most tasks — chat, summarization, code generation — the difference between Q4_K_M and Q8 is imperceptible. The gap only shows in hard reasoning, math, or factual recall where a single wrong token cascades."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which quantization should I use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Q4_K_M is the default for everyone. Step up to Q5_K_M if you have headroom and want the best quality. Drop to Q3 only if the model won't fit at Q4."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/quantization-deep-dive.html" />
+  <meta property="og:title" content="Quantization deep dive: how Q4, Q5, and Q8 change quality and speed | VelsTech" />
+  <meta property="og:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI." />
+  <meta property="og:image" content="https://velstech.net/og/quantization-deep-dive.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Quantization deep dive: how Q4, Q5, and Q8 change quality and speed | VelsTech" />
+  <meta name="twitter:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI." />
+  <meta name="twitter:image" content="https://velstech.net/og/quantization-deep-dive.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">Quantization deep dive: how Q4, Q5, and Q8 change quality and speed</h1>
+    <div class="meta">
+      <span class="tag">Quantization</span>
+      <span class="tag">GGUF</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        When you see a file like <code>model.Q4_K_M.gguf</code>, the <code>Q4</code> is doing
+        a lot of work. It's the quantization level — the knob that trades model size and speed
+        against answer quality. In <a href="gguf-explained.html">GGUF explained</a> we covered
+        what the letters mean. Here's the deeper version: what quantization actually does to
+        the model, how much quality you give up, and how it shows up in real speed numbers.
+      </p>
+
+      <h2>What quantization actually does</h2>
+      <p>
+        A neural network's weights are numbers — normally stored as 16-bit floating point
+        (or even 32-bit). Quantization stores those numbers at lower precision. Instead of
+        a weight being <code>0.7321024…</code>, it becomes something like
+        <code>0.73</code>, or gets snapped to one of 16 possible values (4 bits).
+      </p>
+      <p>
+        That sounds destructive, and it is — but the trick is that <strong>models are
+        extremely robust to it</strong>. Neural networks have enormous redundancy, so you can
+        throw away most of the precision in the weights before the model's behaviour meaningfully
+        degrades. That's why a 4-bit model can still be remarkably good.
+      </p>
+      <p>
+        The size math is simple. A 7-billion-parameter model at 16 bits is roughly
+        <code>7B × 2 bytes ≈ 14 GB</code>. At 4 bits it's <code>7B × 0.5 bytes ≈ 3.5 GB</code>.
+        That's the difference between "doesn't fit on my laptop" and "runs fine on my laptop."
+      </p>
+
+      <h2>The trade-off, quantified</h2>
+      <p>
+        Quantization level affects three things: <strong>file size</strong>,
+        <strong>speed</strong>, and <strong>quality</strong>. The size and speed are easy to
+        reason about; quality is the fuzzy one.
+      </p>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Level</th><th>Bits per weight</th><th>Relative size</th><th>Quality</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Q2_K</td><td>~2.6</td><td>~25%</td><td>Poor — only for tiny budgets</td></tr>
+            <tr><td>Q3_K</td><td>~3.4</td><td>~32%</td><td>Mediocre — visible degradation</td></tr>
+            <tr><td>Q4_K_M</td><td>~4.3</td><td>~42%</td><td><strong>Good — the default</strong></td></tr>
+            <tr><td>Q5_K_M</td><td>~4.8</td><td>~49%</td><td>Very good — noticeably sharper</td></tr>
+            <tr><td>Q6_K</td><td>~6.0</td><td>~58%</td><td>Near-original</td></tr>
+            <tr><td>Q8_0</td><td>~8.0</td><td>~78%</td><td>Indistinguishable</td></tr>
+            <tr><td>F16</td><td>16</td><td>100%</td><td>Original weights</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <strong>Important nuance:</strong> the differences between Q4, Q5, Q6, and Q8 are
+        mostly visible in <em>difficult</em> tasks — long reasoning chains, complex code,
+        math, or factual recall where a single wrong token cascades. For casual chat and
+        summarization, you'll struggle to tell Q4 from Q6. This is why Q4_K_M is the default
+        for everyone: for most real use, the quality gap is imperceptible.
+      </p>
+
+      <h2>How it shows up in speed</h2>
+      <p>
+        Smaller weights mean faster inference, because the bottleneck is memory bandwidth —
+        how fast the GPU can feed bytes to the compute units. Decode speed is roughly:
+      </p>
+      <pre>decode_tok/s ≈ (memory_bandwidth × 0.8) / bytes_per_token</pre>
+      <p>
+        A 7B model at Q4 needs ~0.5 bytes/weight × 7B ≈ 3.5 GB per token pass. At Q8 it's
+        ~7 GB. So <strong>Q4 is roughly twice as fast as Q8 at decode, all else equal</strong> —
+        and about 4× faster than F16. That's why a quantized model feels so much snappier.
+      </p>
+      <p>
+        You can see this effect in the <a href="benchmarks/index.html">VelsTech benchmark
+        database</a> — our tested Qwen 27B at 3.7bpw ran at ~18–22 tok/s on a 12 GB RX 6800M,
+        and that's with partial offload. A bigger quantization would fit less and run slower.
+      </p>
+
+      <h2>Why k-quants (the "K" and "_K_M") are clever</h2>
+      <p>
+        Older quantizations applied the same bit width to every weight. K-quantization is
+        smarter: it <strong>applies fewer bits to less-important weights</strong> and more bits
+        to the ones that matter, grouped per block of weights. The result is that a "4-bit"
+        k-quant file is often <em>better</em> than a naive 4-bit file of the same size —
+        and sometimes even beats a slightly larger naive quantization.
+      </p>
+      <p>
+        The <code>_S</code> (small) and <code>_M</code> (medium) suffixes change how
+        aggressively this is applied. <code>Q4_K_S</code> is the smallest "good" 4-bit option;
+        <code>Q4_K_M</code> spends a bit more size for noticeably better quality. For most
+        people, <code>_M</code> is the right call.
+      </p>
+
+      <h2>When to go higher (and when not to)</h2>
+      <ul>
+        <li><strong>Stay at Q4_K_M</strong> for general chat, writing, and most coding — the default, and the best size/quality balance.</li>
+        <li><strong>Step up to Q5_K_M or Q6_K</strong> when the model is for reasoning-heavy or factual work, and you have the RAM/VRAM to spare.</li>
+        <li><strong>Skip Q8/F16</strong> unless you're benchmarking or have huge memory. The quality gain over Q6 is minimal and you pay double the size and speed cost.</li>
+        <li><strong>Drop to Q3 only</strong> when the model won't fit at Q4 and you need it to work at all.</li>
+      </ul>
+      <p>
+        Want to know exactly what fits your card? Run the numbers through the
+        <a href="llm-vram-calculator.html">LLM VRAM Calculator</a>.
+      </p>
+
+      <h2>Bottom line</h2>
+      <p>
+        Quantization is the reason local AI works at all. It's a compression with a quality
+        tax that's small for most tasks and significant only for hard ones. Q4_K_M is the
+        smart default, Q5_K_M is the quality upgrade, and everything above Q6 is usually
+        wasted on consumer hardware. Understand that and you'll never waste a download again.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="kv-cache-explained.html">KV cache explained →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=12"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

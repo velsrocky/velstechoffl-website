@@ -5,9 +5,36 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-08-30T09:10:04.860Z</updated>
+  <updated>2026-08-30T09:21:13.842Z</updated>
   <author><name>VelsTech</name></author>
 
+  <entry>
+    <title>Quantization deep dive: how Q4, Q5, and Q8 change quality and speed</title>
+    <link rel="alternate" href="https://velstech.net/quantization-deep-dive.html" />
+    <id>https://velstech.net/quantization-deep-dive.html</id>
+    <published>2026-08-30T00:00:00Z</published>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <category term="AI" />
+    <summary>How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed — with real numbers and practical advice for local AI.</summary>
+  </entry>
+  <entry>
+    <title>KV cache explained: why context windows eat memory</title>
+    <link rel="alternate" href="https://velstech.net/kv-cache-explained.html" />
+    <id>https://velstech.net/kv-cache-explained.html</id>
+    <published>2026-08-30T00:00:00Z</published>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <category term="AI" />
+    <summary>Why longer context windows eat memory, how the key-value cache grows with tokens, and how to calculate it for your own GPU.</summary>
+  </entry>
+  <entry>
+    <title>Flash Attention &amp; speculative decoding: making LLMs faster</title>
+    <link rel="alternate" href="https://velstech.net/flash-attention-guide.html" />
+    <id>https://velstech.net/flash-attention-guide.html</id>
+    <published>2026-08-30T00:00:00Z</published>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <category term="AI" />
+    <summary>How Flash Attention and speculative decoding make LLMs faster and use less memory — and why they matter for running models locally.</summary>
+  </entry>
   <entry>
     <title>GGUF explained: the format that makes local LLMs work</title>
     <link rel="alternate" href="https://velstech.net/gguf-explained.html" />

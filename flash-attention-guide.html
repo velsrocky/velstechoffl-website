@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Flash Attention and speculative decoding explained – two techniques that make LLMs faster and use less memory. How they work and why they matter for local AI." />
+  <title>Flash Attention &amp; speculative decoding: making LLMs faster | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/flash-attention-guide.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/flash-attention-guide.html#article",
+  "headline": "Flash Attention & speculative decoding: making LLMs faster",
+  "description": "How Flash Attention and speculative decoding make LLMs faster and use less memory — and why they matter for running models locally.",
+  "url": "https://velstech.net/flash-attention-guide.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/flash-attention-guide.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/flash-attention-guide.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/flash-attention-guide.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need to configure Flash Attention?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — it's enabled automatically by llama.cpp, Ollama, and LM Studio on supported GPUs. You just benefit silently."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does speculative decoding change the output?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The big model verifies the draft's guesses, so the final output is identical to running the big model alone — just faster."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/flash-attention-guide.html" />
+  <meta property="og:title" content="Flash Attention &amp; speculative decoding: making LLMs faster | VelsTech" />
+  <meta property="og:description" content="How Flash Attention and speculative decoding make LLMs faster and use less memory — and why they matter for running models locally." />
+  <meta property="og:image" content="https://velstech.net/og/flash-attention-guide.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Flash Attention &amp; speculative decoding: making LLMs faster | VelsTech" />
+  <meta name="twitter:description" content="How Flash Attention and speculative decoding make LLMs faster and use less memory — and why they matter for running models locally." />
+  <meta name="twitter:image" content="https://velstech.net/og/flash-attention-guide.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">Flash Attention &amp; speculative decoding: making LLMs faster</h1>
+    <div class="meta">
+      <span class="tag">Flash Attention</span>
+      <span class="tag">Speculative Decoding</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Two techniques quietly power most fast LLM inference today: <strong>Flash
+        Attention</strong> and <strong>speculative decoding</strong>. They're the reason a
+        modern engine can hit speeds that seemed impossible a few years ago. Neither is a
+        new model — they're smarter ways to <em>run</em> existing models.
+      </p>
+      <p>
+        Here's what they do, how they work, and whether they matter for the local AI you run
+        on your own hardware.
+      </p>
+
+      <h2>Flash Attention: less memory, faster attention</h2>
+      <p>
+        Attention is the heart of every transformer, but it has a problem: the standard way to
+        compute it materializes a huge intermediate matrix — <code>seq_len × seq_len</code> —
+        in fast memory (SRAM), spills it to slow memory (GPU VRAM), then reads it back. That
+        round trip is pure waste.
+      </p>
+      <p>
+        <strong>Flash Attention</strong> restructures the math so the attention scores are
+        computed and consumed in <em>tiles</em>, keeping the working set in fast SRAM and
+        never writing the big intermediate matrix to VRAM. The result:
+      </p>
+      <ul>
+        <li><strong>Uses far less memory</strong> — no more quadratic intermediate matrix, so long contexts fit where they didn't before.</li>
+        <li><strong>Is faster</strong> — it's memory-bandwidth-bound, and doing fewer slow-memory round trips wins big.</li>
+        <li><strong>Gives the same answer</strong> — it's mathematically equivalent, just computed more efficiently.</li>
+      </ul>
+      <p>
+        It's the reason modern models can claim 128K–1M context windows at all. Without Flash
+        Attention, that much context would blow past GPU memory in seconds. You don't choose
+        to "use" it — engines enable it automatically when your GPU supports it, and you
+        benefit silently.
+      </p>
+
+      <h2>Speculative decoding: predict, verify, skip</h2>
+      <p>
+        LLMs generate one token at a time, and each step is a full model pass — serial and
+        slow. <strong>Speculative decoding</strong> attacks that serial bottleneck with a
+        clever trick:
+      </p>
+      <ol>
+        <li>A small, fast "draft" model guesses the next few tokens (say 4–8) all at once.</li>
+        <li>The big model <strong>verifies the guesses in parallel</strong>, in a single pass.</li>
+        <li>Any tokens the big model agrees with are kept — often 2–4 of them — for the cost of one verification pass.</li>
+      </ol>
+      <p>
+        The win: you get several tokens for roughly the price of one, so effective generation
+        speed goes up — often 1.5–3× — <strong>without changing the output distribution</strong>.
+        The big model is the source of truth; the draft is just a speed-up.
+      </p>
+      <p>
+        It works best when the draft model is good at predicting the big model (e.g. a small
+        sibling of the same family). On consumer hardware, llama.cpp and Ollama support
+        draft models, and the speedup is most noticeable for chat where you generate long
+        replies.
+      </p>
+
+      <h2>What this means for local AI</h2>
+      <p>
+        Both techniques are why modern local AI feels as fast as it does:
+      </p>
+      <ul>
+        <li><strong>Flash Attention</strong> is enabled automatically by llama.cpp / Ollama on supported GPUs (NVIDIA, AMD via ROCm/Vulkan, Apple). It lets you run larger context windows on the same hardware.</li>
+        <li><strong>Speculative decoding</strong> gives you a free speed boost when you supply a draft model — you keep the big model's quality but generate faster.</li>
+        <li>Together with <a href="quantization-deep-dive.html">quantization</a> and a managed <a href="kv-cache-explained.html">KV cache</a>, they're the four pillars of practical local inference.</li>
+      </ul>
+      <p>
+        In practice, you don't tune these by hand — the engine does. But knowing they exist
+        explains why the same model can run at very different speeds depending on your
+        backend and flags, which is exactly what we measure in the
+        <a href="benchmarks/index.html">benchmark database</a>.
+      </p>
+
+      <h2>How to get the benefit</h2>
+      <ul>
+        <li><strong>Keep your engine up to date</strong> — llama.cpp, Ollama, and LM Studio ship Flash Attention and speculative-decoding support in current builds. Old versions are leaving performance on the table.</li>
+        <li><strong>Use a modern GPU</strong> — Flash Attention needs a GPU with enough SRAM; anything from the last ~5 years is fine.</li>
+        <li><strong>Add a draft model for speculative decoding</strong> — e.g. a small GGUF of the same family as your main model, and pass it as the draft in your engine's config.</li>
+      </ul>
+      <p>
+        If you're new to local AI and just want to run a model, the
+        <a href="how-to-get-started-local-ai.html">getting started guide</a> covers the whole
+        flow; these optimizations happen under the hood.
+      </p>
+
+      <h2>Bottom line</h2>
+      <p>
+        Flash Attention and speculative decoding aren't magic — they're smarter ways to use
+        the hardware you have. One saves memory and speeds up attention; the other overlaps
+        generation with cheap verification. Both are free performance on modern engines, and
+        both are part of why running serious models locally is practical in 2026.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="benchmarks/index.html">See benchmark results →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=12"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

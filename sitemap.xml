@@ -126,6 +126,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/how-to-get-started-local-ai.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/html-css-js.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

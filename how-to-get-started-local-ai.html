@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="How to get started with local AI in 2026 – pick the right hardware, install Ollama, download a model, and run it on your own machine. No cloud, no subscription, no jargon." />
+  <title>How to get started with local AI (2026) | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/how-to-get-started-local-ai.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/how-to-get-started-local-ai.html#article",
+  "headline": "How to get started with local AI (2026)",
+  "description": "How to get started with local AI in 2026 – pick the right hardware, install Ollama, download a model, and run it on your own machine. No cloud, no subscription, no jargon.",
+  "url": "https://velstech.net/how-to-get-started-local-ai.html",
+  "datePublished": "2026-08-29T00:00:00Z",
+  "dateModified": "2026-08-29T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/how-to-get-started-local-ai.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/how-to-get-started-local-ai.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/how-to-get-started-local-ai.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I run local AI on a laptop without a GPU?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. A modern laptop with 16 GB of RAM can run a 7B model at conversational speed via CPU-only inference. It won't be as fast as a GPU, but it's perfectly usable for chat, summarization, and coding assistance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is local AI as good as ChatGPT?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For many everyday tasks, yes. A 7B or 13B model running locally handles chat, summarization, and code generation well. The biggest models (70B+) are closer to frontier models but need more hardware."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need an internet connection to use local AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Once the model is downloaded, everything runs entirely on your device. No internet needed, no data sent anywhere, no subscription."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/how-to-get-started-local-ai.html" />
+  <meta property="og:title" content="How to get started with local AI (2026) | VelsTech" />
+  <meta property="og:description" content="How to get started with local AI in 2026 – pick the right hardware, install Ollama, download a model, and run it on your own machine. No cloud, no subscription, no jargon." />
+  <meta property="og:image" content="https://velstech.net/og/how-to-get-started-local-ai.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to get started with local AI (2026) | VelsTech" />
+  <meta name="twitter:description" content="How to get started with local AI in 2026 – pick the right hardware, install Ollama, download a model, and run it on your own machine. No cloud, no subscription, no jargon." />
+  <meta name="twitter:image" content="https://velstech.net/og/how-to-get-started-local-ai.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=31" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">How to get started with local AI (2026)</h1>
+    <div class="meta">
+      <span class="tag">Local AI</span>
+      <span class="tag">Ollama</span>
+      <span class="tag">Getting Started</span>
+      <span>Aug 29, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Running AI on your own computer — not through a cloud API — used to mean setting up
+        Python environments, wrestling with CUDA versions, and spending an afternoon reading
+        error logs. In 2026, it's dramatically simpler. You can install a tool, run a command,
+        and be chatting with a local model in under five minutes.
+      </p>
+      <p>
+        This guide walks through the whole process: what hardware you actually need, which
+        software to install, which model to pick, and what to do after you've got it running.
+        If you're new to local AI, this is the only guide you'll need.
+      </p>
+
+      <h2>What you need: hardware</h2>
+      <p>
+        The most important thing for local AI is <strong>memory</strong> — specifically, how
+        much of the model fits in RAM or VRAM at once. The model's weights need to be loaded
+        before it can run, and the quality of the model is roughly proportional to its size.
+      </p>
+      <p>
+        Here's a quick rule of thumb:
+      </p>
+      <ul>
+        <li><strong>8 GB RAM</strong> — runs 1–3B parameter models at 4-bit. Useful for basic
+        chat, limited reasoning. Runs on most laptops and phones.</li>
+        <li><strong>16 GB RAM</strong> — runs 7B models at 4-bit. This is the sweet spot for
+        a laptop. Good quality, good speed on CPU via llama.cpp.</li>
+        <li><strong>32 GB RAM</strong> — runs 13B models at 4-bit, or 7B at 8-bit. This is
+        where the model starts to feel genuinely smart.</li>
+        <li><strong>64 GB+ RAM</strong> — runs 32B or 70B models at 4-bit. This is
+        workstation territory or a <a href="dgx-spark-rtx-spark-ryzen-ai-halo.html">unified-memory
+        AI desktop</a>.</li>
+      </ul>
+      <p>
+        A GPU helps enormously, but it's not required. If you have a GPU, you need enough
+        <strong>VRAM</strong> to hold the model. Run your numbers through the
+        <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> to see what fits your
+        card. If you're shopping for a GPU, the
+        <a href="best-gpu-for-local-llm.html">best GPU for local LLMs</a> guide has the
+        full breakdown.
+      </p>
+      <p>
+        For most people starting out, the simplest path is: <strong>use what you already
+        have</strong>. Your existing laptop with 16 GB RAM can run a 7B model at
+        conversational speed. If you decide you want more, then you can upgrade.
+      </p>
+
+      <h2>Step 1: Install Ollama</h2>
+      <p>
+        <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> is the single
+        best tool to start with. It wraps model downloading, quantization, and the inference
+        engine into one command-line tool, and it works on Linux, macOS, and Windows. It
+        handles GPU acceleration automatically when it detects an NVIDIA GPU, AMD GPU, or
+        Apple Silicon.
+      </p>
+      <p>
+        <strong>On Linux/macOS:</strong>
+        <code>curl -fsSL https://ollama.com/install.sh | sh</code>
+      </p>
+      <p>
+        <strong>On Windows:</strong> download the installer from <a href="https://ollama.com/download" target="_blank" rel="noopener">ollama.com/download</a> and run it.
+      </p>
+      <p>
+        That's it. After installation, Ollama runs as a background service and you can start
+        pulling models.
+      </p>
+
+      <h2>Step 2: Pick and download a model</h2>
+      <p>
+        Ollama has a large library of models you can pull by name. For a first-time setup,
+        here are the best options based on your hardware:
+      </p>
+      <ul>
+        <li><strong>8–16 GB RAM:</strong> <code>ollama pull llama3.2:3b</code> or
+        <code>ollama pull qwen2.5:7b</code></li>
+        <li><strong>16–32 GB RAM:</strong> <code>ollama pull llama3.1:8b</code> or
+        <code>ollama pull mistral:7b</code></li>
+        <li><strong>32–64 GB RAM:</strong> <code>ollama pull qwen2.5:14b</code> or
+        <code>ollama pull llama3.3:70b</code></li>
+      </ul>
+      <p>
+        If you're not sure, start with <code>ollama pull llama3.2:3b</code> — it's small,
+        fast, and will run on almost anything. You can pull larger models later.
+      </p>
+
+      <h2>Step 3: Chat with it</h2>
+      <p>
+        Once the model is downloaded, just run:
+      </p>
+      <pre>ollama run llama3.2:3b</pre>
+      <p>
+        You'll get a terminal prompt where you can type messages. It's that simple. Type
+        <code>/bye</code> to exit.
+      </p>
+      <p>
+        For a better experience, install a web UI. Ollama ships with a built-in API, and
+        several community UIs will auto-detect it:
+      </p>
+      <ul>
+        <li><strong>Open WebUI</strong> — the most polished. Runs in Docker or directly.
+        Go to <a href="https://openwebui.com" target="_blank" rel="noopener">openwebui.com</a>.</li>
+        <li><strong>Ollama Web UI</strong> — lighter, no Docker needed: <code>ollama run llama3.2:3b</code>
+        then open <code>http://localhost:11434</code> in your browser.</li>
+      </ul>
+      <p>
+        For tips on getting better answers, see the
+        <a href="better-prompts.html">how to write better prompts</a> guide.
+      </p>
+
+      <h2>Step 4: What to do next</h2>
+      <p>
+        Once you have a local model running, the real fun starts. Here's what you can do
+        with it:
+      </p>
+      <ul>
+        <li><strong>Local chat assistant</strong> — keep it running as a private alternative
+        to ChatGPT. No data leaves your computer, no subscription.</li>
+        <li><strong>Summarize articles and documents</strong> — paste in text and get a
+        concise summary. Works offline, no copy-paste limits.</li>
+        <li><strong>Write and edit code</strong> — Ollama works with VS Code extensions,
+        terminal tools, and the built-in API for custom automation.</li>
+        <li><strong>Build a local RAG system</strong> — index your own files (notes, PDFs,
+        emails) and ask questions across them. Tools like
+        <a href="https://github.com/ggerganov/llama.cpp" target="_blank" rel="noopener">llama.cpp</a>
+        and <a href="https://docs.llamaindex.ai" target="_blank" rel="noopener">LlamaIndex</a>
+        make this approachable.</li>
+        <li><strong>Run an AI agent</strong> — with the
+        <a href="dgx-spark-rtx-spark-ryzen-ai-halo.html">new unified-memory machines</a>,
+        you can run agents that browse the web, use tools, and act on your behalf, all
+        locally.</li>
+      </ul>
+
+      <h2>If you hit problems</h2>
+      <p>
+        Most issues come down to memory. If the model doesn't start or runs very slowly:
+      </p>
+      <ul>
+        <li><strong>Try a smaller model</strong> — the 3B model is shockingly capable for its
+        size and will run on a 2019 laptop.</li>
+        <li><strong>Check your RAM usage</strong> — if your system has 16 GB total, a 7B
+        model at 4-bit needs about 4 GB, leaving 12 GB for the OS and other apps. That's
+        fine, but if you have 8 GB, you'll need to close other apps.</li>
+        <li><strong>Use a GPU</strong> — if you have an NVIDIA or AMD GPU, Ollama will use
+        it automatically. Run <code>ollama ps</code> to verify.</li>
+        <li><strong>CPU-only is fine</strong> — a 7B model on a modern CPU runs at about
+        5–10 tokens per second. That's readable, not instant, but perfectly usable for
+        chat and summarization.</li>
+      </ul>
+      <p>
+        For more detailed help, the <a href="https://github.com/ollama/ollama" target="_blank" rel="noopener">Ollama GitHub repo</a> has excellent documentation.
+      </p>
+
+      <h2>Bottom line</h2>
+      <p>
+        Local AI in 2026 is simple: install Ollama, pull a model, and start chatting. You
+        don't need a $3,000 GPU or a degree in machine learning. A 16 GB laptop with a 7B
+        model is enough to feel the real power of local AI — privacy, no subscription, no
+        limits.
+      </p>
+      <p>
+        Once you're comfortable, explore larger models, try a GPU, or build a dedicated
+        local AI machine using the <a href="dgx-spark-rtx-spark-ryzen-ai-halo.html">DGX
+        Spark, RTX Spark, or a Ryzen AI Max mini PC</a>. The door is open, and it costs
+        almost nothing to walk through.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="local-vs-cloud-ai.html">Local vs cloud AI →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=9"></script>
+  <script src="script.js?v=31"></script>
+</body>
+</html>

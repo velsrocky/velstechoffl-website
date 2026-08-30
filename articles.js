@@ -1,5 +1,29 @@
 const ARTICLES = [
   {
+    title: "How to get started with local AI (2026)",
+    url: "how-to-get-started-local-ai.html",
+    date: "2026-08-29",
+    updated: "2026-08-29",
+    category: "AI",
+    featured: true,
+    tags: ["Local AI", "Ollama", "Getting Started", "Beginner"],
+    description: "How to get started with local AI in 2026 – pick the right hardware, install Ollama, download a model, and run it on your own machine. No cloud, no subscription, no jargon.",
+    faq: [
+      {
+        q: "Can I run local AI on a laptop without a GPU?",
+        a: "Yes. A modern laptop with 16 GB of RAM can run a 7B model at conversational speed via CPU-only inference. It won't be as fast as a GPU, but it's perfectly usable for chat, summarization, and coding assistance.",
+      },
+      {
+        q: "Is local AI as good as ChatGPT?",
+        a: "For many everyday tasks, yes. A 7B or 13B model running locally handles chat, summarization, and code generation well. The biggest models (70B+) are closer to frontier models but need more hardware.",
+      },
+      {
+        q: "Do I need an internet connection to use local AI?",
+        a: "No. Once the model is downloaded, everything runs entirely on your device. No internet needed, no data sent anywhere, no subscription.",
+      },
+    ],
+  },
+  {
     title: "DGX Spark vs RTX Spark vs Ryzen AI Halo: the 2026 local-AI desktop showdown",
     url: "dgx-spark-rtx-spark-ryzen-ai-halo.html",
     date: "2026-08-29",

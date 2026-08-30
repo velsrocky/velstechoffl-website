@@ -202,20 +202,32 @@
 
       <section class="hub-tier">
         <div class="hub-tier-head">
-          <span class="hub-tier-label">Coming soon</span>
-          <h2 class="hub-tier-title">On the roadmap</h2>
+          <span class="hub-tier-label">Platform guides</span>
+          <h2 class="hub-tier-title">Run on your hardware</h2>
         </div>
         <div class="hub-grid">
-          <div class="hub-card soon"><h4>ROCm &amp; Vulkan on AMD</h4><p>A beginner's guide to running AMD GPUs for local AI.</p></div>
-          <div class="hub-card soon"><h4>Running LLMs on Apple Silicon</h4><p>What to know before you try local AI on a Mac.</p></div>
-          <div class="hub-card soon"><h4>RAG from scratch</h4><p>Index your own files and ask questions across them.</p></div>
+          <a class="hub-card" href="rocm-vulkan-amd-guide.html">
+            <h4>ROCm &amp; Vulkan on AMD</h4>
+            <p>Which backend to pick, how to install, and benchmark results on the RX 6800M.</p>
+            <span class="hub-meta">Read the guide →</span>
+          </a>
+          <a class="hub-card" href="apple-silicon-llm-guide.html">
+            <h4>Running LLMs on Apple Silicon</h4>
+            <p>How Macs handle local AI, what models fit your RAM, and getting started with Metal.</p>
+            <span class="hub-meta">Read the guide →</span>
+          </a>
+          <a class="hub-card" href="rag-from-scratch.html">
+            <h4>RAG from scratch</h4>
+            <p>Ask questions about your own documents — load, embed, retrieve, generate, all local.</p>
+            <span class="hub-meta">Build it yourself →</span>
+          </a>
         </div>
       </section>
 
     </div>
   </main>
 
-  <script src="articles.js?v=12"></script>
+  <script src="articles.js?v=13"></script>
   <script src="script.js?v=33"></script>
 </body>
 </html>

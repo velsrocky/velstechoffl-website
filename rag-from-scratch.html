@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="RAG from scratch – build a local question-answering system over your own documents with an LLM and embeddings. What RAG is, how it works, and a working example." />
+  <title>RAG from scratch: ask questions about your own documents | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/rag-from-scratch.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/rag-from-scratch.html#article",
+  "headline": "RAG from scratch: ask questions about your own documents",
+  "description": "What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings.",
+  "url": "https://velstech.net/rag-from-scratch.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/rag-from-scratch.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/rag-from-scratch.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/rag-from-scratch.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is RAG?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RAG (Retrieval-Augmented Generation) lets an LLM answer questions using your own documents. It retrieves the few relevant chunks for a question, then has the model answer using only that context — no retraining needed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can RAG run entirely locally?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. With a local LLM and a small embedding model (both via Ollama), the whole load-embed-retrieve-generate pipeline runs offline and private."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/rag-from-scratch.html" />
+  <meta property="og:title" content="RAG from scratch: ask questions about your own documents | VelsTech" />
+  <meta property="og:description" content="What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings." />
+  <meta property="og:image" content="https://velstech.net/og/rag-from-scratch.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RAG from scratch: ask questions about your own documents | VelsTech" />
+  <meta name="twitter:description" content="What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings." />
+  <meta name="twitter:image" content="https://velstech.net/og/rag-from-scratch.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">RAG from scratch: ask questions about your own documents</h1>
+    <div class="meta">
+      <span class="tag">RAG</span>
+      <span class="tag">Embeddings</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        An LLM knows what it was trained on — but not your notes, your PDFs, your code, or
+        your company's docs. <strong>RAG</strong> (Retrieval-Augmented Generation) fixes that
+        by letting a model answer questions using <em>your</em> documents, without retraining.
+        It's how "chat with your PDF" apps work, and you can build it entirely on your own
+        machine with a local LLM.
+      </p>
+      <p>
+        This guide explains the four moving parts of RAG and walks through a working,
+        local-first example.
+      </p>
+
+      <h2>The four parts of RAG</h2>
+      <ol>
+        <li><strong>Load</strong> — read your documents (PDF, markdown, text) into chunks of text.</li>
+        <li><strong>Embed</strong> — turn each chunk into a vector (a list of numbers that captures its meaning) using an embedding model.</li>
+        <li><strong>Retrieve</strong> — when a question comes in, embed it too and find the chunks whose vectors are closest to it.</li>
+        <li><strong>Generate</strong> — give the LLM the retrieved chunks plus the question, and let it answer using only that context.</li>
+      </ol>
+      <p>
+        That's the whole trick. The LLM never sees your whole document set — only the few
+        relevant chunks, which it uses as grounded context. That's why answers are accurate
+        and why you don't need to retrain anything.
+      </p>
+
+      <h2>Step 1: Load and chunk</h2>
+      <p>
+        Split your documents into chunks of a few hundred characters, with a little overlap
+        between them. Why overlap? So that context that straddles a chunk boundary isn't lost.
+        A simple approach in Python:
+      </p>
+      <pre>import re
+text = open("notes.md").read()
+chunks = [text[i:i+500] for i in range(0, len(text), 400)]  # 500 chars, 100 overlap</pre>
+      <p>
+        Tools like <a href="https://docs.llamaindex.ai" target="_blank" rel="noopener">LlamaIndex</a>
+        and <a href="https://langchain.com" target="_blank" rel="noopener">LangChain</a> handle
+        smarter chunking out of the box, but the idea is the same.
+      </p>
+
+      <h2>Step 2: Embed</h2>
+      <p>
+        An embedding model converts text into a vector — a fixed-size list of numbers — where
+        similar meaning lands near each other. A tiny embedding model runs fast on any CPU, so
+        this is cheap. Ollama has several, e.g. <code>nomic-embed-text</code>:
+      </p>
+      <pre>ollama pull nomic-embed-text</pre>
+      <p>
+        Embed every chunk and store the vectors (a simple JSON or SQLite file is fine for
+        personal use; vector databases like Chroma or Qdrant are for scale).
+      </p>
+
+      <h2>Step 3: Retrieve</h2>
+      <p>
+        When someone asks a question, embed it with the same model, then find the chunks whose
+        vectors are most similar. "Similarity" is usually cosine similarity — smaller angle
+        between vectors means more related meaning. Pick the top 3–5 chunks:
+      </p>
+      <pre>import numpy as np
+# assume emb(q) is the question vector, emb(chunks) is a matrix
+scores = emb(chunks) @ emb(q) / (norms * norm_q)   # cosine sim
+top = np.argsort(scores)[::-1][:5]                  # top 5 chunk indices</pre>
+      <p>
+        If the question and a chunk contain similar words or concepts, they'll rank highly —
+        that's how RAG finds the right passages without the LLM seeing everything.
+      </p>
+
+      <h2>Step 4: Generate</h2>
+      <p>
+        Finally, prompt the LLM with the retrieved chunks as context. The magic is the
+        instruction: <em>answer using only this context</em>.
+      </p>
+      <pre>system: You are a helpful assistant. Answer the question using ONLY the
+context below. If the answer isn't there, say you don't know.
+
+Context:
+--- chunk 3 ---
+--- chunk 7 ---
+--- chunk 11 ---
+
+Question: What did the notes say about X?</pre>
+      <p>
+        With a local model (e.g. a 7B via Ollama), this runs fully offline. The
+        <a href="how-to-get-started-local-ai.html">local AI guide</a> shows how to run the
+        model; the <a href="better-prompts.html">prompting guide</a> explains why the "only
+        use the context" instruction matters so much.
+      </p>
+
+      <h2>A simpler shortcut: Ollama + Open WebUI</h2>
+      <p>
+        If you don't want to write the code, <a href="https://openwebui.com" target="_blank" rel="noopener">Open WebUI</a>
+        has RAG built in: upload a document, and it chunks, embeds, and retrieves for you
+        automatically against your local Ollama models. It's the fastest way to try RAG —
+        the "from scratch" version above is how it works under the hood.
+      </p>
+
+      <h2>When RAG works (and when it doesn't)</h2>
+      <ul>
+        <li><strong>Great at:</strong> finding facts in your docs, grounding answers, citations ("this is from section 3"), private data.</li>
+        <li><strong>Good at:</strong> summarization across many documents (retrieve then summarize).</li>
+        <li><strong>Not great at:</strong> math or multi-step reasoning over the whole corpus (that's agents + tools, a different animal), or when the answer needs context from many disconnected chunks.</li>
+      </ul>
+      <p>
+        Chunk size and retrieval count are the two knobs that matter most. Too few or too-small
+        chunks → missing context. Too many → the LLM gets distracted or the answer gets long.
+        Start with ~500-char chunks and top-5 retrieval, then tune.
+      </p>
+
+      <h2>Bottom line</h2>
+      <p>
+        RAG is load, embed, retrieve, generate — four steps you can run entirely locally. It
+        turns a general LLM into one that genuinely knows your documents, with grounded,
+        citable answers and no retraining. Whether you use a library or the raw steps above,
+        the concept is the same, and it's one of the most useful things you can build on top
+        of a local model.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="local-vs-cloud-ai.html">Local vs cloud AI →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M." />
+  <title>ROCm &amp; Vulkan on AMD: running local AI on Radeon | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/rocm-vulkan-amd-guide.html#article",
+  "headline": "ROCm & Vulkan on AMD: running local AI on Radeon",
+  "description": "ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M.",
+  "url": "https://velstech.net/rocm-vulkan-amd-guide.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/rocm-vulkan-amd-guide.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/rocm-vulkan-amd-guide.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/rocm-vulkan-amd-guide.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which is faster, ROCm or Vulkan on AMD?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the workload. In our RX 6800M tests, Vulkan won decode on a dense 27B model (+20%), while ROCm won on a huge-context MoE (+30%). Try both and benchmark on your own card."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does my AMD GPU support ROCm?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ROCm officially supports a specific list of cards. If yours isn't on it, Vulkan is almost always the working option — it's the simpler, broader-compatibility backend."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/rocm-vulkan-amd-guide.html" />
+  <meta property="og:title" content="ROCm &amp; Vulkan on AMD: running local AI on Radeon | VelsTech" />
+  <meta property="og:description" content="ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M." />
+  <meta property="og:image" content="https://velstech.net/og/rocm-vulkan-amd-guide.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ROCm &amp; Vulkan on AMD: running local AI on Radeon | VelsTech" />
+  <meta name="twitter:description" content="ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M." />
+  <meta name="twitter:image" content="https://velstech.net/og/rocm-vulkan-amd-guide.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">ROCm &amp; Vulkan on AMD: running local AI on Radeon</h1>
+    <div class="meta">
+      <span class="tag">ROCm</span>
+      <span class="tag">Vulkan</span>
+      <span class="tag">AMD</span>
+      <span>Aug 30, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        If you run local AI on an AMD Radeon card, you'll hit two competing backends:
+        <strong>ROCm</strong> and <strong>Vulkan</strong>. Which one you use changes your
+        tokens-per-second, your setup effort, and how many GPUs are supported. This guide
+        explains the difference, how to set each up, and — based on our
+        <a href="benchmarks/index.html">RX 6800M benchmarks</a> — which to pick.
+      </p>
+
+      <h2>What's the difference?</h2>
+      <p>
+        Both are ways for software like llama.cpp and Ollama to talk to your GPU. They solve
+        the same problem (run the model on the graphics card instead of the CPU) but go about
+        it differently:
+      </p>
+      <ul>
+        <li><strong>ROCm</strong> is AMD's CUDA equivalent — a purpose-built compute stack with HIP (AMD's CUDA-like language). It's what AMD pushes for AI and HPC.</li>
+        <li><strong>Vulkan</strong> is a cross-vendor graphics and compute API. It's lower-level and more general, but llama.cpp's Vulkan backend works broadly because it doesn't depend on AMD-specific driver quirks.</li>
+      </ul>
+      <p>
+        The practical differences: ROCm is usually <em>faster</em> on supported cards, but
+        officially supports a narrower list. Vulkan works on more GPUs (including older and
+        unsupported Radeons) and is easier to get running, but can be a bit slower in some
+        workloads.
+      </p>
+
+      <h2>Which one is faster?</h2>
+      <p>
+        The honest answer from our testing on an <strong>RX 6800M (12 GB)</strong>:
+        <strong>it depends on the workload.</strong>
+      </p>
+      <ul>
+        <li>For <strong>Qwen 27B at 16K context</strong> (dense): <strong>Vulkan was ~20% faster</strong> at decode (21.8 vs 18.1 tok/s), while ROCm won prompt eval by ~45%.</li>
+        <li>For <strong>Ornith 35B MoE at 262K</strong>: <strong>ROCm was ~30% faster</strong> at decode (25.6 vs 19.7 tok/s).</li>
+      </ul>
+      <p>
+        Why the flip? The bottleneck changes. On a dense model that's partially offloaded,
+        the slower part is feeding bytes to the GPU — where Vulkan's simpler path wins. On a
+        huge-context MoE with many CPU experts, the constraint moves elsewhere and ROCm's
+        compute advantage shows. The full numbers are in the
+        <a href="benchmarks/index.html">benchmark database</a> and the
+        <a href="moe-vs-dense-rx6800m-16k-vs-262k.html">MoE vs Dense Lab test</a>.
+      </p>
+
+      <h2>Setting up ROCm</h2>
+      <p>
+        ROCm is the more involved install. On Ubuntu, you use AMD's installer, choosing the
+        right GPU version flag for your card. Our step-by-step
+        <a href="install-rocm-ubuntu.html">ROCm on Ubuntu guide</a> covers the full flow —
+        from the apt repo to <code>rocminfo</code> verifying your GPU is seen. The short
+        version:
+      </p>
+      <pre>sudo amdgpu-install --usecase=rocm,graphics --gfxversion=gfx1031   # RX 6800M
+rocminfo   # verify the GPU shows up</pre>
+      <p>
+        Then build llama.cpp with ROCm support:
+        <code>cmake .. -DLLAMA_HIPBLAS=ON</code>. Note that RDNA2 (gfx1030) and RDNA3
+        (gfx1100) need different flags, and you may need <code>--load-mode none</code> in
+        llama.cpp to avoid splitting weights across GPU and CPU.
+      </p>
+
+      <h2>Setting up Vulkan</h2>
+      <p>
+        Vulkan is simpler. Install the Vulkan drivers, then build llama.cpp with Vulkan:
+      </p>
+      <pre># Ubuntu: install the Vulkan driver
+sudo apt install mesa-vulkan-drivers
+# llama.cpp with Vulkan
+cmake .. -DLLAMA_VULKAN=ON
+make -j$(nproc)</pre>
+      <p>
+        Ollama also ships Vulkan builds for AMD. The big win: if your card isn't on ROCm's
+        official support list, <strong>Vulkan is almost certainly your working option</strong>.
+      </p>
+
+      <h2>How to choose</h2>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Your situation</th><th>Best backend</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Officially supported Radeon, want max compute speed</td><td><strong>ROCm</strong></td></tr>
+            <tr><td>Unsupported / older / laptop Radeon</td><td><strong>Vulkan</strong></td></tr>
+            <tr><td>Chat (decode-bound) on a dense model</td><td>Vulkan (often)</td></tr>
+            <tr><td>Huge context / MoE workloads</td><td>ROCm (often)</td></tr>
+            <tr><td>Simplest setup, widest compatibility</td><td><strong>Vulkan</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        The safest advice: <strong>try both and benchmark</strong>. Building both backends and
+        running the same prompt through each takes minutes, and the winner genuinely depends
+        on your exact card and model. Our Lab does exactly this — see the
+        <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B ROCm vs Vulkan test</a> and
+        <a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B ROCm vs Vulkan test</a>.
+      </p>
+
+      <h2>Bottom line</h2>
+      <p>
+        ROCm and Vulkan both run local AI on AMD, and neither is universally better. ROCm
+        targets supported cards for max compute; Vulkan covers everything else and often wins
+        on chat-speed. Start with the simplest backend that works on your card (usually
+        Vulkan), and don't be afraid to benchmark the other — the numbers, not the marketing,
+        should decide.
+      </p>
+      <p>
+        Want to know what your Radeon can do? Check the
+        <a href="benchmarks/index.html">benchmark database</a> or the
+        <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a>.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="install-rocm-ubuntu.html">ROCm install guide →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

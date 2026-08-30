@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Running LLMs on Apple Silicon – how M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal." />
+  <title>Running LLMs on Apple Silicon: a practical guide | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/apple-silicon-llm-guide.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/apple-silicon-llm-guide.html#article",
+  "headline": "Running LLMs on Apple Silicon: a practical guide",
+  "description": "How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal.",
+  "url": "https://velstech.net/apple-silicon-llm-guide.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/apple-silicon-llm-guide.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/apple-silicon-llm-guide.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/apple-silicon-llm-guide.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can a Mac run LLMs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — and often better than a PC at the same price, because unified memory means the entire system RAM is available for the model. A 16 GB Mac is a solid local-AI daily driver."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much RAM do I need for local AI on a Mac?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Roughly: 16 GB runs 7B–9B models at Q4, 24 GB runs 13B–14B, 32 GB runs 27B–30B, and 64 GB runs 70B. Buy the RAM you'll want in a few years — it's soldered."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/apple-silicon-llm-guide.html" />
+  <meta property="og:title" content="Running LLMs on Apple Silicon: a practical guide | VelsTech" />
+  <meta property="og:description" content="How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal." />
+  <meta property="og:image" content="https://velstech.net/og/apple-silicon-llm-guide.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Running LLMs on Apple Silicon: a practical guide | VelsTech" />
+  <meta name="twitter:description" content="How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal." />
+  <meta name="twitter:image" content="https://velstech.net/og/apple-silicon-llm-guide.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">Running LLMs on Apple Silicon: a practical guide</h1>
+    <div class="meta">
+      <span class="tag">Apple Silicon</span>
+      <span class="tag">Metal</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Apple Silicon Macs — M1, M2, M3, and M4 — are quietly some of the best local-AI
+        machines you can buy. Not because the GPU is the fastest, but because of
+        <strong>unified memory</strong>: the same RAM is shared by CPU and GPU, which is
+        exactly what running an LLM wants. A Mac with enough RAM can hold models that would
+        need an expensive discrete GPU on a PC.
+      </p>
+      <p>
+        Here's what you need to know about running LLMs on a Mac, what will fit your machine,
+        and how to get started.
+      </p>
+
+      <h2>Why Macs are good at local AI</h2>
+      <p>
+        An LLM's speed is mostly limited by how fast you can feed its weights to the compute
+        units — that's memory bandwidth. Apple Silicon's unified memory means:
+      </p>
+      <ul>
+        <li><strong>No VRAM wall.</strong> On a PC you're capped by GPU VRAM (12–24 GB typically). On a Mac, the entire system RAM is usable for the model. A 64 GB M-series Mac runs models a 24 GB PC GPU can't.</li>
+        <li><strong>Efficient Metal backend.</strong> llama.cpp and Ollama have excellent Metal support, so models use the GPU automatically.</li>
+        <li><strong>Low power.</strong> Even a M-series laptop draws little power running inference, so it's a genuinely practical always-on AI machine.</li>
+      </ul>
+      <p>
+        The catch: <strong>RAM is everything,</strong> and it's soldered. Buy the RAM you'll
+        want in three years, because you can't upgrade it later.
+      </p>
+
+      <h2>What fits your Mac</h2>
+      <p>
+        Model size at 4-bit (Q4_K_M) roughly matches RAM needed, plus the system needs a
+        few GB for itself:
+      </p>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Mac RAM</th><th>Comfortable model (Q4)</th><th>Use case</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>8 GB</td><td>3B–4B</td><td>Basic chat, light tasks</td></tr>
+            <tr><td>16 GB</td><td>7B–9B</td><td>Solid daily driver</td></tr>
+            <tr><td>24 GB</td><td>13B–14B</td><td>Serious local AI</td></tr>
+            <tr><td>32 GB</td><td>27B–30B</td><td>Large models, good context</td></tr>
+            <tr><td>64 GB+</td><td>70B</td><td>Frontier-adjacent</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Memory bandwidth also matters for speed — the M-series Pro/Max chips have more
+        bandwidth than the base M-series, so a "same RAM, bigger chip" Mac runs faster.
+      </p>
+
+      <h2>Getting started</h2>
+      <p>
+        The easiest path is Ollama, which detects Metal automatically. Install it, then:
+      </p>
+      <pre>brew install ollama
+ollama pull llama3.2:3b
+ollama run llama3.2:3b</pre>
+      <p>
+        Ollama uses your Mac's GPU out of the box. For more control, build llama.cpp with
+        Metal and use it directly — same concept as the
+        <a href="llama-cpp-guide.html">llama.cpp guide</a>, just with the Metal backend.
+      </p>
+      <p>
+        New to local AI entirely? The <a href="how-to-get-started-local-ai.html">getting
+        started guide</a> walks through the whole flow.
+      </p>
+
+      <h2>Performance expectations</h2>
+      <p>
+        Expect <strong>5–20 tok/s</strong> decode on an M-series Mac with a model that fits
+        comfortably — usable for chat, not instant. The exact number depends on your chip,
+        RAM, model size, and quantization. Compare against real results in the
+        <a href="benchmarks/index.html">benchmark database</a> (we test Radeon, but the
+        decode formula — bandwidth ÷ bytes per token — applies the same way).
+      </p>
+      <p>
+        Use the <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> to estimate whether
+        a model fits your Mac's RAM at your chosen context and quantization.
+      </p>
+
+      <h2>Practical tips</h2>
+      <ul>
+        <li><strong>Buy RAM over storage.</strong> Storage is cheap to add externally; soldered RAM is forever.</li>
+        <li><strong>Close other apps</strong> when running big models — the model competes with them for the same unified memory.</li>
+        <li><strong>Prefer Q4_K_M</strong> to fit bigger models; see the <a href="quantization-deep-dive.html">quantization deep dive</a> for the quality trade-off.</li>
+        <li><strong>Pro/Max chips run faster</strong> at the same RAM due to more memory bandwidth.</li>
+      </ul>
+
+      <h2>Bottom line</h2>
+      <p>
+        Apple Silicon is one of the most practical local-AI platforms: quiet, low-power, and —
+        thanks to unified memory — able to run models that would choke a PC GPU with half the
+        RAM. A 16 GB Mac is a genuine daily-driver local-AI machine; a 32 GB+ one is a serious
+        workstation. The key decision is buying enough RAM upfront.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="new-mac-desktops.html">Apple's new Mac desktops →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="script.js?v=33"></script>
+</body>
+</html>

@@ -1,5 +1,62 @@
 const ARTICLES = [
   {
+    title: "ROCm & Vulkan on AMD: running local AI on Radeon",
+    url: "rocm-vulkan-amd-guide.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["ROCm", "Vulkan", "AMD", "Local AI"],
+    description: "ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M.",
+    faq: [
+      {
+        q: "Which is faster, ROCm or Vulkan on AMD?",
+        a: "It depends on the workload. In our RX 6800M tests, Vulkan won decode on a dense 27B model (+20%), while ROCm won on a huge-context MoE (+30%). Try both and benchmark on your own card.",
+      },
+      {
+        q: "Does my AMD GPU support ROCm?",
+        a: "ROCm officially supports a specific list of cards. If yours isn't on it, Vulkan is almost always the working option — it's the simpler, broader-compatibility backend.",
+      },
+    ],
+  },
+  {
+    title: "Running LLMs on Apple Silicon: a practical guide",
+    url: "apple-silicon-llm-guide.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["Apple Silicon", "Metal", "Local AI"],
+    description: "How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal.",
+    faq: [
+      {
+        q: "Can a Mac run LLMs?",
+        a: "Yes — and often better than a PC at the same price, because unified memory means the entire system RAM is available for the model. A 16 GB Mac is a solid local-AI daily driver.",
+      },
+      {
+        q: "How much RAM do I need for local AI on a Mac?",
+        a: "Roughly: 16 GB runs 7B–9B models at Q4, 24 GB runs 13B–14B, 32 GB runs 27B–30B, and 64 GB runs 70B. Buy the RAM you'll want in a few years — it's soldered.",
+      },
+    ],
+  },
+  {
+    title: "RAG from scratch: ask questions about your own documents",
+    url: "rag-from-scratch.html",
+    date: "2026-08-30",
+    updated: "2026-08-30",
+    category: "AI",
+    tags: ["RAG", "Embeddings", "Local AI"],
+    description: "What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings.",
+    faq: [
+      {
+        q: "What is RAG?",
+        a: "RAG (Retrieval-Augmented Generation) lets an LLM answer questions using your own documents. It retrieves the few relevant chunks for a question, then has the model answer using only that context — no retraining needed.",
+      },
+      {
+        q: "Can RAG run entirely locally?",
+        a: "Yes. With a local LLM and a small embedding model (both via Ollama), the whole load-embed-retrieve-generate pipeline runs offline and private.",
+      },
+    ],
+  },
+  {
     title: "Quantization deep dive: how Q4, Q5, and Q8 change quality and speed",
     url: "quantization-deep-dive.html",
     date: "2026-08-30",

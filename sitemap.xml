@@ -101,7 +101,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/best-laptop-under-50000.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/best-mini-pc-for-linux.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/best-ssd-for-developers.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/better-prompts.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/buying-guides.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

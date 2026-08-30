@@ -2573,6 +2573,60 @@ summary:focus-visible,
   line-height: 1.4;
 }
 
+/* Buying guides hub */
+.buy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 16px 0 24px;
+}
+
+.buy-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.1s;
+}
+
+.buy-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.buy-card h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.buy-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.buy-badge {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.buy-cta {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: auto;
+}
+
 /* Spec comparison table (article) */
 .spec-table {
   width: 100%;

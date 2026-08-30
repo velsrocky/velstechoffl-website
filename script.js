@@ -181,6 +181,7 @@ function navHTML() {
     '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html">Benchmarks</a>' +
     '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html">Tools</a>' +
     '<a class="nav-link' + (currentPage === "tags.html" ? " active" : "") + '" href="tags.html">Tags</a>' +
+    '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="buying-guides.html">Guides</a>' +
     "</nav>" +
     '<div class="controls">' +
     '<button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme"></button>' +

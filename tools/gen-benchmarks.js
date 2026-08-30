@@ -57,7 +57,7 @@ function page(b, bk) {
   <meta name="twitter:description" content="${esc(desc)}" />
   <meta name="twitter:image" content="${SITE}/og-image.png" />
   <link rel="icon" href="../logo.svg" />
-  <link rel="stylesheet" href="../styles.css?v=31" />
+  <link rel="stylesheet" href="../styles.css?v=32" />
 </head>
 <body>
   <main class="article-page">
@@ -112,7 +112,7 @@ function page(b, bk) {
   </main>
 
   <script src="../articles.js?v=10"></script>
-  <script src="../script.js?v=31"></script>
+  <script src="../script.js?v=32"></script>
 </body>
 </html>`;
 }

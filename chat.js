@@ -178,9 +178,24 @@
     const _t = (k) => { try { if (window.VelsI18n) return window.VelsI18n.t(k); } catch {} return k; };
     root.innerHTML = `
       <button id="vt-chat-bubble" class="vt-bubble" aria-label="${_t("chat_open")}" aria-expanded="false">
-        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 5h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 4V5z"/>
-          <circle cx="9" cy="12" r="1"/><circle cx="13" cy="12" r="1"/><circle cx="17" cy="12" r="1"/>
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- antenna -->
+          <line x1="12" y1="8.6" x2="12" y2="6.4" />
+          <!-- bulb (glowing) -->
+          <g class="vt-bulb">
+            <circle cx="12" cy="4.2" r="2" fill="white" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M11 4.2 L11.4 5.0 L12 4.2 L12.6 5.0 L13 4.2" fill="none" stroke="#06121f" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <!-- robot head -->
+          <rect x="6.5" y="9.2" width="11" height="9.2" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <!-- eyes -->
+          <circle cx="9.6" cy="13.2" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="14.4" cy="13.2" r="1" fill="currentColor" stroke="none"/>
+          <!-- mouth / chin -->
+          <path d="M10 15.6 H14" stroke="currentColor" stroke-width="1" />
+          <!-- side notches -->
+          <path d="M6.5 12.2 H5.2 A1 1 0 0 0 6.5 14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M17.5 12.2 H18.8 A1 1 0 0 1 17.5 14" fill="none" stroke="currentColor" stroke-width="1.2"/>
         </svg>
         <span class="vt-bubble-dot" aria-hidden="true"></span>
       </button>
@@ -361,9 +376,77 @@
     window.VelsChat.isReady = true;
   } catch {}
 
+  function setupBubbleHint() {
+    try {
+      const dismissed = localStorage.getItem("vt-bubble-hint-dismissed");
+      if (dismissed === "1") return;
+      const bubble = $("vt-chat-bubble");
+      if (!bubble) return;
+      // Don't show if panel already open
+      if (!$("vt-chat-panel")?.hidden) return;
+      // Create hint
+      let hint = document.getElementById("vt-bubble-hint");
+      if (!hint) {
+        hint = document.createElement("div");
+        hint.id = "vt-bubble-hint";
+        hint.className = "vt-bubble-hint";
+        hint.setAttribute("role", "status");
+        const lang = getChatLang();
+        const msg = lang === "ta" ? "VelsChat-ஐ முயற்சிக்கவும் – ஏதேனும் சொல்லைப் பற்றி கேளுங்கள்!" : lang === "hi" ? "VelsChat आज़माएँ – किसी शब्द के बारे में पूछें!" : "Try VelsChat – ask about any term!";
+        hint.innerHTML = `<span>${msg}</span><button class="vt-bubble-hint-close" aria-label="Dismiss">×</button>`;
+        document.body.appendChild(hint);
+        hint.querySelector(".vt-bubble-hint-close").addEventListener("click", (e) => {
+          e.stopPropagation();
+          hint.classList.remove("vt-show");
+          try { localStorage.setItem("vt-bubble-hint-dismissed", "1"); } catch {}
+          setTimeout(() => hint.remove(), 300);
+        });
+        hint.addEventListener("click", () => {
+          try { localStorage.setItem("vt-bubble-hint-dismissed", "1"); } catch {}
+          hint.classList.remove("vt-show");
+          openPanel();
+          setTimeout(() => hint.remove(), 300);
+        });
+      }
+      const show = () => {
+        if (!hint || hint.classList.contains("vt-show")) return;
+        if (!$("vt-chat-panel")?.hidden) return;
+        hint.classList.add("vt-show");
+        // auto-hide after 6s
+        setTimeout(() => {
+          hint.classList.remove("vt-show");
+          setTimeout(() => hint.remove(), 300);
+        }, 6000);
+      };
+      // Show after 8s, or on scroll 40%, or on glossary hover
+      let shown = false;
+      const trigger = () => {
+        if (shown) return;
+        shown = true;
+        show();
+      };
+      setTimeout(trigger, 8000);
+      let scrollTriggered = false;
+      window.addEventListener("scroll", () => {
+        if (scrollTriggered) return;
+        const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+        if (scrolled > 0.4) { scrollTriggered = true; trigger(); }
+      }, { passive: true });
+      document.addEventListener("mouseover", (e) => {
+        if (e.target.closest(".vt-term")) trigger();
+      });
+      // Dismiss if user opens chat
+      bubble.addEventListener("click", () => {
+        try { localStorage.setItem("vt-bubble-hint-dismissed", "1"); } catch {}
+        if (hint) hint.remove();
+      }, { once: true });
+    } catch {}
+  }
+
   async function init() {
     ensureContainer();
     updatePageBar();
+    setupBubbleHint();
 
     // Use the default model configured in CHAT_MODEL (no picker needed).
     activeModel = CHAT_MODEL;

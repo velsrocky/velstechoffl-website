@@ -260,7 +260,7 @@
         <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
         <input type="hidden" name="subject" value="VelsTech newsletter signup" />
         <label class="sr-only" for="newsletter-email">Email</label>
-        <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" required />
+        <input id="newsletter-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required />
         <button class="btn btn-primary" type="submit">Subscribe</button>
         <p class="form-status" id="newsletter-status" hidden></p>
       </form>
@@ -293,10 +293,10 @@
         <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
         <input type="hidden" name="subject" value="New message from VelsTech contact form" />
         <label for="contact-name">Name</label>
-        <input id="contact-name" type="text" name="name" placeholder="Your name" required />
+        <input id="contact-name" type="text" name="name" autocomplete="name" placeholder="Your name" required />
 
         <label for="contact-email">Email</label>
-        <input id="contact-email" type="email" name="email" placeholder="you@example.com" required />
+        <input id="contact-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required />
 
         <label for="contact-message">Message</label>
         <textarea id="contact-message" name="message" rows="5" placeholder="What's on your mind?" required></textarea>

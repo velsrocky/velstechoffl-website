@@ -173,6 +173,7 @@ function navHTML() {
     "</div>" +
     '<nav class="links">' +
     '<a class="nav-link' + (currentPage === "index.html" ? " active" : "") + '" href="index.html">Home</a>' +
+    '<a class="nav-link' + (currentPage === "start-here.html" ? " active" : "") + '" href="start-here.html">Get Started</a>' +
     '<div class="nav-dropdown" id="topics-dropdown">' +
     '<button type="button" class="nav-link dropdown-toggle' + (inTopic ? " active" : "") + '" id="topics-toggle" aria-haspopup="true" aria-expanded="false">Topics <span class="dropdown-caret">▾</span></button>' +
     '<div class="dropdown-menu" id="topics-menu">' + topicLinks + "</div>" +
@@ -180,7 +181,6 @@ function navHTML() {
     '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html">Lab</a>' +
     '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html">Benchmarks</a>' +
     '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html">Tools</a>' +
-    '<a class="nav-link' + (currentPage === "tags.html" ? " active" : "") + '" href="tags.html">Tags</a>' +
     '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="buying-guides.html">Guides</a>' +
     "</nav>" +
     '<div class="controls">' +

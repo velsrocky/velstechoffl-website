@@ -2743,3 +2743,96 @@ summary:focus-visible,
   border-bottom: none;
 }
 
+
+/* Onboarding / learning path */
+.path-intro {
+  font-size: 1.05rem;
+  margin: 10px 0 26px;
+}
+
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.path-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.path-card h3 {
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.path-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.path-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 2px 0;
+}
+
+.path-step {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.path-step:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.path-step .step-num {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.8rem;
+  min-width: 20px;
+}
+
+.path-card .path-more {
+  font-size: 0.85rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+.path-card .path-more a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.path-card .path-more a:hover {
+  text-decoration: underline;
+}
+
+.start-cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 8px 0 0;
+}

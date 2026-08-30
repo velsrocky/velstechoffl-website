@@ -421,6 +421,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/start-here.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/tags.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

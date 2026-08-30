@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="VelsTech GPU benchmark database – real tokens/sec for LLMs on real GPUs, filterable by GPU, model, quantization, context, and backend. RX 6800M, RTX 4090, RX 7900 XTX, and more." />
+  <title>LLM &amp; GPU Benchmark Database | VelsTech Lab</title>
+  <link rel="canonical" href="https://velstech.net/benchmarks/index.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://velstech.net/benchmarks/index.html#webpage",
+  "url": "https://velstech.net/benchmarks/index.html",
+  "name": "LLM & GPU Benchmark Database | VelsTech Lab",
+  "description": "Real tokens/sec for LLMs on real GPUs, filterable by GPU, model, quantization, context, and backend.",
+  "inLanguage": "en"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/benchmarks/index.html" />
+  <meta property="og:title" content="LLM &amp; GPU Benchmark Database | VelsTech Lab" />
+  <meta property="og:description" content="Real tokens/sec for LLMs on real GPUs, filterable by GPU, model, quantization, context, and backend." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LLM &amp; GPU Benchmark Database | VelsTech Lab" />
+  <meta name="twitter:description" content="Real tokens/sec for LLMs on real GPUs, filterable by GPU, model, quantization, context, and backend." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="../styles.css?v=31" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="../index.html">Home</a> / <a href="../lab.html">Lab</a> / Benchmarks</p>
+    <h1 class="title">LLM &amp; GPU Benchmark Database</h1>
+    <div class="meta">
+      <span>Real tokens/sec on real hardware · tested &amp; estimated results</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Search, filter, and compare how fast different LLMs run on different GPUs.
+        <strong>Tested</strong> results come from the <a href="../lab.html">VelsTech Lab</a>
+        on real hardware. <strong>Estimated</strong> results come from the
+        <a href="../gpu-ai-calculator.html">GPU AI Performance Calculator</a>.
+        Every row links to a dedicated benchmark page.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Search</span>
+            <input id="search" type="search" class="input" placeholder="GPU, model, quant…" autocomplete="off" />
+          </label>
+          <label class="field">
+            <span>GPU</span>
+            <select id="f-gpu" class="input"><option value="">All GPUs</option></select>
+          </label>
+          <label class="field">
+            <span>Backend</span>
+            <select id="f-backend" class="input"><option value="">All backends</option></select>
+          </label>
+          <label class="field">
+            <span>Type</span>
+            <select id="f-type" class="input">
+              <option value="">Tested + estimated</option>
+              <option value="tested">🧪 Tested only</option>
+              <option value="estimated">Estimated only</option>
+            </select>
+          </label>
+        </div>
+
+        <p class="tool-note" id="result-count"></p>
+        <div style="overflow-x:auto">
+          <table class="spec-table bench-table" id="bench-table">
+            <thead>
+              <tr>
+                <th>GPU</th>
+                <th>Model</th>
+                <th>Quant</th>
+                <th>Context</th>
+                <th>Backend</th>
+                <th>Decode</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="bench-body"></tbody>
+          </table>
+        </div>
+        <p class="tool-note">
+          Decode = tokens per second while generating. Higher is better for chat.
+          Offloaded results run partly in system RAM and are slower.
+        </p>
+      </div>
+
+      <h2>How to read these numbers</h2>
+      <p>
+        Decode speed is the number that matters most for chatting – it's how fast the model
+        streams its answer. Prompt eval (not shown per row) matters for long documents.
+        Numbers are only comparable within the same backend, context, and quantization.
+      </p>
+      <p>
+        Want to know what fits your card? Check the
+        <a href="../llm-vram-calculator.html">LLM VRAM Calculator</a>, or read the
+        <a href="../best-gpu-for-local-llm.html">best GPU for local LLMs</a> guide.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="../lab.html">← Back to Lab</a>
+      <a href="../best-gpu-for-local-llm.html">Best GPU for local LLMs →</a>
+    </div>
+  </main>
+
+  <script>
+    const state = { data: [], gpus: [], backends: [] };
+
+    async function load() {
+      const res = await fetch("data.json");
+      state.data = (await res.json()).benchmarks;
+      state.gpus = [...new Set(state.data.map((b) => b.gpu))].sort();
+      state.backends = [...new Set(state.data.flatMap((b) => b.backends.map((x) => x.name)))].sort();
+
+      const gpuSel = document.getElementById("f-gpu");
+      state.gpus.forEach((g) => {
+        const o = document.createElement("option");
+        o.value = g;
+        o.textContent = g;
+        gpuSel.appendChild(o);
+      });
+      const beSel = document.getElementById("f-backend");
+      state.backends.forEach((b) => {
+        const o = document.createElement("option");
+        o.value = b;
+        o.textContent = b;
+        beSel.appendChild(o);
+      });
+
+      ["search", "f-gpu", "f-backend", "f-type"].forEach((id) => {
+        document.getElementById(id).addEventListener("input", render);
+        document.getElementById(id).addEventListener("change", render);
+      });
+      render();
+    }
+
+    function render() {
+      const q = document.getElementById("search").value.trim().toLowerCase();
+      const gpu = document.getElementById("f-gpu").value;
+      const be = document.getElementById("f-backend").value;
+      const type = document.getElementById("f-type").value;
+
+      const rows = [];
+      for (const b of state.data) {
+        if (gpu && b.gpu !== gpu) continue;
+        if (type && ((type === "tested") !== b.tested)) continue;
+        for (const bk of b.backends) {
+          if (be && bk.name !== be) continue;
+          const hay = (b.gpu + " " + b.model + " " + b.quant + " " + (bk.name) + " " + b.context).toLowerCase();
+          if (q && !hay.includes(q)) continue;
+          rows.push({ b, bk });
+        }
+      }
+      rows.sort((a, b) => (b.bk.decode || 0) - (a.bk.decode || 0));
+
+      const body = document.getElementById("bench-body");
+      body.innerHTML = rows.map(({ b, bk }) => {
+        const slug = b.id + "-" + bk.name.toLowerCase();
+        const testedBadge = b.tested ? ' <span class="latest-badge">🧪 Tested</span>' : "";
+        return '<tr>' +
+          '<td><a href="' + slug + '.html">' + esc(b.gpu) + '</a></td>' +
+          '<td>' + esc(b.model) + testedBadge + '</td>' +
+          '<td>' + esc(b.quant) + '</td>' +
+          '<td>' + esc(b.context) + '</td>' +
+          '<td>' + esc(bk.name) + '</td>' +
+          '<td><strong>' + (bk.decode != null ? esc(String(bk.decode)) + " tok/s" : "–") + '</strong></td>' +
+          '<td><a href="' + slug + '.html">Details →</a></td>' +
+          '</tr>';
+      }).join("") || '<tr><td colspan="7" class="tool-note" style="text-align:center;padding:20px">No results. Try clearing filters.</td></tr>';
+
+      document.getElementById("result-count").textContent =
+        rows.length + " result" + (rows.length === 1 ? "" : "s") + " (" + state.data.length + " total benchmarks)";
+    }
+
+    const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+    load();
+  </script>
+
+  <script src="../articles.js?v=10"></script>
+  <script src="../script.js?v=31"></script>
+</body>
+</html>

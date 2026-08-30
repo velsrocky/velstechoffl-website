@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Benchmark: RX 6800M (12 GB) running Ornith 35B-A3B MoE (35B (3B active)) at Q5_K/Q4_K / 262K / q8_0 on ROCm — 25.62 tok/s decode. Tested in the VelsTech Lab." />
+  <title>RX 6800M · Ornith 35B-A3B MoE · Q5_K/Q4_K · ROCm · 262K | VelsTech Lab</title>
+  <link rel="canonical" href="https://velstech.net/benchmarks/rx-6800m-ornith-35b-moe-rocm.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "@id": "https://velstech.net/benchmarks/rx-6800m-ornith-35b-moe-rocm.html#article",
+  "headline": "RX 6800M · Ornith 35B-A3B MoE · Q5_K/Q4_K · ROCm · 262K",
+  "description": "Benchmark: RX 6800M (12 GB) running Ornith 35B-A3B MoE (35B (3B active)) at Q5_K/Q4_K / 262K / q8_0 on ROCm — 25.62 tok/s decode. Tested in the VelsTech Lab.",
+  "url": "https://velstech.net/benchmarks/rx-6800m-ornith-35b-moe-rocm.html",
+  "inLanguage": "en",
+  "author": { "@type": "Person", "name": "VelsTech", "url": "https://velstech.net/" },
+  "publisher": { "@type": "Organization", "name": "VelsTech", "url": "https://velstech.net/", "logo": { "@type": "ImageObject", "url": "https://velstech.net/logo.svg" } },
+  "mainEntityOfPage": "https://velstech.net/benchmarks/rx-6800m-ornith-35b-moe-rocm.html",
+  "image": "https://velstech.net/og-image.png"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/benchmarks/rx-6800m-ornith-35b-moe-rocm.html" />
+  <meta property="og:title" content="RX 6800M · Ornith 35B-A3B MoE · Q5_K/Q4_K · ROCm · 262K" />
+  <meta property="og:description" content="Benchmark: RX 6800M (12 GB) running Ornith 35B-A3B MoE (35B (3B active)) at Q5_K/Q4_K / 262K / q8_0 on ROCm — 25.62 tok/s decode. Tested in the VelsTech Lab." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RX 6800M · Ornith 35B-A3B MoE · Q5_K/Q4_K · ROCm · 262K" />
+  <meta name="twitter:description" content="Benchmark: RX 6800M (12 GB) running Ornith 35B-A3B MoE (35B (3B active)) at Q5_K/Q4_K / 262K / q8_0 on ROCm — 25.62 tok/s decode. Tested in the VelsTech Lab." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="../logo.svg" />
+  <link rel="stylesheet" href="../styles.css?v=31" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Benchmarks</a> / RX 6800M / Ornith 35B-A3B MoE</p>
+    <h1 class="title">RX 6800M · Ornith 35B-A3B MoE</h1>
+    <div class="meta">
+      <span>35B (3B active)</span>
+      <span>· Q5_K/Q4_K</span>
+      <span>· 262K</span>
+      <span>· q8_0</span>
+      <span>· 🧪 Tested</span>
+    </div>
+
+    <div class="article-body">
+      <div class="calc">
+        <div class="result-rows">
+          <div class="result-row total"><span>Backend</span><strong>ROCm</strong></div>
+          <div class="result-row total"><span>Decode</span><strong>25.62 tok/s</strong></div>
+          <div class="result-row"><span>Prompt eval</span><strong>83.8 tok/s</strong></div>
+          <div class="result-row"><span>VRAM</span><strong>12 GB</strong></div>
+          <div class="result-row"><span>Memory bandwidth</span><strong>~384 GB/s</strong></div>
+          <div class="result-row"><span>Model</span><strong>Ornith 35B-A3B MoE</strong></div>
+          <div class="result-row"><span>Parameters</span><strong>35B (3B active)</strong></div>
+          <div class="result-row"><span>Quantization</span><strong>Q5_K/Q4_K</strong></div>
+          <div class="result-row"><span>Context</span><strong>262K</strong></div>
+          <div class="result-row"><span>KV quant</span><strong>q8_0</strong></div>
+          <div class="result-row"><span>Offload</span><strong>Partial (some layers in RAM)</strong></div>
+        </div>
+      </div>
+
+      <h2>About this result</h2>
+      <p>28 CPU experts, MoE-sparse + q8 KV + CPU offload. ROCm wins decode (+30%). Decodes ~3B active per token, so speed holds even at 262K. Needs --load-mode none, no -ngl 999.</p>
+      <p>
+        This result was <strong>tested in the VelsTech Lab</strong> on real hardware. <a href="../ornith-35b-moe-262k-rocm-vs-vulkan.html">Read the full Lab report →</a>
+      </p>
+
+      <h2>Related</h2>
+      <ul>
+        <li><a href="../best-gpu-for-local-llm.html">Best GPU for running LLMs locally</a></li>
+        <li><a href="../llm-vram-calculator.html">LLM VRAM Calculator</a></li>
+        <li><a href="../gpu-ai-calculator.html">GPU AI Performance Calculator</a></li>
+        <li><a href="index.html">All benchmarks</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="index.html">← All benchmarks</a>
+      <a href="../lab.html">VelsTech Lab</a>
+    </div>
+  </main>
+
+  <script src="../articles.js?v=10"></script>
+  <script src="../script.js?v=31"></script>
+</body>
+</html>

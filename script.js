@@ -178,6 +178,7 @@ function navHTML() {
     '<div class="dropdown-menu" id="topics-menu">' + topicLinks + "</div>" +
     "</div>" +
     '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html">Lab</a>' +
+    '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html">Benchmarks</a>' +
     '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html">Tools</a>' +
     '<a class="nav-link' + (currentPage === "tags.html" ? " active" : "") + '" href="tags.html">Tags</a>' +
     "</nav>" +

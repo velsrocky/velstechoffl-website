@@ -2575,7 +2575,9 @@ summary:focus-visible,
 
 /* Topic hub (learning progression) */
 .hub {
-  margin-top: 28px;
+  max-width: 1100px;
+  margin: 28px auto 0;
+  padding: 0 32px 64px;
 }
 
 .hub-tier {
@@ -2594,8 +2596,8 @@ summary:focus-visible,
 .hub-tier-label {
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--accent);
   white-space: nowrap;
 }

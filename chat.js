@@ -222,6 +222,28 @@
 
   const $ = (id) => document.getElementById(id);
 
+  function applyChatLang() {
+    if (!document.getElementById("vt-chat-root")) return;
+    const bubble = $("vt-chat-bubble");
+    if (bubble) bubble.setAttribute("aria-label", tChat("chat_open"));
+    const title = document.querySelector(".vt-title");
+    if (title) title.textContent = tChat("chat_title");
+    const sub = document.querySelector(".vt-sub");
+    if (sub) sub.textContent = tChat("chat_sub");
+    const close = $("vt-chat-close");
+    if (close) close.setAttribute("aria-label", tChat("chat_close"));
+    const pageBtn = $("vt-page-explain");
+    if (pageBtn) pageBtn.textContent = tChat("chat_explain_page");
+    const pageHint = document.querySelector(".vt-page-hint");
+    if (pageHint) pageHint.textContent = tChat("chat_explain_hint");
+    const input = $("vt-chat-input");
+    if (input) input.placeholder = tChat("chat_placeholder");
+    const send = $("vt-chat-send");
+    if (send) send.setAttribute("aria-label", tChat("chat_send"));
+    const disclaimer = document.querySelector(".vt-disclaimer");
+    if (disclaimer) disclaimer.textContent = tChat("chat_disclaimer");
+  }
+
   function openPanel() {
     const p = $("vt-chat-panel");
     p.hidden = false;
@@ -474,6 +496,9 @@
     // Welcome message
     const welcome = tChat("chat_welcome");
     const w = addMessage("assistant", welcome);
+
+    // Re-apply localized strings when the site language changes
+    window.addEventListener("vt-lang-change", () => applyChatLang());
   }
 
   if (document.readyState === "loading") {

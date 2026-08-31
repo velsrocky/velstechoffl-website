@@ -353,9 +353,13 @@
   const chip = document.createElement("button");
   chip.id = "vt-select-chip";
   chip.type = "button";
-  chip.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 4V5z"/><circle cx="9" cy="12" r="1"/><circle cx="13" cy="12" r="1"/><circle cx="17" cy="12" r="1"/></svg> <span>Ask VelsChat</span>`;
+  chip.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 4V5z"/><circle cx="9" cy="12" r="1"/><circle cx="13" cy="12" r="1"/><circle cx="17" cy="12" r="1"/></svg> <span class="vt-chip-label">${tDef("ask_velschat")}</span>`;
   chip.hidden = true;
   document.body.appendChild(chip);
+  window.addEventListener("vt-lang-change", () => {
+    const lbl = chip.querySelector(".vt-chip-label");
+    if (lbl) lbl.textContent = tDef("ask_velschat");
+  });
 
   let selTimer = null;
   let lastSelectionText = "";

@@ -16,52 +16,77 @@ function t(key) {
   return key;
 }
 function setLang(lang) {
-  if (window.VelsI18n && window.VelsI18n.setLang) window.VelsI18n.setLang(lang);
-  else try { localStorage.setItem("vt-lang", lang); document.documentElement.setAttribute("lang", lang); } catch {}
+  if (window.VelsI18n && window.VelsI18n.setLang) {
+    window.VelsI18n.setLang(lang); // dispatches vt-lang-change internally
+  } else {
+    try { localStorage.setItem("vt-lang", lang); document.documentElement.setAttribute("lang", lang); } catch {}
+    try { window.dispatchEvent(new CustomEvent("vt-lang-change", { detail: lang })); } catch {}
+  }
 
   const path = location.pathname.split("/").pop() || "index.html";
   const baseUrl = location.origin + location.pathname.replace(/[^/]+$/, "");
 
-  // If leaving Hindi page to EN/TA, go back to the English original
-  if (lang !== "hi" && path.endsWith(".hi.html")) {
-    const enPath = path.replace(/\.hi\.html$/, ".html");
-    location.href = baseUrl + enPath + location.search + location.hash;
+  // Resolve the English base filename of the current page.
+  let base = path;
+  if (/\.(hi|ta)\.html$/.test(base)) base = base.replace(/\.(hi|ta)\.html$/, ".html");
+
+  // Target variant for the chosen language.
+  const variants = {
+    en: base,
+    hi: base.replace(/\.html$/, ".hi.html"),
+    ta: base.replace(/\.html$/, ".ta.html"),
+  };
+  const target = variants[lang] || base;
+
+  // Already on the target variant -> just apply UI in place.
+  if (target === path) {
+    applyLang(lang);
     return;
   }
 
-  // For Hindi: navigate to .hi.html variant if it exists
-  if (lang === "hi" && !path.endsWith(".hi.html") && path.endsWith(".html")) {
-    const hiPath = path.replace(/\.html$/, ".hi.html");
-    // Check existence via HEAD fetch, fallback to UI-only
-    fetch(baseUrl + hiPath, { method: "HEAD" })
-      .then(r => {
-        if (r.ok) {
-          location.href = baseUrl + hiPath + location.search + location.hash;
-        } else {
-          // No translation exists, apply UI only
-          try { applyLang(lang); } catch {}
-          setTimeout(() => location.reload(), 120);
-        }
-      })
-      .catch(() => {
-        try { applyLang(lang); } catch {}
-        setTimeout(() => location.reload(), 120);
-      });
-    return;
-  }
-
-  try { applyLang(lang); } catch {}
-  setTimeout(() => location.reload(), 120);
+  fetch(baseUrl + target, { method: "HEAD" })
+    .then(r => {
+      if (r.ok) {
+        // Full translated variant exists -> navigate to it.
+        location.href = baseUrl + target + location.search + location.hash;
+      } else if (lang !== "en" && path !== base) {
+        // Picked a language with no variant while on a translated page ->
+        // fall back to the English original.
+        location.href = baseUrl + base + location.search + location.hash;
+      } else {
+        // No translated variant -> translate the UI instantly, keep content.
+        applyLang(lang);
+      }
+    })
+    .catch(() => applyLang(lang));
 }
+
 function applyLang(lang) {
   // Update html lang and selector state
   try { document.documentElement.setAttribute("lang", lang); } catch {}
   document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
-  // Update a few dynamic placeholders without reload
-  const sInput = document.getElementById("search-input");
-  if (sInput) sInput.placeholder = t("search_placeholder");
-  const footerNote = document.querySelector(".footer-note");
-  if (footerNote) footerNote.textContent = t("footer_note");
+
+  // Update all elements tagged with data-i18n (nav, footer, headings…)
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const attr = el.getAttribute("data-i18n-attr");
+    const val = t(key);
+    if (attr) el.setAttribute(attr, val);
+    else el.textContent = val;
+  });
+
+  // Buttons with title/aria-label (theme, accent)
+  const themeBtn = document.getElementById("theme-toggle");
+  if (themeBtn) { themeBtn.title = t("theme_toggle"); themeBtn.setAttribute("aria-label", t("theme_toggle")); }
+  const paletteBtn = document.getElementById("palette-btn");
+  if (paletteBtn) { paletteBtn.title = t("accent_toggle"); paletteBtn.setAttribute("aria-label", t("accent_toggle")); }
+
+  // Re-render search results so the empty message / placeholders match.
+  const input = document.getElementById("search-input");
+  if (input) {
+    input.placeholder = t("search_placeholder");
+    if (input.value) input.dispatchEvent(new Event("input", { bubbles: true }));
+  }
 }
 
 /* Amazon Associates tracking ID – ONE place to change it site-wide.
@@ -240,20 +265,20 @@ function navHTML() {
     '<header class="nav">' +
     '<a class="brand" href="index.html">' + brandSVG + '<span class="brand-name">VelsTech<span class="brand-sub">Solutions</span></span></a>' +
     '<div class="search-wrap">' +
-    '<input id="search-input" class="search-input" type="search" placeholder="' + t("search_placeholder") + '" aria-label="Search articles" autocomplete="off" />' +
+    '<input id="search-input" class="search-input" type="search" data-i18n="search_placeholder" data-i18n-attr="placeholder" placeholder="' + t("search_placeholder") + '" aria-label="Search articles" autocomplete="off" />' +
     '<div id="search-results" class="search-results" hidden></div>' +
     "</div>" +
     '<nav class="links">' +
-    '<a class="nav-link' + (currentPage === "index.html" ? " active" : "") + '" href="index.html">' + t("nav_home") + '</a>' +
-    '<a class="nav-link' + (currentPage === "start-here.html" ? " active" : "") + '" href="start-here.html">' + t("nav_getstarted") + '</a>' +
+    '<a class="nav-link' + (currentPage === "index.html" ? " active" : "") + '" href="index.html" data-i18n="nav_home">' + t("nav_home") + '</a>' +
+    '<a class="nav-link' + (currentPage === "start-here.html" ? " active" : "") + '" href="start-here.html" data-i18n="nav_getstarted">' + t("nav_getstarted") + '</a>' +
     '<div class="nav-dropdown" id="topics-dropdown">' +
-    '<button type="button" class="nav-link dropdown-toggle' + (inTopic ? " active" : "") + '" id="topics-toggle" aria-haspopup="true" aria-expanded="false">' + t("nav_topics") + ' <span class="dropdown-caret">▾</span></button>' +
+    '<button type="button" class="nav-link dropdown-toggle' + (inTopic ? " active" : "") + '" id="topics-toggle" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav_topics">' + t("nav_topics") + '</span> <span class="dropdown-caret">▾</span></button>' +
     '<div class="dropdown-menu" id="topics-menu">' + topicLinks + "</div>" +
     "</div>" +
-    '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html">' + t("nav_lab") + '</a>' +
-    '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html">' + t("nav_benchmarks") + '</a>' +
-    '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html">' + t("nav_tools") + '</a>' +
-    '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="buying-guides.html">' + t("nav_guides") + '</a>' +
+    '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html" data-i18n="nav_lab">' + t("nav_lab") + '</a>' +
+    '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html" data-i18n="nav_benchmarks">' + t("nav_benchmarks") + '</a>' +
+    '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html" data-i18n="nav_tools">' + t("nav_tools") + '</a>' +
+    '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="buying-guides.html" data-i18n="nav_guides">' + t("nav_guides") + '</a>' +
     "</nav>" +
     '<div class="controls">' +
     langSwitch +
@@ -453,7 +478,7 @@ function renderRelated(cur) {
   const section = document.createElement("section");
   section.className = "related-section";
   section.innerHTML =
-    '<h2 class="related-heading">' + t("related_heading") + '</h2>' +
+    '<h2 class="related-heading" data-i18n="related_heading">' + t("related_heading") + '</h2>' +
     '<div class="related-list">' +
     scored
       .map(
@@ -590,7 +615,7 @@ function initFaq() {
   const section = document.createElement("section");
   section.className = "faq-section";
   section.innerHTML =
-    '<h2 class="faq-heading">' + t("faq_heading") + '</h2>' +
+    '<h2 class="faq-heading" data-i18n="faq_heading">' + t("faq_heading") + '</h2>' +
     details;
 
   const nav = main.querySelector(".article-nav");
@@ -620,17 +645,17 @@ function footerHTML() {
   return (
     '<footer class="footer">' +
     '<nav class="footer-links">' +
-    '<a href="feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' ' + t("footer_subscribe") + '</a>' +
-    '<a href="resources.html">' + t("footer_resources") + '</a>' +
-    '<a href="advertise.html">' + t("footer_advertise") + '</a>' +
-    '<a href="disclosure.html">' + t("footer_disclosure") + '</a>' +
-    '<a href="terms.html">' + t("footer_terms") + '</a>' +
-    '<a href="privacy.html">' + t("footer_privacy") + '</a>' +
-    '<a href="mailto:hello@velstech.net">' + t("footer_contact") + '</a>' +
+    '<a href="feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' <span data-i18n="footer_subscribe">' + t("footer_subscribe") + '</span></a>' +
+    '<a href="resources.html" data-i18n="footer_resources">' + t("footer_resources") + '</a>' +
+    '<a href="advertise.html" data-i18n="footer_advertise">' + t("footer_advertise") + '</a>' +
+    '<a href="disclosure.html" data-i18n="footer_disclosure">' + t("footer_disclosure") + '</a>' +
+    '<a href="terms.html" data-i18n="footer_terms">' + t("footer_terms") + '</a>' +
+    '<a href="privacy.html" data-i18n="footer_privacy">' + t("footer_privacy") + '</a>' +
+    '<a href="mailto:hello@velstech.net" data-i18n="footer_contact">' + t("footer_contact") + '</a>' +
     "</nav>" +
     socialHTML() +
-    '<p class="footer-note">' + t("footer_note") + '</p>' +
-    '<p>&copy; <span id="year"></span> VelsTech. ' + t("footer_rights") + '</p>' +
+    '<p class="footer-note" data-i18n="footer_note">' + t("footer_note") + '</p>' +
+    '<p>&copy; <span id="year"></span> VelsTech. <span data-i18n="footer_rights">' + t("footer_rights") + '</span></p>' +
     "</footer>"
   );
 }
@@ -659,7 +684,7 @@ function injectDefine() {
   if (document.getElementById("vt-define-js")) return;
   const d = document.createElement("script");
   d.id = "vt-define-js";
-  d.src = "define.js?v=4";
+  d.src = "define.js?v=5";
   d.onerror = () => console.error("[VelsTech] Failed to load define");
   document.head.appendChild(d);
 }
@@ -674,7 +699,7 @@ function injectChat() {
   if (document.getElementById("vt-chat-script")) return;
   const s = document.createElement("script");
   s.id = "vt-chat-script";
-  s.src = "chat.js?v=20";
+  s.src = "chat.js?v=21";
   s.onerror = () => console.error("[VelsTech] Failed to load chat widget");
   document.head.appendChild(s);
 }

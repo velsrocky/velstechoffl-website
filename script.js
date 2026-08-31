@@ -19,23 +19,37 @@ function setLang(lang) {
   if (window.VelsI18n && window.VelsI18n.setLang) window.VelsI18n.setLang(lang);
   else try { localStorage.setItem("vt-lang", lang); document.documentElement.setAttribute("lang", lang); } catch {}
 
-  // For Hindi: navigate to the .hi.html variant of the current page if it exists.
-  // For other langs (en/ta): stay on current page, just reload to apply UI strings.
   const path = location.pathname.split("/").pop() || "index.html";
-  if (lang === "hi" && !path.endsWith(".hi.html")) {
-    const hiPath = path.replace(/\.html$/, ".hi.html");
-    if (hiPath !== path) {
-      // Keep query/hash if present
-      location.href = location.origin + location.pathname.replace(/[^/]+$/, "") + hiPath + location.search + location.hash;
-      return;
-    }
-  }
+  const baseUrl = location.origin + location.pathname.replace(/[^/]+$/, "");
+
   // If leaving Hindi page to EN/TA, go back to the English original
   if (lang !== "hi" && path.endsWith(".hi.html")) {
     const enPath = path.replace(/\.hi\.html$/, ".html");
-    location.href = location.origin + location.pathname.replace(/[^/]+$/, "") + enPath + location.search + location.hash;
+    location.href = baseUrl + enPath + location.search + location.hash;
     return;
   }
+
+  // For Hindi: navigate to .hi.html variant if it exists
+  if (lang === "hi" && !path.endsWith(".hi.html") && path.endsWith(".html")) {
+    const hiPath = path.replace(/\.html$/, ".hi.html");
+    // Check existence via HEAD fetch, fallback to UI-only
+    fetch(baseUrl + hiPath, { method: "HEAD" })
+      .then(r => {
+        if (r.ok) {
+          location.href = baseUrl + hiPath + location.search + location.hash;
+        } else {
+          // No translation exists, apply UI only
+          try { applyLang(lang); } catch {}
+          setTimeout(() => location.reload(), 120);
+        }
+      })
+      .catch(() => {
+        try { applyLang(lang); } catch {}
+        setTimeout(() => location.reload(), 120);
+      });
+    return;
+  }
+
   try { applyLang(lang); } catch {}
   setTimeout(() => location.reload(), 120);
 }

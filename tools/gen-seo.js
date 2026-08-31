@@ -272,6 +272,7 @@ for (const file of files) {
 
 const urls = [];
 for (const file of files) {
+  if (file.endsWith(".hi.html") || file.endsWith(".ta.html")) continue; // handled below
   if (!getMeta(file)) continue;
   const loc = file === "index.html" ? `${SITE}/` : `${SITE}/${file}`;
   const priority = file === "index.html" ? "1.0" : file === "terms.html" || file === "privacy.html" ? "0.3" : TOOLS_META[file] ? "0.9" : "0.8";
@@ -285,11 +286,36 @@ if (fs.existsSync(benchDir)) {
     urls.push({ file: "benchmarks/" + f, loc, priority: "0.7" });
   }
 }
+// Add Hindi article translations
+for (const f of files.filter((f) => f.endsWith(".hi.html"))) {
+  const base = f.replace(".hi.html", ".html");
+  if (ARTICLES.find((a) => a.url === base)) {
+    const loc = `${SITE}/${f}`;
+    urls.push({ file: f, loc, priority: "0.8" });
+  }
+}
 urls.sort((a, b) => { if (a.file === "index.html") return -1; if (b.file === "index.html") return 1; return a.file.localeCompare(b.file); });
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`).join("\n")}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls.map((u) => {
+  const isHi = u.file.endsWith(".hi.html");
+  const enFile = isHi ? u.file.replace(".hi.html", ".html") : u.file;
+  const enLoc = SITE + (enFile === "index.html" ? "/" : "/" + enFile);
+  const hiLoc = SITE + "/" + enFile.replace(/\.html$/, ".hi.html");
+  let alternates = "";
+  if (isHi) {
+    // HI page: point to EN primary + HI
+    alternates = `\n    <xhtml:link rel="alternate" hreflang="en" href="${enLoc}" />\n    <xhtml:link rel="alternate" hreflang="hi" href="${hiLoc}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
+  } else if (ARTICLES.find((a) => a.url === u.file)) {
+    // EN article with HI translation
+    const hiExists = fs.existsSync(path.join(__dirname, "..", u.file.replace(".html", ".hi.html")));
+    alternates = `\n    <xhtml:link rel="alternate" hreflang="en" href="${enLoc}" />`;
+    if (hiExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="hi" href="${hiLoc}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
+  }
+  return `  <url>\n    <loc>${u.loc}</loc>${alternates}\n    <changefreq>monthly</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`;
+}).join("\n")}
 </urlset>
 `;
 fs.writeFileSync(path.join(__dirname, "..", "sitemap.xml"), sitemap);

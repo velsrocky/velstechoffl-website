@@ -51,7 +51,7 @@ Sitemap is shared with Google via `robots.txt`.
 
 `tools/gen-seo.js` is the single source of truth for:
 - canonical URLs, OG/Twitter cards, JSON-LD (BlogPosting, WebApplication, FAQPage)
-- `sitemap.xml` and `robots.txt`
+- `sitemap.xml` (includes `.hi.html` Hindi article URLs) and `robots.txt`
 - optional GSC HTML-tag verification meta
 
 Run it whenever you change metadata, add a page, or change a token:
@@ -59,6 +59,20 @@ Run it whenever you change metadata, add a page, or change a token:
 ```sh
 node tools/gen-seo.js
 ```
+
+## 5. Custom events (glossary + selection)
+
+`define.js` fires analytics events when readers interact with glossary terms
+(if `gtag` or `plausible` is present):
+
+| Event | Fired when | Data |
+|---|---|---|
+| `glossary_ask` | Reader clicks **Ask VelsChat →** on a glossary popover | `{ term }` |
+| `selection_ask` | Reader clicks the **Ask about "…"** chip after selecting text | `{ text }` |
+
+To capture these, expose `window.gtag` (AdSense/GA4) or `window.plausible` on the
+page; otherwise they are silently skipped. Cloudflare Web Analytics alone will not
+see them (no JS event API in Automatic Setup).
 
 ## What to check weekly
 

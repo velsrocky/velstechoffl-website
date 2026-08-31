@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://velstech.net/</loc>
     <changefreq>monthly</changefreq>
@@ -21,7 +22,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/apple-silicon-llm-guide.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/apple-silicon-llm-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/apple-silicon-llm-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/apple-silicon-llm-guide.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/apple-silicon-llm-guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/apple-silicon-llm-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/apple-silicon-llm-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/apple-silicon-llm-guide.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -101,12 +113,34 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://velstech.net/best-gpu-ai-under-50000.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/best-gpu-ai-under-50000.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/best-gpu-ai-under-50000.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/best-gpu-ai-under-50000.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/best-gpu-ai-under-50000.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/best-gpu-ai-under-50000.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/best-gpu-ai-under-50000.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/best-gpu-ai-under-50000.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/best-gpu-for-local-llm.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/best-gpu-for-local-llm.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/best-gpu-for-local-llm.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/best-gpu-for-local-llm.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/best-gpu-for-local-llm.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/best-gpu-for-local-llm.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/best-gpu-for-local-llm.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/best-gpu-for-local-llm.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -126,7 +160,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/better-prompts.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/better-prompts.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/better-prompts.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/better-prompts.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/better-prompts.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/better-prompts.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/better-prompts.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/better-prompts.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -156,7 +201,18 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/cpu-vs-gpu.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/cpu-vs-gpu.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/cpu-vs-gpu.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/cpu-vs-gpu.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/cpu-vs-gpu.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/cpu-vs-gpu.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/cpu-vs-gpu.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/cpu-vs-gpu.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -171,7 +227,18 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/dgx-spark-rtx-spark-ryzen-ai-halo.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -191,17 +258,50 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/first-pc-build.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/first-pc-build.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/first-pc-build.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/first-pc-build.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/first-pc-build.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/first-pc-build.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/first-pc-build.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/first-pc-build.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/flash-attention-guide.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/flash-attention-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/flash-attention-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/flash-attention-guide.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/flash-attention-guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/flash-attention-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/flash-attention-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/flash-attention-guide.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/gguf-explained.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gguf-explained.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gguf-explained.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gguf-explained.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/gguf-explained.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gguf-explained.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gguf-explained.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gguf-explained.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -211,12 +311,34 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/git-beginners.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/git-beginners.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/git-beginners.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/git-beginners.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/git-beginners.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/git-beginners.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/git-beginners.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/git-beginners.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/glm-5-3.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/glm-5-3.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/glm-5-3.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/glm-5-3.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/glm-5-3.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/glm-5-3.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/glm-5-3.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/glm-5-3.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -236,32 +358,98 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/how-internet-works.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/how-internet-works.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/how-internet-works.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/how-internet-works.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/how-internet-works.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/how-internet-works.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/how-internet-works.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/how-internet-works.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/how-much-vram-for-llm.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/how-much-vram-for-llm.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/how-much-vram-for-llm.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/how-much-vram-for-llm.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/how-much-vram-for-llm.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/how-much-vram-for-llm.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/how-much-vram-for-llm.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/how-much-vram-for-llm.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/how-to-get-started-local-ai.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/how-to-get-started-local-ai.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/how-to-get-started-local-ai.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/how-to-get-started-local-ai.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/how-to-get-started-local-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/how-to-get-started-local-ai.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/how-to-get-started-local-ai.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/how-to-get-started-local-ai.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/html-css-js.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/html-css-js.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/html-css-js.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/html-css-js.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/html-css-js.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/html-css-js.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/html-css-js.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/html-css-js.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/install-pytorch-rocm-ubuntu.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/install-pytorch-rocm-ubuntu.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/install-pytorch-rocm-ubuntu.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/install-pytorch-rocm-ubuntu.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/install-rocm-ubuntu.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/install-rocm-ubuntu.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/install-rocm-ubuntu.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/install-rocm-ubuntu.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/install-rocm-ubuntu.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/install-rocm-ubuntu.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/install-rocm-ubuntu.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/install-rocm-ubuntu.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -276,7 +464,18 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/kv-cache-explained.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/kv-cache-explained.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/kv-cache-explained.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/kv-cache-explained.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/kv-cache-explained.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/kv-cache-explained.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/kv-cache-explained.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/kv-cache-explained.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -286,12 +485,34 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/learn-to-code.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/learn-to-code.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/learn-to-code.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/learn-to-code.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/learn-to-code.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/learn-to-code.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/learn-to-code.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/learn-to-code.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/linux-beginners.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/linux-beginners.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/linux-beginners.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/linux-beginners.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/linux-beginners.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/linux-beginners.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/linux-beginners.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/linux-beginners.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -301,7 +522,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/llama-cpp-guide.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/llama-cpp-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/llama-cpp-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/llama-cpp-guide.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/llama-cpp-guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/llama-cpp-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/llama-cpp-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/llama-cpp-guide.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -311,12 +543,34 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/local-vs-cloud-ai.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/local-vs-cloud-ai.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/local-vs-cloud-ai.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/local-vs-cloud-ai.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/local-vs-cloud-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/local-vs-cloud-ai.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/local-vs-cloud-ai.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/local-vs-cloud-ai.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -326,17 +580,50 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/new-mac-desktops.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/new-mac-desktops.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/new-mac-desktops.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/new-mac-desktops.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/new-mac-desktops.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/new-mac-desktops.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/new-mac-desktops.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/new-mac-desktops.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/omarchy.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/omarchy.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/omarchy.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/omarchy.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/omarchy.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/omarchy.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/omarchy.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/omarchy.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -351,7 +638,18 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/password-managers.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/password-managers.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/password-managers.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/password-managers.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/password-managers.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/password-managers.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/password-managers.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/password-managers.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -376,22 +674,66 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/quantization-deep-dive.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/quantization-deep-dive.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/quantization-deep-dive.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/quantization-deep-dive.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/quantization-deep-dive.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/quantization-deep-dive.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/quantization-deep-dive.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/quantization-deep-dive.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/qwen3-8-flash-next.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/qwen3-8-flash-next.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/qwen3-8-flash-next.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen3-8-flash-next.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/qwen3-8-flash-next.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/qwen3-8-flash-next.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/qwen3-8-flash-next.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen3-8-flash-next.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/rag-from-scratch.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/rag-from-scratch.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/rag-from-scratch.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/rag-from-scratch.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/rag-from-scratch.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/rag-from-scratch.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/rag-from-scratch.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/rag-from-scratch.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -411,12 +753,34 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/rocm-vulkan-amd-guide.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/rocm-vulkan-amd-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/rocm-vulkan-amd-guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/rocm-vulkan-amd-guide.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/security-habits.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/security-habits.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/security-habits.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/security-habits.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/security-habits.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/security-habits.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/security-habits.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/security-habits.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -426,22 +790,66 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/self-hosting-101.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/self-hosting-101.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/self-hosting-101.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/self-hosting-101.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/self-hosting-101.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/self-hosting-101.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/self-hosting-101.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/self-hosting-101.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/setup-domain.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/setup-domain.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/setup-domain.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/setup-domain.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/setup-domain.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/setup-domain.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/setup-domain.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/setup-domain.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/spotting-phishing.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/spotting-phishing.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/spotting-phishing.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/spotting-phishing.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/spotting-phishing.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/spotting-phishing.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/spotting-phishing.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/spotting-phishing.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/ssd-vs-hdd.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/ssd-vs-hdd.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/ssd-vs-hdd.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/ssd-vs-hdd.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/ssd-vs-hdd.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/ssd-vs-hdd.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/ssd-vs-hdd.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/ssd-vs-hdd.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -456,7 +864,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/terminal-commands.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/terminal-commands.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/terminal-commands.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/terminal-commands.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/terminal-commands.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/terminal-commands.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/terminal-commands.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/terminal-commands.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -501,22 +920,66 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://velstech.net/what-is-an-llm.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/what-is-an-llm.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/what-is-an-llm.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/what-is-an-llm.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/what-is-an-llm.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/what-is-an-llm.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/what-is-an-llm.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/what-is-an-llm.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/what-is-machine-learning.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/what-is-machine-learning.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/what-is-machine-learning.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/what-is-machine-learning.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/what-is-machine-learning.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/what-is-machine-learning.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/what-is-machine-learning.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/what-is-machine-learning.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/windows-vs-linux.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/windows-vs-linux.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/windows-vs-linux.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/windows-vs-linux.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/windows-vs-linux.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/windows-vs-linux.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/windows-vs-linux.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/windows-vs-linux.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/xiaomi-ai-cube.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/xiaomi-ai-cube.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/xiaomi-ai-cube.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/xiaomi-ai-cube.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/xiaomi-ai-cube.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/xiaomi-ai-cube.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/xiaomi-ai-cube.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/xiaomi-ai-cube.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -16,6 +16,33 @@ browser widget  →  Cloudflare Worker proxy (chat-proxy.js)
 - **`chat-proxy.js`** – the Cloudflare Worker that forwards requests to the
   configured AI provider (default: **Cloudflare Workers AI**).
 
+## Bubble icon & pop-out hint
+
+- The bubble uses a **robot-with-glowing-bulb** icon – `chat.js` renders
+  `<img src="/robot-bulb.png" class="vt-bubble-img">` (96×96 transparent PNG,
+  generated with Pillow; full-res in `og/robot-bulb.png`) with an SVG fallback.
+- Glow pulse (`vt-bulbPulse`), pop-in (`vt-bubbleIn`) and hint tooltip
+  (`vt-bubble-hint`) are in `chat.css`.
+- A **pop-out hint** appears after 8s, on 40% scroll, or on first glossary hover
+  (`setupBubbleHint()` in `chat.js`). It auto-hides after 6s, is localized
+  (EN/TA/HI), and its dismissal persists in `vt-bubble-hint-dismissed`.
+
+## Programmatic API
+
+`chat.js` exposes `window.VelsChat` for the glossary / selection chip:
+
+```js
+window.VelsChat.ask(prompt, { forcePage: true })  // opens panel + sends with page context
+window.VelsChat.open() / close() / isReady
+```
+
+## Language-aware chat
+
+`chat.js` reads `vt-lang` (from `i18n.js`). If the user chose `ta` or `hi`, the
+system prompt appends "respond in Tamil/Hindi", and the widget UI strings come
+from `VelsI18n.t()`. Glossary answers always start with `TERM – Full Form:`
+(line 1), and `—` em dashes in model output are normalized to `–`.
+
 ## Production backend (default – live)
 
 `CHAT_BACKEND = "proxy"` in `chat.js` calls the deployed Worker at
@@ -38,7 +65,12 @@ const CHAT_FALLBACK_MODELS = [ "@cf/meta/llama-3.2-3b-instruct", "@cf/qwen/qwen2
 ```toml
 name = "velstech-chat"
 main = "chat-proxy.js"
-routes = ["chat.velstech.net/*"]
+compatibility_date = "2026-08-26"
+workers_dev = false
+
+[[custom_domains]]
+hostname = "chat.velstech.net"
+zone_name = "velstech.net"
 
 [vars]
 ALLOWED_ORIGIN = "https://velstech.net"
@@ -54,7 +86,13 @@ Set the secrets, then deploy:
 wrangler secret put CLOUDFLARE_API_KEY
 wrangler secret put CLOUDFLARE_ACCOUNT_ID
 wrangler deploy
+# Wrangler v4: upload then promote the version to 100%:
+wrangler versions upload && wrangler versions deploy <version-id>
 ```
+
+> ⚠️ `custom_domains` triggers a "Unexpected fields" warning in wrangler v4 but still works.
+> If `wrangler deploy` reports "No targets deployed", run
+> `wrangler versions deploy <version-id>` (list with `wrangler versions list`).
 
 The Worker honours the `model` the widget sends (so its fallback chain works)
 and falls back to `AI_MODEL` when the client doesn't specify one.
@@ -94,7 +132,11 @@ const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";  // API is at /v1
   and tags – no vector DB needed. It's good for "what does the blog say about X".
 - To strengthen blog answers, add fuller summaries to the `description` fields
   in `articles.js`.
-- The proxy is **locked down by default**: CORS is restricted to `ALLOWED_ORIGIN`
-  (default `https://velstech.net`), a per-IP rate limit applies (default
-  30 req / 60s), and nothing is logged. Adjust `ALLOWED_ORIGIN` / `RATE_LIMIT`
-  in `wrangler.toml` as needed.
+- The proxy is **locked down by default**: CORS is restricted via
+  `getCorsOrigin()` in `chat-proxy.js`, a per-IP rate limit applies (default
+  30 req / 60s), and nothing is logged.
+- `getCorsOrigin()` echoes the request `Origin` when it is:
+  `https://velstech.net`, any `*.velstech.net` subdomain, or a localhost preview
+  (`http://localhost:*` / `http://127.0.0.1:*`) – so local dev works out of the
+  box. Unknown origins fall back to `ALLOWED_ORIGIN`.
+- Adjust `RATE_LIMIT` / `RATE_WINDOW` in `wrangler.toml` as needed.

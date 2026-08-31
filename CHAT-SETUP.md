@@ -18,9 +18,9 @@ browser widget  →  Cloudflare Worker proxy (chat-proxy.js)
 
 ## Bubble icon & pop-out hint
 
-- The bubble uses a **robot-with-glowing-bulb** icon – `chat.js` renders
-  `<img src="/robot-bulb.png" class="vt-bubble-img">` (96×96 transparent PNG,
-  generated with Pillow; full-res in `og/robot-bulb.png`) with an SVG fallback.
+- The bubble uses a **chatbot** icon – `chat.js` renders
+  `<img src="/chatbot.png" class="vt-bubble-img">` (PNG, full-res in
+  `chatbot.png`) with an SVG fallback.
 - Glow pulse (`vt-bulbPulse`), pop-in (`vt-bubbleIn`) and hint tooltip
   (`vt-bubble-hint`) are in `chat.css`.
 - A **pop-out hint** appears after 8s, on 40% scroll, or on first glossary hover

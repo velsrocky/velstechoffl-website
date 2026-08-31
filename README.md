@@ -111,7 +111,7 @@ Every article body is auto-annotated with **dotted-underline glossary terms**:
 
 ## VelsChat (AI chat)
 
-Floating chat bubble (bottom-right) – **robot-with-glowing-bulb icon** + pop-out hint that
+Floating chat bubble (bottom-right) – **chatbot icon** + pop-out hint that
 appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 `vt-bubble-hint-dismissed`).
 

@@ -44,6 +44,10 @@ function setLang(lang) {
     return;
   }
 
+  // Apply the UI immediately so the toggle feels instant,
+  // then navigate to the translated variant in the background.
+  applyLang(lang);
+
   fetch(baseUrl + target, { method: "HEAD" })
     .then(r => {
       if (r.ok) {

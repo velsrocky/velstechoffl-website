@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="12GB RX 6800M இல் Qwen 27B Ridge 3.7bpw சோதனை – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode 16K சூழலில், prompt-eval பரிமாற்றங்கள், VRAM பொருத்தம், மற்றும் -ngl 999 --fit ஐ ஏன் உடைக்கிறது." />
+  <title>Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.ta.html#article",
+  "headline": "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab",
+  "description": "12GB RX 6800M இல் Qwen 27B Ridge 3.7bpw சோதனை – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode 16K, prompt-eval பரிமாற்றங்கள் மற்றும் VRAM பொருத்தம்.",
+  "url": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.ta.html",
+  "datePublished": "2026-08-27T00:00:00Z",
+  "dateModified": "2026-08-27T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/qwen-27b-ridge-rocm-vs-vulkan.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.ta.html"
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.ta.html" />
+  <meta property="og:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech" />
+  <meta property="og:description" content="12GB RX 6800M இல் Qwen 27B Ridge 3.7bpw சோதனை – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode 16K, prompt-eval பரிமாற்றங்கள் மற்றும் VRAM பொருத்தம்." />
+  <meta property="og:image" content="https://velstech.net/og/qwen-27b-ridge-rocm-vs-vulkan.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="12GB RX 6800M இல் Qwen 27B Ridge 3.7bpw சோதனை – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode 16K, prompt-eval பரிமாற்றங்கள் மற்றும் VRAM பொருத்தம்." />
+  <meta name="twitter:image" content="https://velstech.net/og/qwen-27b-ridge-rocm-vs-vulkan.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="ai.html">AI</a> / <a href="index.html#lab">VelsTech Lab</a> / இந்த சோதனை</p>
+    <h1 class="title">Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">Qwen</span>
+      <span class="tag">RX 6800M</span>
+      <span class="tag">llama.cpp</span>
+      <span>ஆக 27, 2026</span>
+      <span>· 6 நிமிட வாசிப்பு</span>
+      <span>· ஆக 27, 2026 அன்று புதுப்பிக்கப்பட்டது</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab – விரைவில்</span> Lab வடிவில் முதல் அளவிடப்பட்ட பதிவு இது: சரியான வன்பொருள், மென்பொருள், கட்டளை, மற்றும் மூல <code>llama-server</code> நேரங்கள் – உடைந்தவையும் சேர்த்து.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 முதலில் உங்கள் பொருத்தத்தை சரிபார்க்கவும்</div>
+        <p><a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர்</a> – 27B 3.7bpw + 16K உங்கள் VRAM இல் பொருந்துமா? · <a href="gpu-ai-calculator.html">GPU AI செயல்திறன் கால்குலேட்டர்</a> – இயங்குவதற்கு முன் எந்த tok/s எதிர்பார்க்கலாம்.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">கால்குலேட்டர்களைத் திற →</a>
+      </div>
+
+      <h2>நாங்கள் என்ன சோதித்தோம்</h2>
+      <ul>
+        <li><strong>GPU:</strong> AMD RX 6800M 12GB (mobile, RDNA2, 12 GB VRAM, ~384 GB/s) – உள்ளூர் AIக்கு நாங்கள் பரிந்துரைக்கும் பட்ஜெட் 12 GB கார்டு</li>
+        <li><strong>மாடல்:</strong> <code>Qwen3.8-27B-Ridge-3.7bpw.gguf</code> – Qwen 27B வகுப்பு ஒரு எடைக்கு 3.7 பிட்களில் (~12.3 GB எடைகள்). Ridge குவாண்ட், K-குவாண்ட்கள் அல்ல.</li>
+        <li><strong>சூழல்:</strong> <code>-c 16384</code> உடன் <code>--cache-type-k q8_0 --cache-type-v q8_0 -fa on</code> (q8 KV, flash attention இயக்கத்தில்)</li>
+        <li><strong>ஆஃப்லோட்:</strong> <code>-ngl 999 --fit on</code> (கட்டாயமாக அனைத்து அடுக்குகளும்; கீழே எச்சரிக்கை பார்க்கவும்)</li>
+        <li><strong>Prompt:</strong> 373 டோக்கன்கள் (இரண்டு இயக்கங்களுக்கும் ஒரே prompt), <code>n_slots=4, n_ctx_slot=16384, kv_unified=true, n_threads=8</code></li>
+        <li><strong>பில்ட்கள்:</strong> இயக்கம் 1 – <code>/home/user-name/llama.cpp/build/bin/llama-server</code> (ROCm); இயக்கம் 2 – <code>/home/user-name/llama.cpp_vulkan/build-vulkan/bin/llama-server</code> (Vulkan)</li>
+      </ul>
+
+      <h2>எப்படி இயக்கினோம்</h2>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Qwen3.8-27B-Ridge-3.7bpw.gguf \
+ -ngl 999 \
+ --cache-type-k q8_0 --cache-type-v q8_0 \
+ -c 16384 -fa on --fit on --reasoning-preserve --jinja</pre>
+      <p>இரண்டு பேக்எண்டுகள், ஒரே ஃபிளாக்குகள். சர்வர் <code>listening on http://127.0.0.1:8080</code> என்று பதிவு செய்து பின்னர் 373-டோக்கன் prompt ஐ செயலாக்கி ~228-243 டோக்கன்களை உருவாக்குகிறது (600 token budget, truncated 0).</p>
+
+      <h2>நாங்கள் என்ன அளந்தோம்</h2>
+      <pre>Run            Prompt eval                Decode (tg)                Total
+─────────────────────────────────────────────────────────────────────────────
+ROCm  (build)  1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s   100:18.42  155:18.12  210:18.08 → 18.12 tok/s   14.24s / 601 tok  graphs reused 226
+Vulkan        2493 ms / 373 tok = 6.68 ms/tok = 149.6 tok/s   100:22.09  166:21.83  232:21.82 → 21.84 tok/s   13.57s / 616 tok  graphs reused 241</pre>
+      <p><strong>முடிவு:</strong> Vulkan decode இல் <strong>~20% வேகமானது</strong> (21.84 vs 18.12 tok/s) – அரட்டை அடிப்பதற்கு முக்கியமான பகுதி. ROCm prompt eval இல் ~45% வேகமானது (217 vs 149 tok/s) – நீண்ட prompt இல் முதல் டோக்கனுக்கான நேரம். 615 டோக்கன்களுக்கு இறுதி-முதல்-இறுதி, decode ஆதிக்கம் செலுத்துவதால் Vulkan 0.67s (13.57 vs 14.23) வெற்றி பெறுகிறது.</p>
+
+      <h2>பதிவுகள் உண்மையில் என்ன சொன்னது – எது உடைந்தது</h2>
+      <ol>
+        <li><code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – நீங்கள் <code>-ngl 999</code> ஐ கட்டாயப்படுத்தினீர்கள், எனவே <code>--fit on</code> புறக்கணிக்கப்படுகிறது. 12 GB கார்டில் இந்த 27B q8-KV இயக்கம் பகுதியாக ஆஃப்லோட் செய்ய வேண்டும்; 999 ஐ கட்டாயப்படுத்துவது எத்தனை அடுக்குகள் உண்மையில் பொருந்துகின்றன என்பதை மறைக்கிறது. <strong>அடுத்த இயக்கத்தில் திருத்தம்: <code>-ngl 999</code> ஐ விட்டுவிட்டு <code>--fit on</code> தேர்வு செய்ய விடுங்கள், அல்லது <code>-ngl 60</code> அமைத்து <code>n_gpu_layers</code> ஐ பதிவு செய்யுங்கள்.</strong></li>
+        <li>14× <code>W model has unused tensor blk.64.* (size ~20KB–73MB)</code> – மாடல் தலைப்பு 65 பிளாக்குகளை (0-64) விளம்பரப்படுத்துகிறது ஆனால் பிளாக் 64 என்பது Qwen3 <code>nextn</code> speculative head (<code>eh_proj/enorm/hnorm/shared_head_norm</code>). llama.cpp அதை புறக்கணிக்கிறது. இந்த பில்டின் கீழ் <code>--jinja --reasoning-preserve</code> உடன் வரைவு செய்யாதபோது. பிழை அல்ல, ஆனால் நீங்கள் ~300 MB இறந்த எடையை ஏற்றுகிறீர்கள்.</li>
+        <li><code>kv_unified=true, n_slots=4, n_ctx_slot=16384</code> – 4 ஸ்லாட்டுகள் ஒரு KV பூலைப் பகிர்ந்து கொள்கின்றன. ஒவ்வொன்றும் 16K இல் இணை கோரிக்கைகளை அனுப்பினால், ஒற்றை-ஸ்லாட் சோதனை காட்டுவதை விட வேகமாக OOM ஆகிவிடும்.</li>
+      </ol>
+
+      <h2>இது கால்குலேட்டர்களுடன் எப்படி பொருந்துகிறது</h2>
+      <p>எடைகள்: <code>27B × 0.4625 bytes (3.7bpw/8) ≈ 12.5 GB</code>. 16K இல் KV q8: எங்கள் <a href="llm-vram-calculator.html">VRAM கால்குலேட்டர்</a> 8K இல் ~1.0 GB என மதிப்பிடுகிறது <code>2×layers×kv_heads×head_dim×2 bytes×context</code> – 16K q8 இல் அது ~2×, எனவே ~2.2 GB. மேலும் 6% மேல்நிலை + 0.25 GB → மொத்தம் ~15.6 GB, 12 GB க்கு மேல். இது இயங்கியதே பகுதி ஆஃப்லோட் (சிஸ்டம் RAM வழியாக) நிரூபிக்கிறது – இது ~18-21 tok/s ஐ விளக்குகிறது, முழுமையாக இருந்தால் <a href="gpu-ai-calculator.html">GPU AI செயல்திறன் கால்குலேட்டரின்</a> மேல் வரம்பு ~30 tok/s உடன் ஒப்பிடும்போது. அந்த வித்தியாசம்தான் ஆஃப்லோட் வரி.</p>
+
+      <details class="calc-method">
+        <summary>எப்படி கணக்கிடுகிறோம் – எண்களுக்குப் பின்னால் உள்ள சூத்திரங்கள்</summary>
+        <div class="calc-method-body">
+          <p>கால்குலேட்டர்களின் அதே தர்க்கம், நீங்கள் சரிபார்க்க இணைக்கப்பட்டுள்ளது.</p>
+          <h4>VRAM: <a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர்</a></h4>
+          <pre>weights = params × bytes_per_weight / GiB
+kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes
+kv_cache = kv_per_token × context × batch / GiB</pre>
+          <h4>வேகம்: <a href="gpu-ai-calculator.html">GPU AI செயல்திறன் கால்குலேட்டர்</a></h4>
+          <pre>decode_tok/s ≈ (memory_BW × 0.8) / bytes_per_token</pre>
+          <p>உங்கள் அளவிடப்பட்ட 18-21 tok/s 30 tok/s வரம்புக்குக் கீழே உள்ளது, ஏனென்றால் bytes_per_token ஆனது PCIe + RAM ஆஃப்லோடை உள்ளடக்கியது, VRAM BW மட்டுமல்ல.</p>
+        </div>
+      </details>
+
+      <h2>இறுதி விளைவு</h2>
+      <p>12 GB RX 6800M இல் 16K இல், Qwen 27B Ridge 3.7bpw <strong>இயங்குகிறது, ஆனால் முழுமையாக உள்ளமைவதில்லை</strong>. நீங்கள் அரட்டை அடித்தால் (decode-bound), Vulkan இன் +20% உண்மையானது. நீங்கள் நீண்ட ஆவணங்களை ஊட்டினால், ROCm இன் வேகமான prefill முக்கியமானது. Lab முடிவுக்கு: <strong>பயன்படுத்தக்கூடியது ஆனால் ஆஃப்லோட் செய்யப்பட்டது</strong> – 16K q8 KV இல் 18-21 tok/s எதிர்பார்க்கவும், 32K இல் மெதுவாக இருக்கும். வசதியாக உள்ளமைய விரும்பினால்? <code>c 8192</code> க்கு இறங்கவும், இடம் இருந்தால் மட்டும் <code>q8_0→f16</code> பயன்படுத்தவும், அல்லது 16/24 GB க்கு மேம்படுத்தவும்.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 மேலும் Lab</div>
+        <p>அடுத்தது: அதே மாடல் <code>--fit on</code> உடன் <code>-ngl 999</code> இல்லாமல் (பொருந்திய அடுக்குகளைக் காட்டு), மற்றும் 16K இல் <code>q8_0 vs f16</code> KV. பிறகு 70B வரம்பு cloud மட்டுமே.</p>
+        <a class="btn btn-primary" href="index.html#lab">VelsTech Lab க்குத் திரும்பு →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI க்குத் திரும்பு</a>
+      <a href="best-gpu-for-local-llm.html">உள்ளூர் LLMகளுக்கு சிறந்த GPU</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

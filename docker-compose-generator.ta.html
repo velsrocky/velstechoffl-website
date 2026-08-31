@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச Docker Compose ஜெனரேட்டர் – ஒரு சேவை படம், போர்ட்கள், வால்யூம்கள், சூழல் மாறிகள் மற்றும் மறுதொடக்க கொள்கையைத் தேர்ந்தெடுத்து நகலெடுத்து ஒட்டத் தயாரான docker-compose.yml ஐப் பெறுங்கள்." />
+  <title>Docker Compose ஜெனரேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/docker-compose-generator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/docker-compose-generator.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/docker-compose-generator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/docker-compose-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/docker-compose-generator.ta.html#webapp",
+  "name": "Docker Compose ஜெனரேட்டர் | VelsTech",
+  "description": "நகலெடுத்து ஒட்டத் தயாரான docker-compose.yml ஐ உருவாக்கவும் – ஒரு படம், போர்ட்கள், வால்யூம்கள், சூழல் மாறிகள் மற்றும் மறுதொடக்க கொள்கையைத் தேர்ந்தெடுக்கவும்.",
+  "url": "https://velstech.net/docker-compose-generator.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/docker-compose-generator.ta.html" />
+  <meta property="og:title" content="Docker Compose ஜெனரேட்டர் | VelsTech" />
+  <meta property="og:description" content="நகலெடுத்து ஒட்டத் தயாரான docker-compose.yml ஐ உருவாக்கவும் – ஒரு படம், போர்ட்கள், வால்யூம்கள், சூழல் மாறிகள் மற்றும் மறுதொடக்க கொள்கையைத் தேர்ந்தெடுக்கவும்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Docker Compose ஜெனரேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="நகலெடுத்து ஒட்டத் தயாரான docker-compose.yml ஐ உருவாக்கவும் – ஒரு படம், போர்ட்கள், வால்யூம்கள், சூழல் மாறிகள் மற்றும் மறுதொடக்க கொள்கையைத் தேர்ந்தெடுக்கவும்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / Docker Compose ஜெனரேட்டர்</p>
+    <h1 class="title">Docker Compose ஜெனரேட்டர்</h1>
+    <div class="meta">
+      <span>docker-compose.yml உருவாக்கவும் · போர்ட்கள் · வால்யூம்கள் · சூழல் மாறிகள்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        ஒரு ஒற்றை சேவைக்கான <code>docker-compose.yml</code> ஐ விரைவாக உருவாக்கவும். படத்தை அமைக்கவும்,
+        போர்ட்கள் மற்றும் வால்யூம்களை மேப் செய்யவும், சூழல் மாறிகளைச் சேர்க்கவும், மறுதொடக்க கொள்கையைத்
+        தேர்ந்தெடுக்கவும் – பின்னர் வெளியீட்டை நேரடியாக உங்கள் திட்டத்தில் நகலெடுக்கவும்.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>சேவை பெயர்</span>
+            <input id="svc" class="input" type="text" value="web" />
+          </label>
+          <label class="field">
+            <span>படம்</span>
+            <input id="img" class="input" type="text" value="nginx:latest" list="img-list" />
+            <datalist id="img-list">
+              <option value="nginx:latest"></option>
+              <option value="postgres:17"></option>
+              <option value="redis:7"></option>
+              <option value="node:22"></option>
+              <option value="python:3.13-slim"></option>
+              <option value="ubuntu:24.04"></option>
+            </datalist>
+          </label>
+          <label class="field full">
+            <span>மறுதொடக்க கொள்கை</span>
+            <select id="restart" class="input">
+              <option value="unless-stopped">unless-stopped</option>
+              <option value="always">always</option>
+              <option value="on-failure">on-failure</option>
+              <option value="no">no</option>
+            </select>
+          </label>
+
+          <label class="field full">
+            <span>போர்ட்கள் (host:container)</span>
+            <div class="kv-list" id="ports-list"></div>
+            <button class="btn btn-ghost add-btn" id="add-port" type="button" title="மற்றொரு போர்ட் மேப்பிங்கை சேர்க்க" aria-label="போர்ட் சேர்">+ போர்ட் சேர்</button>
+          </label>
+
+          <label class="field full">
+            <span>வால்யூம்கள் (host:container)</span>
+            <div class="kv-list" id="vols-list"></div>
+            <button class="btn btn-ghost add-btn" id="add-vol" type="button" title="மற்றொரு வால்யூம் மவுண்ட்டை சேர்க்க" aria-label="வால்யூம் சேர்">+ வால்யூம் சேர்</button>
+          </label>
+
+          <label class="field full">
+            <span>சூழல் மாறிகள் (KEY=value)</span>
+            <div class="kv-list" id="env-list"></div>
+            <button class="btn btn-ghost add-btn" id="add-env" type="button" title="மற்றொரு சூழல் மாறியை சேர்க்க" aria-label="மாறி சேர்">+ மாறி சேர்</button>
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="gen-out" id="gen-out"></div>
+          <p class="tool-note">
+            Compose கோப்பு வடிவம் v3.8 க்காக உருவாக்கப்பட்டது. பல-சேவை அமைப்புகளுக்கு <code>networks:</code> பகுதி மற்றும்
+            <code>depends_on:</code> ஐ சேர்க்கவும் – இது ஒரு தொடக்க புள்ளியாக ஒரு சேவையை உருவாக்குகிறது.
+          </p>
+        </div>
+      </div>
+
+      <h2>தொடர்புடைய வழிகாட்டிகள்</h2>
+      <ul>
+        <li><a href="self-hosting-101.html">சுய-ஹோஸ்டிங் 101: வீட்டில் என்ன இயக்கலாம்?</a></li>
+        <li><a href="setup-domain.html">டொமைன் அமைத்தல் மற்றும் அதை எங்கு வேண்டுமானாலும் சுட்டிக்காட்டுதல்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="tutorials.html">பயிற்சிகள்</a>
+    </div>
+  </main>
+
+  <script>
+    function makeList(id, addBtnId, addVal) {
+      const container = document.getElementById(id);
+      const addBtn = document.getElementById(addBtnId);
+      let idx = 0;
+
+      function addRow(value) {
+        const row = document.createElement("div");
+        row.className = "kv-row";
+        const inp = document.createElement("input");
+        inp.className = "input";
+        inp.type = "text";
+        inp.placeholder = addVal;
+        inp.value = value || "";
+        inp.addEventListener("input", render);
+        const rem = document.createElement("button");
+        rem.className = "kv-remove";
+        rem.textContent = "\u00d7";
+        rem.type = "button";
+        rem.setAttribute('aria-label', 'Remove row');
+        rem.title = "Remove this row";
+        rem.addEventListener("click", () => { row.remove(); render(); });
+        row.appendChild(inp);
+        row.appendChild(rem);
+        container.appendChild(row);
+        idx++;
+        return inp;
+      }
+
+      addBtn.addEventListener("click", () => addRow(""));
+      return { container, addRow };
+    }
+
+    const ports = makeList("ports-list", "add-port", "80:80");
+    const vols = makeList("vols-list", "add-vol", "./html:/usr/share/nginx/html");
+    const envs = makeList("env-list", "add-env", "NODE_ENV=production");
+    ports.addRow("80:80");
+    vols.addRow("./html:/usr/share/nginx/html");
+
+    function render() {
+      const svc = document.getElementById("svc").value.trim() || "app";
+      const img = document.getElementById("img").value.trim() || "alpine:latest";
+      const restart = document.getElementById("restart").value;
+
+      const portVals = Array.from(document.querySelectorAll("#ports-list .input")).map(i => i.value.trim()).filter(Boolean);
+      const volVals = Array.from(document.querySelectorAll("#vols-list .input")).map(i => i.value.trim()).filter(Boolean);
+      const envVals = Array.from(document.querySelectorAll("#env-list .input")).map(i => i.value.trim()).filter(Boolean);
+
+      let yaml = "version: '3.8'\n\nservices:\n  " + svc + ":\n    image: " + img;
+      if (restart !== "no") yaml += "\n    restart: " + restart;
+      if (portVals.length) yaml += "\n    ports:\n" + portVals.map(p => "      - " + JSON.stringify(p)).join("\n");
+      if (volVals.length) yaml += "\n    volumes:\n" + volVals.map(v => "      - " + JSON.stringify(v)).join("\n");
+      if (envVals.length) yaml += "\n    environment:\n" + envVals.map(e => "      - " + JSON.stringify(e)).join("\n");
+      yaml += "\n";
+
+      document.getElementById("results").hidden = false;
+      const out = document.getElementById("gen-out");
+      out.innerHTML = "";
+
+      const wrap = document.createElement("div");
+      wrap.className = "code-block";
+      const pre = document.createElement("pre");
+      pre.textContent = yaml;
+      wrap.appendChild(pre);
+
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.type = "button";
+      btn.textContent = "Copy";
+      btn.title = "Copy YAML to clipboard";
+      btn.setAttribute("aria-label", "Copy compose file");
+      btn.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(yaml); } catch {
+          const ta = document.createElement("textarea");
+          ta.value = yaml; document.body.appendChild(ta); ta.select();
+          document.execCommand("copy"); ta.remove();
+        }
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2000);
+      });
+      wrap.appendChild(btn);
+      out.appendChild(wrap);
+
+      const verdict = document.getElementById("verdict");
+      verdict.className = "result-verdict verdict-ok";
+      verdict.innerHTML = "\u2705 <strong>Compose file generated</strong> \u2013 " + svc +
+        " (" + img + ")" +
+        (portVals.length ? " \u00b7 " + portVals.length + " port" + (portVals.length > 1 ? "s" : "") : "") +
+        (volVals.length ? " \u00b7 " + volVals.length + " volume" + (volVals.length > 1 ? "s" : "") : "") +
+        (envVals.length ? " \u00b7 " + envVals.length + " env var" + (envVals.length > 1 ? "s" : "") : "") + ".";
+    }
+
+    ["svc", "img", "restart"].forEach((id) => document.getElementById(id).addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச chmod கால்குலேட்டர் – உரிமையாளர், குழு மற்றும் மற்றவர்களுக்கான படிக்க/எழுத/இயக்க அனுமதிகளை தேர்வு செய்து உடனடியாக எண் முறைமையை (755 போன்று) மற்றும் இயக்க கட்டளையைப் பெறுங்கள்." />
+  <title>chmod கால்குலேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/chmod-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/chmod-calculator.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/chmod-calculator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/chmod-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/chmod-calculator.ta.html#webapp",
+  "name": "chmod கால்குலேட்டர் | VelsTech",
+  "description": "உரிமையாளர், குழு மற்றும் மற்றவர்களுக்கான படிக்க/எழுத/இயக்க அனுமதிகளை மாற்றி எண் முறைமையை (755 போன்று) மற்றும் இயக்க வேண்டிய chmod கட்டளையைப் பெறுங்கள்.",
+  "url": "https://velstech.net/chmod-calculator.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/chmod-calculator.ta.html" />
+  <meta property="og:title" content="chmod கால்குலேட்டர் | VelsTech" />
+  <meta property="og:description" content="உரிமையாளர், குழு மற்றும் மற்றவர்களுக்கான படிக்க/எழுத/இயக்க அனுமதிகளை மாற்றி எண் முறைமையை (755 போன்று) மற்றும் இயக்க வேண்டிய chmod கட்டளையைப் பெறுங்கள்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="chmod கால்குலேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="உரிமையாளர், குழு மற்றும் மற்றவர்களுக்கான படிக்க/எழுத/இயக்க அனுமதிகளை மாற்றி எண் முறைமையை (755 போன்று) மற்றும் இயக்க வேண்டிய chmod கட்டளையைப் பெறுங்கள்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / chmod கால்குலேட்டர்</p>
+    <h1 class="title">chmod கால்குலேட்டர்</h1>
+    <div class="meta">
+      <span>எண் + குறியீட்டு அனுமதிகள் · இயக்கத் தயாரான கட்டளைகள்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        உரிமையாளர், குழு மற்றும் மற்றவர்களுக்கான படிக்க / எழுத / இயக்க அனுமதிகளை மாற்றவும், இது உடனடியாக <strong>எண் முறைமையை</strong> (<code>755</code> போன்று), <strong>குறியீட்டு வடிவத்தை</strong>, மற்றும் நகல் எடுக்க சரியான <code>chmod</code> கட்டளையைக் காட்டுகிறது. இனி எண் அட்டவணையை மனப்பாடம் செய்ய வேண்டியதில்லை.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <div class="preset-row">
+            <button class="preset-chip" data-bits="7,5,5" title="755 அமை – rwxr-xr-x (உரிமையாளருக்கு முழு, குழு/மற்றவர்களுக்கு படிக்க+இயக்கு)" aria-label="755-க்கு அனுமதிகளை அமை">755</button>
+            <button class="preset-chip" data-bits="6,4,4" title="644 அமை – rw-r--r-- (உரிமையாளருக்கு படிக்க/எழுத, குழு/மற்றவர்களுக்கு படிக்க)" aria-label="644-க்கு அனுமதிகளை அமை">644</button>
+            <button class="preset-chip" data-bits="6,0,0" title="600 அமை – rw------- (உரிமையாளருக்கு மட்டும் படிக்க/எழுத)" aria-label="600-க்கு அனுமதிகளை அமை">600</button>
+            <button class="preset-chip" data-bits="7,0,0" title="700 அமை – rwx------ (உரிமையாளருக்கு மட்டும் முழு)" aria-label="700-க்கு அனுமதிகளை அமை">700</button>
+            <button class="preset-chip" data-bits="7,7,7" title="777 அமை – rwxrwxrwx (அனைவருக்கும் முழு – எச்சரிக்கையுடன் பயன்படுத்தவும்)" aria-label="777-க்கு அனுமதிகளை அமை">777</button>
+            <button class="preset-chip" data-bits="4,0,0" title="400 அமை – r-------- (உரிமையாளருக்கு மட்டும் படிக்க)" aria-label="400-க்கு அனுமதிகளை அமை">400</button>
+          </div>
+
+          <fieldset class="field perm-group">
+            <legend>உரிமையாளர் (u)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="4" /> படிக்க (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="2" /> எழுத (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="1" /> இயக்கு (1)</label>
+          </fieldset>
+          <fieldset class="field perm-group">
+            <legend>குழு (g)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="4" /> படிக்க (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="2" /> எழுத (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="1" /> இயக்கு (1)</label>
+          </fieldset>
+          <fieldset class="field perm-group">
+            <legend>மற்றவர்கள் (o)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="4" /> படிக்க (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="2" /> எழுத (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="1" /> இயக்கு (1)</label>
+          </fieldset>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>எண் முறைமை</span><strong id="r-num">–</strong></div>
+            <div class="result-row"><span>குறியீட்டு வடிவம்</span><strong id="r-sym">–</strong></div>
+            <div class="result-row"><span>உரிமையாளர் / குழு / மற்றவர்கள்</span><strong id="r-desc">–</strong></div>
+            <div class="result-row total"><span>கட்டளை (கோப்பு)</span><strong id="r-cmd-file">–</strong></div>
+            <div class="result-row"><span>கட்டளை (அடைவு, மீள்நிகழ்வு)</span><strong id="r-cmd-dir">–</strong></div>
+          </div>
+          <p class="tool-note">
+            சிறப்பு பிட்கள் (setuid <code>4</code>, setgid <code>2</code>, sticky <code>1</code>)
+            முன்னால் சேர்க்கப்படலாம், எ.கா. setuid-க்கு <code>4755</code> – சாதாரண பயன்பாட்டிற்கு அரிதாக தேவை.
+          </p>
+        </div>
+      </div>
+
+      <h2>தொடர்புடைய வழிகாட்டிகள்</h2>
+      <ul>
+        <li><a href="terminal-commands.html">அனைவரும் தெரிந்துகொள்ள வேண்டிய அத்தியாவசிய டெர்மினல் கட்டளைகள்</a></li>
+        <li><a href="linux-beginners.html">Linux ஆரம்பநிலையாளர்களுக்கு: தொடங்குதல்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="os.html">இயக்க முறைமை குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    const SYM = {
+      owner: "u", group: "g", others: "o",
+    };
+    const bits = { owner: 0, group: 0, others: 0 };
+    const checked = { owner: [false, false, false], group: [false, false, false], others: [false, false, false] };
+    const R = 4, W = 2, X = 1;
+
+    function value(group, v) {
+      const order = v === R ? 0 : v === W ? 1 : 2;
+      return checked[group][order];
+    }
+
+    function applyBits(o, g, o2) {
+      [[o, "owner"], [g, "group"], [o2, "others"]].forEach(([num, grp]) => {
+        checked[grp] = [!!(num & R), !!(num & W), !!(num & X)];
+      });
+      render();
+    }
+
+    function render() {
+      ["owner", "group", "others"].forEach((grp) => {
+        const sum = (checked[grp][0] ? R : 0) + (checked[grp][1] ? W : 0) + (checked[grp][2] ? X : 0);
+        bits[grp] = sum;
+        document.querySelectorAll('input[data-g="' + grp + '"]').forEach((cb) => {
+          cb.checked = checked[grp][cb.dataset.v === "4" ? 0 : cb.dataset.v === "2" ? 1 : 2];
+        });
+      });
+
+      const num = "" + bits.owner + bits.group + bits.others;
+      const sym = ["owner", "group", "others"]
+        .map((grp) => SYM[grp] + "=" + (checked[grp][0] ? "r" : "") + (checked[grp][1] ? "w" : "") + (checked[grp][2] ? "x" : "") + (bits[grp] ? "" : ""))
+        .join(",");
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-num").textContent = num;
+      document.getElementById("r-sym").textContent = "chmod " + sym;
+      document.getElementById("r-desc").textContent =
+        bits.owner + (bits.owner ? "" : "") + " / " + bits.group + " / " + bits.others;
+      document.getElementById("r-cmd-file").textContent = "chmod " + num + " file";
+      document.getElementById("r-cmd-dir").textContent = "chmod -R " + num + " directory/";
+
+      const verdict = document.getElementById("verdict");
+      verdict.className = "result-verdict";
+      if (bits.others === 7 || bits.others === 6) {
+        verdict.className += " verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>" + num + " gives " + (bits.others === 7 ? "full read+write+execute" : "read+write") + " to everyone.</strong> For public directories that's often intentional – just make sure you mean it.";
+      } else if (bits.owner === 0) {
+        verdict.className += " verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>Owner has no permissions.</strong> You may lock yourself out – this is usually a mistake.";
+      } else {
+        verdict.className += " verdict-ok";
+        verdict.innerHTML = "✅ <strong>" + num + " is set.</strong> Owner: " + describe(bits.owner) + ", group: " + describe(bits.group) + ", others: " + describe(bits.others) + ".";
+      }
+    }
+
+    function describe(n) {
+      if (n === 0) return "no access";
+      const parts = [];
+      if (n & R) parts.push("read");
+      if (n & W) parts.push("write");
+      if (n & X) parts.push("execute");
+      return parts.join("+");
+    }
+
+    document.querySelectorAll('input[data-g]').forEach((cb) => {
+      cb.addEventListener("change", () => {
+        const grp = cb.dataset.g;
+        const idx = cb.dataset.v === "4" ? 0 : cb.dataset.v === "2" ? 1 : 2;
+        checked[grp][idx] = cb.checked;
+        render();
+      });
+    });
+
+    document.querySelectorAll(".preset-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const [o, g, o2] = chip.dataset.bits.split(",").map(Number);
+        applyBits(o, g, o2);
+      });
+    });
+
+    applyBits(7, 5, 5);
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

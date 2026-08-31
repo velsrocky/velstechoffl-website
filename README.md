@@ -20,8 +20,8 @@ node --check tools/*.js
 | Path | What |
 |---|---|
 | `*.html` | Articles, tools, category pages, static pages (English) |
-| `*.hi.html` | Hindi translations of articles (42) |
-| `*.ta.html` | Tamil translations (proof-of-concept, 4 – paused: model quality) |
+| `*.hi.html` | Hindi translations (all pages) |
+| `*.ta.html` | Tamil translations (all pages) |
 | `articles.js` | **Content source of truth** – all article metadata |
 | `i18n.js` | **EN/TA/HI** UI strings + `vt-lang` persistence + `VelsI18n` API |
 | `glossary.js` | 40+ tech-term definitions (`fullForm`/`short`/`link`) |
@@ -77,12 +77,12 @@ The site has a **language toggle** in the nav (`script.js` `navHTML()` → `lang
 persists `vt-lang` in `localStorage`, sets `<html lang>` on every page, and drives the UI.
 
 - **UI strings** live in `i18n.js` → `window.VelsI18n.t(key)` (used by `script.js`, `chat.js`, `define.js`).
-- **Hindi article translations** are separate static files `*.hi.html` (42 articles) with
+- **Hindi article translations** are separate static files `*.hi.html` (all pages) with
   `hreflang` `en/hi/x-default` alternates. Clicking `HI` on an article redirects to the
   `.hi.html` variant (checked via `fetch HEAD` – falls back to UI-only if untranslated);
   leaving `HI` returns to the English original.
-- **Tamil** UI works, but full TA article translation is **paused** – the free
-  `llama-3.1-8b` model produces poor Tamil. Do not expand TA until a better model is wired up.
+- **Tamil** translations are also separate static files `*.ta.html` (all pages) with
+  the same `hreflang` pattern for `ta`.
 
 **To add a Hindi translation of an article** (`your-article.html` → `your-article.hi.html`):
 1. Copy the EN file, change `<html lang="hi">`.

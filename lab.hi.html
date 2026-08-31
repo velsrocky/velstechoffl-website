@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="VelsTech Lab – वास्तविक हार्डवेयर पर टेस्ट किए गए बेंचमार्क, प्रयोग और टूल्स। स्थिति, हार्डवेयर स्पेक्स, कार्यप्रणाली और कच्चे परिणाम – असफलताओं सहित।" />
+  <title>VelsTech Lab – बेंचमार्क और प्रयोग | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/lab.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/lab.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/lab.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/lab.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://velstech.net/lab.hi.html#webpage",
+  "url": "https://velstech.net/lab.hi.html",
+  "name": "VelsTech Lab – बेंचमार्क और प्रयोग | VelsTech",
+  "description": "VelsTech Lab – वास्तविक हार्डवेयर पर टेस्ट किए गए बेंचमार्क, प्रयोग और टूल्स। स्थिति, हार्डवेयर स्पेक्स, कार्यप्रणाली और कच्चे परिणाम – असफलताओं सहित।",
+  "inLanguage": "hi"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/lab.html" />
+  <meta property="og:title" content="VelsTech Lab – बेंचमार्क और प्रयोग | VelsTech" />
+  <meta property="og:description" content="VelsTech Lab – वास्तविक हार्डवेयर पर टेस्ट किए गए बेंचमार्क, प्रयोग और टूल्स। स्थिति, हार्डवेयर स्पेक्स, कार्यप्रणाली और कच्चे परिणाम – असफलताओं सहित।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VelsTech Lab – बेंचमार्क और प्रयोग | VelsTech" />
+  <meta name="twitter:description" content="VelsTech Lab – वास्तविक हार्डवेयर पर टेस्ट किए गए बेंचमार्क, प्रयोग और टूल्स। स्थिति, हार्डवेयर स्पेक्स, कार्यप्रणाली और कच्चे परिणाम – असफलताओं सहित।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main>
+    <header class="page-hero">
+      <p class="breadcrumb"><a href="index.html">गृह</a> / VelsTech Lab</p>
+      <p class="eyebrow">🧪 VelsTech Lab</p>
+      <h1>बेंचमार्क • प्रयोग • टूल्स</h1>
+      <p>
+        वास्तविक हार्डवेयर पर व्यावहारिक टेस्ट – प्रेस रिलीज़ नहीं। हर Lab पोस्ट <strong>पूर्वापेक्षाएँ, हार्डवेयर/सॉफ़्टवेयर स्पेक्स, विधि, कच्चे परिणाम और क्या टूटा</strong> सूचीबद्ध करता है – असफलताओं सहित।
+      </p>
+      <p class="tool-note" style="margin-top:12px"><a href="#experiments">सभी प्रयोग</a> · <a href="llm-vram-calculator.html">VRAM कैलकुलेटर</a> · <a href="gpu-ai-calculator.html">GPU प्रदर्शन</a> · <a href="index.html#lab">Lab अवलोकन</a></p>
+    </header>
+
+    <section id="experiments" class="article-grid">
+      <article class="article" style="border-color: var(--accent)">
+        <div class="lab-meta">
+          <span class="tested-badge">🧪 Lab</span>
+          <span class="status-done">✓ पूर्ण</span>
+          <span class="meta-date">27 अगस्त 2026</span>
+        </div>
+        <h3><a href="moe-vs-dense-rx6800m-16k-vs-262k.html">RX 6800M पर MoE बनाम Dense: 3B Active बनाम 27B at 16K/262K</a></h3>
+        <p>एक ही 12GB RX 6800M – Ornith MoE (3B active, 262K) बनाम Qwen dense (27B, 16K) at q8 KV, ROCm बनाम Vulkan आमने-सामने। MoE कब जीतता है और कब नहीं।</p>
+        <div class="tags"><span class="tag">MoE vs Dense</span><span class="tag">RX 6800M</span><span class="tag">Benchmark</span></div>
+        <span class="date">ROCm 25.6 vs 19.6 tok/s (Ornith) · Vulkan 21.8 vs 18.1 (Qwen)</span>
+      </article>
+
+      <article class="article">
+        <div class="lab-meta">
+          <span class="tested-badge">🧪 Lab</span>
+          <span class="status-done">✓ पूर्ण</span>
+          <span class="meta-date">27 अगस्त 2026</span>
+        </div>
+        <h3><a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">RX 6800M पर 262K पर Ornith 35B MoE: ROCm बनाम Vulkan</a></h3>
+        <p>35B-A3B (3B active) Q5/Q4 mix at 262K q8 KV, 28 CPU experts – ROCm 25.6 tok/s बनाम Vulkan 19.6, 83 tok/s prompt। विशाल कॉन्टेक्स्ट, विरल decode।</p>
+        <div class="tags"><span class="tag">MoE</span><span class="tag">Ornith 35B</span><span class="tag">RX 6800M</span></div>
+        <span class="date">12GB · q8 KV · --n-cpu-moe 28 · kv_unified=false</span>
+      </article>
+
+      <article class="article">
+        <div class="lab-meta">
+          <span class="tested-badge">🧪 Lab</span>
+          <span class="status-done">✓ पूर्ण</span>
+          <span class="meta-date">27 अगस्त 2026</span>
+        </div>
+        <h3><a href="qwen-27b-ridge-rocm-vs-vulkan.html">RX 6800M पर Qwen 27B Ridge 3.7bpw: 16K पर ROCm बनाम Vulkan</a></h3>
+        <p>27B at 3.7bpw (~12.5GB) at 16K q8 KV – ROCm 18.12 tok/s बनाम Vulkan 21.84, 217 vs 149 tok/s prompt। कच्चे लॉग्स वाला पहला Lab।</p>
+        <div class="tags"><span class="tag">Qwen</span><span class="tag">RX 6800M</span><span class="tag">3.7bpw</span></div>
+        <span class="date">12GB · q8 KV · -ngl 999 (fit abort) · blk.64 nextn</span>
+      </article>
+
+      <article class="article">
+        <div class="lab-meta">
+          <span class="tested-badge">🧪 Lab</span>
+          <span class="status-done">✓ पूर्ण</span>
+          <span class="meta-date">27 अगस्त 2026</span>
+        </div>
+        <h3><a href="how-much-vram-for-llm.html">7B, 14B और 32B मॉडल के लिए आपको कितनी VRAM चाहिए?</a></h3>
+        <p>7B, 14B और 32B LLMs के लिए आवश्यक VRAM – वेट्स, क्वांटाइज़ेशन, KV कैश और कॉन्टेक्स्ट लंबाई, एक त्वरित-संदर्भ तालिका के साथ जिसे आप बुकमार्क कर सकते हैं।</p>
+        <div class="tags"><span class="tag">VRAM</span><span class="tag">LLM</span><span class="tag">GPU</span></div>
+        <span class="date">गाइड · <a href="llm-vram-calculator.html">VRAM कैलकुलेटर</a> के साथ जोड़ी गई</span>
+      </article>
+
+      <article class="article planned">
+        <div class="lab-meta">
+          <span class="tested-badge" style="background:var(--accent-soft);">🧪 Lab – अगला</span>
+          <span class="status-planned">◷ नियोजित</span>
+        </div>
+        <h3>Qwen 27B बिना -ngl 999: MoE के लिए --fit चुनें + --load-mode none</h3>
+        <p>दोनों मॉडलों को बिना बाध्य <code>-ngl 999</code> (log fitted layers) और 28 CPU experts के लिए <code>--load-mode none</code> के साथ दोबारा चलाएँ – क्या 262K पर +30% ROCm टिकेगा?</p>
+        <div class="tags"><span class="tag">अगला</span><span class="tag">ROCm</span><span class="tag">Vulkan</span></div>
+        <span class="date">स्थिति: नियोजित – वही RX 6800M, वही प्रॉम्प्ट</span>
+      </article>
+    </section>
+
+    <section class="section pt-0">
+      <h2>खरीद गाइड</h2>
+      <p>ऊपर दिए गए बेंचमार्क के आधार पर लोकल AI चलाने के लिए व्यावहारिक चयन:</p>
+      <div class="article-grid" style="padding:0">
+        <article class="article">
+          <h3><a href="best-gpu-for-local-llm.html">LLMs को लोकली चलाने के लिए सबसे अच्छा GPU (2026)</a></h3>
+          <p>RTX बनाम Radeon, आपको वास्तव में कितनी VRAM चाहिए, और llama.cpp और Ollama के लिए क्या मायने रखता है।</p>
+          <div class="tags"><span class="tag">GPU</span><span class="tag">LLM</span><span class="tag">खरीद गाइड</span></div>
+          <span class="date">27 अगस्त 2026</span>
+        </article>
+        <article class="article">
+          <h3><a href="best-gpu-ai-under-50000.html">₹50,000 से कम में AI के लिए सबसे अच्छा GPU (भारत, 2026)</a></h3>
+          <p>कौन से कार्ड वास्तव में बजट में फिट बैठते हैं और लोकल LLMs चला सकते हैं, प्रति रुपया VRAM की तुलना के साथ।</p>
+          <div class="tags"><span class="tag">GPU</span><span class="tag">बजट</span><span class="tag">भारत</span></div>
+          <span class="date">27 अगस्त 2026</span>
+        </article>
+        <article class="article">
+          <h3><a href="xiaomi-ai-cube.html">Xiaomi AI Cube: लोकल AI के लिए बना मिनी डेस्कटॉप</a></h3>
+          <p>एक बड़े NPU वाला छोटा डेस्कटॉप, जो LLMs को लोकली चलाने के लिए बना है – अंदर क्या है और क्या इसे खरीदना उचित है।</p>
+          <div class="tags"><span class="tag">AI हार्डवेयर</span><span class="tag">NPU</span><span class="tag">मिनी PC</span></div>
+          <span class="date">27 अगस्त 2026</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section pt-0">
+      <h2>Lab पोस्ट कैसे संरचित होते हैं</h2>
+      <p>हर Lab एक ही फ़ॉर्मेट का पालन करता है ताकि आप रनों की तुलना कर सकें:</p>
+      <ol class="method-list">
+        <li><strong>पूर्वापेक्षाएँ:</strong> मॉडल फ़ाइल, quant, GPU, ड्राइवर (ROCm/Vulkan), llama.cpp commit</li>
+        <li><strong>हार्डवेयर/सॉफ़्टवेयर स्पेक्स:</strong> सटीक कार्ड, VRAM, CPU, RAM, OS, ROCm/Vulkan, कैश प्रकार, कॉन्टेक्स्ट, थ्रेड्स</li>
+        <li><strong>विधि:</strong> पूरा <code>llama-server</code> कमांड, prompt tokens, slots, KV सेटिंग्स</li>
+        <li><strong>परिणाम:</strong> कच्ची <code>print_timing</code> तालिका – prompt eval ms/tok और tok/s, decode tg, graphs reused, कुल समय (कोई स्मूथिंग नहीं)</li>
+        <li><strong>क्या टूटा:</strong> चेतावनियाँ जैसे <code>failed to fit params</code> / <code>tensor overrides to CPU with mmap</code> / <code>blk.64 unused nextn</code> और समाधान</li>
+        <li><strong>कैलकुलेटर मैपिंग:</strong> <a href="llm-vram-calculator.html">VRAM</a> + <a href="gpu-ai-calculator.html">GPU प्रदर्शन</a> की सीमाएँ अंतर कैसे समझाती हैं</li>
+      </ol>
+      <p class="tool-note">असफलताएँ मूल्यवान सामग्री हैं – हम उन्हें लॉग करते हैं। यदि कोई रन OOM करता है या ऑफलोड होता है, तो वही परिणाम है।</p>
+    </section>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

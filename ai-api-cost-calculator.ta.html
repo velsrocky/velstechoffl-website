@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச AI API செலவு கால்குலேட்டர் – OpenAI, Anthropic, Google, மற்றும் உள்ளூர் inference செலவுகளுக்கு இடையே ஒவ்வொரு-டோக்கன் விலையை ஒப்பிடுங்கள். உங்கள் சொந்த வன்பொருளை இயக்குவதற்கான இடைவேளை-சமநிலை (break-even) புள்ளியை மதிப்பிடுங்கள்." />
+  <title>AI API செலவு கால்குலேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/ai-api-cost-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/ai-api-cost-calculator.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/ai-api-cost-calculator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/ai-api-cost-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/ai-api-cost-calculator.ta.html#webapp",
+  "name": "AI API செலவு கால்குலேட்டர் | VelsTech",
+  "description": "OpenAI, Anthropic, Google, மற்றும் உள்ளூர் inference செலவுகளுக்கு இடையே ஒவ்வொரு-டோக்கன் விலையை ஒப்பிடுங்கள். உங்கள் சொந்த வன்பொருளை இயக்குவதற்கான இடைவேளை-சமநிலை (break-even) புள்ளியை மதிப்பிடுங்கள்.",
+  "url": "https://velstech.net/ai-api-cost-calculator.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/ai-api-cost-calculator.ta.html" />
+  <meta property="og:title" content="AI API செலவு கால்குலேட்டர் | VelsTech" />
+  <meta property="og:description" content="OpenAI, Anthropic, Google, மற்றும் உள்ளூர் inference செலவுகளுக்கு இடையே ஒவ்வொரு-டோக்கன் விலையை ஒப்பிடுங்கள்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI API செலவு கால்குலேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="OpenAI, Anthropic, Google, மற்றும் உள்ளூர் inference செலவுகளுக்கு இடையே ஒவ்வொரு-டோக்கன் விலையை ஒப்பிடுங்கள்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / AI API செலவு கால்குலேட்டர்</p>
+    <h1 class="title">AI API செலவு கால்குலேட்டர்</h1>
+    <div class="meta">
+      <span>கிளவுட் API செலவுகளை உள்ளூர் inference உடன் ஒப்பிடுங்கள்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        உங்கள் பணிச்சுமையை கிளவுட் API வழியாக இயக்குவதற்கு எவ்வளவு செலவாகும், உங்கள் சொந்த வன்பொருளில் இயக்குவதற்கு எவ்வளவு?
+        உங்கள் தினசரி டோக்கன் பயன்பாட்டை உள்ளிட்டு, OpenAI, Anthropic, Google க்கான மாதாந்திர செலவுகளையும்,
+        உள்ளூரில் இயக்குவதற்கான மதிப்பிடப்பட்ட மின்சார செலவையும் பாருங்கள்.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>தினசரி input டோக்கன்கள்</span>
+            <input type="number" id="in-tok" class="input" value="100000" min="0" step="10000" />
+          </label>
+          <label class="field">
+            <span>தினசரி output டோக்கன்கள்</span>
+            <input type="number" id="out-tok" class="input" value="50000" min="0" step="10000" />
+          </label>
+          <label class="field">
+            <span>உள்ளூர் GPU மின்சாரம் (W)</span>
+            <input type="number" id="watts" class="input" value="150" min="0" step="10" />
+          </label>
+          <label class="field">
+            <span>மின்சார செலவு (₹/kWh)</span>
+            <input type="number" id="rate" class="input" value="8" min="0" step="0.5" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-rows" id="body"></div>
+        </div>
+
+        <p class="tool-note">
+          விலைகள் தோராயமானவை மற்றும் அடிக்கடி மாறும். API விலைகள் ஒவ்வொரு வழங்குநரின்
+          வெளியிடப்பட்ட விகிதங்களிலிருந்து எடுக்கப்பட்டவை. உள்ளூர் செலவு 100% GPU பயன்பாட்டை கருதுகிறது. முழுமையான ஒப்பீட்டிற்கு
+          <a href="local-vs-cloud-ai.html">உள்ளூர் vs கிளவுட் AI</a> வழிகாட்டியைப் பார்க்கவும்.
+        </p>
+      </div>
+
+      <h2>தொடர்புடையவை</h2>
+      <ul>
+        <li><a href="local-vs-cloud-ai.html">உள்ளூர் vs கிளவுட் AI: எதை தேர்வு செய்ய வேண்டும்?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">உள்ளூரில் LLMகளை இயக்க சிறந்த GPU</a></li>
+        <li><a href="benchmarks/index.html">பெஞ்ச்மார்க் தரவுத்தளம்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="local-vs-cloud-ai.html">உள்ளூர் vs கிளவுட் AI →</a>
+    </div>
+  </main>
+
+  <script>
+    const inTok = document.getElementById("in-tok");
+    const outTok = document.getElementById("out-tok");
+    const watts = document.getElementById("watts");
+    const rate = document.getElementById("rate");
+    const body = document.getElementById("body");
+    const results = document.getElementById("results");
+
+    const PROVIDERS = [
+      { name: "OpenAI GPT-4o", inPrice: 2.5, outPrice: 10 },
+      { name: "Anthropic Claude 3.5 Sonnet", inPrice: 3, outPrice: 15 },
+      { name: "Google Gemini 1.5 Pro", inPrice: 1.25, outPrice: 5 },
+      { name: "OpenAI GPT-4o mini", inPrice: 0.15, outPrice: 0.6 },
+      { name: "Local (electricity only)", inPrice: 0, outPrice: 0 },
+    ];
+
+    function render() {
+      const i = parseFloat(inTok.value) || 0;
+      const o = parseFloat(outTok.value) || 0;
+      const w = parseFloat(watts.value) || 150;
+      const r = parseFloat(rate.value) || 8;
+      results.hidden = false;
+
+      body.innerHTML = PROVIDERS.map((p) => {
+        let monthly;
+        if (p.inPrice === 0) {
+          const hours = 730; // avg hours per month running 24/7
+          monthly = (w * hours * r) / 1000;
+          monthly = monthly.toFixed(0);
+          return '<div class="result-row"><span>' + p.name + '</span><strong>₹' + monthly + '/mo (electricity)</strong></div>';
+        } else {
+          const daily = (i * p.inPrice / 1e6) + (o * p.outPrice / 1e6);
+          monthly = (daily * 30).toFixed(1);
+          return '<div class="result-row"><span>' + p.name + '</span><strong>$' + monthly + '/mo</strong></div>';
+        }
+      }).join("");
+    }
+
+    [inTok, outTok, watts, rate].forEach((el) => el.addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

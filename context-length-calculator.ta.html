@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச LLM கான்டெக்ஸ்ட் நீளம் & நினைவக கால்குலேட்டர் – வெவ்வேறு நீளங்கள் மற்றும் KV கேச் குவாண்டைசேஷன்களில் உங்கள் கான்டெக்ஸ்ட் விண்டோ எவ்வளவு VRAM பயன்படுத்தும் என மதிப்பிடவும்." />
+  <title>கான்டெக்ஸ்ட் நீளம் & நினைவக கால்குலேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/context-length-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/context-length-calculator.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/context-length-calculator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/context-length-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/context-length-calculator.ta.html#webapp",
+  "name": "கான்டெக்ஸ்ட் நீளம் & நினைவக கால்குலேட்டர் | VelsTech",
+  "description": "உங்கள் GPU-வில் வெவ்வேறு கான்டெக்ஸ்ட் விண்டோ அளவுகள் மற்றும் KV கேச் குவாண்டைசேஷன்களுக்கான VRAM பயன்பாட்டை மதிப்பிடவும்.",
+  "url": "https://velstech.net/context-length-calculator.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/context-length-calculator.ta.html" />
+  <meta property="og:title" content="கான்டெக்ஸ்ட் நீளம் & நினைவக கால்குலேட்டர் | VelsTech" />
+  <meta property="og:description" content="உங்கள் GPU-வில் வெவ்வேறு கான்டெக்ஸ்ட் விண்டோ அளவுகள் மற்றும் KV கேச் குவாண்டைசேஷன்களுக்கான VRAM பயன்பாட்டை மதிப்பிடவும்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="கான்டெக்ஸ்ட் நீளம் & நினைவக கால்குலேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="உங்கள் GPU-வில் வெவ்வேறு கான்டெக்ஸ்ட் விண்டோ அளவுகள் மற்றும் KV கேச் குவாண்டைசேஷன்களுக்கான VRAM பயன்பாட்டை மதிப்பிடவும்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / கான்டெக்ஸ்ட் நீளம் கால்குலேட்டர்</p>
+    <h1 class="title">கான்டெக்ஸ்ட் நீளம் &amp; நினைவக கால்குலேட்டர்</h1>
+    <div class="meta">
+      <span>KV கேச் VRAM கான்டெக்ஸ்ட் அளவு மூலம் · இயக்கும் முன் மதிப்பிடவும்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        KV கேச் ஒவ்வொரு கான்டெக்ஸ்ட் டோக்கனுடனும் வளர்கிறது. இந்த கால்குலேட்டர் வெவ்வேறு கான்டெக்ஸ்ட் நீளங்கள் மற்றும் குவாண்டைசேஷன்களில் கேச் எவ்வளவு நினைவகத்தைப் பயன்படுத்தும் என்பதைக் காட்டுகிறது, எனவே மாடலை இயக்கும் முன் உங்கள் GPU-க்கு எது பொருந்தும் என்பதை நீங்கள் அறிவீர்கள்.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>மாடல் அளவுருக்கள் (B)</span>
+            <input type="number" id="params" class="input" value="7" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>அடுக்குகள்</span>
+            <input type="number" id="layers" class="input" value="32" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>KV தலைகள்</span>
+            <input type="number" id="heads" class="input" value="8" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>தலை பரிமாணம்</span>
+            <input type="number" id="dim" class="input" value="128" min="1" step="1" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows" id="body"></div>
+        </div>
+
+        <p class="tool-note">
+          தோராய மதிப்பீடு: <code>layers × kv_heads × head_dim × 2 × bytes_per_value × context</code>.
+          மாடல் எடைகள் உள்ளிட்ட துல்லியமான எண்களுக்கு, <a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டரைப்</a> பயன்படுத்தவும்.
+          அதை எவ்வாறு குறைப்பது என்பதற்கான <a href="kv-cache-explained.html">KV கேச் வழிகாட்டியைப்</a> பார்க்கவும்.
+        </p>
+      </div>
+
+      <h2>தொடர்புடையவை</h2>
+      <ul>
+        <li><a href="kv-cache-explained.html">KV கேச் விளக்கம்: ஏன் கான்டெக்ஸ்ட் விண்டோக்கள் நினைவகத்தை சாப்பிடுகின்றன</a></li>
+        <li><a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர்</a></li>
+        <li><a href="llama-cpp-guide.html">llama.cpp வழிகாட்டி: GGUF மாடல்களை இயக்கவும்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="kv-cache-explained.html">KV கேச் விளக்கம் →</a>
+    </div>
+  </main>
+
+  <script>
+    const params = document.getElementById("params");
+    const layers = document.getElementById("layers");
+    const heads = document.getElementById("heads");
+    const dim = document.getElementById("dim");
+    const body = document.getElementById("body");
+
+    const CONTEXTS = [2048, 4096, 8192, 16384, 32768, 65536, 131072];
+    const BYTES = { "q8": 1, "q4": 0.5, "f16": 2 };
+
+    function render() {
+      const p = parseFloat(params.value) || 7;
+      const l = parseInt(layers.value) || 32;
+      const h = parseInt(heads.value) || 8;
+      const d = parseInt(dim.value) || 128;
+      body.innerHTML = "";
+      const header = '<div class="result-row" style="font-weight:600;border-bottom:2px solid var(--border)"><span>Context</span><strong>q8</strong><strong>q4</strong><strong>f16</strong></div>';
+      body.innerHTML = header + CONTEXTS.map((ctx) => {
+        const base = l * h * d * 2 * ctx;
+        return '<div class="result-row"><span>' + (ctx >= 1024 ? (ctx / 1024).toFixed(0) + "K" : ctx) + '</span>' +
+          '<strong>' + (base * BYTES.q8 / 1e9).toFixed(2) + ' GB</strong>' +
+          '<strong>' + (base * BYTES.q4 / 1e9).toFixed(2) + ' GB</strong>' +
+          '<strong>' + (base * BYTES.f16 / 1e9).toFixed(2) + ' GB</strong></div>';
+      }).join("");
+    }
+
+    [params, layers, heads, dim].forEach((el) => el.addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

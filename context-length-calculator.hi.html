@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त LLM कॉन्टेक्स्ट लंबाई और मेमोरी कैलकुलेटर – अनुमान लगाएं कि विभिन्न लंबाई और KV कैश क्वांटाइज़ेशन पर आपकी कॉन्टेक्स्ट विंडो कितनी VRAM उपयोग करेगी।" />
+  <title>कॉन्टेक्स्ट लंबाई और मेमोरी कैलकुलेटर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/context-length-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/context-length-calculator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/context-length-calculator.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/context-length-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/context-length-calculator.hi.html#webapp",
+  "name": "कॉन्टेक्स्ट लंबाई और मेमोरी कैलकुलेटर | VelsTech",
+  "description": "अपने GPU पर विभिन्न कॉन्टेक्स्ट विंडो आकारों और KV कैश क्वांटाइज़ेशन के लिए VRAM उपयोग का अनुमान लगाएं।",
+  "url": "https://velstech.net/context-length-calculator.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/context-length-calculator.html" />
+  <meta property="og:title" content="कॉन्टेक्स्ट लंबाई और मेमोरी कैलकुलेटर | VelsTech" />
+  <meta property="og:description" content="अपने GPU पर विभिन्न कॉन्टेक्स्ट विंडो आकारों और KV कैश क्वांटाइज़ेशन के लिए VRAM उपयोग का अनुमान लगाएं।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="कॉन्टेक्स्ट लंबाई और मेमोरी कैलकुलेटर | VelsTech" />
+  <meta name="twitter:description" content="अपने GPU पर विभिन्न कॉन्टेक्स्ट विंडो आकारों और KV कैश क्वांटाइज़ेशन के लिए VRAM उपयोग का अनुमान लगाएं।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">उपकरण</a> / कॉन्टेक्स्ट लंबाई कैलकुलेटर</p>
+    <h1 class="title">कॉन्टेक्स्ट लंबाई और मेमोरी कैलकुलेटर</h1>
+    <div class="meta">
+      <span>कॉन्टेक्स्ट आकार के अनुसार KV कैश VRAM · चलाने से पहले अनुमान लगाएं</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        KV कैश कॉन्टेक्स्ट के प्रत्येक टोकन के साथ बढ़ता है। यह कैलकुलेटर दिखाता है कि विभिन्न कॉन्टेक्स्ट लंबाई और क्वांटाइज़ेशन पर कैश कितनी मेमोरी उपयोग करेगा, ताकि आप मॉडल चलाने से पहले जान सकें कि आपके GPU में क्या फिट बैठता है।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>मॉडल पैरामीटर (B)</span>
+            <input type="number" id="params" class="input" value="7" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>लेयर्स</span>
+            <input type="number" id="layers" class="input" value="32" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>KV हेड्स</span>
+            <input type="number" id="heads" class="input" value="8" min="1" step="1" />
+          </label>
+          <label class="field">
+            <span>हेड डिम</span>
+            <input type="number" id="dim" class="input" value="128" min="1" step="1" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows" id="body"></div>
+        </div>
+
+        <p class="tool-note">
+          मोटा अनुमान: <code>layers × kv_heads × head_dim × 2 × bytes_per_value × context</code>.
+          सटीक संख्याओं के लिए मॉडल वज़न सहित,
+          <a href="llm-vram-calculator.html">LLM VRAM कैलकुलेटर</a> का उपयोग करें।
+          इसे कम करने के तरीके के लिए <a href="kv-cache-explained.html">KV कैश गाइड</a> देखें।
+        </p>
+      </div>
+
+      <h2>संबंधित</h2>
+      <ul>
+        <li><a href="kv-cache-explained.html">KV कैश समझाया: कॉन्टेक्स्ट विंडो मेमोरी क्यों खाती हैं</a></li>
+        <li><a href="llm-vram-calculator.html">LLM VRAM कैलकुलेटर</a></li>
+        <li><a href="llama-cpp-guide.html">llama.cpp गाइड: GGUF मॉडल चलाएं</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी उपकरण</a>
+      <a href="kv-cache-explained.html">KV कैश समझाया →</a>
+    </div>
+  </main>
+
+  <script>
+    const params = document.getElementById("params");
+    const layers = document.getElementById("layers");
+    const heads = document.getElementById("heads");
+    const dim = document.getElementById("dim");
+    const body = document.getElementById("body");
+
+    const CONTEXTS = [2048, 4096, 8192, 16384, 32768, 65536, 131072];
+    const BYTES = { "q8": 1, "q4": 0.5, "f16": 2 };
+
+    function render() {
+      const p = parseFloat(params.value) || 7;
+      const l = parseInt(layers.value) || 32;
+      const h = parseInt(heads.value) || 8;
+      const d = parseInt(dim.value) || 128;
+      body.innerHTML = "";
+      const header = '<div class="result-row" style="font-weight:600;border-bottom:2px solid var(--border)"><span>Context</span><strong>q8</strong><strong>q4</strong><strong>f16</strong></div>';
+      body.innerHTML = header + CONTEXTS.map((ctx) => {
+        const base = l * h * d * 2 * ctx;
+        return '<div class="result-row"><span>' + (ctx >= 1024 ? (ctx / 1024).toFixed(0) + "K" : ctx) + '</span>' +
+          '<strong>' + (base * BYTES.q8 / 1e9).toFixed(2) + ' GB</strong>' +
+          '<strong>' + (base * BYTES.q4 / 1e9).toFixed(2) + ' GB</strong>' +
+          '<strong>' + (base * BYTES.f16 / 1e9).toFixed(2) + ' GB</strong></div>';
+      }).join("");
+    }
+
+    [params, layers, heads, dim].forEach((el) => el.addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

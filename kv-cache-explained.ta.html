@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="KV கேச் விளக்கம் – நீண்ட கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன, key-value கேச் டோக்கன்களுடன் எவ்வாறு வளர்கிறது, உங்கள் சொந்த GPU க்கு அதை எவ்வாறு கணக்கிடுவது." />
+  <title>KV கேச் விளக்கம்: கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/kv-cache-explained.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/kv-cache-explained.ta.html#article",
+  "headline": "KV கேச் விளக்கம்: கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன",
+  "description": "நீண்ட கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன, key-value கேச் டோக்கன்களுடன் எவ்வாறு வளர்கிறது, உங்கள் சொந்த GPU க்கு அதை எவ்வாறு கணக்கிடுவது.",
+  "url": "https://velstech.net/kv-cache-explained.ta.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/kv-cache-explained.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/kv-cache-explained.ta.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/kv-cache-explained.ta.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "KV கேச் வேகத்தைப் பாதிக்கிறதா?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ஆம் – பெரிய KV கேச் என்பது ஒவ்வொரு டோக்கனுக்கும் படிக்க வேண்டிய அதிக தரவு, இது டிகோடை மெதுவாக்குகிறது. KV கேச்யை குவாண்டைஸ் செய்வது (q8, q4) நினைவகம் மற்றும் வேகம் இரண்டிற்கும் உதவுகிறது."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "KV கேச் எவ்வளவு நினைவகத்தைப் பயன்படுத்துகிறது?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "இது மாடல் கட்டமைப்பு மற்றும் கான்டெக்ஸ்ட்டைப் பொறுத்தது. 8K கான்டெக்ஸ்ட்டில் 7B மாடலுக்கு, ஏறத்தாழ 1 GB. 32K இல், சுமார் 4 GB. 128K இல், அது 12 GB அல்லது அதற்கு மேல் இருக்கலாம்."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/kv-cache-explained.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/kv-cache-explained.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/kv-cache-explained.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/kv-cache-explained.ta.html" />
+  <meta property="og:title" content="KV கேச் விளக்கம்: கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன | VelsTech" />
+  <meta property="og:description" content="நீண்ட கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன, key-value கேச் டோக்கன்களுடன் எவ்வாறு வளர்கிறது, உங்கள் சொந்த GPU க்கு அதை எவ்வாறு கணக்கிடுவது." />
+  <meta property="og:image" content="https://velstech.net/og/kv-cache-explained.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="KV கேச் விளக்கம்: கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன | VelsTech" />
+  <meta name="twitter:description" content="நீண்ட கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன, key-value கேச் டோக்கன்களுடன் எவ்வாறு வளர்கிறது, உங்கள் சொந்த GPU க்கு அதை எவ்வாறு கணக்கிடுவது." />
+  <meta name="twitter:image" content="https://velstech.net/og/kv-cache-explained.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="ai.html">AI</a> / இந்தக் கட்டுரை</p>
+    <h1 class="title">KV கேச் விளக்கம்: கான்டெக்ஸ்ட் விண்டோக்கள் ஏன் நினைவகத்தைச் சாப்பிடுகின்றன</h1>
+    <div class="meta">
+      <span class="tag">KV கேச்</span>
+      <span class="tag">VRAM</span>
+      <span class="tag">உள்ளூர் AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        "இந்த மாடல் 128K கான்டெக்ஸ்ட்டை ஆதரிக்கிறது" என்று கேட்க நன்றாகத் தான் இருக்கிறது –
+        அதை இயக்க முயன்று உங்கள் நினைவகம் எல்லாம் எங்கே போனது என்று யோசிக்கும் வரை.
+        குற்றவாளி <strong>KV கேச்</strong>: கான்டெக்ஸ்ட்டின் ஒவ்வொரு டோக்கனிலும் வளரும் LLM
+        இன் பகுதி, பெரிய கான்டெக்ஸ்ட் விண்டோ உண்மையான ஜிகாபைட்டுகள் செலவாகக் காரணம்.
+      </p>
+      <p>
+        இந்த வழிகாட்டி KV கேச் என்றால் என்ன, அது ஏன் அப்படி அளவிடப்படுகிறது, உங்கள்
+        <em>சொந்த</em> வன்பொருளில் ஒரு கான்டெக்ஸ்ட் விண்டோவுக்கு எவ்வளவு நினைவகம் தேவை
+        என்பதை எவ்வாறு சரியாகக் கணக்கிடுவது என்பதை விளக்குகிறது.
+      </p>
+
+      <h2>KV கேச் என்றால் என்ன</h2>
+      <p>
+        ஒரு LLM ஒரு டோக்கனைச் செயலாக்கும்போது, அது நிறைய கணக்கீடுகளைச் செய்கிறது – மேலும்
+        முக்கியமாக, பிறகு வரும் டோக்கன்களைப் புரிந்துகொள்ள <em>முந்தைய</em> டோக்கன்களிலிருந்து
+        முடிவுகள் தேவை. ஒவ்வொரு டோக்கனின் கடந்த காலத்திற்கான கவனம் (attention), ஒவ்வொரு
+        அடுக்கிலும் இரண்டு விஷயங்களிலிருந்து கணக்கிடப்படுகிறது: ஒரு <strong>key</strong> (இந்த
+        டோக்கன் என்ன வழங்குகிறது) மற்றும் ஒரு <strong>value</strong> (அது என்ன கொண்டுள்ளது).
+      </p>
+      <p>
+        ஒவ்வொரு புதிய டோக்கனிலும் முந்தைய ஒவ்வொரு டோக்கனுக்கும் அந்த keys மற்றும் values
+        ஐ மீண்டும் கணக்கிடுவதற்குப் பதிலாக – இது உருவாக்கத்தை இருபடி அளவில் மெதுவாக்கும் –
+        மாடல் அவற்றை சேமிக்கிறது. அந்த சேமிப்பகம் தான் <strong>KV கேச்</strong>. கான்டெக்ஸ்ட்டில்
+        உள்ள ஒவ்வொரு டோக்கனும், ஒவ்வொரு அடுக்கு மற்றும் ஒவ்வொரு attention head இல், அதில்
+        ஒரு நிலையான தொகையைச் சேர்க்கிறது.
+      </p>
+
+      <h2>அது கான்டெக்ஸ்டுடன் ஏன் நேர்கோட்டில் நினைவகத்தைச் சாப்பிடுகிறது</h2>
+      <p>
+        இதோ முக்கிய உண்மை: <strong>KV கேச் டோக்கன்களின் எண்ணிக்கையுடன் வளர்கிறது, மாடலின்
+        அளவுடன் அல்ல.</strong> அதிக கான்டெக்ஸ்ட் = அதிக சேமிக்கப்பட்ட keys மற்றும் values.
+        கான்டெக்ஸ்ட்டை இரட்டிப்பாக்கினால் KV கேச்யை ஏறத்தாழ இரட்டிப்பாக்கும்.
+      </p>
+      <p>
+        ஒரு dense மாடலுக்கான தோராயமான அளவு:
+      </p>
+      <pre>KV cache ≈ layers × kv_heads × head_dim × 2 × bytes_per_value × context</pre>
+      <p>
+        சரியான எண்கள் மாடல் கட்டமைப்பைப் பொறுத்தது. நடைமுறைக் கருத்து: 7B அல்லது 13B போன்ற
+        நடுத்தர அளவிலான மாடலுக்கு, பெரிய கான்டெக்ஸ்ட்டில் (சொல்லுங்கள் 32K அல்லது 128K) KV கேச்,
+        எடைகளின் அளவோடு எளிதில் பொருந்தலாம் அல்லது அதை மீறலாம்.
+      </p>
+
+      <h2>உண்மையான எண்கள்</h2>
+      <p>
+        இதை நடைமுறையில் பார்க்க, <a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர்</a>
+        உங்கள் சரியான மாடல், குவாண்டைசேஷன், கான்டெக்ஸ்ட்டுக்கான எடைகள் + KV கேச்யைப் பிரிக்கிறது.
+        இரண்டு வேலை செய்த எடுத்துக்காட்டுகள்:
+      </p>
+      <ul>
+        <li>Q4 உடன் <strong>8K கான்டெக்ஸ்ட்</strong> இல் உள்ள 7B மாடல்: KV கேச் ஏறத்தாழ 1 GB – மொத்தம் ~4 GB இல் ஒரு சிறிய பகுதி.</li>
+        <li>அதே மாடல் <strong>32K கான்டெக்ஸ்ட்</strong> இல்: KV கேச் ~4 GB க்கு தாவுகிறது, இப்போது எடைகளுக்கு சமமாகிறது.</li>
+        <li><strong>64K கான்டெக்ஸ்ட்</strong> உடன் Q4 இல் உள்ள 32B மாடல்: KV கேச் மட்டும் 8–12 GB ஆக இருக்கலாம் – பல GPU களில் இருப்பதை விட அதிகம்.</li>
+      </ul>
+      <p>
+        அதனால்தான் "8K கான்டெக்ஸ்ட்டில் இயங்கும்" மற்றும் "128K கான்டெக்ஸ்ட்டில் இயங்கும்"
+        என்பவை ஒரே மாடலுக்கு கூட முற்றிலும் வித்தியாசமான வன்பொருள் தேவைகள்.
+      </p>
+
+      <h2>அதை எவ்வாறு குறைப்பது</h2>
+      <p>
+        KV கேச் உங்கள் நினைவகத்தைச் சாப்பிட்டால், உங்களிடம் சில நெம்புகோல்கள் உள்ளன:
+      </p>
+      <ul>
+        <li><strong>கான்டெக்ஸ்ட் விண்டோவைக் குறைக்கவும் (<code>-c</code>)</strong> – மிகப்பெரிய ஒற்றை நெம்புகோல். மாடல் ஆதரிக்கும் அதிகபட்சத்தை அல்ல, உங்களுக்குத் தேவையான கான்டெக்ஸ்ட்டைப் பயன்படுத்துங்கள்.</li>
+        <li><strong>KV கேச்யை குவாண்டைஸ் செய்யவும் (<code>q8_0</code>, <code>q4_0</code>)</strong> – keys/values ஐ 8-பிட் அல்லது 4-பிட் இல் சேமிப்பது கேச்யை ஏறத்தாழ பாதியாக அல்லது கால் பங்காக்குகிறது, பெரும்பாலான பணிகளுக்கு குறைந்தபட்ச தர இழப்புடன்.</li>
+        <li><strong>MoE அல்லது நீண்ட-கான்டெக்ஸ்ட்-உகந்த மாடல்களைப் பயன்படுத்தவும்</strong> – <a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B</a> போன்ற MoE மாடல்கள் டோக்கன்கள் முழுவதும் KV ஐப் பகிர்கின்றன, இது கேச்யை ஒரு dense மாடலின் கேச்யை விட சிறியதாக்குகிறது.</li>
+        <li><strong>ஆஃப்லோடு</strong> – llama.cpp KV கேச்யின் ஒரு பகுதியை சிஸ்டம் RAM இல் வைத்திருக்க முடியும், வேகத்தின் விலையில்.</li>
+      </ul>
+      <p>
+        எங்கள் <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B லேப் சோதனையில்</a> q8 KV
+        விளைவைக் காணலாம், அங்கு q8 KV 16K இல் பகுதி ஆஃப்லோடுடன் 12 GB கார்டில் (அரிதாக)
+        பொருந்தியது.
+      </p>
+
+      <h2>MoE vs dense (அவை ஏன் வேறுபடுகின்றன)</h2>
+      <p>
+        ஒரு dense மாடல் ஒவ்வொரு டோக்கனையும் அதன் அனைத்து அளவுருக்கள் வழியாகச் செயலாக்குகிறது.
+        ஒரு MoE மாடல் ஒவ்வொரு டோக்கனையும் சில "எக்ஸ்பர்ட்" அடுக்குகள் வழியாக மட்டும் வழிநடத்துகிறது
+        – ஆனால் KV கேச் வேறு கதை. எந்த எக்ஸ்பர்ட்கள் அவற்றைக் கையாண்டாலும் கவனம் டோக்கன்கள்
+        முழுவதும் பகிரப்படுவதால், MoE மாடல்கள் சில கட்டமைப்புகளில் ஒவ்வொரு டோக்கனுக்கும்
+        <em>சிறிய</em> KV கேச்யை வைத்திருக்க முடியும். 35B MoE, 35B dense மாடல் ஒருபோதும்
+        முடியாத 262K கான்டெக்ஸ்ட்டில் இயங்க இது ஒரு காரணம்.
+        நேரடி ஒப்பீட்டிற்கு <a href="moe-vs-dense-rx6800m-16k-vs-262k.html">MoE vs Dense லேப்
+        சோதனையைப்</a> பார்க்கவும்.
+      </p>
+
+      <h2>இறுதி முடிவு</h2>
+      <p>
+        KV கேச் LLM களின் மறைக்கப்பட்ட நினைவகச் செலவு, அது கான்டெக்ஸ்ட்டின் ஒவ்வொரு டோக்கனிலும்
+        வளர்கிறது. ஒரு மாடல் "128K ஆதரிக்கிறது" என்று சொன்னால், அது ஒரு மேல் வரம்பு, பரிந்துரை
+        அல்ல. உங்களுக்கு உண்மையில் தேவையான கான்டெக்ஸ்ட்டைப் பயன்படுத்துங்கள், KV கேச்யை
+        குவாண்டைஸ் செய்யுங்கள், மேலும் நீங்கள் ஈடுபடுவதற்கு முன் <a href="llm-vram-calculator.html">VRAM
+        கால்குலேட்டரைச்</a> சரிபார்க்கவும் – உங்கள் மாடல் நினைவகத்தின் ஒரு பகுதியில் இயங்கும்.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI க்குத் திரும்பு</a>
+      <a href="flash-attention-guide.html">Flash Attention &amp; ஸ்பெகுலேட்டிவ் டிகோடிங் →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

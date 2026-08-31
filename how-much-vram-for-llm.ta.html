@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="7B, 14B, 32B LLM களுக்கு உங்களுக்கு உண்மையில் எவ்வளவு VRAM தேவை? எடைகள், குவாண்டைசேஷன், KV கேச், மற்றும் கான்டெக்ஸ்ட் நீளம் – விரைவான குறிப்பு அட்டவணையுடன்." />
+  <title>7B, 14B, 32B மாடல்களுக்கு எவ்வளவு VRAM தேவை? | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/how-much-vram-for-llm.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/how-much-vram-for-llm.ta.html#article",
+  "headline": "7B, 14B, 32B மாடல்களுக்கு எவ்வளவு VRAM தேவை?",
+  "description": "7B, 14B, 32B LLM களுக்கு தேவையான VRAM – எடைகள், குவாண்டைசேஷன், KV கேச், கான்டெக்ஸ்ட் நீளம், விரைவான குறிப்பு அட்டவணையுடன்.",
+  "url": "https://velstech.net/how-much-vram-for-llm.ta.html",
+  "datePublished": "2026-08-27T00:00:00Z",
+  "dateModified": "2026-08-27T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/how-much-vram-for-llm.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/how-much-vram-for-llm.ta.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/how-much-vram-for-llm.ta.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "VRAM க்கு குவாண்டைசேஷன் என்றால் என்ன?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "குவாண்டைசேஷன் மாடலின் எடைகளின் துல்லியத்தைக் குறைக்கிறது (எ.கா. 16-பிட் இலிருந்து 4-பிட்), இது நினைவக இடத்தைச் சுருக்குகிறது. 4-பிட் இல் உள்ள 7B மாடல், 16-பிட் இல் உள்ளதை விட ஏறத்தாழ பாதி VRAM எடுக்கிறது."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "நீண்ட கான்டெக்ஸ்ட் விண்டோவுக்கு அதிக VRAM தேவையா?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ஆம். KV கேச் கான்டெக்ஸ்ட் நீளத்துடன் வளர்கிறது, எனவே 32K கான்டெக்ஸ்ட் எடைகளுக்கு மேல் பல GB VRAM ஐச் சேர்க்கும். உங்கள் சரியான அமைப்பைச் சரிபார்க்க LLM VRAM கால்குலேட்டர் போன்ற கருவியைப் பயன்படுத்தவும்."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/how-much-vram-for-llm.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/how-much-vram-for-llm.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/how-much-vram-for-llm.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/how-much-vram-for-llm.ta.html" />
+  <meta property="og:title" content="7B, 14B, 32B மாடல்களுக்கு எவ்வளவு VRAM தேவை? | VelsTech" />
+  <meta property="og:description" content="7B, 14B, 32B LLM களுக்கு தேவையான VRAM – எடைகள், குவாண்டைசேஷன், KV கேச், கான்டெக்ஸ்ட் நீளம், விரைவான குறிப்பு அட்டவணையுடன்." />
+  <meta property="og:image" content="https://velstech.net/og/how-much-vram-for-llm.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="7B, 14B, 32B மாடல்களுக்கு எவ்வளவு VRAM தேவை? | VelsTech" />
+  <meta name="twitter:description" content="7B, 14B, 32B LLM களுக்கு தேவையான VRAM – எடைகள், குவாண்டைசேஷன், KV கேச், கான்டெக்ஸ்ட் நீளம், விரைவான குறிப்பு அட்டவணையுடன்." />
+  <meta name="twitter:image" content="https://velstech.net/og/how-much-vram-for-llm.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="ai.html">AI &amp; ML</a> / இந்தக் கட்டுரை</p>
+    <h1 class="title">7B, 14B, 32B மாடல்களுக்கு எவ்வளவு VRAM தேவை?</h1>
+    <div class="meta">
+      <span class="tag">VRAM</span>
+      <span class="tag">LLM</span>
+      <span class="tag">GPU</span>
+      <span class="tag">குவாண்டைசேஷன்</span>
+      <span>Aug 27, 2026</span>
+      <span>· 7 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        உள்ளூர் AI இல் மிகவும் பொதுவான கேள்வி "என் GPU இந்த மாடலை இயக்க முடியுமா?" என்பதே.
+        பதில் ஒரே ஒரு எண்ணைச் சார்ந்துள்ளது: <strong>VRAM</strong>. சுமார் முப்பது வினாடிகளில்
+        அதை நீங்களே எவ்வாறு மதிப்பிடுவது என்பது இங்கே – மேலும் பிரபலமான மாடல் அளவுகளுக்கான
+        ஏமாற்றுத் தாளும்.
+      </p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 கணிதத்தைத் தவிர்க்கவும் – கால்குலேட்டரைப் பயன்படுத்தவும்</div>
+        <p>உங்கள் GPU க்கு பொருந்துகிறதா என்பதைச் சரிபார்த்து, உங்கள் மாடல், குவாண்டைசேஷன், கான்டெக்ஸ்ட் ஆகியவற்றைத் தேர்ந்தெடுத்து சரியான VRAM மதிப்பீட்டைப் பெறுங்கள்.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டரைத் திற →</a>
+      </div>
+
+      <h2>விரைவான பதில்</h2>
+      <p>8K கான்டெக்ஸ்ட்டில் மாடலுக்கு மட்டுமே (எடைகள்) தேவையான VRAM, கூடுதலாக KV கேச் + ஓவர்ஹெட்டுக்கு ~1–3 GB:</p>
+      <pre>Model size   Q4_K_M        Q8_0          FP16
+──────────────────────────────────────────────
+7–8B         ~4–5 GB      ~8–9 GB      ~15–16 GB
+13–14B       ~9–10 GB     ~16–17 GB    ~30 GB
+27–32B       ~18–21 GB    ~32–35 GB    ~60+ GB
+70B          ~40–45 GB    ~75 GB       cloud only</pre>
+      <p>
+        அதை GPU களுக்கு மொழிபெயர்க்க: <strong>8 GB</strong> கார்டு 7B Q4 ஐ இயக்கும்.
+        <strong>16 GB</strong> கார்டு சிறந்த தேர்வு – 14B Q4 முழுமையாக, 32B ஐ லேசான
+        ஆஃப்லோடுடன் இயக்கும். <strong>24 GB</strong> கார்டு 32B Q4 ஐ முழுமையாக இயக்கும்.
+        அதனால்தான் எங்கள் <a href="best-gpu-for-local-llm.html">உள்ளூர் LLM களுக்கான சிறந்த
+        GPU</a> தேர்வுகளில் "16 GB" தொடர்ந்து இடம்பெறுகிறது.
+      </p>
+
+      <h2>VRAM ஐ உண்மையில் எது சாப்பிடுகிறது</h2>
+      <p>மூன்று விஷயங்கள், அவை அனைத்தையும் நீங்கள் கூட்ட வேண்டும்:</p>
+      <ol>
+        <li><strong>மாடல் எடைகள்</strong> – முக்கியமானது. ஏறத்தாழ <code>parameters × bytes per weight</code>.
+        Q4_K_M இல் அது ~0.6 பைட்டுகள்/எடை; Q8_0 இல் ~1.06; FP16 இல் சரியாக 2.</li>
+        <li><strong>KV கேச்</strong> – கான்டெக்ஸ்ட் நீளம் மற்றும் பேட்ச் அளவுடன் வளர்கிறது. 8K இல் சிறியது, 128K இல் குறிப்பிடத்தக்கது. 7B க்கு அது 8K இல் ~0.5 GB, 64K+ இல் ~3–4 GB.</li>
+        <li><strong>ஓவர்ஹெட்</strong> – CUDA கான்டெக்ஸ்ட், எஞ்சின் பஃபர்கள், டோக்கனைசர்: பொதுவாக கூடுதலாக ~0.5–1.5 GB.</li>
+      </ol>
+      <p>
+        எனவே 8K கான்டெக்ஸ்ட்டுடன் Q4_K_M இல் உள்ள 7B ≈ 4.5 GB எடைகள் + 0.5 GB KV + ~0.5 GB
+        ஓவர்ஹெட் ≈ <strong>5.5 GB</strong>. 8 GB கார்டில் வசதியாக இயங்கும், 6 GB இல் இறுக்கமாக
+        இருக்கும்.
+      </p>
+
+      <h2>7B மாடல்கள்: அடிப்படை நிலை</h2>
+      <ul>
+        <li><strong>Q4_K_M (~4.5 GB)</strong> – 8 GB GPU (RTX 4060, RX 7600) இல் கான்டெக்ஸ்டுக்கு இடம் அளித்து இயங்கும்.</li>
+        <li><strong>Q8_0 (~8 GB)</strong> – 8 GB கார்டு விளிம்பில் உள்ளது; 12 GB வசதியானது.</li>
+        <li><strong>FP16 (~16 GB)</strong> – உங்களுக்கு 16 GB கார்டு தேவை; அந்த நிலையில் பொதுவாக 14B Q4 ஐ இயக்குவதே நல்லது.</li>
+      </ul>
+
+      <h2>13–14B மாடல்கள்: நடைமுறைச் சிறந்த தேர்வு</h2>
+      <ul>
+        <li><strong>Q4_K_M (~9–10 GB)</strong> – 12 GB இயக்கும்; 16 GB (RTX 4060 Ti 16 GB, RX 7600 XT) நீண்ட கான்டெக்ஸ்டுடன் இயக்கும்.</li>
+        <li><strong>Q8_0 (~16 GB)</strong> – 16 GB கார்டு குறுகிய கான்டெக்ஸ்டுடன் இயக்கும்; 24 GB வசதியானது.</li>
+        <li><strong>FP16 (~30 GB)</strong> – ஆஃப்லோடுடன் 24 GB கார்டு, அல்லது கிளவுட் தேவை.</li>
+      </ul>
+      <p>
+        ~40–50 tok/s இல் உள்ள 14B Q4, உள்ளூர் மாடல் டெமோ போல் உணர்வதை நிறுத்தி, பயனுள்ள
+        உதவியாளராக உணரத் தொடங்கும் இடமாகும்.
+      </p>
+
+      <h2>27–32B மாடல்கள்: 24 GB மதிப்பு பெறும் இடம்</h2>
+      <ul>
+        <li><strong>Q4_K_M (~20 GB + KV)</strong> – 24 GB GPU (RTX 4090, RX 7900 XTX) 32B Q4 ஐ 8–16K கான்டெக்ஸ்ட்டுடன் இயக்கும். 32K கான்டெக்ஸ்ட்டில் நீங்கள் சரியாக விளிம்பில் இருக்கிறீர்கள்.</li>
+        <li><strong>Q8_0 (~32 GB)</strong> – நுகர்வோர் கார்டுகளுக்கு அப்பால்; 32 GB கார்டு அல்லது கிளவுட் தேவை.</li>
+      </ul>
+      <p>
+        16–32 GB சிஸ்டம் RAM இருந்தால், 16 GB கார்டு <strong>பகுதி ஆஃப்லோடு</strong> மூலம்
+        30B Q4 ஐ இயக்க முடியும் – இது வேலை செய்யும், ஆனால் உருவாக்கம் மிகவும் மெதுவாகும்
+        (பெரும்பாலும் 5–15 tok/s).
+      </p>
+
+      <h2>கான்டெக்ஸ்ட் நீளம் மறைந்திருக்கும் மாறி</h2>
+      <p>
+        கான்டெக்ஸ்ட்டை இரட்டிப்பாக்குவது KV கேச்யை ஏறத்தாழ இரட்டிப்பாக்கும். 128K கான்டெக்ஸ்ட்டில்,
+        KV கேச் மட்டுமே 3–6 GB ஆக இருக்கலாம் – அது முழு குவாண்டைசேஷன் நிலையின் நினைவக அளவு.
+        நீண்ட ஆவணங்களைத் திட்டமிடுகிறீர்கள் என்றால், பெரிய கார்டை வாங்குங்கள் அல்லது உங்கள்
+        கான்டெக்ஸ்ட்டைக் குறைக்கவும்.
+      </p>
+
+      <h2>அடிக்கடி கேட்கப்படும் கேள்விகள்</h2>
+      <h3>எடைகளுக்கு தேவையானதை விட குறைந்த VRAM உடன் மாடலை இயக்க முடியுமா?</h3>
+      <p>சில அடுக்குகளை சிஸ்டம் RAM க்கு ஆஃப்லோடு செய்வதன் மூலம் மட்டுமே. அது வேலை செய்யும், ஆனால் ஒவ்வொரு ஆஃப்லோடு செய்யப்பட்ட அடுக்கும் உருவாக்கத்தை மெதுவாக்கும். அதிக RAM உதவும்; அது VRAM ஐ மாற்றாது.</p>
+      <h3>CPU அல்லது GPU வேகம் மேற்கண்ட எண்களுக்கு முக்கியமா?</h3>
+      <p>பொருத்தத்திற்கு இல்லை – VRAM திறன் பற்றியது. வேகம் தனித்தனியாக tokens/sec க்கு முக்கியம்.</p>
+      <h3>குறைந்தபட்ச பயன்படுத்தக்கூடிய அமைப்பு எது?</h3>
+      <p>8 GB VRAM + 16 GB சிஸ்டம் RAM, 7B Q4 உள்ளூர் உதவியாளரை நன்றாக இயக்கும். அங்கிருந்து, VRAM தான் முக்கியமான மேம்படுத்தல்.</p>
+
+      <h2>இறுதி முடிவு</h2>
+      <p>
+        8 GB → 7B. 16 GB → 14B. 24 GB → 32B. நீண்ட கான்டெக்ஸ்ட்டுக்கு ~1–3 GB சேர்க்கவும்,
+        மேலும் குவாண்டைசேஷனை அறியாமல் எந்த VRAM கூற்றையும் நம்ப வேண்டாம். கார்டு வாங்குவதற்கு
+        முன் கீழே உள்ள கால்குலேட்டருடன் உங்கள் சரியான மாடலைச் சரிபார்க்கவும்.
+      </p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 உங்கள் மாடலுக்கான சரியான எண்ணைப் பெறுங்கள்</div>
+        <p>LLM VRAM கால்குலேட்டர் – எடைகள் + KV கேச் + பொருத்துதல் முடிவு. பிறகு GPU AI செயல்திறன் கால்குலேட்டருடன் எவ்வளவு வேகமாக இயங்கும் என்று பாருங்கள்.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">கால்குலேட்டரைத் திற →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI &amp; ML க்குத் திரும்பு</a>
+      <a href="best-gpu-for-local-llm.html">உள்ளூர் LLM களுக்கான சிறந்த GPU</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

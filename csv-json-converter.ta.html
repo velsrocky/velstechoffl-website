@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச CSV இலிருந்து JSON மாற்றி – எந்த CSVயையும் ஒரே கிளிக்கில் சுத்தமான JSON ஆக மாற்றவும். JSON அணிகளை மீண்டும் CSV ஆக மாற்றவும் ஆதரிக்கிறது." />
+  <title>CSV ↔ JSON மாற்றி | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/csv-json-converter.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/csv-json-converter.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/csv-json-converter.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/csv-json-converter.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/csv-json-converter.ta.html#webapp",
+  "name": "CSV ↔ JSON மாற்றி | VelsTech",
+  "description": "CSV ஐ ஒட்டி சுத்தமான JSON பெறுங்கள், அல்லது JSON அணியை ஒட்டி CSV பெறுங்கள். சேவையகத்தில் பதிவேற்றம் இல்லை – உங்கள் உலாவியில் இயங்குகிறது.",
+  "url": "https://velstech.net/csv-json-converter.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/csv-json-converter.ta.html" />
+  <meta property="og:title" content="CSV ↔ JSON மாற்றி | VelsTech" />
+  <meta property="og:description" content="CSV ஐ ஒட்டி சுத்தமான JSON பெறுங்கள், அல்லது JSON அணியை ஒட்டி CSV பெறுங்கள். சேவையகத்தில் பதிவேற்றம் இல்லை – உங்கள் உலாவியில் இயங்குகிறது." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSV ↔ JSON மாற்றி | VelsTech" />
+  <meta name="twitter:description" content="CSV ஐ ஒட்டி சுத்தமான JSON பெறுங்கள், அல்லது JSON அணியை ஒட்டி CSV பெறுங்கள். சேவையகத்தில் பதிவேற்றம் இல்லை – உங்கள் உலாவியில் இயங்குகிறது." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / CSV ↔ JSON மாற்றி</p>
+    <h1 class="title">CSV ↔ JSON மாற்றி</h1>
+    <div class="meta">
+      <span>CSV மற்றும் JSON இடையே மாற்றவும் · தலைப்பு வரி தேவை · உங்கள் உலாவியில் இயங்குகிறது</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        CSV (கமா, டேப் அல்லது பைப்பால் பிரிக்கப்பட்டது) ஒட்டி உடனடியாக சுத்தமான JSON
+        அணியைப் பெறுங்கள். எதிர் திசையிலும் வேலை செய்கிறது: பொருள்களின் JSON அணியை ஒட்டி CSV
+        பெறுங்கள். எந்த தரவும் சேவையகத்திற்கு அனுப்பப்படுவதில்லை – அனைத்தும் உங்கள் உலாவியில்
+        உள்நாட்டில் இயங்குகிறது.
+      </p>
+
+      <div class="calc">
+        <div class="tool-radio-row">
+          <label><input type="radio" name="mode" value="csv-to-json" checked /> CSV → JSON</label>
+          <label><input type="radio" name="mode" value="json-to-csv" /> JSON → CSV</label>
+        </div>
+
+        <label class="field" style="margin-top:14px">
+          <span>உள்ளீடு</span>
+          <textarea id="input" class="tool-textarea" rows="6" spellcheck="false"></textarea>
+        </label>
+
+        <label class="field" style="margin-top:14px">
+          <span>வெளியீடு</span>
+          <textarea id="output" class="tool-textarea" rows="6" spellcheck="false" readonly></textarea>
+        </label>
+
+        <div class="tool-btn-row">
+          <button class="btn btn-primary" id="btn-copy" type="button" title="வெளியீட்டை கிளிப்போர்டுக்கு நகலெடுக்கவும்" aria-label="வெளியீட்டை நகலெடு">வெளியீட்டை நகலெடு</button>
+          <button class="btn btn-ghost" id="btn-swap" type="button" title="உள்ளீடு மற்றும் வெளியீட்டை மாற்றி பயன்முறையை புரட்டவும்" aria-label="உள்ளீடு மற்றும் வெளியீட்டை மாற்று">உள்ளீடு ↔ வெளியீட்டை மாற்று</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+        </div>
+      </div>
+
+      <h2>தொடர்புடைய கருவிகள்</h2>
+      <ul>
+        <li><a href="json-formatter.html">JSON வடிவமைப்பு &amp; சரிபார்ப்பு</a></li>
+        <li><a href="url-encoder-decoder.html">URL என்கோடர் / டிகோடர்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="programming.html">நிரலாக்க குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+    const verdict = document.getElementById("verdict");
+    const results = document.getElementById("results");
+    const csvToJson = document.querySelector('input[name="mode"][value="csv-to-json"]');
+    const jsonToCsv = document.querySelector('input[name="mode"][value="json-to-csv"]');
+
+    function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+    function parseCSV(text) {
+      const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+      if (!lines.length) return null;
+      const delim = lines[0].includes("\t") ? "\t" : lines[0].includes("|") ? "|" : ",";
+      const headers = lines[0].split(delim).map(h => h.trim());
+      const rows = lines.slice(1).map(l => {
+        const vals = l.split(delim).map(v => v.trim());
+        const row = {};
+        headers.forEach((h, i) => { row[h] = vals[i] || ""; });
+        return row;
+      });
+      return { rows, headers };
+    }
+
+    function render() {
+      const raw = input.value;
+      if (!raw) { results.hidden = true; output.value = ""; return; }
+      results.hidden = false;
+
+      try {
+        if (csvToJson.checked) {
+          const parsed = parseCSV(raw);
+          if (!parsed || !parsed.rows.length) throw new Error("No data rows found");
+          const json = JSON.stringify(parsed.rows, null, 2);
+          output.value = json;
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Converted " + parsed.rows.length + " row" + (parsed.rows.length === 1 ? "" : "s") + " with " + parsed.headers.length + " columns.";
+        } else {
+          const arr = JSON.parse(raw);
+          if (!Array.isArray(arr)) throw new Error("Input must be a JSON array");
+          if (!arr.length) throw new Error("Array is empty");
+          const headers = Object.keys(arr[0]);
+          const lines = arr.map(obj => headers.map(h => String(obj[h] || "")).join(","));
+          output.value = headers.join(",") + "\n" + lines.join("\n");
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ Converted " + arr.length + " object" + (arr.length === 1 ? "" : "s") + " to CSV.";
+        }
+      } catch (e) {
+        output.value = "";
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>" + esc(e.message) + "</strong>";
+      }
+    }
+
+    [csvToJson, jsonToCsv].forEach((r) => r.addEventListener("change", render));
+    input.addEventListener("input", render);
+
+    document.getElementById("btn-copy").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(output.value); } catch { output.select(); document.execCommand("copy"); }
+      const btn = document.getElementById("btn-copy");
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = "Copy output"; }, 1500);
+    });
+
+    document.getElementById("btn-swap").addEventListener("click", () => {
+      const tmp = input.value;
+      input.value = output.value;
+      output.value = tmp;
+      const wasCsv = csvToJson.checked;
+      csvToJson.checked = !wasCsv;
+      jsonToCsv.checked = wasCsv;
+      render();
+    });
+
+    input.value = "name,role,years\nAlice,Engineer,5\nBob,Designer,3\nCharlie,PM,4";
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

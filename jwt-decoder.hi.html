@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त JWT डिकोडर – header, payload और signature का निरीक्षण करने के लिए JSON Web Token पेस्ट करें। base64 URL डीकोड करता है और exp, iat, iss, sub जैसे क्लेम दिखाता है।" />
+  <title>JWT डिकोडर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/jwt-decoder.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/jwt-decoder.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/jwt-decoder.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/jwt-decoder.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/jwt-decoder.hi.html#webapp",
+  "name": "JWT डिकोडर | VelsTech",
+  "description": "JSON Web Token – header, payload, exp/iat/iss जैसे क्लेम और signature को डीकोड करें और निरीक्षण करें। सभी डेटा आपके ब्राउज़र में ही रहता है।",
+  "url": "https://velstech.net/jwt-decoder.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/jwt-decoder.html" />
+  <meta property="og:title" content="JWT डिकोडर | VelsTech" />
+  <meta property="og:description" content="JSON Web Token – header, payload, exp/iat/iss जैसे क्लेम और signature को डीकोड करें और निरीक्षण करें। सभी डेटा आपके ब्राउज़र में ही रहता है।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JWT डिकोडर | VelsTech" />
+  <meta name="twitter:description" content="JSON Web Token – header, payload, exp/iat/iss जैसे क्लेम और signature को डीकोड करें और निरीक्षण करें। सभी डेटा आपके ब्राउज़र में ही रहता है।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">टूल्स</a> / JWT डिकोडर</p>
+    <h1 class="title">JWT डिकोडर</h1>
+    <div class="meta">
+      <span>header, payload और क्लेम का निरीक्षण करें · कोई डेटा कहीं नहीं भेजा जाता</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        एक JWT (JSON Web Token) पेस्ट करें और यह base64url-एन्कोडेड header और
+        payload को डीकोड करता है, सिंटैक्स हाइलाइटिंग के साथ फ़ॉर्मेट करता है, और एक्सपायरी,
+        issue समय, issuer और subject जैसे सामान्य क्लेम निकालता है। Signature को hex
+        फ़िंगरप्रिंट के रूप में दिखाया जाता है। सब कुछ लोकल रूप से चलता है – आपका टोकन
+        कभी इस पेज से बाहर नहीं जाता।
+      </p>
+
+      <div class="calc">
+        <textarea id="token" class="tool-textarea" rows="4" spellcheck="false" placeholder="यहाँ एक JWT पेस्ट करें…">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjc4NzY1NDMyMTB9.5Hh0sMFOlKJDLk0_3Ze7t0U8jRo0P0F0Gw0Ss0K0l0</textarea>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+
+          <h3 class="subheading">Header</h3>
+          <div class="tool-out" id="header-out"></div>
+
+          <h3 class="subheading">Payload</h3>
+          <div class="tool-out" id="payload-out"></div>
+
+          <h3 class="subheading">क्लेम</h3>
+          <div class="result-rows" id="claims-list"></div>
+
+          <h3 class="subheading">Signature</h3>
+          <div class="tool-out" id="sig-out" class="break-all"></div>
+        </div>
+      </div>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="security-habits.html">वास्तव में आवश्यक केवल 5 सुरक्षा आदतें</a></li>
+        <li><a href="password-managers.html">पासवर्ड मैनेजर: आपको एक की आवश्यकता क्यों है</a></li>
+        <li><a href="json-formatter.html">JSON फ़ॉर्मेटर और वैलिडेटर</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी टूल्स</a>
+      <a href="security.html">सुरक्षा नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const tokenInput = document.getElementById("token");
+    const results = document.getElementById("results");
+    const verdict = document.getElementById("verdict");
+    const headerOut = document.getElementById("header-out");
+    const payloadOut = document.getElementById("payload-out");
+    const claimsList = document.getElementById("claims-list");
+    const sigOut = document.getElementById("sig-out");
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    function base64urlDecode(str) {
+      str = str.replace(/-/g, "+").replace(/_/g, "/");
+      while (str.length % 4) str += "=";
+      try { return atob(str); } catch { return null; }
+    }
+
+    function highlight(json) {
+      let out = "", i = 0;
+      while (i < json.length) {
+        const c = json[i];
+        if (c === "\"") {
+          let j = i + 1, token = "\"", bs = false;
+          while (j < json.length) { const d = json[j]; token += d; if (bs) bs = false; else if (d === "\\") bs = true; else if (d === "\"") { j++; break; } j++; }
+          let k = j; while (k < json.length && /\s/.test(json[k])) k++;
+          const cls = json[k] === ":" ? "json-key" : "json-string";
+          out += '<span class="' + cls + '">' + esc(token) + "</span>"; i = j;
+        } else if (/[0-9-]/.test(c)) {
+          let j = i, token = ""; while (j < json.length && /[0-9eE+\-.]/.test(json[j])) { token += json[j]; j++; }
+          out += '<span class="json-number">' + esc(token) + "</span>"; i = j;
+        } else if (/[a-zA-Z]/.test(c)) {
+          let j = i, token = ""; while (j < json.length && /[a-zA-Z]/.test(json[j])) { token += json[j]; j++; }
+          const cls = token === "true" || token === "false" ? "json-bool" : token === "null" ? "json-null" : "";
+          out += cls ? '<span class="' + cls + '">' + token + "</span>" : token; i = j;
+        } else { out += esc(c); i++; }
+      }
+      return out;
+    }
+
+    function fmtDate(ts) {
+      if (!ts || typeof ts !== "number") return null;
+      const d = new Date(ts * 1000);
+      const now = Date.now();
+      const diff = d - now;
+      const rel = Math.abs(diff) < 1000 ? "just now" : diff > 0
+        ? "in " + Math.round(diff / 3600000) + "h"
+        : Math.round(-diff / 3600000) + "h ago";
+      return d.toISOString().replace("T", " ").replace("Z", "") + " (" + rel + ")";
+    }
+
+    function render() {
+      const raw = tokenInput.value.trim();
+      if (!raw) { results.hidden = true; return; }
+
+      const parts = raw.split(".");
+      if (parts.length !== 3) {
+        results.hidden = false;
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>Invalid JWT format.</strong> Expected 3 dot-separated parts (header.payload.signature).";
+        headerOut.innerHTML = payloadOut.innerHTML = sigOut.innerHTML = "";
+        claimsList.innerHTML = "";
+        return;
+      }
+
+      const headerB64 = parts[0], payloadB64 = parts[1], sigB64 = parts[2];
+      const headerDecoded = base64urlDecode(headerB64);
+      const payloadDecoded = base64urlDecode(payloadB64);
+
+      let headerJson, payloadJson;
+      try { headerJson = JSON.parse(headerDecoded); } catch { headerJson = null; }
+      try { payloadJson = JSON.parse(payloadDecoded); } catch { payloadJson = null; }
+
+      const sigBytes = base64urlDecode(sigB64);
+      const sigHex = sigBytes ? Array.from(sigBytes, (c) => c.charCodeAt(0).toString(16).padStart(2, "0")).join("") : "(invalid)";
+
+      results.hidden = false;
+      headerOut.innerHTML = headerJson ? highlight(JSON.stringify(headerJson, null, 2)) : esc(headerDecoded);
+      payloadOut.innerHTML = payloadJson ? highlight(JSON.stringify(payloadJson, null, 2)) : esc(payloadDecoded);
+      sigOut.textContent = sigHex;
+
+      let ok = true;
+      if (!headerJson) { verdict.className = "result-verdict verdict-no"; verdict.innerHTML = "❌ Could not decode header."; ok = false; }
+      else if (!payloadJson) { verdict.className = "result-verdict verdict-no"; verdict.innerHTML = "❌ Could not decode payload."; ok = false; }
+
+      if (ok) {
+        const claims = [];
+        if (payloadJson.iss !== undefined) claims.push({ k: "iss (Issuer)", v: payloadJson.iss });
+        if (payloadJson.sub !== undefined) claims.push({ k: "sub (Subject)", v: payloadJson.sub });
+        if (payloadJson.aud !== undefined) claims.push({ k: "aud (Audience)", v: Array.isArray(payloadJson.aud) ? payloadJson.aud.join(", ") : payloadJson.aud });
+        if (payloadJson.exp !== undefined) {
+          const d = fmtDate(payloadJson.exp);
+          claims.push({ k: "exp (Expiration)", v: d ? esc(d) : "Invalid timestamp" });
+        }
+        if (payloadJson.nbf !== undefined) {
+          const d = fmtDate(payloadJson.nbf);
+          claims.push({ k: "nbf (Not Before)", v: d ? esc(d) : "Invalid timestamp" });
+        }
+        if (payloadJson.iat !== undefined) {
+          const d = fmtDate(payloadJson.iat);
+          claims.push({ k: "iat (Issued At)", v: d ? esc(d) : "Invalid timestamp" });
+        }
+        if (payloadJson.jti !== undefined) claims.push({ k: "jti (JWT ID)", v: payloadJson.jti });
+        if (!claims.length) claims.push({ k: "", v: "No standard claims found" });
+
+        claimsList.innerHTML = claims.map(c =>
+          '<div class="result-row"><span>' + c.k + '</span><strong>' + c.v + "</strong></div>"
+        ).join("");
+
+        const now = Date.now() / 1000;
+        if (payloadJson.exp && payloadJson.exp < now) {
+          verdict.className = "result-verdict verdict-warn";
+          verdict.innerHTML = "⚠️ <strong>Token expired</strong> " + fmtDate(payloadJson.exp).replace(/^.*?\(/, "(");
+        } else if (payloadJson.nbf && payloadJson.nbf > now) {
+          verdict.className = "result-verdict verdict-warn";
+          verdict.innerHTML = "⚠️ <strong>Token not yet valid</strong> (nbf is in the future).";
+        } else {
+          verdict.className = "result-verdict verdict-ok";
+          verdict.innerHTML = "✅ <strong>Valid JWT</strong> – algorithm: " + esc(headerJson.alg || "unknown") + ".";
+        }
+      }
+    }
+
+    tokenInput.addEventListener("input", render);
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

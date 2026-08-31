@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="VelsTech Linux கட்டளை cheat sheet – கோப்புகள், அனுமதிகள், செயல்முறைகள், நெட்வொர்க்கிங், மற்றும் பேக்கேஜ் மேலாண்மைக்கு தேவையான ஒவ்வொரு கட்டளையும். இலவசம், அச்சிடத்தக்கது, மின்னஞ்சல் தேவையில்லை." />
+  <title>Linux கட்டளை குயிக் ரெஃபரன்ஸ் (இலவச PDF) | VelsTech</title>
+  <link href="https://velstech.net/linux-cheat-sheet.html" rel="canonical"/><link href="https://velstech.net/linux-cheat-sheet.html" hreflang="en" rel="alternate"/><link href="https://velstech.net/linux-cheat-sheet.ta.html" hreflang="ta" rel="alternate"/><link href="https://velstech.net/linux-cheat-sheet.html" hreflang="x-default" rel="alternate"/>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://velstech.net/linux-cheat-sheet.ta.html#webpage",
+  "url": "https://velstech.net/linux-cheat-sheet.ta.html",
+  "name": "Linux கட்டளை குயிக் ரெஃபரன்ஸ் (இலவச PDF) | VelsTech",
+  "description": "உங்களுக்கு தேவையான ஒவ்வொரு Linux கட்டளை – கோப்புகள், அனுமதிகள், செயல்முறைகள், நெட்வொர்க்கிங், பேக்கேஜ் மேலாண்மை. இலவச அச்சிடத்தக்க குயிக் ரெஃபரன்ஸ்.",
+  "inLanguage": "ta"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/linux-cheat-sheet.ta.html" />
+  <meta property="og:title" content="Linux கட்டளை குயிக் ரெஃபரன்ஸ் (இலவச PDF) | VelsTech" />
+  <meta property="og:description" content="உங்களுக்கு தேவையான ஒவ்வொரு Linux கட்டளை – கோப்புகள், அனுமதிகள், செயல்முறைகள், நெட்வொர்க்கிங், பேக்கேஜ் மேலாண்மை. இலவச அச்சிடத்தக்க குயிக் ரெஃபரன்ஸ்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Linux கட்டளை குயிக் ரெஃபரன்ஸ் (இலவச PDF) | VelsTech" />
+  <meta name="twitter:description" content="உங்களுக்கு தேவையான ஒவ்வொரு Linux கட்டளை – கோப்புகள், அனுமதிகள், செயல்முறைகள், நெட்வொர்க்கிங், பேக்கேஜ் மேலாண்மை. இலவச அச்சிடத்தக்க குயிக் ரெஃபரன்ஸ்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / Linux கட்டளை குயிக் ரெஃபரன்ஸ்</p>
+    <h1 class="title">Linux கட்டளை குயிக் ரெஃபரன்ஸ்</h1>
+    <div class="meta">
+      <span>இலவச பதிவிறக்கம் · அச்சிடத்தக்கது · நீங்கள் உண்மையில் பயன்படுத்தும் கட்டளைகள்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        கீழே உள்ள கட்டளைகள் தினசரி Linux பயன்பாட்டின் 95% உள்ளடக்குகின்றன – நேவிகேஷன்,
+        கோப்புகள், அனுமதிகள், செயல்முறைகள், நெட்வொர்க்கிங், மற்றும் பேக்கேஜ் மேலாண்மை.
+        இந்தப் பக்கத்தை புக்மார்க் செய்யுங்கள், அல்லது
+        <a href="#" onclick="window.print();return false;">உங்கள் மேசையில் ஒரு நகலை
+        வைத்திருக்க அச்சிடுங்கள் (Ctrl+P / Cmd+P)</a>.
+      </p>
+
+      <h2>🖥️ நேவிகேஷன் &amp; கோப்புகள்</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>pwd</code><span>தற்போதைய கோப்பகத்தை அச்சிடு</span></div>
+        <div class="cheat-item"><code>ls</code><span>கோப்புகளை பட்டியலிடு</span></div>
+        <div class="cheat-item"><code>ls -la</code><span>அனைத்து கோப்புகளையும் விவரங்கள் &amp; மறைக்கப்பட்ட கோப்புகளுடன் பட்டியலிடு</span></div>
+        <div class="cheat-item"><code>cd dir</code><span>கோப்பகத்திற்கு மாறு</span></div>
+        <div class="cheat-item"><code>cd ~</code><span>ஹோம் கோப்பகத்திற்கு செல்</span></div>
+        <div class="cheat-item"><code>cd ..</code><span>ஒரு நிலை மேலே செல்</span></div>
+        <div class="cheat-item"><code>mkdir dir</code><span>கோப்பகத்தை உருவாக்கு</span></div>
+        <div class="cheat-item"><code>rm file</code><span>கோப்பை நீக்கு (கவனம் – மீள முடியாது)</span></div>
+        <div class="cheat-item"><code>rm -r dir</code><span>கோப்பகத்தை மீண்டும் மீண்டும் நீக்கு</span></div>
+        <div class="cheat-item"><code>cp a b</code><span>a → b நகலெடு</span></div>
+        <div class="cheat-item"><code>mv a b</code><span>a → b நகர்த்து / மறுபெயரிடு</span></div>
+        <div class="cheat-item"><code>touch file</code><span>காலி கோப்பை உருவாக்கு</span></div>
+        <div class="cheat-item"><code>cat file</code><span>கோப்பு உள்ளடக்கத்தை அச்சிடு</span></div>
+        <div class="cheat-item"><code>less file</code><span>கோப்பை பார்க்க (ஸ்க்ரோல், வெளியேற q)</span></div>
+        <div class="cheat-item"><code>head / tail file</code><span>முதல் / கடைசி 10 வரிகள்</span></div>
+        <div class="cheat-item"><code>tail -f file</code><span>கோப்பு வளர்வதை பார்க்க (லாக்ஸ்)</span></div>
+        <div class="cheat-item"><code>grep pattern file</code><span>வடிவத்துடன் பொருந்தும் வரிகளை தேடு</span></div>
+        <div class="cheat-item"><code>find . -name "*.txt"</code><span>கோப்புகளை பெயரால் கண்டறி</span></div>
+      </div>
+
+      <h2>🔐 அனுமதிகள் &amp; உரிமை</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>chmod 755 file</code><span>அனுமதிகளை அமைக்க (rwxr-xr-x)</span></div>
+        <div class="cheat-item"><code>chmod +x file</code><span>இயங்கக்கூடியதாக மாற்று</span></div>
+        <div class="cheat-item"><code>chown user file</code><span>உரிமையாளரை மாற்று</span></div>
+        <div class="cheat-item"><code>chown -R user dir</code><span>உரிமையாளரை மீண்டும் மீண்டும் மாற்று</span></div>
+        <div class="cheat-item"><code>ls -l</code><span>அனுமதிகளை காட்டு</span></div>
+        <div class="cheat-item"><code>sudo command</code><span>நிர்வாகியாக இயக்கு</span></div>
+      </div>
+
+      <h2>📦 பேக்கேஜ் மேலாண்மை (apt – Debian/Ubuntu)</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>sudo apt update</code><span>பேக்கேஜ் பட்டியலை புதுப்பி</span></div>
+        <div class="cheat-item"><code>sudo apt upgrade</code><span>நிறுவப்பட்ட பேக்கேஜ்களை மேம்படுத்து</span></div>
+        <div class="cheat-item"><code>sudo apt install pkg</code><span>ஒரு பேக்கேஜை நிறுவு</span></div>
+        <div class="cheat-item"><code>sudo apt remove pkg</code><span>ஒரு பேக்கேஜை நீக்கு</span></div>
+        <div class="cheat-item"><code>apt search term</code><span>கிடைக்கும் பேக்கேஜ்களை தேடு</span></div>
+        <div class="cheat-item"><code>dpkg -l</code><span>நிறுவப்பட்ட பேக்கேஜ்களை பட்டியலிடு</span></div>
+      </div>
+
+      <h2>⚙️ செயல்முறைகள் &amp; அமைப்பு</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ps aux</code><span>இயங்கும் செயல்முறைகளை பட்டியலிடு</span></div>
+        <div class="cheat-item"><code>top / htop</code><span>நேரடி அமைப்பு மானிட்டர்</span></div>
+        <div class="cheat-item"><code>kill PID</code><span>ஒரு செயல்முறையை முடி</span></div>
+        <div class="cheat-item"><code>kill -9 PID</code><span>ஒரு செயல்முறையை வலுக்கட்டாயமாக முடி</span></div>
+        <div class="cheat-item"><code>systemctl status svc</code><span>சேவை நிலை</span></div>
+        <div class="cheat-item"><code>systemctl start/stop svc</code><span>ஒரு சேவையை தொடங்கு / நிறுத்து</span></div>
+        <div class="cheat-item"><code>systemctl enable svc</code><span>துவக்கத்தில் சேவையை தொடங்கு</span></div>
+        <div class="cheat-item"><code>df -h</code><span>வட்டு பயன்பாடு</span></div>
+        <div class="cheat-item"><code>du -sh dir</code><span>கோப்பக அளவு</span></div>
+        <div class="cheat-item"><code>free -h</code><span>நினைவக பயன்பாடு</span></div>
+        <div class="cheat-item"><code>uname -a</code><span>கேர்னல் தகவல்</span></div>
+      </div>
+
+      <h2>🌐 நெட்வொர்க்கிங்</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ping host</code><span>இணைப்பை சரிபார்</span></div>
+        <div class="cheat-item"><code>ip addr</code><span>IP முகவரிகளை காட்டு</span></div>
+        <div class="cheat-item"><code>curl URL</code><span>ஒரு URL-ஐ பெறு</span></div>
+        <div class="cheat-item"><code>wget URL</code><span>ஒரு கோப்பை பதிவிறக்கு</span></div>
+        <div class="cheat-item"><code>ssh user@host</code><span>SSH வழியாக இணை</span></div>
+        <div class="cheat-item"><code>scp f user@h:/path</code><span>SSH மீது கோப்பை நகலெடு</span></div>
+        <div class="cheat-item"><code>netstat -tulpn</code><span>திறந்த போர்ட்களை காட்டு</span></div>
+        <div class="cheat-item"><code>dig domain</code><span>DNS lookup</span></div>
+      </div>
+
+      <h2>🧰 பயனுள்ள குறுக்குவழிகள் &amp; தந்திரங்கள்</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>Tab</code><span>தானாக நிறைவு</span></div>
+        <div class="cheat-item"><code>↑ / ↓</code><span>கட்டளை வரலாறு</span></div>
+        <div class="cheat-item"><code>Ctrl + C</code><span>தற்போதைய கட்டளையை ரத்து</span></div>
+        <div class="cheat-item"><code>Ctrl + D</code><span>ஷெல் / EOF-லிருந்து வெளியேறு</span></div>
+        <div class="cheat-item"><code>Ctrl + R</code><span>வரலாற்றை தேடு</span></div>
+        <div class="cheat-item"><code>command | grep x</code><span>வெளியீட்டை தேடலுக்கு அனுப்பு</span></div>
+        <div class="cheat-item"><code>command &gt; file</code><span>வெளியீட்டை கோப்பில் சேமி</span></div>
+        <div class="cheat-item"><code>!!</code><span>கடைசி கட்டளையை மீண்டும் செய்</span></div>
+        <div class="cheat-item"><code>man command</code><span>கையேடு / உதவி</span></div>
+      </div>
+
+      <h2>📬 இது போன்று மேலும் வேண்டுமா?</h2>
+      <p>
+        <strong>VelsTech Weekly</strong>-ல் சேருங்கள் – வாரத்திற்கு ஐந்து பயனுள்ள
+        விஷயங்கள்: ஒரு AI கண்டுபிடிப்பு, ஒரு கருவி, ஒரு வன்பொருள் நுண்ணறிவு, ஒரு Linux
+        தந்திரம், மற்றும் உண்மையான நல்ல சலுகை. ஸ்பேம் இல்லை, எப்போது வேண்டுமானாலும்
+        குழுவிலிருந்து விலகலாம்.
+      </p>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
+        <input type="hidden" name="subject" value="VelsTech newsletter signup (cheat sheet)" />
+        <label class="sr-only" for="newsletter-email">மின்னஞ்சல்</label>
+        <input id="newsletter-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+        <button class="btn btn-primary" type="submit">வாராந்திர செய்தியைப் பெறுங்கள்</button>
+        <p class="form-status" id="newsletter-status" hidden></p>
+      </form>
+    </div>
+
+    <div class="article-nav">
+      <a href="linux-beginners.html">← Linux ஆரம்பநிலையாளர்கள்</a>
+      <a href="terminal-commands.html">டெர்மினல் கட்டளைகள் →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

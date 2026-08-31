@@ -286,10 +286,12 @@ if (fs.existsSync(benchDir)) {
     urls.push({ file: "benchmarks/" + f, loc, priority: "0.7" });
   }
 }
-// Add Hindi article translations
-for (const f of files.filter((f) => f.endsWith(".hi.html"))) {
-  const base = f.replace(".hi.html", ".html");
-  if (ARTICLES.find((a) => a.url === base)) {
+// Add translated article pages (HI + TA) to sitemap
+for (const suffix of [".hi.html", ".ta.html"]) {
+  for (const f of files.filter((f) => f.endsWith(suffix))) {
+    const base = f.replace(suffix, ".html");
+    // Only include if the base English page exists (skip orphans)
+    if (!fs.existsSync(path.join(__dirname, "..", base))) continue;
     const loc = `${SITE}/${f}`;
     urls.push({ file: f, loc, priority: "0.8" });
   }
@@ -301,18 +303,25 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.map((u) => {
   const isHi = u.file.endsWith(".hi.html");
-  const enFile = isHi ? u.file.replace(".hi.html", ".html") : u.file;
+  const isTa = u.file.endsWith(".ta.html");
+  const enFile = isHi ? u.file.replace(".hi.html", ".html") : isTa ? u.file.replace(".ta.html", ".html") : u.file;
   const enLoc = SITE + (enFile === "index.html" ? "/" : "/" + enFile);
   const hiLoc = SITE + "/" + enFile.replace(/\.html$/, ".hi.html");
+  const taLoc = SITE + "/" + enFile.replace(/\.html$/, ".ta.html");
   let alternates = "";
-  if (isHi) {
-    // HI page: point to EN primary + HI
-    alternates = `\n    <xhtml:link rel="alternate" hreflang="en" href="${enLoc}" />\n    <xhtml:link rel="alternate" hreflang="hi" href="${hiLoc}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
-  } else if (ARTICLES.find((a) => a.url === u.file)) {
-    // EN article with HI translation
-    const hiExists = fs.existsSync(path.join(__dirname, "..", u.file.replace(".html", ".hi.html")));
+  if (isHi || isTa) {
+    // Translated page: point to EN primary + its own language
+    const ownLang = isHi ? "hi" : "ta";
+    const ownLoc = isHi ? hiLoc : taLoc;
+    alternates = `\n    <xhtml:link rel="alternate" hreflang="en" href="${enLoc}" />\n    <xhtml:link rel="alternate" hreflang="${ownLang}" href="${ownLoc}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
+  } else {
+    // EN page: add alternate links for every translation that exists
+    const hiExists = fs.existsSync(path.join(__dirname, "..", enFile.replace(/\.html$/, ".hi.html")));
+    const taExists = fs.existsSync(path.join(__dirname, "..", enFile.replace(/\.html$/, ".ta.html")));
     alternates = `\n    <xhtml:link rel="alternate" hreflang="en" href="${enLoc}" />`;
-    if (hiExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="hi" href="${hiLoc}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
+    if (hiExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="hi" href="${hiLoc}" />`;
+    if (taExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="ta" href="${taLoc}" />`;
+    if (hiExists || taExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
   }
   return `  <url>\n    <loc>${u.loc}</loc>${alternates}\n    <changefreq>monthly</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`;
 }).join("\n")}

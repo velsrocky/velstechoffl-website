@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="VelsTech Linux कमांड चीट शीट – फ़ाइलों, अनुमतियों, प्रोसेसेस, नेटवर्किंग और पैकेज प्रबंधन के लिए आवश्यक हर कमांड। मुफ़्त, प्रिंट करने योग्य, ईमेल की आवश्यकता नहीं।" />
+  <title>Linux कमांड चीट शीट (मुफ़्त PDF) | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/linux-cheat-sheet.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/linux-cheat-sheet.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/linux-cheat-sheet.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/linux-cheat-sheet.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://velstech.net/linux-cheat-sheet.hi.html#webpage",
+  "url": "https://velstech.net/linux-cheat-sheet.hi.html",
+  "name": "Linux कमांड चीट शीट (मुफ़्त PDF) | VelsTech",
+  "description": "आपको आवश्यक हर Linux कमांड – फ़ाइलें, अनुमतियाँ, प्रोसेसेस, नेटवर्किंग, पैकेज प्रबंधन। मुफ़्त प्रिंट करने योग्य चीट शीट।",
+  "inLanguage": "hi"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/linux-cheat-sheet.html" />
+  <meta property="og:title" content="Linux कमांड चीट शीट (मुफ़्त PDF) | VelsTech" />
+  <meta property="og:description" content="आपको आवश्यक हर Linux कमांड – फ़ाइलें, अनुमतियाँ, प्रोसेसेस, नेटवर्किंग, पैकेज प्रबंधन। मुफ़्त प्रिंट करने योग्य चीट शीट।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Linux कमांड चीट शीट (मुफ़्त PDF) | VelsTech" />
+  <meta name="twitter:description" content="आपको आवश्यक हर Linux कमांड – फ़ाइलें, अनुमतियाँ, प्रोसेसेस, नेटवर्किंग, पैकेज प्रबंधन। मुफ़्त प्रिंट करने योग्य चीट शीट।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / Linux कमांड चीट शीट</p>
+    <h1 class="title">Linux कमांड चीट शीट</h1>
+    <div class="meta">
+      <span>मुफ़्त डाउनलोड · प्रिंट करने योग्य · वे कमांड जो आप वास्तव में उपयोग करेंगे</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        नीचे दिए गए कमांड रोज़मर्रा के 95% Linux उपयोग को कवर करते हैं – नेविगेशन, फ़ाइलें,
+        अनुमतियाँ, प्रोसेसेस, नेटवर्किंग और पैकेज प्रबंधन। इस पेज को बुकमार्क करें,
+        या <a href="#" onclick="window.print();return false;">इसे प्रिंट करें (Ctrl+P / Cmd+P)
+        और एक कॉपी अपनी मेज़ पर रखें</a>।
+      </p>
+
+      <h2>🖥️ नेविगेशन और फ़ाइलें</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>pwd</code><span>वर्तमान डायरेक्टरी प्रिंट करें</span></div>
+        <div class="cheat-item"><code>ls</code><span>फ़ाइलें सूचीबद्ध करें</span></div>
+        <div class="cheat-item"><code>ls -la</code><span>विवरण और छिपी हुई फ़ाइलों के साथ सभी फ़ाइलें सूचीबद्ध करें</span></div>
+        <div class="cheat-item"><code>cd dir</code><span>डायरेक्टरी में बदलें</span></div>
+        <div class="cheat-item"><code>cd ~</code><span>होम डायरेक्टरी पर जाएँ</span></div>
+        <div class="cheat-item"><code>cd ..</code><span>एक स्तर ऊपर जाएँ</span></div>
+        <div class="cheat-item"><code>mkdir dir</code><span>डायरेक्टरी बनाएँ</span></div>
+        <div class="cheat-item"><code>rm file</code><span>फ़ाइल हटाएँ (सावधान – वापस नहीं आती)</span></div>
+        <div class="cheat-item"><code>rm -r dir</code><span>डायरेक्टरी को पुनरावर्ती रूप से हटाएँ</span></div>
+        <div class="cheat-item"><code>cp a b</code><span>कॉपी करें a → b</span></div>
+        <div class="cheat-item"><code>mv a b</code><span>ले जाएँ / नाम बदलें a → b</span></div>
+        <div class="cheat-item"><code>touch file</code><span>खाली फ़ाइल बनाएँ</span></div>
+        <div class="cheat-item"><code>cat file</code><span>फ़ाइल की सामग्री प्रिंट करें</span></div>
+        <div class="cheat-item"><code>less file</code><span>फ़ाइल देखें (स्क्रॉल करें, बाहर निकलने के लिए q)</span></div>
+        <div class="cheat-item"><code>head / tail file</code><span>पहली / आखिरी 10 लाइनें</span></div>
+        <div class="cheat-item"><code>tail -f file</code><span>फ़ाइल को बढ़ते हुए देखें (लॉग)</span></div>
+        <div class="cheat-item"><code>grep pattern file</code><span>पैटर्न से मेल खाती लाइनें खोजें</span></div>
+        <div class="cheat-item"><code>find . -name "*.txt"</code><span>नाम से फ़ाइलें खोजें</span></div>
+      </div>
+
+      <h2>🔐 अनुमतियाँ और स्वामित्व</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>chmod 755 file</code><span>अनुमतियाँ सेट करें (rwxr-xr-x)</span></div>
+        <div class="cheat-item"><code>chmod +x file</code><span>निष्पादन योग्य बनाएँ</span></div>
+        <div class="cheat-item"><code>chown user file</code><span>स्वामी बदलें</span></div>
+        <div class="cheat-item"><code>chown -R user dir</code><span>स्वामी को पुनरावर्ती रूप से बदलें</span></div>
+        <div class="cheat-item"><code>ls -l</code><span>अनुमतियाँ दिखाएँ</span></div>
+        <div class="cheat-item"><code>sudo command</code><span>एडमिनिस्ट्रेटर के रूप में चलाएँ</span></div>
+      </div>
+
+      <h2>📦 पैकेज प्रबंधन (apt – Debian/Ubuntu)</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>sudo apt update</code><span>पैकेज सूची ताज़ा करें</span></div>
+        <div class="cheat-item"><code>sudo apt upgrade</code><span>स्थापित पैकेज अपग्रेड करें</span></div>
+        <div class="cheat-item"><code>sudo apt install pkg</code><span>एक पैकेज स्थापित करें</span></div>
+        <div class="cheat-item"><code>sudo apt remove pkg</code><span>एक पैकेज हटाएँ</span></div>
+        <div class="cheat-item"><code>apt search term</code><span>उपलब्ध पैकेज खोजें</span></div>
+        <div class="cheat-item"><code>dpkg -l</code><span>स्थापित पैकेज सूचीबद्ध करें</span></div>
+      </div>
+
+      <h2>⚙️ प्रोसेसेस और सिस्टम</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ps aux</code><span>चल रहे प्रोसेसेस सूचीबद्ध करें</span></div>
+        <div class="cheat-item"><code>top / htop</code><span>लाइव सिस्टम मॉनिटर</span></div>
+        <div class="cheat-item"><code>kill PID</code><span>एक प्रोसेस समाप्त करें</span></div>
+        <div class="cheat-item"><code>kill -9 PID</code><span>एक प्रोसेस जबरन समाप्त करें</span></div>
+        <div class="cheat-item"><code>systemctl status svc</code><span>सर्विस की स्थिति</span></div>
+        <div class="cheat-item"><code>systemctl start/stop svc</code><span>सर्विस शुरू / बंद करें</span></div>
+        <div class="cheat-item"><code>systemctl enable svc</code><span>बूट पर सर्विस शुरू करें</span></div>
+        <div class="cheat-item"><code>df -h</code><span>डिस्क उपयोग</span></div>
+        <div class="cheat-item"><code>du -sh dir</code><span>डायरेक्टरी का आकार</span></div>
+        <div class="cheat-item"><code>free -h</code><span>मेमोरी उपयोग</span></div>
+        <div class="cheat-item"><code>uname -a</code><span>केर्नल जानकारी</span></div>
+      </div>
+
+      <h2>🌐 नेटवर्किंग</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ping host</code><span>कनेक्टिविटी जाँचें</span></div>
+        <div class="cheat-item"><code>ip addr</code><span>IP पते दिखाएँ</span></div>
+        <div class="cheat-item"><code>curl URL</code><span>एक URL लाएँ</span></div>
+        <div class="cheat-item"><code>wget URL</code><span>एक फ़ाइल डाउनलोड करें</span></div>
+        <div class="cheat-item"><code>ssh user@host</code><span>SSH के माध्यम से कनेक्ट करें</span></div>
+        <div class="cheat-item"><code>scp f user@h:/path</code><span>SSH पर फ़ाइल कॉपी करें</span></div>
+        <div class="cheat-item"><code>netstat -tulpn</code><span>खुले पोर्ट दिखाएँ</span></div>
+        <div class="cheat-item"><code>dig domain</code><span>DNS लुकअप</span></div>
+      </div>
+
+      <h2>🧰 उपयोगी शॉर्टकट और ट्रिक्स</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>Tab</code><span>ऑटो-कंप्लीट</span></div>
+        <div class="cheat-item"><code>↑ / ↓</code><span>कमांड इतिहास</span></div>
+        <div class="cheat-item"><code>Ctrl + C</code><span>वर्तमान कमांड रद्द करें</span></div>
+        <div class="cheat-item"><code>Ctrl + D</code><span>शेल बाहर निकलें / EOF</span></div>
+        <div class="cheat-item"><code>Ctrl + R</code><span>इतिहास खोजें</span></div>
+        <div class="cheat-item"><code>command | grep x</code><span>आउटपुट को खोज में पाइप करें</span></div>
+        <div class="cheat-item"><code>command &gt; file</code><span>आउटपुट को फ़ाइल में सहेजें</span></div>
+        <div class="cheat-item"><code>!!</code><span>पिछला कमांड दोहराएँ</span></div>
+        <div class="cheat-item"><code>man command</code><span>मैनुअल / सहायता</span></div>
+      </div>
+
+      <h2>📬 ऐसे और चाहते हैं?</h2>
+      <p>
+        <strong>VelsTech Weekly</strong> से जुड़ें – हर हफ्ते पाँच उपयोगी चीज़ें: एक AI
+        खोज, एक टूल, एक हार्डवेयर जानकारी, एक Linux ट्रिक और एक सचमुच अच्छा डील।
+        कोई स्पैम नहीं, कभी भी अनसब्सक्राइब करें।
+      </p>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />
+        <input type="hidden" name="subject" value="VelsTech newsletter signup (cheat sheet)" />
+        <label class="sr-only" for="newsletter-email">Email</label>
+        <input id="newsletter-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+        <button class="btn btn-primary" type="submit">साप्ताहिक पत्र प्राप्त करें</button>
+        <p class="form-status" id="newsletter-status" hidden></p>
+      </form>
+    </div>
+
+    <div class="article-nav">
+      <a href="linux-beginners.html">← शुरुआती के लिए Linux</a>
+      <a href="terminal-commands.html">टर्मिनल कमांड →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

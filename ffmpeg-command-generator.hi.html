@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त FFmpeg कमांड जनरेटर – कंटेनर, कोडेक, क्वालिटी, स्केल और ऑडियो सेटिंग्स चुनें और कॉपी-पेस्ट रेडी ffmpeg कमांड प्राप्त करें।" />
+  <title>FFmpeg कमांड जनरेटर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/ffmpeg-command-generator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/ffmpeg-command-generator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/ffmpeg-command-generator.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/ffmpeg-command-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/ffmpeg-command-generator.hi.html#webapp",
+  "name": "FFmpeg कमांड जनरेटर | VelsTech",
+  "description": "मीडिया को कन्वर्ट, कंप्रेस और ट्रिम करने के लिए सही ffmpeg कमांड बनाएं – कंटेनर, कोडेक, क्वालिटी, स्केल और ऑडियो सेटिंग्स।",
+  "url": "https://velstech.net/ffmpeg-command-generator.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/ffmpeg-command-generator.html" />
+  <meta property="og:title" content="FFmpeg कमांड जनरेटर | VelsTech" />
+  <meta property="og:description" content="मीडिया को कन्वर्ट, कंप्रेस और ट्रिम करने के लिए सही ffmpeg कमांड बनाएं – कंटेनर, कोडेक, क्वालिटी, स्केल और ऑडियो सेटिंग्स।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FFmpeg कमांड जनरेटर | VelsTech" />
+  <meta name="twitter:description" content="मीडिया को कन्वर्ट, कंप्रेस और ट्रिम करने के लिए सही ffmpeg कमांड बनाएं – कंटेनर, कोडेक, क्वालिटी, स्केल और ऑडियो सेटिंग्स।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">उपकरण</a> / FFmpeg कमांड जनरेटर</p>
+    <h1 class="title">FFmpeg कमांड जनरेटर</h1>
+    <div class="meta">
+      <span>फ़्लैग याद किए बिना सही ffmpeg कमांड बनाएं</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        फ़ॉर्मेट, कोडेक, क्वालिटी और ट्रिम टाइम सेट करें और यह आपके लिए पूरा
+        <code>ffmpeg</code> कमांड बनाता है – प्रत्येक भाग क्या करता है इसकी सादी भाषा की व्याख्या के साथ।
+        इसे सीधे अपने टर्मिनल में कॉपी करें।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>इनपुट फ़ाइल</span>
+            <input id="in" class="input" type="text" value="input.mp4" />
+          </label>
+
+          <label class="field">
+            <span>आउटपुट फ़ॉर्मेट</span>
+            <select id="fmt" class="input">
+              <option value="mp4">MP4 (वीडियो)</option>
+              <option value="webm">WebM (वीडियो)</option>
+              <option value="mkv">MKV (वीडियो)</option>
+              <option value="mov">MOV (वीडियो)</option>
+              <option value="gif">GIF (एनिमेटेड)</option>
+              <option value="mp3">MP3 (ऑडियो)</option>
+              <option value="opus">Opus (ऑडियो)</option>
+              <option value="wav">WAV (ऑडियो)</option>
+            </select>
+          </label>
+
+          <label class="field" id="vcodec-field">
+            <span>वीडियो कोडेक</span>
+            <select id="vcodec" class="input">
+              <option value="copy">copy (बिना री-एन्कोड)</option>
+              <option value="libx264">H.264 (libx264)</option>
+              <option value="libx265">H.265 (libx265)</option>
+              <option value="libvpx-vp9">VP9 (libvpx-vp9)</option>
+              <option value="libsvtav1">AV1 (libsvtav1)</option>
+            </select>
+          </label>
+
+          <label class="field" id="crf-field">
+            <span>क्वालिटी (CRF: <strong id="crf-val" style="color:var(--accent)">23</strong>)</span>
+            <input id="crf" class="input" type="range" min="0" max="51" step="1" value="23" />
+          </label>
+
+          <label class="field" id="preset-field">
+            <span>प्रीसेट</span>
+            <select id="preset" class="input">
+              <option value="ultrafast">ultrafast</option>
+              <option value="fast">fast</option>
+              <option value="medium" selected>medium</option>
+              <option value="slow">slow</option>
+              <option value="veryslow">veryslow</option>
+            </select>
+          </label>
+
+          <label class="field" id="scale-field">
+            <span>स्केल</span>
+            <select id="scale" class="input">
+              <option value="">कोई बदलाव नहीं</option>
+              <option value="1280:720">720p (1280×720)</option>
+              <option value="1920:1080">1080p (1920×1080)</option>
+              <option value="3840:2160">4K (3840×2160)</option>
+            </select>
+          </label>
+
+          <label class="field" id="acodec-field">
+            <span>ऑडियो कोडेक</span>
+            <select id="acodec" class="input">
+              <option value="copy">copy (बिना री-एन्कोड)</option>
+              <option value="aac">AAC</option>
+              <option value="libopus">Opus</option>
+              <option value="libmp3lame">MP3</option>
+              <option value="none">ऑडियो हटाएं</option>
+            </select>
+          </label>
+
+          <label class="field" id="abitrate-field">
+            <span>ऑडियो बिटरेट</span>
+            <select id="abitrate" class="input">
+              <option value="128k">128 kbps</option>
+              <option value="192k" selected>192 kbps</option>
+              <option value="256k">256 kbps</option>
+              <option value="320k">320 kbps</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>शुरू करें (वैकल्पिक, जैसे 00:01:30)</span>
+            <input id="ss" class="input" type="text" placeholder="00:01:30" />
+          </label>
+
+          <label class="field">
+            <span>अवधि (वैकल्पिक, जैसे 00:00:30)</span>
+            <input id="dur" class="input" type="text" placeholder="00:00:30" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="gen-out" id="gen-out"></div>
+          <p class="tool-note">
+            H.264/5 क्वालिटी के लिए CRF का उपयोग करते हैं (कम = बेहतर, 18–28 सामान्य); VP9/AV1 अक्सर
+            क्वालिटी-आधारित एन्कोडिंग के लिए <code>-crf</code> को <code>-b:v 0</code> के साथ उपयोग करते हैं। केवल-ऑडियो
+            फ़ॉर्मेट (MP3/Opus/WAV) वीडियो सेटिंग्स को स्वचालित रूप से छोड़ देते हैं।
+          </p>
+        </div>
+      </div>
+
+      <h2>संबंधित मार्गदर्शिकाएँ</h2>
+      <ul>
+        <li><a href="terminal-commands.html">आवश्यक टर्मिनल कमांड जो सभी को जानने चाहिए</a></li>
+        <li><a href="tutorials.html">अधिक चरण-दर-चरण ट्यूटोरियल</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी उपकरण</a>
+      <a href="tutorials.html">ट्यूटोरियल</a>
+    </div>
+  </main>
+
+  <script>
+    const fmtSel = document.getElementById("fmt");
+    const vcodecSel = document.getElementById("vcodec");
+    const crfInput = document.getElementById("crf");
+    const presetSel = document.getElementById("preset");
+    const scaleSel = document.getElementById("scale");
+    const acodecSel = document.getElementById("acodec");
+    const abitrateSel = document.getElementById("abitrate");
+
+    const AUDIO_ONLY = ["mp3", "opus", "wav"];
+
+    function setVisible(el, show) { el.style.display = show ? "" : "none"; }
+    function toggleFields() {
+      const audioOnly = AUDIO_ONLY.includes(fmtSel.value);
+      const isGif = fmtSel.value === "gif";
+      setVisible(document.getElementById("vcodec-field"), !audioOnly && !isGif);
+      setVisible(document.getElementById("crf-field"), !audioOnly && !isGif);
+      setVisible(document.getElementById("preset-field"), !audioOnly && !isGif);
+      setVisible(document.getElementById("scale-field"), !audioOnly && !isGif);
+      setVisible(document.getElementById("acodec-field"), !audioOnly && !isGif);
+      setVisible(document.getElementById("abitrate-field"), !audioOnly && !isGif);
+    }
+
+    function render() {
+      const input = document.getElementById("in").value.trim() || "input";
+      const fmt = fmtSel.value;
+      const audioOnly = AUDIO_ONLY.includes(fmt);
+      const isGif = fmt === "gif";
+      const vcodec = vcodecSel.value;
+      const acodec = acodecSel.value;
+      const ss = document.getElementById("ss").value.trim();
+      const dur = document.getElementById("dur").value.trim();
+
+      let cmd, explain = [];
+
+      if (isGif) {
+        cmd = "ffmpeg -i " + input + " -vf \"fps=15,scale=480:-1\" -loop 0 output.gif";
+        explain.push("Simple GIF: 15 fps, scaled to 480px wide. For higher quality, generate a color palette first.");
+      } else if (audioOnly) {
+        const parts = ["ffmpeg", "-i", input];
+        if (ss) parts.push("-ss", ss);
+        const args = ["-c:a", acodec === "copy" ? "copy" : acodec];
+        if (acodec !== "copy") args.push("-b:a", abitrateSel.value);
+        parts.push(...args);
+        if (dur) parts.push("-t", dur);
+        parts.push("-y", "output." + fmt);
+        cmd = parts.join(" ");
+        explain.push("Audio-only: re-encodes audio to " + acodec + (acodec === "copy" ? "" : " at " + abitrateSel.value) + ".");
+        if (ss) explain.push("Starts at " + ss + ".");
+        if (dur) explain.push("Keeps only " + dur + " of audio.");
+      } else {
+        const parts = ["ffmpeg", "-i", input];
+        if (ss) parts.push("-ss", ss);
+        if (vcodec === "copy") {
+          parts.push("-c:v", "copy");
+          explain.push("Video stream copied without re-encoding (fast, lossless – container/audio change only).");
+        } else {
+          parts.push("-c:v", vcodec);
+          explain.push("Video re-encoded with " + vcodec + " at CRF " + crfInput.value + ".");
+          if (vcodec === "libx264" || vcodec === "libx265") {
+            parts.push("-crf", crfInput.value, "-preset", presetSel.value);
+            explain.push("Using the " + presetSel.value + " encode preset (slower = better compression).");
+          } else {
+            parts.push("-crf", crfInput.value, "-b:v", "0");
+            explain.push("Quality-based (CRF) encoding with no bitrate cap.");
+          }
+        }
+        const scale = scaleSel.value;
+        if (scale) {
+          parts.push("-vf", "scale=" + scale);
+          explain.push("Scaled to " + scale.replace(":", "×") + ".");
+        }
+        if (acodec === "none") {
+          parts.push("-an");
+          explain.push("Audio removed.");
+        } else {
+          const args = ["-c:a", acodec === "copy" ? "copy" : acodec];
+          if (acodec !== "copy") args.push("-b:a", abitrateSel.value);
+          parts.push(...args);
+          explain.push("Audio " + (acodec === "copy" ? "copied" : "re-encoded to " + acodec + " at " + abitrateSel.value) + ".");
+        }
+        if (dur) parts.push("-t", dur);
+        parts.push("-y", "output." + fmt);
+        cmd = parts.join(" ");
+        if (dur) explain.push("Limited to " + dur + " of output.");
+      }
+
+      document.getElementById("results").hidden = false;
+      const out = document.getElementById("gen-out");
+      out.innerHTML = "";
+
+      const wrap = document.createElement("div");
+      wrap.className = "code-block";
+      const pre = document.createElement("pre");
+      pre.textContent = cmd;
+      wrap.appendChild(pre);
+
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.type = "button";
+      btn.textContent = "Copy";
+      btn.title = "Copy command to clipboard";
+      btn.setAttribute("aria-label", "Copy command");
+      btn.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(cmd); } catch {
+          const ta = document.createElement("textarea");
+          ta.value = cmd; document.body.appendChild(ta); ta.select();
+          document.execCommand("copy"); ta.remove();
+        }
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2000);
+      });
+      wrap.appendChild(btn);
+      out.appendChild(wrap);
+
+      const verdict = document.getElementById("verdict");
+      verdict.className = "result-verdict verdict-ok";
+      verdict.innerHTML = "✅ <strong>Command ready.</strong> " + explain.join(" ");
+    }
+
+    ["in", "ss", "dur"].forEach((id) => document.getElementById(id).addEventListener("input", render));
+    fmtSel.addEventListener("change", () => { toggleFields(); render(); });
+    [vcodecSel, crfInput, presetSel, scaleSel, acodecSel, abitrateSel].forEach((el) => el.addEventListener("input", render));
+    crfInput.addEventListener("input", () => { document.getElementById("crf-val").textContent = crfInput.value; render(); });
+
+    toggleFields();
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

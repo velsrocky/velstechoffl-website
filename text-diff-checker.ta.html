@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச உரை வேறுபாடு சரிபார்ப்பான் – இரண்டு உரை பதிப்புகளை அருகருகே ஒப்பிட்டு, சேர்க்கப்பட்ட/நீக்கப்பட்ட வரிகளை முன்னிலைப்படுத்துகிறது. உங்கள் உலாவியில் முழுமையாக இயங்குகிறது." />
+  <title>உரை வேறுபாடு சரிபார்ப்பான் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/text-diff-checker.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/text-diff-checker.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/text-diff-checker.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/text-diff-checker.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/text-diff-checker.ta.html#webapp",
+  "name": "உரை வேறுபாடு சரிபார்ப்பான் | VelsTech",
+  "description": "இரண்டு உரை பதிப்புகளை ஒப்பிட்டு, சேர்க்கப்பட்ட மற்றும் நீக்கப்பட்ட வரிகளை முன்னிலைப்படுத்துகிறது. ஒரு எளிய வரி அடிப்படையிலான diff, சர்வர் ஈடுபாடு இல்லை.",
+  "url": "https://velstech.net/text-diff-checker.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/text-diff-checker.ta.html" />
+  <meta property="og:title" content="உரை வேறுபாடு சரிபார்ப்பான் | VelsTech" />
+  <meta property="og:description" content="இரண்டு உரை பதிப்புகளை ஒப்பிட்டு, சேர்க்கப்பட்ட மற்றும் நீக்கப்பட்ட வரிகளை முன்னிலைப்படுத்துகிறது. ஒரு எளிய வரி அடிப்படையிலான diff, சர்வர் ஈடுபாடு இல்லை." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="உரை வேறுபாடு சரிபார்ப்பான் | VelsTech" />
+  <meta name="twitter:description" content="இரண்டு உரை பதிப்புகளை ஒப்பிட்டு, சேர்க்கப்பட்ட மற்றும் நீக்கப்பட்ட வரிகளை முன்னிலைப்படுத்துகிறது. ஒரு எளிய வரி அடிப்படையிலான diff, சர்வர் ஈடுபாடு இல்லை." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / உரை வேறுபாடு சரிபார்ப்பான்</p>
+    <h1 class="title">உரை வேறுபாடு சரிபார்ப்பான்</h1>
+    <div class="meta">
+      <span>இரண்டு பதிப்புகளை ஒப்பிடுக · சேர்க்கப்பட்ட &amp; நீக்கப்பட்ட வரிகள் முன்னிலைப்படுத்தப்பட்டுள்ளன</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        எந்த உரையின் இரண்டு பதிப்புகளை ஒட்டவும் – ஒரு கான்ஃபிக் கோப்பு, ஒரு ஸ்கிரிப்ட், ஒரு குறியீடு துண்டு – மேலும் இது
+        சரியாக என்ன மாற்றப்பட்டது என்பதை முன்னிலைப்படுத்துகிறது. சேர்க்கப்பட்ட வரிகள் பச்சை நிறத்திலும், நீக்கப்பட்ட வரிகள் சிவப்பு நிறத்திலும் காட்டப்படும்.
+        ஒரு எளிய வரி அடிப்படையிலான diff, சர்வர் ஈடுபாடு இல்லை.
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>அசல் (A)</span>
+          <textarea id="text-a" class="tool-textarea" rows="8" spellcheck="false"></textarea>
+        </label>
+
+        <label class="field" style="margin-top:14px">
+          <span>மாற்றப்பட்டது (B)</span>
+          <textarea id="text-b" class="tool-textarea" rows="8" spellcheck="false"></textarea>
+        </label>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="diff-out" id="diff"></div>
+          <div class="diff-meta" id="diff-meta"></div>
+        </div>
+      </div>
+
+      <h2>தொடர்புடைய வழிகாட்டிகள்</h2>
+      <ul>
+        <li><a href="git-beginners.html">Git உடன் பதிப்புக் கட்டுப்பாடு – முழு ஆரம்பநிலையாளர்களுக்கு</a></li>
+        <li><a href="json-formatter.html">JSON ஃபார்மேட்டர் &amp; வாலிடேட்டர்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="programming.html">புரோகிராமிங் குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    const textA = document.getElementById("text-a");
+    const textB = document.getElementById("text-b");
+    const results = document.getElementById("results");
+    const verdict = document.getElementById("verdict");
+    const diffEl = document.getElementById("diff");
+    const metaEl = document.getElementById("diff-meta");
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    // LCS-based diff (suitable for line counts in a web tool)
+    function diffLines(a, b) {
+      const n = a.length, m = b.length;
+      const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+      for (let i = n - 1; i >= 0; i--) {
+        for (let j = m - 1; j >= 0; j--) {
+          dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+        }
+      }
+      const out = [];
+      let i = 0, j = 0;
+      while (i < n && j < m) {
+        if (a[i] === b[j]) { out.push({ t: "=", v: a[i] }); i++; j++; }
+        else if (dp[i + 1][j] >= dp[i][j + 1]) { out.push({ t: "-", v: a[i] }); i++; }
+        else { out.push({ t: "+", v: b[j] }); j++; }
+      }
+      while (i < n) { out.push({ t: "-", v: a[i] }); i++; }
+      while (j < m) { out.push({ t: "+", v: b[j] }); j++; }
+      return out;
+    }
+
+    function render() {
+      const aLines = textA.value.split("\n");
+      const bLines = textB.value.split("\n");
+      if (!textA.value && !textB.value) { results.hidden = true; return; }
+      results.hidden = false;
+
+      const ops = diffLines(aLines, bLines);
+      let adds = 0, dels = 0;
+      diffEl.innerHTML = ops.map((op) => {
+        if (op.t === "+") { adds++; return '<span class="diff-line diff-add">+ ' + esc(op.v) + "</span>"; }
+        if (op.t === "-") { dels++; return '<span class="diff-line diff-del">- ' + esc(op.v) + "</span>"; }
+        return '<span class="diff-line diff-unchanged">  ' + esc(op.v) + "</span>";
+      }).join("");
+
+      if (adds === 0 && dels === 0) {
+        verdict.className = "result-verdict verdict-ok";
+        verdict.innerHTML = "✅ <strong>No differences</strong> – the two texts are identical.";
+      } else {
+        verdict.className = "result-verdict verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>" + adds + " added</strong> and <strong>" + dels + " removed</strong> line" + (adds + dels === 1 ? "" : "s") + ".";
+      }
+      metaEl.textContent = aLines.length + " lines (A) · " + bLines.length + " lines (B)";
+    }
+
+    [textA, textB].forEach((el) => el.addEventListener("input", render));
+
+    textA.value = "server {\n  listen 80;\n  server_name velstech.net;\n  root /var/www/site;\n}\n";
+    textB.value = "server {\n  listen 443 ssl;\n  server_name velstech.net;\n  root /var/www/site;\n  index index.html;\n}\n";
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

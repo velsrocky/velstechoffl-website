@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="ஒரே RX 6800M 12GB-ல் MoE vs dense – Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) q8 KV-ல், ROCm vs Vulkan decode/prefill, VRAM கணக்கீடு மற்றும் MoE எப்போது வெல்லும்." />
+  <title>RX 6800M-ல் MoE vs Dense: 3B Active vs 27B at 16K/262K – VelsTech Lab | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.ta.html#article",
+  "headline": "RX 6800M-ல் MoE vs Dense: 3B Active vs 27B at 16K/262K – VelsTech Lab",
+  "description": "ஒரே RX 6800M 12GB – Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) q8 KV-ல், ROCm vs Vulkan நேரடி ஒப்பீடு.",
+  "url": "https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.ta.html",
+  "datePublished": "2026-08-27T00:00:00Z",
+  "dateModified": "2026-08-27T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/moe-vs-dense-rx6800m-16k-vs-262k.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.ta.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.ta.html" />
+  <meta property="og:title" content="RX 6800M-ல் MoE vs Dense: 3B Active vs 27B at 16K/262K – VelsTech Lab | VelsTech" />
+  <meta property="og:description" content="ஒரே RX 6800M 12GB-ல் MoE vs dense – Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) q8 KV-ல், ROCm vs Vulkan." />
+  <meta property="og:image" content="https://velstech.net/og/moe-vs-dense-rx6800m-16k-vs-262k.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RX 6800M-ல் MoE vs Dense: 3B Active vs 27B at 16K/262K – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="ஒரே RX 6800M 12GB-ல் MoE vs dense – Ornith 35B-A3B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) q8 KV-ல், ROCm vs Vulkan." />
+  <meta name="twitter:image" content="https://velstech.net/og/moe-vs-dense-rx6800m-16k-vs-262k.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="ai.html">AI</a> / <a href="index.html#lab">VelsTech Lab</a> / MoE vs dense</p>
+    <h1 class="title">RX 6800M-ல் MoE vs Dense: 3B Active vs 27B at 16K/262K – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">MoE vs Dense</span>
+      <span class="tag">RX 6800M</span>
+      <span>Aug 27, 2026</span>
+      <span>· 7 நிமிட வாசிப்பு</span>
+      <span>· Aug 27, 2026-ல் புதுப்பிக்கப்பட்டது</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab</span> ஒரே கார்டு, ஒரே என்ஜின்கள், அளவிடுவதற்கு இரண்டு எதிர் வழிகள்: 16K-ல் Qwen 27B dense vs 262K-ல் Ornith 35B-A3B MoE (3B active), இரண்டும் 12GB RX 6800M-ல் q8 KV. யார் வெல்கிறார் என்பது நீங்கள் கேட்பதையும் எவ்வளவு உருவாக்குகிறீர்கள் என்பதையும் பொறுத்தது.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 உங்கள் மாடலுக்கான கணக்கீட்டை மீண்டும் இயக்கவும்</div>
+        <p>MoE: <em>active</em> அளவுருக்களை (3B, 35B அல்ல) + தனிப்பயன் KV-ஐ உள்ளிடவும். Dense: முழு அளவுருக்களை உள்ளிடவும். <code>q8_0</code> vs <code>f16</code>-ஐ நேர்மையாக வைத்திருங்கள்.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">LLM VRAM Calculator →</a> <a class="btn btn-ghost" href="gpu-ai-calculator.html" style="margin-left:8px">GPU Performance →</a>
+      </div>
+
+      <h2>இரண்டு ரன்களும் பக்கவாட்டில்</h2>
+      <p>ஒரே GPU <strong>RX 6800M 12GB</strong> (~384 GB/s), ஒரே <code>q8_0</code> KV, ஒரே <code>n_threads=8</code>, ஒரே 335-373 prompt டோக்கன்கள். மாடல் + context + MoE offload மட்டுமே வேறுபடுகின்றன.</p>
+      <pre>Model               Params   Context  KV type  Offload          Build   Prompt eval          Decode tg          Total
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Qwen 27B Ridge       27B dense  16K   q8_0     -ngl 999 (+fit abort)  ROCm    1713 ms /373 = 217.6 tok/s   18.12 tok/s   14.23s /601 tok
+3.7bpw Ridge                                                Vulkan  2493 ms /373 = 149.6 tok/s   21.84 tok/s   13.57s /616 tok
+
+Ornith 35B-A3B MoE   35B/3B*    262K  q8_0     --n-cpu-moe 28        ROCm    3995 ms /335 = 83.8 tok/s    25.62 tok/s   14.65s /609 tok
+Q5_K/Q4_K mix               kv_unified=false              Vulkan  4029 ms /335 = 83.1 tok/s    19.66 tok/s   19.59s /642 tok
+* 35B total, 3B active – MoE decodes 3B, not 35B.</pre>
+      <p class="tool-note">முதல் இரண்டு வரிசைகள்: <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B 16K முழு அறிக்கை</a>; கடைசி இரண்டு: <a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">Ornith 35B 262K முழு அறிக்கை</a>. அனைத்தும் <code>-c</code> ஒதுக்கப்பட்ட KV, <code>fa on</code>, 373/335 prompt டோக்கன்கள், ~600 gen டோக்கன்கள்.</p>
+
+      <h2>உண்மையில் என்ன நடக்கிறது</h2>
+      <ul>
+        <li><strong>Decode என்பது MoE-வின் வெற்றி, ஆனால் எல்லா இடங்களிலும் அல்ல.</strong> 16K dense-ல் Vulkan +20% வெல்லும் (21.84 vs 18.12). 262K MoE-ல் ROCm +30% வெல்லும் (25.62 vs 19.66). ஒரே கார்டு, எதிர் என்ஜின் வெற்றி – 262K-ல் bottleneck தூய VRAM BW (dense 27B) இலிருந்து CPU-MoE + PCIe (CPU-ல் 28 experts) ஆக மாறுகிறது.</li>
+        <li><strong>Prompt eval prompt அளவால் அல்ல, context ஒதுக்கீட்டால் சரிகிறது.</strong> Qwen 16K prompt 217 tok/s vs Ornith 262K prompt 83 tok/s – ஒரே 335 டோக்கன்கள், ஆனால் Ornith ஒரு 262K KV pool-ஐ (<code>kv_unified=false, n_slots=1</code>) ஒதுக்குகிறது, அது prefill bookkeeping-க்கு செலவாகிறது. Prompt குறுகியதாக இருந்தாலும் <code>-c</code>-க்கு நீங்கள் பணம் செலுத்துகிறீர்கள்.</li>
+        <li><strong>MoE ஒவ்வொரு டோக்கனுக்கும் மிகக் குறைவான பைட்டுகளை decode செய்கிறது.</strong> Dense ஒவ்வொரு டோக்கனுக்கும் 27B எடைகளை decode செய்கிறது; MoE ~3B active-ஐ decode செய்கிறது. அதனால்தான் 262K-ல் Ornith 12GB-ல் 25.6 tok/s செய்ய முடிகிறது, அதேசமயம் Qwen 16K-ல் 18-21 செய்கிறது – மொத்தம் அல்ல, active தான் முக்கியம். எங்கள் <a href="gpu-ai-calculator.html">GPU calculator</a> bound <code>decode ≈ BW×0.8 / bytes_per_token</code> அனைத்தும் resident ஆக இருந்தால் ~30 tok/s கணிக்கிறது; 25.6-க்கான இடைவெளி CPU MoE + offload ஆகும்.</li>
+        <li><strong>இரண்டும் <code>-ngl 999</code>-ஐ கட்டாயப்படுத்தியது → <code>failed to fit params... abort</code>.</strong> <code>--fit on</code> புறக்கணிக்கப்பட்டது. அடுத்த Lab <code>-ngl</code>-ஐ நீக்கி fitted layers-ஐ log செய்யும், மேலும் MoE-க்கு <code>--load-mode none</code>-ஐ சேர்க்கும் (மேலும் <code>tensor overrides to CPU with mmap</code>-ஐ சரிசெய்கிறது).</li>
+      </ul>
+
+      <h2>VRAM கணக்கீடு – 12GB ஏன் இன்னும் இயங்குகிறது</h2>
+      <p>Qwen 27B 3.7bpw: <code>27B ×0.4625 ≈12.5 GB</code> எடைகள் + q8 KV 16K ≈2.2 GB + 6% overhead → ~15.6 GB (<a href="llm-vram-calculator.html">VRAM Calculator</a>-இலிருந்து) – 12GB-க்கு அதிகமாக, எனவே partial offload 18-21 tok/s vs 30 tok/s bound-ஐ விளக்குகிறது.</p>
+      <p>Ornith 35B MoE 3B active: 35B ஆக எண்ணினால் Q5/Q4 கலவை ≈13-14 GB, ஆனால் ஒவ்வொரு டோக்கனுக்கான KV active 3B-உடன் அளவிடப்படுகிறது, எனவே naive ஆக dense என எண்ணினால் 262K q8 ≈262K×0.5KB ≈131 GB ஆகும். அதனால்தான் 28 experts-ஐ CPU-க்கு கட்டாயப்படுத்துகிறோம் – நீங்கள் resident அல்ல, நீங்கள் sparse. கால்குலேட்டரில் 35B அல்ல, <code>3B active</code> + custom <code>layers 48 / kv 4 / hd 128</code>-ஐ உள்ளிடவும், அல்லது <code>Custom model…</code>-ஐ மாற்றவும்.</p>
+
+      <details class="calc-method">
+        <summary>எப்படி கணக்கிடுகிறோம் – எண்களுக்குப் பின்னால் உள்ள சூத்திரங்கள்</summary>
+        <div class="calc-method-body">
+          <h4>VRAM</h4>
+          <pre>weights = params × bytes_per_weight / GiB
+kv_per_token = 2 × layers × kv_heads × head_dim × bytes
+kv_cache = kv_per_token × context × batch / GiB
+total = weights + kv_cache + (weights+kv)×0.06+0.25</pre>
+          <p>MoE-க்கு, KV-க்கு மொத்த அளவுருக்கள் அல்ல, <em>active</em> அளவுருக்களைப் பயன்படுத்தவும். <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> → Custom model-ஐப் பார்க்கவும்.</p>
+          <h4>வேக வரம்பு</h4>
+          <pre>decode_tok/s ≈ (memory_BW ×0.8) / bytes_per_token (weights + KV per token)</pre>
+          <p>MoE bytes_per_token ≈ active 3B, dense ≈27B – எனவே பெரிய மொத்தம் இருந்தாலும் Ornith Qwen-ஐ விட வேகமாக இருக்க முடியும்.</p>
+        </div>
+      </details>
+
+      <h2>எனவே 12GB கார்டில் எதைத் தேர்ந்தெடுக்க வேண்டும்?</h2>
+      <ul>
+        <li><strong>குறுகிய prompts + நீண்ட பதில்கள் (chat, 16K சாளரம்):</strong> <strong>Vulkan</strong>-ல் Qwen 27B dense (21.8 tok/s) சிறந்த chat அனுபவத்தை அளிக்கிறது.</li>
+        <li><strong>பெரிய context + MoE (262K சாளரம், 28 CPU experts):</strong> <strong>ROCm</strong>-ல் Ornith 35B MoE (25.6 tok/s) சாளரம் இருந்தாலும் decode-ல் வெல்லும், ஆனால் <code>--load-mode none</code> மற்றும் முதல் prompt-ல் பொறுமை (83 tok/s) தேவை.</li>
+        <li><strong>அடுத்த மேம்படுத்தல்:</strong> இரண்டுக்கும் <code>-ngl 999</code> இல்லாமை, fitted layers-ஐ log செய்வது, மற்றும் ஒவ்வொரு context-லும் q8 vs f16 KV-ஐ சோதிப்பது தேவை. அதுவே Lab #4.</li>
+      </ul>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 மூல ரன்களில் ஆழ்ந்து பார்க்கவும்</div>
+        <p>முழு logs, கட்டளைகள் மற்றும் எச்சரிக்கைகள் இரண்டு மூல Labs-களிலும் உள்ளன – Qwen 16K-லிருந்து தொடங்கவும், பிறகு Ornith 262K, பிறகு இங்கே ஒப்பிடவும்.</p>
+        <a class="btn btn-primary" href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B 16K →</a> <a class="btn btn-ghost" href="ornith-35b-moe-262k-rocm-vs-vulkan.html" style="margin-left:8px">Ornith 35B 262K →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI-க்குத் திரும்பு</a>
+      <a href="index.html#lab">VelsTech Lab மேலோட்டம்</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

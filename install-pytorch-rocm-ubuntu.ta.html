@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="AMD Radeon (RDNA2) GPU களுக்காக Ubuntu இல் ROCm ஆதரவுடன் PyTorch ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – venv அமைப்பு, pip நிறுவல், GPU சரிபார்ப்பு." />
+  <title>Radeon GPU களில் ROCm உடன் PyTorch நிறுவுதல் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/install-pytorch-rocm-ubuntu.ta.html#article",
+  "headline": "Radeon GPU களில் ROCm உடன் PyTorch நிறுவுதல்",
+  "description": "AMD Radeon (RDNA2) GPU களுக்காக Ubuntu இல் ROCm ஆதரவுடன் PyTorch ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – venv அமைப்பு, pip நிறுவல், GPU சரிபார்ப்பு.",
+  "url": "https://velstech.net/install-pytorch-rocm-ubuntu.ta.html",
+  "datePublished": "2026-08-25T00:00:00Z",
+  "dateModified": "2026-08-25T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/install-pytorch-rocm-ubuntu.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/install-pytorch-rocm-ubuntu.ta.html"
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/install-pytorch-rocm-ubuntu.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/install-pytorch-rocm-ubuntu.ta.html" />
+  <meta property="og:title" content="Radeon GPU களில் ROCm உடன் PyTorch நிறுவுதல் | VelsTech" />
+  <meta property="og:description" content="AMD Radeon (RDNA2) GPU களுக்காக Ubuntu இல் ROCm ஆதரவுடன் PyTorch ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – venv அமைப்பு, pip நிறுவல், GPU சரிபார்ப்பு." />
+  <meta property="og:image" content="https://velstech.net/og/install-pytorch-rocm-ubuntu.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Radeon GPU களில் ROCm உடன் PyTorch நிறுவுதல் | VelsTech" />
+  <meta name="twitter:description" content="AMD Radeon (RDNA2) GPU களுக்காக Ubuntu இல் ROCm ஆதரவுடன் PyTorch ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – venv அமைப்பு, pip நிறுவல், GPU சரிபார்ப்பு." />
+  <meta name="twitter:image" content="https://velstech.net/og/install-pytorch-rocm-ubuntu.png" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tutorials.html">பயிற்சிகள்</a> / இந்தக் கட்டுரை</p>
+    <h1 class="title">Radeon GPU களில் ROCm உடன் PyTorch நிறுவுதல்</h1>
+    <div class="meta">
+      <span class="tag">PyTorch</span>
+      <span class="tag">ROCm</span>
+      <span class="tag">Radeon</span>
+      <span>Aug 25, 2026</span>
+      <span>· 5 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        PyTorch தான் டீப் லேர்னிங்கிற்கான முதன்மையான கட்டமைப்பு (framework), மேலும் AMD
+        வன்பொருளில் அது <strong>ROCm</strong> மூலம் இயங்குகிறது. ROCm நிறுவப்பட்டவுடன்,
+        Radeon GPU இல் PyTorch ஐ வேலை செய்ய வைப்பது ஒரு <code>pip install</code> மட்டுமே.
+      </p>
+
+      <p>
+        நான் இதை <strong>Radeon RX 6800M</strong> (gfx1031, RDNA2) இல் ROCm 7.14 மற்றும்
+        Ubuntu 26.04 உடன் சோதித்தேன் – கீழே உள்ள சரியான கட்டளைகள் தான் வேலை செய்தவை.
+        இதே செயல்முறை மற்ற RDNA2/RDNA3 கார்டுகளுக்கும் பொருந்தும்; நிறுவல் கட்டளையில் gfx
+        இலக்கை மட்டும் மாற்றுங்கள்.
+      </p>
+
+      <h2>முன்நிபந்தனைகள்</h2>
+      <ul>
+        <li>
+          <strong>ROCm நிறுவப்பட்டு சரிபார்க்கப்பட்டது</strong> – இதை இன்னும் செய்யவில்லை
+          என்றால், எங்கள் <a href="install-rocm-ubuntu.html">Radeon GPU களுக்காக Ubuntu இல்
+          ROCm நிறுவுதல்</a> வழிகாட்டியை முதலில் பின்பற்றவும், மேலும் <code>rocminfo</code>
+          உங்கள் GPU ஐக் காட்டுகிறது என்பதை உறுதிப்படுத்தவும்.
+        </li>
+        <li>Python <strong>3.11, 3.12, 3.13, அல்லது 3.14</strong> நிறுவப்பட்டிருக்க வேண்டும்.</li>
+        <li>உங்கள் GPU இன் <code>gfx</code> கட்டமைப்பு (எ.கா. RX 6800M க்கு gfx1031).</li>
+      </ul>
+
+      <h2>படி 1 – மெய்நிகர் சூழலை உருவாக்கவும்</h2>
+      <p>
+        PyTorch ஐ எப்போதும் புதிய மெய்நிகர் சூழலில் நிறுவுங்கள், இதனால் அது சிஸ்டம்
+        பேக்கேஜ்கள் அல்லது மற்ற Python திட்டங்களுடன் ஒருபோதும் மோதாது:
+      </p>
+
+      <pre>python3.12 -m venv .venv</pre>
+
+      <p>
+        உங்களிடம் உள்ள எந்த Python பதிப்பையும் பயன்படுத்துங்கள் – <code>python3.11</code>,
+        <code>python3.13</code>, அல்லது <code>python3.14</code> அனைத்தும் வேலை செய்யும். இது
+        உங்கள் தற்போதைய கோப்பகத்தில் <code>.venv</code> என்ற கோப்புறையை உருவாக்குகிறது.
+      </p>
+
+      <h2>படி 2 – சூழலைச் செயல்படுத்தவும்</h2>
+      <p>
+        <code>python</code> மற்றும் <code>pip</code> venv ஐ சுட்டும் வகையில் அதைச்
+        செயல்படுத்தவும்:
+      </p>
+
+      <pre>source .venv/bin/activate</pre>
+
+      <p>
+        ப்ராம்ப்ட் தொடக்கத்தில் <code>(.venv)</code> காட்டும்போது அது வேலை செய்தது என்று
+        தெரிந்துகொள்வீர்கள்.
+      </p>
+
+      <h2>படி 3 – ROCm ஆதரவுடன் PyTorch நிறுவவும்</h2>
+      <p>
+        AMD இன் wheel களஞ்சியத்திலிருந்து ROCm-செயல்படுத்தப்பட்ட PyTorch, torchvision, மற்றும்
+        torchaudio ஐ நிறுவவும். உங்கள் GPU இன் <code>device-gfx</code> இலக்கைப் பயன்படுத்தவும் –
+        RX 6800M க்கு அது <code>device-gfx1031</code>:
+      </p>
+
+      <pre>python -m pip install --index-url https://repo.amd.com/rocm/whl-multi-arch/ \
+    "torch[device-gfx1031]==2.12.0+rocm7.14.0" \
+    "torchvision[device-gfx1031]==0.27.0+rocm7.14.0" \
+    "torchaudio==2.11.0+rocm7.14.0"</pre>
+
+      <p>
+        சில குறிப்புகள்:
+      </p>
+      <ul>
+        <li>
+          <code>[device-gfx1031]</code> எக்ஸ்ட்ரா, உங்கள் சரியான GPU கட்டமைப்பிற்காக
+          மேம்படுத்தப்பட்ட ROCm நூலகங்களை இழுக்கிறது – <strong>அதைத் தவிர்க்காதீர்கள்</strong>.
+        </li>
+        <li>
+          மற்ற கார்டுகளுக்கு, இலக்கை மாற்றவும்: gfx1030 (RX 6800/6700 XT), gfx1100 (RX 7900
+          XTX), மற்றும் பல. அல்லது அனைத்து கட்டமைப்புகளுக்கும் ஒரே நேரத்தில் ஆதரவு வேண்டுமானால்
+          <code>[device-all]</code> பயன்படுத்தவும் (பெரிய பதிவிறக்கம்).
+        </li>
+        <li>
+          <code>+rocm7.14.0</code> பதிப்பு டேக் உங்கள் நிறுவிய ROCm பதிப்புடன் பொருந்த வேண்டும்.
+        </li>
+      </ul>
+
+      <blockquote>
+        pip சார்புகளைத் தீர்ப்பதில் சிக்கல் என்று சொன்னால், venv செயலில் இருப்பதையும்,
+        <code>--index-url https://repo.amd.com/rocm/whl-multi-arch/</code> ஐ அனுப்புவதையும்
+        உறுதி செய்யுங்கள் – ROCm பில்டுகளை AMD வெளியிடும் களஞ்சியம் அதுவே.
+      </blockquote>
+
+      <h2>படி 4 – GPU கண்டறியப்பட்டதைச் சரிபார்க்கவும்</h2>
+      <p>
+        PyTorch உங்கள் AMD GPU வைப் பார்க்கிறது என்பதை உறுதிப்படுத்த இந்த ஒரு-வரி
+        கட்டளையை இயக்கவும்:
+      </p>
+
+      <pre>python -c "import torch; print(torch.cuda.is_available())"</pre>
+
+      <p>
+        PyTorch மற்றும் ROCm சரியாக நிறுவப்பட்டு உங்கள் AMD GPU கண்டறியப்பட்டால் அது
+        <code>True</code> என அச்சிடும். (ஆம், API இல் அது <code>cuda</code> தான் – PyTorch
+        ROCm க்கும் அதே இடைமுகத்தை வைத்துள்ளது, எனவே குறியீடு எடுத்துச் செல்லக்கூடியது.)
+      </p>
+
+      <p>
+        நீங்கள் மேலும் சென்று சாதனத்தின் பெயரைச் சரிபார்க்கலாம்:
+      </p>
+
+      <pre>python -c "import torch; print(torch.cuda.get_device_name(0))"</pre>
+
+      <p>
+        RX 6800M இல் இது <code>AMD Radeon RX 6800M</code> போன்று ஏதாவது புகாரளிக்கும்.
+      </p>
+
+      <h2>அடுத்து என்ன?</h2>
+      <p>
+        ROCm இல் PyTorch இயங்குவதால் நீங்கள் இவற்றைச் செய்யலாம்:
+      </p>
+      <ul>
+        <li>முழு GPU முடுக்கத்துடன் மாடல்களைப் பயிற்றுவிக்கவும், அனுமானத்தை இயக்கவும்</li>
+        <li>LLM களை உள்ளூரில் இயக்கவும் – Hugging Face Transformers, text-generation-webui, மற்றும் ஒத்த கருவிகள் ஆயத்தமாக வேலை செய்கின்றன</li>
+        <li>பட மாடல்களுக்கு torchvision, ஆடியோ குழாய்களுக்கு torchaudio பயன்படுத்தவும்</li>
+      </ul>
+
+      <p>
+        உங்களுக்குத் தேவைப்பட்டால் அதிகாரப்பூர்வ வழிகாட்டியில் கூடுதல் விவரம் உள்ளது:
+        <a href="https://rocm.docs.amd.com/projects/ai-ecosystem/en/latest/frameworks/pytorch/install.html" target="_blank" rel="noopener">ROCm க்கான PyTorch ஐ நிறுவுங்கள் – AMD AI ecosystem ஆவணங்கள்</a>.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="tutorials.html">← பயிற்சிகளுக்குத் திரும்பு</a>
+      <a href="install-rocm-ubuntu.html">முந்தையது: ROCm நிறுவுதல்</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

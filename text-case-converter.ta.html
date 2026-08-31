@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச உரை எழுத்து மாற்றி – உடனடியாக உரையை UPPERCASE, lowercase, Title Case, Sentence case அல்லது camelCase ஆக மாற்றவும். உங்கள் உலாவியில் முழுமையாக இயங்குகிறது." />
+  <title>உரை எழுத்து மாற்றி | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/text-case-converter.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/text-case-converter.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/text-case-converter.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/text-case-converter.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/text-case-converter.ta.html#webapp",
+  "name": "உரை எழுத்து மாற்றி | VelsTech",
+  "description": "உரையை UPPERCASE, lowercase, Title Case, Sentence case அல்லது camelCase ஆக உடனடியாக மாற்றவும். உங்கள் உலாவியில் முழுமையாக இயங்குகிறது.",
+  "url": "https://velstech.net/text-case-converter.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/text-case-converter.ta.html" />
+  <meta property="og:title" content="உரை எழுத்து மாற்றி | VelsTech" />
+  <meta property="og:description" content="உரையை UPPERCASE, lowercase, Title Case, Sentence case அல்லது camelCase ஆக உடனடியாக மாற்றவும். உங்கள் உலாவியில் முழுமையாக இயங்குகிறது." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="உரை எழுத்து மாற்றி | VelsTech" />
+  <meta name="twitter:description" content="உரையை UPPERCASE, lowercase, Title Case, Sentence case அல்லது camelCase ஆக உடனடியாக மாற்றவும். உங்கள் உலாவியில் முழுமையாக இயங்குகிறது." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / உரை எழுத்து மாற்றி</p>
+    <h1 class="title">உரை எழுத்து மாற்றி</h1>
+    <div class="meta">
+      <span>UPPERCASE · lowercase · Title Case · Sentence case · camelCase</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        எந்த உரையையும் தட்டச்சு செய்யவும் அல்லது ஒட்டவும், அது ஒரே நேரத்தில் ஒவ்வொரு பொதுவான எழுத்து வடிவத்திலும் மாற்றப்பட்டதைப் பார்க்கவும்.
+        தலைப்புகளை சுத்தம் செய்ய, தற்செயலான கேப்ஸ்-லாக்கை சரிசெய்ய அல்லது குறியீட்டிற்கான மாறி பெயர்களை தயார் செய்ய ஏற்றது.
+        எல்லாம் உங்கள் உலாவியில் இயங்குகிறது – எதுவும் எங்கும் அனுப்பப்படவில்லை.
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>உள்ளீடு</span>
+          <textarea id="input" class="tool-textarea" rows="4" spellcheck="false"></textarea>
+        </label>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-rows">
+            <div class="result-row"><span>UPPERCASE</span><strong id="r-upper">–</strong></div>
+            <div class="result-row"><span>lowercase</span><strong id="r-lower">–</strong></div>
+            <div class="result-row"><span>Title Case</span><strong id="r-title">–</strong></div>
+            <div class="result-row"><span>Sentence case</span><strong id="r-sentence">–</strong></div>
+            <div class="result-row"><span>camelCase</span><strong id="r-camel">–</strong></div>
+            <div class="result-row"><span>snake_case</span><strong id="r-snake">–</strong></div>
+          </div>
+          <div class="tool-btn-row">
+            <button class="btn btn-primary" id="btn-copy" type="button" title="அனைத்து மாற்றங்களையும் நகலெடுக்கவும்" aria-label="அனைத்து மாற்றங்களையும் நகலெடுக்கவும்">அனைத்தையும் நகலெடு</button>
+          </div>
+          <p class="tool-note">அதை மட்டும் நகலெடுக்க மேலே உள்ள ஒரு வரிசையைக் கிளிக் செய்யவும்.</p>
+        </div>
+      </div>
+
+      <h2>தொடர்புடைய கருவிகள்</h2>
+      <ul>
+        <li><a href="text-diff-checker.html">உரை வேறுபாடு சரிபார்ப்பான்</a></li>
+        <li><a href="url-encoder-decoder.html">URL என்கோடர் / டிகோடர்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="programming.html">புரோகிராமிங் குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const results = document.getElementById("results");
+    const out = {
+      upper: document.getElementById("r-upper"),
+      lower: document.getElementById("r-lower"),
+      title: document.getElementById("r-title"),
+      sentence: document.getElementById("r-sentence"),
+      camel: document.getElementById("r-camel"),
+      snake: document.getElementById("r-snake"),
+    };
+
+    const stopwords = new Set(["a", "an", "and", "as", "at", "but", "by", "for", "in", "nor", "of", "on", "or", "the", "to", "with"]);
+
+    function words(text) {
+      return text.match(/[A-Za-z0-9]+/g) || [];
+    }
+
+    function render() {
+      const raw = input.value;
+      if (!raw.trim()) { results.hidden = true; return; }
+      results.hidden = false;
+
+      out.upper.textContent = raw.toUpperCase();
+
+      out.lower.textContent = raw.toLowerCase();
+
+      out.title.textContent = raw.toLowerCase().replace(/\b[a-z0-9]+/g, (w, idx, str) => {
+        const prev = str.slice(0, idx).trim().split(/\s+/).pop() || "";
+        const first = idx === 0 || prev.endsWith(":") || prev.endsWith("-");
+        if (!first && stopwords.has(w)) return w;
+        return w[0].toUpperCase() + w.slice(1);
+      });
+
+      out.sentence.textContent = raw.toLowerCase().replace(/(^\s*|[.!?]\s+)[a-z]/g, (c) => c.toUpperCase());
+
+      const camel = words(raw).map((w) => w.toLowerCase()).map((w, i) => (i === 0 ? w : w[0].toUpperCase() + w.slice(1))).join("");
+      out.camel.textContent = camel;
+
+      out.snake.textContent = words(raw).map((w) => w.toLowerCase()).join("_");
+
+      // Click a row to copy just that conversion
+      document.querySelectorAll(".result-row").forEach((row) => {
+        const key = row.getAttribute("data-key");
+        row.style.cursor = "pointer";
+        row.addEventListener("click", () => {
+          const val = out[key] ? out[key].textContent : "";
+          if (!val || val === "–") return;
+          navigator.clipboard.writeText(val);
+          const strong = row.querySelector("strong");
+          const old = strong.textContent;
+          strong.textContent = "Copied!";
+          setTimeout(() => { strong.textContent = old; }, 1200);
+        });
+        row.setAttribute("data-key", Object.keys(out).find((k) => out[k] === row.querySelector("strong")));
+      });
+    }
+
+    input.addEventListener("input", render);
+
+    document.getElementById("btn-copy").addEventListener("click", async () => {
+      const text = Object.values(out).map((el) => el.textContent).filter((v) => v && v !== "–").join("\n");
+      try { await navigator.clipboard.writeText(text); } catch { /* clipboard unavailable */ }
+      const btn = document.getElementById("btn-copy");
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = "Copy all"; }, 1500);
+    });
+
+    input.value = "The quick brown fox jumps over the lazy dog";
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

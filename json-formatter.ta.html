@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச JSON ஃபார்மேட்டர் மற்றும் வாலிடேட்டர் – JSON ஐ ஒட்டி வடிவமைக்கவும், குறுக்கவும், சரிபார்க்கவும், அளவைச் சரிபார்க்கவும். முழுவதும் உங்கள் உலாவியில் இயங்குகிறது." />
+  <title>JSON ஃபார்மேட்டர் &amp; வாலிடேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/json-formatter.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/json-formatter.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/json-formatter.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/json-formatter.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/json-formatter.ta.html#webapp",
+  "name": "JSON ஃபார்மேட்டர் & வாலிடேட்டர் | VelsTech",
+  "description": "தொடரியல் சிறப்பம்சத்துடன் JSON ஐ வடிவமைக்கவும், குறுக்கவும், சரிபார்க்கவும், அளவைச் சரிபார்க்கவும். முழுவதும் உங்கள் உலாவியில் இயங்குகிறது.",
+  "url": "https://velstech.net/json-formatter.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/json-formatter.ta.html" />
+  <meta property="og:title" content="JSON ஃபார்மேட்டர் &amp; வாலிடேட்டர் | VelsTech" />
+  <meta property="og:description" content="தொடரியல் சிறப்பம்சத்துடன் JSON ஐ வடிவமைக்கவும், குறுக்கவும், சரிபார்க்கவும், அளவைச் சரிபார்க்கவும். முழுவதும் உங்கள் உலாவியில் இயங்குகிறது." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JSON ஃபார்மேட்டர் &amp; வாலிடேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="தொடரியல் சிறப்பம்சத்துடன் JSON ஐ வடிவமைக்கவும், குறுக்கவும், சரிபார்க்கவும், அளவைச் சரிபார்க்கவும். முழுவதும் உங்கள் உலாவியில் இயங்குகிறது." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / JSON ஃபார்மேட்டர்</p>
+    <h1 class="title">JSON ஃபார்மேட்டர் &amp; வாலிடேட்டர்</h1>
+    <div class="meta">
+      <span>வடிவமை · குறுக்கு · சரிபார் · அளவைச் சரிபார்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        எந்த JSON ஐயும் ஒட்டினால் இது தொடரியல் சிறப்பம்சத்துடன் வடிவமைக்கிறது, சரிபார்க்கிறது,
+        அளவைச் சொல்கிறது. API பதிலை டீபக் செய்யும்போது அல்லது கான்ஃபிக் கோப்பை சுத்தம் செய்யும்போது
+        பயனுள்ளதாக இருக்கும். எதுவும் எங்கும் அனுப்பப்படுவதில்லை – எல்லாம் உங்கள் உலாவியில்
+        இயங்குகிறது.
+      </p>
+
+      <div class="calc">
+        <textarea id="input" class="tool-textarea" rows="10" spellcheck="false" placeholder='JSON ஐ இங்கே ஒட்டவும்… எ.கா. {"hello": "world", "count": 42}'></textarea>
+
+        <div class="tool-btn-row" class="btn-row">
+          <button class="btn btn-primary" id="btn-format" type="button" title="2-இட இடைவெளியுடன் JSON ஐ அழகாக அச்சிடவும்" aria-label="JSON வடிவமைக்கவும்">வடிவமை</button>
+          <button class="btn btn-ghost" id="btn-minify" type="button" title="JSON ஐ குறுக்கவும் – அனைத்து வெள்ளை இடைவெளிகளையும் அகற்றவும்" aria-label="JSON குறுக்கவும்">குறுக்கு</button>
+          <button class="btn btn-ghost" id="btn-clear" type="button" title="உள்ளீடு மற்றும் வெளியீட்டை அழிக்கவும்" aria-label="JSON அழிக்கவும்">அழி</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="tool-out" id="output" dir="ltr"></div>
+          <div class="tool-info" id="info"></div>
+        </div>
+      </div>
+
+      <h2>தொடர்புடைய வழிகாட்டிகள்</h2>
+      <ul>
+        <li><a href="html-css-js.html">HTML, CSS, JavaScript: ஒவ்வொன்றும் என்ன செய்கிறது?</a></li>
+        <li><a href="how-internet-works.html">இணையம் உண்மையில் எப்படி வேலை செய்கிறது?</a></li>
+        <li><a href="jwt-decoder.html">JWT டிகோடர் – டோக்கன்களை ஆய்வு செய்யவும்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகளும்</a>
+      <a href="programming.html">புரோகிராமிங் குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+    const verdict = document.getElementById("verdict");
+    const info = document.getElementById("info");
+    const results = document.getElementById("results");
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    function highlight(json) {
+      let out = "", i = 0;
+      while (i < json.length) {
+        const c = json[i];
+        if (c === "\"") {
+          let j = i + 1, token = "\"", backslash = false;
+          while (j < json.length) {
+            const d = json[j];
+            token += d;
+            if (backslash) backslash = false;
+            else if (d === "\\") backslash = true;
+            else if (d === "\"") { j++; break; }
+            j++;
+          }
+          let k = j;
+          while (k < json.length && /\s/.test(json[k])) k++;
+          const cls = json[k] === ":" ? "json-key" : "json-string";
+          out += '<span class="' + cls + '">' + esc(token) + "</span>";
+          i = j;
+        } else if (/[0-9-]/.test(c)) {
+          let j = i, token = "";
+          while (j < json.length && /[0-9eE+\-.]/.test(json[j])) { token += json[j]; j++; }
+          out += '<span class="json-number">' + esc(token) + "</span>";
+          i = j;
+        } else if (/[a-zA-Z]/.test(c)) {
+          let j = i, token = "";
+          while (j < json.length && /[a-zA-Z]/.test(json[j])) { token += json[j]; j++; }
+          const cls = token === "true" || token === "false" ? "json-bool" : token === "null" ? "json-null" : "";
+          out += cls ? '<span class="' + cls + '">' + token + "</span>" : token;
+          i = j;
+        } else {
+          out += esc(c);
+          i++;
+        }
+      }
+      return out;
+    }
+
+    function bytes(str) {
+      return new TextEncoder().encode(str).length;
+    }
+
+    function lineCol(json, pos) {
+      const before = json.slice(0, pos);
+      const lines = before.split("\n");
+      return { line: lines.length, col: lines[lines.length - 1].length + 1 };
+    }
+
+    function process(mode) {
+      const raw = input.value;
+      if (!raw.trim()) { results.hidden = true; return; }
+      input.classList.remove("error");
+
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (e) {
+        results.hidden = false;
+        verdict.className = "result-verdict verdict-no";
+        let msg = e.message;
+        const m = msg.match(/position\s+(\d+)/);
+        if (m) {
+          const lc = lineCol(raw, parseInt(m[1], 10));
+          msg = "Invalid JSON near line " + lc.line + ", column " + lc.col + ".";
+        }
+        verdict.innerHTML = "❌ <strong>Invalid JSON.</strong> " + esc(msg);
+        output.innerHTML = "";
+        info.textContent = raw.length + " chars · " + bytes(raw) + " bytes";
+        input.classList.add("error");
+        return;
+      }
+
+      const text = mode === "minify" ? JSON.stringify(parsed) : JSON.stringify(parsed, null, 2);
+      results.hidden = false;
+      verdict.className = "result-verdict verdict-ok";
+      verdict.innerHTML = "✅ <strong>Valid JSON.</strong>";
+      output.innerHTML = highlight(text);
+      info.textContent = (mode === "minify" ? "Minified · " : "Formatted · ") + text.length + " chars · " + bytes(text) + " bytes";
+    }
+
+    document.getElementById("btn-format").addEventListener("click", () => process("format"));
+    document.getElementById("btn-minify").addEventListener("click", () => process("minify"));
+    document.getElementById("btn-clear").addEventListener("click", () => {
+      input.value = "";
+      input.classList.remove("error");
+      results.hidden = true;
+    });
+
+    input.value = '{\n  "site": "velstech.net",\n  "tools": 7,\n  "ai_assisted": true\n}';
+    process("format");
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

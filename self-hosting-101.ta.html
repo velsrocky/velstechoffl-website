@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="மீடியா சர்வர் முதல் தனிப்பட்ட கிளவுட் வரை – Raspberry Pi அல்லது பழைய லேப்டாப்பில் இயக்கக்கூடிய சேவைகள்." />
+  <title>சுய-ஹோஸ்டிங் 101: வீட்டில் என்ன இயக்க முடியும்? | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/self-hosting-101.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/self-hosting-101.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/self-hosting-101.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/self-hosting-101.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/self-hosting-101.ta.html#article",
+  "headline": "சுய-ஹோஸ்டிங் 101: வீட்டில் என்ன இயக்க முடியும்?",
+  "description": "மீடியா சர்வர் முதல் தனிப்பட்ட கிளவுட் வரை – Raspberry Pi அல்லது பழைய லேப்டாப்பில் இயக்கக்கூடிய சேவைகள்.",
+  "url": "https://velstech.net/self-hosting-101.ta.html",
+  "datePublished": "2026-08-24T00:00:00Z",
+  "dateModified": "2026-08-24T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/self-hosting-101.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/self-hosting-101.ta.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/self-hosting-101.ta.html" />
+  <meta property="og:title" content="சுய-ஹோஸ்டிங் 101: வீட்டில் என்ன இயக்க முடியும்? | VelsTech" />
+  <meta property="og:description" content="மீடியா சர்வர் முதல் தனிப்பட்ட கிளவுட் வரை – Raspberry Pi அல்லது பழைய லேப்டாப்பில் இயக்கக்கூடிய சேவைகள்." />
+  <meta property="og:image" content="https://velstech.net/og/self-hosting-101.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="சுய-ஹோஸ்டிங் 101: வீட்டில் என்ன இயக்க முடியும்? | VelsTech" />
+  <meta name="twitter:description" content="மீடியா சர்வர் முதல் தனிப்பட்ட கிளவுட் வரை – Raspberry Pi அல்லது பழைய லேப்டாப்பில் இயக்கக்கூடிய சேவைகள்." />
+  <meta name="twitter:image" content="https://velstech.net/og/self-hosting-101.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="networking.html">நெட்வொர்க்கிங்</a> / இந்த கட்டுரை</p>
+    <h1 class="title">சுய-ஹோஸ்டிங் 101: வீட்டில் என்ன இயக்க முடியும்?</h1>
+    <div class="meta">
+      <span class="tag">சுய-ஹோஸ்டிங்</span>
+      <span class="tag">திட்டங்கள்</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        சுய-ஹோஸ்டிங் என்றால் உங்கள் சொந்த வன்பொருளில் உங்கள் சொந்த சேவைகளை இயக்குவது, வேறொருவரின்
+        கிளவுட்டுக்கு பணம் செலுத்துவதற்கு பதிலாக. இது தனிப்பட்டது, கற்றுக்கொள்ள ஒரு சிறந்த வழி, மற்றும் பல விஷயங்களுக்கு
+        இது கிட்டத்தட்ட எதுவும் செலவாகாது. வீட்டில் ஹோஸ்ட் செய்யத் தகுந்தவை இங்கே – மற்றும் தகுந்தவை அல்ல.
+      </p>
+
+      <h2>தொடங்குவதற்கு உங்களுக்கு என்ன தேவை</h2>
+      <p>
+        நுழைவு புள்ளி மிகச் சிறியது:
+      </p>
+      <ul>
+        <li><strong>ஒரு Raspberry Pi 4/5</strong> – கிளாசிக். ~$50–80, சில வாட் மின்சாரத்தைப் பயன்படுத்துகிறது.</li>
+        <li><strong>ஒரு பழைய லேப்டாப் அல்லது டெஸ்க்டாப்</strong> – முற்றிலும் நல்லது, மேலும் உங்களிடம் ஏற்கனவே ஒன்று இருக்கலாம்.</li>
+        <li><strong>ஒரு மினி PC</strong> (N100-வகுப்பு) – மலிவானது, அமைதியானது, குறைந்த மின்சாரம், வியக்கத்தக்க திறன் கொண்டது.</li>
+        <li><strong>சேமிப்பு</strong> – ஒரு நல்ல வெளி அல்லது உள் டிரைவ், முன்னுரிமை உங்கள் பூட் டிரைவ் அல்ல.</li>
+      </ul>
+      <p>
+        லினக்ஸை நிறுவவும் (OS பகுதியைப் பார்க்கவும்), இயந்திரத்திற்கு ஒரு நிலையான IP முகவரியைக் கொடுக்கவும், நீங்கள் தயார்.
+        <strong>Docker</strong> அடுத்த பகுதியை வியத்தகு முறையில் எளிதாக்குகிறது – பெரும்பாலான சுய-ஹோஸ்ட் செய்யப்பட்ட பயன்பாடுகள்
+        ஒரு-கட்டளை நிறுவல்கள்.
+      </p>
+
+      <h2>எளிதான, உயர்-மதிப்பு வெற்றிகள்</h2>
+      <p>
+        மக்கள் பொதுவாக இந்த திட்டங்களுடன் தொடங்குகிறார்கள்:
+      </p>
+      <ul>
+        <li>
+          <strong>மீடியா சர்வர் – Jellyfin அல்லது Plex.</strong> உங்கள் சொந்த திரைப்படங்கள் மற்றும் இசையை
+          எந்த சாதனத்திலும் ஸ்ட்ரீம் செய்யுங்கள். Jellyfin இலவசம் மற்றும் முழுமையாக சுய-உள்ளடக்கியது. இதுவே #1 காரணம்
+          மக்கள் சுய-ஹோஸ்டிங்கைத் தொடங்குகிறார்கள்.
+        </li>
+        <li>
+          <strong>தனிப்பட்ட கிளவுட் – Nextcloud.</strong> உங்கள் சொந்த Dropbox/Google Drive. கோப்புகள்,
+          புகைப்படங்கள், குறிப்புகள், தொடர்புகள் – உங்கள் போனிலிருந்து அணுகலாம். "அந்நியரின் சர்வருடன் ஒத்திசை" என்பதை
+          "என் கழுவறையுடன் ஒத்திசை" ஆக மாற்றவும்.
+        </li>
+        <li>
+          <strong>நெட்வொர்க் மட்டத்தில் விளம்பரத் தடுப்பு – AdGuard Home அல்லது Pi-hole.</strong> உங்கள் நெட்வொர்க்கில் உள்ள
+          ஒவ்வொரு சாதனத்திற்கும் விளம்பரங்கள் மற்றும் டிராக்கர்களைத் தடுக்கவும், ரூட்டர் மட்டத்திலிருந்து, அவை
+          ஏற்றப்படுவதற்கு முன்பே.
+        </li>
+        <li>
+          <strong>வீட்டு டேஷ்போர்டு – Home Assistant.</strong> ஸ்மார்ட் சாதனங்கள், சென்சார்கள்
+          மற்றும் ஆட்டோமேஷன்களை ஒரு தனிப்பட்ட டேஷ்போர்டில் இணைக்கவும். முழு ஸ்மார்ட்-ஹோம்
+          உரிமைக்கான நுழைவு மருந்து.
+        </li>
+      </ul>
+
+      <h2>மேம்படுத்தவும்</h2>
+      <p>
+        நீங்கள் வசதியான பிறகு, மேலும் சேர்க்கவும்:
+      </p>
+      <ul>
+        <li><strong>கடவுச்சொல் மேலாளர் – Vaultwarden.</strong> உங்கள் கடவுச்சொற்கள், சுய-ஹோஸ்ட் செய்யப்பட்டவை (Bitwarden-ன் சர்வருக்கு ஒரு துளி-இன் மாற்று).</li>
+        <li><strong>காப்புப்பிரதி இலக்கு.</strong> உங்கள் கணினிகளை இரவில் வீட்டு சர்வருக்கு காப்புப் பிரதி எடுக்கவும். சர்வர் இடத்திற்கு வெளியே காப்புப் பிரதி எடுக்கப்படுகிறது.</li>
+        <li><strong>குறிப்புகள் மற்றும் ஆவணங்கள் – Obsidian sync, Bookstack, அல்லது Trilium.</strong> உங்கள் சொந்த அறிவுத் தளம்.</li>
+        <li><strong>தனிப்பட்ட வலைப்பதிவு அல்லது தளம்.</strong> அதை நீங்களே ஹோஸ்ட் செய்யுங்கள் – இருப்பினும் GitHub Pages-இல் ஒரு ஸ்டேடிக் தளம் பெரும்பாலும் புத்திசாலித்தனமானது.</li>
+        <li><strong>Git சர்வர் – Gitea.</strong> தனிப்பட்ட திட்டங்களுக்கான உங்கள் சொந்த GitHub.</li>
+      </ul>
+
+      <h2>இணையத்தில் வெளிப்படுத்துதல்</h2>
+      <p>
+        உங்கள் வீட்டிற்குள், சேவைகள் உள்ளூர் நெட்வொர்க்கில் நன்றாக வேலை செய்கின்றன. வெளியில் இருந்து
+        அணுகலை விரும்பும் தருணத்தில், உங்களுக்கு விருப்பங்கள் உள்ளன – அதிகரிக்கும் முயற்சியின் வரிசையில்:
+      </p>
+      <ol>
+        <li>
+          <strong>VPN – Tailscale அல்லது WireGuard.</strong> பாதுகாப்பான, நவீன தேர்வு. நீங்கள் ஒரு
+          தனிப்பட்ட நெட்வொர்க்கில் சேருகிறீர்கள், அது எங்கிருந்தும் உங்கள் வீட்டு சர்வரை அடைகிறது. எந்த போர்ட்களும் திறக்கப்படவில்லை, எந்த
+          வெளிப்பாடும் இல்லை. எல்லாவற்றிற்கும் பரிந்துரைக்கப்படுகிறது.
+        </li>
+        <li>
+          <strong>Cloudflare Tunnel.</strong> எந்த போர்ட்களையும் திறக்காமல் உங்கள் சர்வரை Cloudflare-உடன்
+          இணைக்கும் ஒரு இலவச டன்னல். குறிப்பிட்ட பயன்பாடுகளை பொதுவில் பகிர்வதற்கு சிறந்தது.
+        </li>
+        <li>
+          <strong>போர்ட் ஃபார்வர்டிங் + DDNS.</strong> பழைய-பள்ளி வழி: ஒரு போர்ட்டைத் திறக்கவும், மாறும்
+          IP-க்கு DDNS பயன்படுத்தவும். வேலை செய்கிறது, ஆனால் சர்வரை நேரடியாக வெளிப்படுத்துகிறது – வலுவான
+          பாதுகாப்புடன் மட்டுமே இதைச் செய்யுங்கள்.
+        </li>
+      </ol>
+      <blockquote>
+        கட்டைவிரல் விதி: எல்லாவற்றுக்கும் தனிப்பட்ட அணுகலுக்கு VPN (Tailscale) பயன்படுத்தவும், மற்றும்
+        நீங்கள் குறிப்பாக எதையாவது பொதுவில் வைக்க விரும்பினால் Cloudflare Tunnel பயன்படுத்தவும். உங்கள்
+        அமைப்பில் நம்பிக்கை இல்லாவிட்டால் திறந்த இணையத்தில் ரா போர்ட் ஃபார்வர்டிங்கைத் தவிர்க்கவும்.
+      </blockquote>
+
+      <h2>நீங்கள் சுய-ஹோஸ்ட் செய்ய கூடாதவை</h2>
+      <p>
+        நேர்மை மூலை. சில விஷயங்கள் மதிப்புக்குரியவை அல்ல:
+      </p>
+      <ul>
+        <li><strong>வணிக-முக்கியமான மின்னஞ்சல்</strong> – வீட்டு IP-யிலிருந்து நம்பத்தகுந்த மின்னஞ்சலை வழங்குவது ஒரு கனவு (ஸ்பேம் வடிப்பான்கள் குடியிருப்பு IPகளை வெறுக்கின்றன). மின்னஞ்சல் வழங்குநரைப் பயன்படுத்தவும்.</li>
+        <li><strong>எண்டர்பிரைஸ் அப்டைமில் 24/7 இருக்க வேண்டிய எதுவும்</strong> – வீட்டு இணையம் மற்றும் மின்சாரம் டேட்டா சென்டர்கள் அல்ல.</li>
+        <li><strong>இழக்க முடியாத காப்புப்பிரதிகள்</strong> – எப்போதும் இடத்திற்கு வெளியே ஒரு நகலை வைத்திருக்கவும் (3-2-1 விதி).</li>
+        <li><strong>நீங்கள் பராமரிக்காத விஷயங்கள்</strong> – ஒவ்வொரு சுய-ஹோஸ்ட் செய்யப்பட்ட சேவைக்கும் புதுப்பிப்புகள் தேவை. பராமரிக்கப்படாதது = இணைக்கப்படாதது = ஆபத்து.</li>
+      </ul>
+
+      <h2>ஒரு தொடக்க சரிபார்ப்புப் பட்டியல்</h2>
+      <pre>1. Get hardware (Pi / old laptop / mini PC)
+2. Install Linux + Docker
+3. Give it a static local IP
+4. Start with ONE service (Jellyfin is the classic)
+5. Add Tailscale for secure remote access
+6. Set up nightly backups to an external drive
+7. Repeat updates regularly (and actually do them)</pre>
+
+      <p>
+        சுய-ஹோஸ்டிங் என்பது கற்றல் மற்றும் தனியுரிமையில் தன்னைத்தானே செலுத்தும் ஒரு பொழுதுபோக்கு. ஒரு
+        விஷயத்துடன் தொடங்குங்கள், ஒரு வார இறுதியில் பத்து சேவைகளை நிறுவுவதை எதிர்க்கவும், மேலும் எல்லாவற்றையும் புதுப்பித்த நிலையில் வைக்கவும்.
+        இனிமேல் ஆறு மாதங்களில் உங்களிடம் முற்றிலும் உங்களுடைய ஒரு தனிப்பட்ட சிறிய கிளவுட் இருக்கும்.
+      </p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🐳 VelsTech Docker Compose ஜெனரேட்டரை முயற்சிக்கவும்</div>
+        <p>நகல்-ஒட்டு தயாரான docker-compose.yml ஐப் பெறுங்கள் – இமேஜ், போர்ட்கள், வால்யூம்கள், என்வி வேருகள் மற்றும் மறுதொடக்கம் பாலிசி விநாடிகளில்.</p>
+        <a class="btn btn-primary" href="docker-compose-generator.html">ஜெனரேட்டரைத் திறக்கவும் →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="networking.html">← நெட்வொர்க்கிங்கிற்குத் திரும்பு</a>
+      <a href="index.html">முகப்பு</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

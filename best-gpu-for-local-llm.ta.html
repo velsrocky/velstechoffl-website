@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="2026-இல் உள்ளூரில் LLMகளை இயக்க சிறந்த GPUகள் – RTX vs Radeon, உங்களுக்கு உண்மையில் எவ்வளவு VRAM தேவை, மற்றும் llama.cpp மற்றும் Ollama-க்கு எது முக்கியம்." />
+  <title>உள்ளூரில் LLMகளை இயக்க சிறந்த GPU (2026) | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/best-gpu-for-local-llm.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/best-gpu-for-local-llm.ta.html#article",
+  "headline": "உள்ளூரில் LLMகளை இயக்க சிறந்த GPU (2026)",
+  "description": "2026-இல் உள்ளூரில் LLMகளை இயக்க சிறந்த GPUகள் – RTX vs Radeon, உங்களுக்கு உண்மையில் எவ்வளவு VRAM தேவை, மற்றும் llama.cpp மற்றும் Ollama-க்கு எது முக்கியம்.",
+  "url": "https://velstech.net/best-gpu-for-local-llm.ta.html",
+  "datePublished": "2026-08-27T00:00:00Z",
+  "dateModified": "2026-08-27T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/best-gpu-for-local-llm.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/best-gpu-for-local-llm.ta.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/best-gpu-for-local-llm.ta.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "உள்ளூரில் ஒரு LLM-ஐ இயக்க எவ்வளவு VRAM தேவை?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "4-bit குவாண்டிசேஷனில் ஒரு 7B மாதிரிக்கு 8 GB வேண்டும்; 13–14B மாதிரிகளுக்கு 12–16 GB; மற்றும் 32B மாதிரிகளுக்கு எடைகள் மற்றும் KV கேச் இரண்டையும் மெமரியில் பொருத்த விரும்பினால் 24 GB அல்லது அதற்கு மேல்."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "உள்ளூர் LLMகளுக்கு NVIDIA அல்லது AMD GPU?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "llama.cpp மற்றும் Ollama உடன் NVIDIA (CUDA) மிகவும் சீரான அமைப்பைக் கொண்டுள்ளது. AMD (ROCm/Vulkan) நன்றாக வேலை செய்கிறது மற்றும் பெரும்பாலும் ஒரு ரூபாய்க்கு அதிக VRAM தருகிறது, ஆனால் சிறிது கூடுதல் முயற்சி தேவை."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "CPU-மட்டும் inference மதிப்புள்ளதா?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "அவ்வப்போது பயன்படுத்த, ஆம் – நவீன CPUகள் 7B மாதிரிகளை ஒரு நொடிக்கு சில டோக்கன்களில் இயக்க முடியும். தினசரி பயன்பாட்டிற்கு, 12 GB+ VRAM கொண்ட GPU மிகச் சிறந்த அனுபவம்."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/best-gpu-for-local-llm.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/best-gpu-for-local-llm.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/best-gpu-for-local-llm.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/best-gpu-for-local-llm.ta.html" />
+  <meta property="og:title" content="உள்ளூரில் LLMகளை இயக்க சிறந்த GPU (2026) | VelsTech" />
+  <meta property="og:description" content="2026-இல் உள்ளூரில் LLMகளை இயக்க சிறந்த GPUகள் – RTX vs Radeon, உங்களுக்கு உண்மையில் எவ்வளவு VRAM தேவை, மற்றும் llama.cpp மற்றும் Ollama-க்கு எது முக்கியம்." />
+  <meta property="og:image" content="https://velstech.net/og/best-gpu-for-local-llm.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="உள்ளூரில் LLMகளை இயக்க சிறந்த GPU (2026) | VelsTech" />
+  <meta name="twitter:description" content="2026-இல் உள்ளூரில் LLMகளை இயக்க சிறந்த GPUகள் – RTX vs Radeon, உங்களுக்கு உண்மையில் எவ்வளவு VRAM தேவை, மற்றும் llama.cpp மற்றும் Ollama-க்கு எது முக்கியம்." />
+  <meta name="twitter:image" content="https://velstech.net/og/best-gpu-for-local-llm.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="hardware.html">வன்பொருள்</a> / இந்த கட்டுரை</p>
+    <h1 class="title">உள்ளூரில் LLMகளை இயக்க சிறந்த GPU (2026)</h1>
+    <div class="meta">
+      <span class="tag">GPU</span>
+      <span class="tag">LLM</span>
+      <span class="tag">உள்ளூர் AI</span>
+      <span class="tag">பெஞ்ச்மார்க்குகள்</span>
+      <span>Aug 27, 2026</span>
+      <span>· 9 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        ஒரு LLM-ஐ உள்ளூரில் இயக்குவது AI-இல் மிகச் சிறந்த தனியுரிமை/விலை ஒப்பந்தம் – சரியான
+        GPU-ஐ தேர்வு செய்தால். இதை தவறாக செய்தால் நீங்கள் அதிக அட்டையை (வீண் பணம்) அல்லது குறைவாக
+        (உங்கள் மாடல் பொருந்தாது) வாங்குகிறீர்கள். பட்ஜெட்டிலிருந்து ஆர்வலர் வரையிலான 2026-இன் நேர்மையான தேர்வு இதோ.
+      </p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 முதலில், உங்கள் அமைப்பிற்கான எண்களை சரிபார்க்கவும்</div>
+        <p><a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர்</a> – உங்கள் இலக்கு மாதிரி பொருந்துமா? · <a href="gpu-ai-calculator.html">GPU AI செயல்திறன் கால்குலேட்டர்</a> – இது எவ்வளவு வேகமாக இயங்கும்?</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">கால்குலேட்டர்களை திறக்கவும் →</a>
+      </div>
+
+      <h2>விரைவான பதில்</h2>
+      <ul>
+        <li><strong>ஒட்டுமொத்தமாக சிறந்தது:</strong> RTX 4090 (24 GB) – 2026-இல் இன்னும் sweet spot.</li>
+        <li><strong>சிறந்த மதிப்பு நடுத்தர வரம்பு:</strong> RTX 5070 Ti (16 GB) அல்லது RX 9070 XT (16 GB) – வேகமானவை மற்றும் 14B மாதிரிகளை இடமிருந்து பொருத்துகின்றன.</li>
+        <li><strong>சிறந்த பட்ஜெட் நுழைவு:</strong> RTX 4060 Ti 16 GB – குறிப்பாக 16 GB பதிப்பு. இது 14B Q4-ஐ இயக்க முடியும், offload உடன் சிறிய 30B கூட.</li>
+        <li><strong>சிறந்த Radeon:</strong> RX 7900 XTX (24 GB) – AMD பக்கத்தில் ஒரு ரூபாய்க்கு அதிக VRAM.</li>
+        <li><strong>சிறந்த பயன்படுத்திய பேரம்:</strong> RX 6800M (12 GB) அல்லது விலை சரியாக இருந்தால் பயன்படுத்திய 3090 (24 GB).</li>
+      </ul>
+
+      <h2>உள்ளூர் LLMகளுக்கு உண்மையில் எது முக்கியம்</h2>
+      <p>இந்த வரிசையில் மூன்று விஷயங்கள்:</p>
+      <ol>
+        <li><strong>VRAM தான் எல்லாம்.</strong> மாதிரி மற்றும் அதன் KV கேச் VRAM-இல் பொருந்த வேண்டும், இல்லையெனில் நீங்கள் RAM-க்கு offload செய்து தவழ்கிறீர்கள். எந்த மாதிரிகளை இயக்க முடியும் என்பதை தீர்மானிக்கும் கடினமான வரம்பு இதுவே.</li>
+        <li><strong>மெமரி பேண்ட்விட்த் உங்கள் வேகத்தை நிர்ணயிக்கிறது.</strong> உரை உருவாக்கம் (decode) மெமரி-சார்ந்தது – GPU ஒவ்வொரு டோக்கனிலும் முழு மாதிரியையும் படிக்கிறது. அதிக பேண்ட்விட்த் = ஒரு நொடிக்கு அதிக டோக்கன்கள்.</li>
+        <li><strong>கம்ப்யூட் குறைவாக முக்கியம்.</strong> மூல TFLOPS ப்ராம்ப்ட் பிராசசிங்கின் போது (prefill) மட்டுமே பிரகாசிக்கிறது. அரட்டைக்கு, நிறைய பேண்ட்விட்த் கொண்ட அட்டை நிறைய கம்ப்யூட் கொண்டதை விட வெல்லும்.</li>
+      </ol>
+      <p>
+        எனவே வாங்கும் விதி எளிது: <strong>உங்களால் முடிந்த அதிக VRAM-ஐ வாங்குங்கள், பின்னர் அந்த VRAM
+        வகுப்பில் அதிக மெமரி பேண்ட்விட்த்.</strong>
+      </p>
+
+      <h2>2026 வரிசை, ஒப்பிடப்பட்டது</h2>
+      <p>Q4_K_M இல் ஒரு 14B மாதிரிக்கான மதிப்பிடப்பட்ட decode வேகங்கள் (llama.cpp வழியாக). உங்கள் முடிவுகள் காண்டெக்ஸ்ட், எஞ்சின், மற்றும் குளிரூட்டலைப் பொறுத்து மாறுபடும்.</p>
+      <pre>GPU             VRAM   Bandwidth   Qwen 7B Q4   Qwen 14B Q4   Qwen 27B Q4   ~Price (INR)
+────────────────────────────────────────────────────────────────────────────────────────
+RTX 4060       8 GB    272 GB/s    ~40 tok/s    offload only   ✗             ₹30,000
+RTX 4060 Ti    16 GB   288 GB/s    ~42 tok/s    ~40 tok/s     offload only  ₹48,000
+RX 7600 XT     16 GB   288 GB/s    ~42 tok/s    ~40 tok/s     offload only  ₹38,000
+RX 7700 XT     12 GB   432 GB/s    ~55 tok/s    offload only  ✗             ₹40,000
+RTX 5070 Ti    16 GB   896 GB/s    ~95 tok/s    ~90 tok/s     offload only  ₹80,000
+RX 9070 XT     16 GB   644 GB/s    ~72 tok/s    ~68 tok/s     offload only  ₹65,000
+RTX 4090       24 GB  1008 GB/s   ~160 tok/s   ~120 tok/s    ~60 tok/s     ₹1,50,000+
+RX 7900 XTX    24 GB   960 GB/s   ~150 tok/s   ~115 tok/s    ~58 tok/s     ₹1,20,000</pre>
+      <p class="tool-note">"Offload only" = VRAM-இல் முழுமையாக பொருந்தாது; பாகங்கள் சிஸ்டம் RAM-இல் இயங்கும், இது மிகவும் மெதுவானது. எண்கள் <a href="gpu-ai-calculator.html">GPU AI செயல்திறன் கால்குலேட்டரில்</a> இருந்து மதிப்பீடுகள்.</p>
+
+      <h2>ஒட்டுமொத்தமாக சிறந்தது: RTX 4090 (24 GB)</h2>
+      <p>
+        4090 2026-இல் இன்னும் பெஞ்ச்மார்க். 24 GB VRAM, மிகப்பெரிய காண்டெக்ஸ்டுடன் 14B Q4-ஐ
+        இயக்குகிறது, 27B-வகை மாதிரிகளை முழுவதுமாக GPU-இல், மேலும் இது ப்ராம்ப்ட்
+        பிராசசிங்கிற்கு மிக வேகமான கன்ஸ்யூமர் அட்டை. RTX 5090 (32 GB) வேகமானது மற்றும் பெரிய மாதிரிகளை பொருத்துகிறது, ஆனால் அது
+        அதிக செலவாகும் – பெரும்பாலான மக்களுக்கு 4090 (அல்லது பயன்படுத்தியது) புத்திசாலித்தனமான வாங்கல்.
+      </p>
+      <p><a data-amazon="RTX 4090 24GB graphics card" rel="sponsored">Amazon-இல் தற்போதைய விலையை சரிபார்க்கவும் →</a></p>
+
+      <h2>சிறந்த மதிப்பு நடுத்தர வரம்பு: RTX 5070 Ti / RX 9070 XT (16 GB)</h2>
+      <p>
+        4090-ஐ நியாயப்படுத்த முடியாவிட்டால், நான் வாங்கும் வகுப்பு இது. 16 GB 14B Q4_K_M-ஐ
+        16–32K காண்டெக்ஸ்டுடன் வசதியாக பொருத்துகிறது, மற்றும் இலகுவான offload உடன் 27B Q4 கூட. RTX 5070 Ti-க்கு
+        4060 Ti-ஐ விட கிட்டத்தட்ட இரட்டை பேண்ட்விட்த் உள்ளது – அது ஒரு நொடிக்கு தோராயமாக 2× டோக்கன்களாக
+        தோன்றும். AMD பக்கத்தில் RX 9070 XT வலுவான ROCm ஆதரவுடன் ஒரு திடமான மாற்று.
+      </p>
+      <p><a data-amazon="RTX 5070 Ti 16GB graphics card" rel="sponsored">RTX 5070 Ti Amazon-இல் →</a> · <a data-amazon="RX 9070 XT 16GB graphics card" rel="sponsored">RX 9070 XT Amazon-இல் →</a></p>
+
+      <h2>சிறந்த பட்ஜெட்: RTX 4060 Ti 16 GB</h2>
+      <p>
+        AI-க்கு வாங்க வேண்டியது <em>16 GB</em> பதிப்பு. ஆம், இது 8 GB மாடலை விட மெதுவாக
+        இருக்கிறது – ஆனால் 8 GB பதிப்பு 14B Q4-ஐ முழுவதுமாக GPU-இல் இயக்க முடியாது, 16 GB
+        பதிப்பு அதை இன்னும் மரியாதைக்குரிய ~40 tok/s இல் செய்ய முடியும். ஒரு பொம்மைக்கும் பயன்படக்கூடிய
+        உள்ளூர் உதவியாளருக்கும் இடையிலான வித்தியாசம் அதுவே. RX 7600 XT 16 GB Radeon
+        சமமானது மற்றும் பொதுவாக மலிவானது.
+      </p>
+      <p><a data-amazon="RTX 4060 Ti 16GB graphics card" rel="sponsored">RTX 4060 Ti 16 GB Amazon-இல் →</a> · <a data-amazon="RX 7600 XT 16GB graphics card" rel="sponsored">RX 7600 XT 16 GB Amazon-இல் →</a></p>
+
+      <h2>உள்ளூர் AI-க்கு AMD vs NVIDIA</h2>
+      <p>
+        பழைய "AMD AI-க்கு நம்பிக்கையற்றது" ஆலோசனை காலாவதியானது. RDNA2/RDNA3 அட்டைகளுக்கு llama.cpp,
+        Ollama, மற்றும் LM Studio உடன் ROCm நன்றாக வேலை செய்கிறது – எங்கள் <a href="install-rocm-ubuntu.html">ROCm நிறுவல் வழிகாட்டியை</a> பார்க்கவும்.
+        VRAM per rupee இல் AMD இன்னும் வெற்றி பெறுகிறது (RX 7900 XTX சுற்றி மிக மலிவான 24 GB அட்டை),
+        மென்பொருள் நேர்த்தி, CUDA லைப்ரரிகள், மற்றும் prefill வேகத்தில் NVIDIA வெற்றி பெறுகிறது. தூய
+        உள்ளூர்-அரட்டை அமைப்பிற்கு, இரண்டும் நன்றாக இருக்கின்றன.
+      </p>
+
+      <h2>பயன்படுத்திய சந்தை எப்படி?</h2>
+      <ul>
+        <li><strong>RX 6800M (12 GB)</strong> – மலிவான பயன்படுத்திய பலகைகளில் தோன்றும் லேப்டாப் சிப்; 7B–14B வேலைக்கு சிறந்த விலை/VRAM. இதை நாங்கள் முன்பே உள்ளடக்கியுள்ளோம் – இது ஒரு சிறந்த முதல் உள்ளூர்-AI அட்டை.</li>
+        <li><strong>பயன்படுத்திய RTX 3090 (24 GB)</strong> – ₹60–70k அருகே ஒன்றை கண்டால், அது AI-க்கு ஒரு பட்ஜெட் 4090.</li>
+        <li><strong>7B-க்கு மேல் எதற்கும் 8 GB அட்டைகளை தவிர்க்கவும்</strong> – தொடர்ந்து offload உடன் போராடுவீர்கள்.</li>
+      </ul>
+      <p><a data-amazon="used RX 6800M graphics card" rel="sponsored">RX 6800M Amazon-இல் தேடுங்கள் →</a></p>
+
+      <h2>கட்டமைப்பின் மற்ற பகுதிகளை மறக்காதீர்கள்</h2>
+      <p>
+        VRAM தான் நட்சத்திரம், ஆனால் மெதுவான CPU அல்லது போதுமான சிஸ்டம் RAM இல்லாதது நீங்கள் offload
+        செய்யும்போது தடையாக மாறும். <strong>16–32 GB சிஸ்டம் RAM</strong> மற்றும் மாதிரி கோப்புகளை ஏற்றுவதற்கு
+        ஒரு நல்ல NVMe ஐ இலக்காக கொள்ளுங்கள். அந்த 4090-ஐ வாங்குவதற்கு முன்
+        <a href="psu-calculator.html">PSU கால்குலேட்டருடன்</a> உங்கள் முழு கட்டமைப்பை சரிபார்க்கவும்.
+      </p>
+
+      <h2>FAQ</h2>
+      <h3>கன்ஸ்யூமர் வன்பொருளில் 70B மாதிரியை இயக்க முடியுமா?</h3>
+      <p>GPU-இல் உண்மையில் இல்லை. 70B Q4-க்கு ~40–45 GB தேவை – அது கிளவுட் GPU எல்லை. 4090 அதை கனமான offload உடன் <em>இயக்க</em> முடியும், ஆனால் அரட்டைக்கு பயன்படுத்த முடியாத அளவுக்கு மெதுவாக இருக்கும்.</p>
+      <h3>8 GB VRAM போதுமானதா?</h3>
+      <p>7B Q4 மாதிரிகளுக்கு, ஆம் – கடினமாக. அதைவிட பெரியதற்கு, இல்லை. அதனால்தான் இந்த பக்கத்தில் உள்ள ஒவ்வொரு பட்ஜெட் தேர்வும் 16 GB.</p>
+      <h3>NVIDIA CUDA அவ்வளவு முக்கியமா?</h3>
+      <p>Prefill வேகம் மற்றும் விசித்திர லைப்ரரிகளுக்கு, ஆம். அன்றாட llama.cpp/Ollama அரட்டைக்கு, வித்தியாசம் நிறைய குறைந்துள்ளது – Radeon நன்றாக உள்ளது.</p>
+      <h3>Apple Silicon பற்றி என்ன?</h3>
+      <p>Unified memory Macகள் (M-சீரிஸ் 32–64 GB உடன்) உள்ளூர் LLMகளுக்கு உண்மையில் சிறந்தவை – அது ஒரு தனி கட்டுரை. டெஸ்க்டாப் பக்கத்தில், இந்த பக்கம் NVIDIA/AMD GPUகளை பற்றியது.</p>
+
+      <h2>இறுதி முடிவு</h2>
+      <p>
+        இந்த வரிசையில் உங்களால் முடிந்த அதிக VRAM-ஐ வாங்குங்கள்: 24 GB (4090/7900 XTX) → 16 GB
+        (5070 Ti / 9070 XT / 4060 Ti) → 12 GB பயன்படுத்தியது (6800M) → மற்றவை அனைத்தும் சமரசம்.
+        பின்னர் உங்கள் சரியான மாதிரி மற்றும் காண்டெக்ஸ்டை கீழே உள்ள கால்குலேட்டர்களில் இணைத்து நம்பிக்கையுடன் வாங்குங்கள்.
+      </p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 செலவு செய்வதற்கு முன் பொருத்தத்தை கணக்கிடுங்கள்</div>
+        <p>LLM VRAM கால்குலேட்டர் + GPU AI செயல்திறன் கால்குலேட்டர் – உங்கள் மாதிரி, குவாண்ட், மற்றும் காண்டெக்ஸ்டிற்கான சரியான எண்கள்.</p>
+        <a class="btn btn-primary" href="tools.html">அனைத்து கருவிகளையும் பாருங்கள் →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="hardware.html">← வன்பொருளுக்கு திரும்பு</a>
+      <a href="how-much-vram-for-llm.html">உங்களுக்கு எவ்வளவு VRAM தேவை?</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

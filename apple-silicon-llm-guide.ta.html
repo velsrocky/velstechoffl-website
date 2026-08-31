@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Apple Silicon இல் LLMகளை இயக்குதல் – M1/M2/M3/M4 Macகள் உள்ளூர் AI-ஐ எவ்வாறு இயக்குகின்றன, unified memory என்றால் என்ன, உங்கள் Mac-க்கு எந்த மாதிரிகள் பொருந்தும், மற்றும் Metal உடன் எவ்வாறு தொடங்குவது." />
+  <title>Apple Silicon இல் LLMகளை இயக்குதல்: ஒரு நடைமுறை வழிகாட்டி | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/apple-silicon-llm-guide.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/apple-silicon-llm-guide.ta.html#article",
+  "headline": "Apple Silicon இல் LLMகளை இயக்குதல்: ஒரு நடைமுறை வழிகாட்டி",
+  "description": "M1/M2/M3/M4 Macகள் உள்ளூர் AI-ஐ எவ்வாறு இயக்குகின்றன, unified memory என்றால் என்ன, உங்கள் Mac-க்கு எந்த மாதிரிகள் பொருந்தும், மற்றும் Metal உடன் எவ்வாறு தொடங்குவது.",
+  "url": "https://velstech.net/apple-silicon-llm-guide.ta.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/apple-silicon-llm-guide.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/apple-silicon-llm-guide.ta.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/apple-silicon-llm-guide.ta.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Mac-இல் LLMகளை இயக்க முடியுமா?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ஆம் – பெரும்பாலும் அதே விலையில் உள்ள PC-ஐ விட சிறப்பாகவும் கூட, ஏனென்றால் unified memory என்பது முழு சிஸ்டம் RAM-ஐயும் மாடலுக்கு கிடைக்கச் செய்கிறது. 16 GB Mac ஒரு திடமான உள்ளூர்-AI தினசரி டிரைவர்."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Mac-இல் உள்ளூர் AI-க்கு எவ்வளவு RAM தேவை?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "தோராயமாக: 16 GB 7B–9B மாதிரிகளை Q4-இல் இயக்குகிறது, 24 GB 13B–14B-ஐயும், 32 GB 27B–30B-ஐயும், மேலும் 64 GB 70B-ஐயும் இயக்குகிறது. சில ஆண்டுகளில் உங்களுக்கு தேவைப்படும் RAM-ஐ வாங்குங்கள் – அது சாலிடர் செய்யப்பட்டது."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/apple-silicon-llm-guide.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/apple-silicon-llm-guide.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/apple-silicon-llm-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/apple-silicon-llm-guide.ta.html" />
+  <meta property="og:title" content="Apple Silicon இல் LLMகளை இயக்குதல்: ஒரு நடைமுறை வழிகாட்டி | VelsTech" />
+  <meta property="og:description" content="M1/M2/M3/M4 Macகள் உள்ளூர் AI-ஐ எவ்வாறு இயக்குகின்றன, unified memory என்றால் என்ன, உங்கள் Mac-க்கு எந்த மாதிரிகள் பொருந்தும், மற்றும் Metal உடன் எவ்வாறு தொடங்குவது." />
+  <meta property="og:image" content="https://velstech.net/og/apple-silicon-llm-guide.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Apple Silicon இல் LLMகளை இயக்குதல்: ஒரு நடைமுறை வழிகாட்டி | VelsTech" />
+  <meta name="twitter:description" content="M1/M2/M3/M4 Macகள் உள்ளூர் AI-ஐ எவ்வாறு இயக்குகின்றன, unified memory என்றால் என்ன, உங்கள் Mac-க்கு எந்த மாதிரிகள் பொருந்தும், மற்றும் Metal உடன் எவ்வாறு தொடங்குவது." />
+  <meta name="twitter:image" content="https://velstech.net/og/apple-silicon-llm-guide.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="ai.html">AI</a> / இந்த கட்டுரை</p>
+    <h1 class="title">Apple Silicon இல் LLMகளை இயக்குதல்: ஒரு நடைமுறை வழிகாட்டி</h1>
+    <div class="meta">
+      <span class="tag">Apple Silicon</span>
+      <span class="tag">Metal</span>
+      <span class="tag">உள்ளூர் AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Apple Silicon Macகள் – M1, M2, M3, மற்றும் M4 – நீங்கள் வாங்கக்கூடிய மிகச் சிறந்த உள்ளூர்-AI
+        இயந்திரங்களில் சில. GPU மிக வேகமானது என்பதால் அல்ல, மாறாக
+        <strong>unified memory</strong> காரணமாக: அதே RAM CPU மற்றும் GPU இரண்டாலும் பகிரப்படுகிறது, இது
+        ஒரு LLM-ஐ இயக்க விரும்புவது துல்லியமாக இதுதான். போதுமான RAM உள்ள ஒரு Mac, PC-இல்
+        விலை உயர்ந்த தனி GPU தேவைப்படும் மாதிரிகளை வைத்திருக்க முடியும்.
+      </p>
+      <p>
+        Mac-இல் LLMகளை இயக்குவது பற்றி நீங்கள் தெரிந்து கொள்ள வேண்டியது, உங்கள் இயந்திரத்திற்கு எது பொருந்தும்,
+        மற்றும் எவ்வாறு தொடங்குவது என்பதை இங்கே காணலாம்.
+      </p>
+
+      <h2>Macகள் உள்ளூர் AI-இல் ஏன் சிறந்தவை</h2>
+      <p>
+        ஒரு LLM-இன் வேகம் பெரும்பாலும் அதன் எடைகளை (weights) கணக்கீட்டு அலகுகளுக்கு எவ்வளவு வேகமாக
+        அளிக்கிறீர்கள் என்பதைப் பொறுத்தது – அதுவே மெமரி பேண்ட்விட்த். Apple Silicon-இன் unified memory என்பது:
+      </p>
+      <ul>
+        <li><strong>VRAM சுவர் இல்லை.</strong> PC-இல் நீங்கள் GPU VRAM-ஆல் வரம்பிடப்படுகிறீர்கள் (பொதுவாக 12–24 GB). Mac-இல், முழு சிஸ்டம் RAM-ஐயும் மாடலுக்கு பயன்படுத்தலாம். 64 GB M-சீரிஸ் Mac, 24 GB PC GPU-ஆல் இயக்க முடியாத மாதிரிகளை இயக்குகிறது.</li>
+        <li><strong>திறமையான Metal பேக்எண்ட்.</strong> llama.cpp மற்றும் Ollama-க்கு சிறந்த Metal ஆதரவு உள்ளது, எனவே மாதிரிகள் GPU-ஐ தானாகவே பயன்படுத்துகின்றன.</li>
+        <li><strong>குறைந்த மின்சாரம்.</strong> M-சீரிஸ் லேப்டாப் கூட inference இயக்கும்போது மிகக் குறைந்த மின்சாரத்தை எடுக்கிறது, எனவே இது உண்மையிலேயே நடைமுறையான எப்போதும்-இயங்கும் AI இயந்திரம்.</li>
+      </ul>
+      <p>
+        பிடிப்பு (catch): <strong>RAM தான் எல்லாம்,</strong> மற்றும் அது சாலிடர் செய்யப்பட்டது. மூன்று ஆண்டுகளுக்குப்
+        பிறகு உங்களுக்கு வேண்டிய RAM-ஐ இப்போதே வாங்குங்கள், ஏனென்றால் அதை பிறகு மேம்படுத்த முடியாது.
+      </p>
+
+      <h2>உங்கள் Mac-க்கு எது பொருந்தும்</h2>
+      <p>
+        4-bit (Q4_K_M) இல் மாடல் அளவு தோராயமாக தேவையான RAM-ஐ ஒத்திருக்கிறது, கூடுதலாக சிஸ்டத்திற்கு
+        சில GB தேவைப்படுகிறது:
+      </p>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Mac RAM</th><th>வசதியான மாடல் (Q4)</th><th>பயன்பாட்டு நிலை</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>8 GB</td><td>3B–4B</td><td>அடிப்படை அரட்டை, இலகுவான பணிகள்</td></tr>
+            <tr><td>16 GB</td><td>7B–9B</td><td>திடமான தினசரி டிரைவர்</td></tr>
+            <tr><td>24 GB</td><td>13B–14B</td><td>தீவிர உள்ளூர் AI</td></tr>
+            <tr><td>32 GB</td><td>27B–30B</td><td>பெரிய மாதிரிகள், நல்ல காண்டெக்ஸ்ட்</td></tr>
+            <tr><td>64 GB+</td><td>70B</td><td>Frontier அளவில்</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        வேகத்திற்கு மெமரி பேண்ட்விட்த் முக்கியம் – M-சீரிஸ் Pro/Max சில்லுகளுக்கு அடிப்படை M-சீரிஸை
+        விட அதிக பேண்ட்விட்த் உள்ளது, எனவே "அதே RAM, பெரிய சிப்" கொண்ட Mac வேகமாக இயங்கும்.
+      </p>
+
+      <h2>தொடங்குதல்</h2>
+      <p>
+        எளிதான வழி Ollama, இது Metal-ஐ தானாகவே கண்டறியும். அதை நிறுவிய பிறகு:
+      </p>
+      <pre>brew install ollama
+ollama pull llama3.2:3b
+ollama run llama3.2:3b</pre>
+      <p>
+        Ollama உங்கள் Mac-இன் GPU-ஐ முன்னிருப்பாகவே பயன்படுத்துகிறது. மேலும் கட்டுப்பாட்டிற்கு, llama.cpp-ஐ
+        Metal உடன் கட்டமைத்து நேரடியாக பயன்படுத்துங்கள் – <a href="llama-cpp-guide.html">llama.cpp வழிகாட்டியில்</a>
+        இருப்பது போலவே, வெறுமனே Metal பேக்எண்டுடன்.
+      </p>
+      <p>
+        உள்ளூர் AI-க்கு முற்றிலும் புதியவரா? <a href="how-to-get-started-local-ai.html">தொடங்குதல்
+        வழிகாட்டி</a> முழு செயல்முறையையும் விளக்குகிறது.
+      </p>
+
+      <h2>செயல்திறன் எதிர்பார்ப்புகள்</h2>
+      <p>
+        வசதியாக பொருந்தக்கூடிய ஒரு மாதிரியுடன் M-சீரிஸ் Mac-இல் <strong>5–20 tok/s</strong> decode-ஐ
+        எதிர்பார்க்கலாம் – அரட்டைக்கு பயன்படக்கூடியது, உடனடியானது அல்ல. சரியான எண் உங்கள் சிப்,
+        RAM, மாடல் அளவு, மற்றும் குவாண்டிசேஷனைப் பொறுத்தது. <a href="benchmarks/index.html">பெஞ்ச்மார்க்
+        தரவுத்தளத்தில்</a> உண்மையான முடிவுகளுடன் ஒப்பிடுங்கள் (நாங்கள் Radeon-ஐ சோதிக்கிறோம், ஆனால்
+        decode சூத்திரம் – பேண்ட்விட்த் ÷ ஒரு டோக்கனுக்கான பைட்டுகள் – அதே வழியில் பொருந்தும்).
+      </p>
+      <p>
+        உங்கள் தேர்ந்தெடுத்த காண்டெக்ஸ்ட் மற்றும் குவாண்டிசேஷனில் ஒரு மாதிரி உங்கள் Mac-இன் RAM-க்கு
+        பொருந்துமா என்பதை மதிப்பிட <a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டரை</a> பயன்படுத்துங்கள்.
+      </p>
+
+      <h2>நடைமுறை உதவிக்குறிப்புகள்</h2>
+      <ul>
+        <li><strong>சேமிப்பகத்தை விட RAM வாங்குங்கள்.</strong> சேமிப்பகத்தை வெளிப்புறமாக சேர்க்க மலிவு; சாலிடர் செய்யப்பட்ட RAM என்றென்றும் நிரந்தரம்.</li>
+        <li><strong>பெரிய மாதிரிகளை இயக்கும்போது மற்ற பயன்பாடுகளை மூடுங்கள்</strong> – மாதிரி அதே unified memory-க்காக அவற்றுடன் போட்டியிடுகிறது.</li>
+        <li><strong>Q4_K_M ஐ விரும்புங்கள்</strong> பெரிய மாதிரிகளை பொருத்துவதற்கு; தர வர்த்தக-முடிவை <a href="quantization-deep-dive.html">குவாண்டிசேஷன் ஆழமான ஆய்வில்</a> பார்க்கவும்.</li>
+        <li><strong>Pro/Max சில்லுகள் வேகமாக இயங்குகின்றன</strong> அதே RAM-இல், அதிக மெமரி பேண்ட்விட்த் காரணமாக.</li>
+      </ul>
+
+      <h2>இறுதி முடிவு</h2>
+      <p>
+        Apple Silicon மிகவும் நடைமுறையான உள்ளூர்-AI தளங்களில் ஒன்று. இது அமைதியானது மற்றும்
+        குறைந்த மின்சாரம். Unified memory காரணமாக, பாதி RAM கொண்ட PC GPU-ஐ திணறடிக்கும் மாதிரிகளை இது இயக்க முடியும். 16 GB Mac
+        ஒரு உண்மையான தினசரி-டிரைவர் உள்ளூர்-AI இயந்திரம். 32 GB+ உள்ளது ஒரு தீவிர பணிநிலையம். முக்கிய
+        முடிவு போதுமான RAM-ஐ முன்கூட்டியே வாங்குவதே.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI-க்கு திரும்பு</a>
+      <a href="new-mac-desktops.html">Apple-இன் புதிய Mac டெஸ்க்டாப்கள் →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

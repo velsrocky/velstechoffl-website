@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त regex टेस्टर – एक रेगुलर एक्सप्रेशन और टेस्ट स्ट्रिंग पेस्ट करें और हर मैच, कैप्चर ग्रुप और मैच की स्थिति को इनलाइन हाइलाइट होते देखें।" />
+  <title>Regex टेस्टर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/regex-tester.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/regex-tester.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/regex-tester.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/regex-tester.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/regex-tester.hi.html#webapp",
+  "name": "Regex टेस्टर | VelsTech",
+  "description": "रेगुलर एक्सप्रेशन लाइव टेस्ट करें – पैटर्न और टेस्ट स्ट्रिंग पेस्ट करें और हर मैच, कैप्चर ग्रुप और स्थिति को इनलाइन हाइलाइट देखें।",
+  "url": "https://velstech.net/regex-tester.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/regex-tester.html" />
+  <meta property="og:title" content="Regex टेस्टर | VelsTech" />
+  <meta property="og:description" content="रेगुलर एक्सप्रेशन लाइव टेस्ट करें – पैटर्न और टेस्ट स्ट्रिंग पेस्ट करें और हर मैच, कैप्चर ग्रुप और स्थिति को इनलाइन हाइलाइट देखें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Regex टेस्टर | VelsTech" />
+  <meta name="twitter:description" content="रेगुलर एक्सप्रेशन लाइव टेस्ट करें – पैटर्न और टेस्ट स्ट्रिंग पेस्ट करें और हर मैच, कैप्चर ग्रुप और स्थिति को इनलाइन हाइलाइट देखें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">उपकरण</a> / Regex टेस्टर</p>
+    <h1 class="title">Regex टेस्टर</h1>
+    <div class="meta">
+      <span>पैटर्न लाइव टेस्ट करें · मैच और कैप्चर ग्रुप देखें</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        कुछ टेक्स्ट के विरुद्ध रेगुलर एक्सप्रेशन बनाएँ और टेस्ट करें। मैच इनलाइन हाइलाइट
+        होते हैं और उनकी स्थिति व कैप्चर ग्रुप के साथ सूचीबद्ध होते हैं – <code>grep</code> या
+        <code>sed</code> कमांड को प्रोडक्शन में लगाने से पहले यह काम आता है।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>पैटर्न</span>
+            <input id="pattern" class="input" type="text" value="\b(\w+)@(\w+)\.(com|net)" spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>फ़्लैग्स</span>
+            <input id="flags" class="input" type="text" value="g" placeholder="g i m s u" spellcheck="false" />
+          </label>
+        </div>
+
+        <label class="field" style="margin-top:14px">
+          <span>टेस्ट स्ट्रिंग</span>
+          <textarea id="test" class="tool-textarea" rows="6" spellcheck="false">Contact help@velstech.net or dev@example.org for support.
+ Sales is sales@velstech.com.</textarea>
+        </label>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="tool-out" id="highlight"></div>
+          <h3 class="subheading">मैच</h3>
+          <div class="result-rows" id="match-list"></div>
+        </div>
+      </div>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="terminal-commands.html">आवश्यक टर्मिनल कमांड जो हर किसी को पता होनी चाहिए</a></li>
+        <li><a href="html-css-js.html">HTML, CSS और JavaScript: हर एक क्या करता है?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी उपकरण</a>
+      <a href="programming.html">प्रोग्रामिंग नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const patternInput = document.getElementById("pattern");
+    const flagsInput = document.getElementById("flags");
+    const testInput = document.getElementById("test");
+    const results = document.getElementById("results");
+    const verdict = document.getElementById("verdict");
+    const highlightEl = document.getElementById("highlight");
+    const matchList = document.getElementById("match-list");
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    function render() {
+      const pattern = patternInput.value;
+      const flags = flagsInput.value.replace(/[^gimsuy]/g, "");
+      const text = testInput.value;
+
+      if (!pattern || !text) { results.hidden = true; return; }
+
+      let re;
+      try {
+        re = new RegExp(pattern, flags);
+      } catch (e) {
+        results.hidden = false;
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>Invalid pattern:</strong> " + esc(e.message);
+        highlightEl.innerHTML = "";
+        matchList.innerHTML = "";
+        return;
+      }
+
+      const matches = [];
+      const re2 = new RegExp(re.source, re.flags.includes("g") ? re.flags : re.flags + "g");
+      let m;
+      while ((m = re2.exec(text)) !== null) {
+        matches.push({ index: m.index, groups: Array.from(m).map((g) => g === undefined ? null : g) });
+        if (m[0] === "") re2.lastIndex++;
+      }
+
+      // Inline highlighting
+      let html = "", pos = 0;
+      matches.forEach((match, i) => {
+        html += esc(text.slice(pos, match.index));
+        // color the full match, then overlay group spans (simplified: color groups within)
+        html += '<span class="match-hl">' + esc(match.groups[0]) + "</span>";
+        pos = match.index + match.groups[0].length;
+      });
+      html += esc(text.slice(pos));
+      highlightEl.innerHTML = html;
+
+      // Match list
+      matchList.innerHTML = matches.length
+        ? matches.map((match, i) => {
+            const groupHtml = match.groups.map((g, gi) => {
+              return g === null ? "" : '<span class="match-grp">' + esc(g) + "</span>";
+            }).join(" ");
+            return '<div class="result-row" class="mono-list">' +
+              "<span>#"+ (i+1) + " @ " + match.index + " – " + (groupHtml || "<em>no capture groups</em>") + "</span>" +
+              "</div>";
+          }).join("")
+        : '<div class="result-row"><span><em>No matches</em></span></div>';
+
+      verdict.className = "result-verdict " + (matches.length ? "verdict-ok" : "verdict-warn");
+      verdict.innerHTML = matches.length
+        ? "✅ <strong>" + matches.length + " match" + (matches.length === 1 ? "" : "es") + "</strong> found."
+        : "⚠️ <strong>No matches</strong> for /" + esc(pattern) + "/" + esc(flags) + ".";
+      results.hidden = false;
+    }
+
+    [patternInput, flagsInput, testInput].forEach((el) => el.addEventListener("input", render));
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

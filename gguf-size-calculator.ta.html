@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச GGUF கோப்பு அளவு கால்குலேட்டர் – எந்த குவாண்டைசேஷனிலும் (Q2–Q8) ஒரு மாடல் எவ்வளவு பெரியதாக இருக்கும் என்பதை பதிவிறக்கும் முன் மதிப்பிடுங்கள். எந்த அளவுரு எண்ணிக்கைக்கும் வேலை செய்யும்." />
+  <title>GGUF அளவு கால்குலேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/gguf-size-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/gguf-size-calculator.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/gguf-size-calculator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/gguf-size-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/gguf-size-calculator.ta.html#webapp",
+  "name": "GGUF அளவு கால்குலேட்டர் | VelsTech",
+  "description": "Q2 முதல் Q8 வரை ஒரு குவாண்டைஸ் செய்யப்பட்ட மாடல் எவ்வளவு வட்டு இடத்தை எடுக்கும் என்பதை பதிவிறக்கும் முன் மதிப்பிடுங்கள்.",
+  "url": "https://velstech.net/gguf-size-calculator.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/gguf-size-calculator.ta.html" />
+  <meta property="og:title" content="GGUF அளவு கால்குலேட்டர் | VelsTech" />
+  <meta property="og:description" content="Q2 முதல் Q8 வரை ஒரு குவாண்டைஸ் செய்யப்பட்ட மாடல் எவ்வளவு வட்டு இடத்தை எடுக்கும் என்பதை பதிவிறக்கும் முன் மதிப்பிடுங்கள்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GGUF அளவு கால்குலேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="Q2 முதல் Q8 வரை ஒரு குவாண்டைஸ் செய்யப்பட்ட மாடல் எவ்வளவு வட்டு இடத்தை எடுக்கும் என்பதை பதிவிறக்கும் முன் மதிப்பிடுங்கள்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / GGUF அளவு கால்குலேட்டர்</p>
+    <h1 class="title">GGUF அளவு கால்குலேட்டர்</h1>
+    <div class="meta">
+      <span>பதிவிறக்கும் முன் GGUF கோப்பு அளவை மதிப்பிடுங்கள்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Q4_K_M vs Q8-ல் ஒரு மாடல் எவ்வளவு வட்டு இடத்தை எடுக்கும் என்று யோசிக்கிறீர்களா? அளவுரு
+        எண்ணிக்கையை உள்ளிட்டால் ஒவ்வொரு பொதுவான குவாண்டைசேஷன் நிலைக்கும் மதிப்பிடப்பட்ட கோப்பு அளவை இது காட்டுகிறது –
+        மாடல் பக்கங்களை ஒவ்வொன்றாக சரிபார்க்க வேண்டியதில்லை.
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>அளவுருக்கள் (பில்லியன்கள்)</span>
+          <input type="number" id="params" class="input" value="7" min="1" max="500" step="1" />
+        </label>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows" id="results-body"></div>
+        </div>
+
+        <p class="tool-note">
+          மதிப்பீடுகள் டோக்கனைசர் மற்றும் மெட்டாடேட்டாவிற்கு ஒரு அளவுருவுக்கு ~1.25 பைட்டுகள் மேல்நிலையை கருதுகின்றன.
+          உண்மையான அளவுகள் மாடல் கட்டமைப்பால் மாறுபடும். ஒவ்வொரு குவாண்டைசேஷன் நிலையின் அர்த்தத்திற்கு <a href="gguf-explained.html">GGUF விளக்கம்</a>
+          வழிகாட்டியைப் பார்க்கவும்.
+        </p>
+      </div>
+
+      <h2>தொடர்புடையவை</h2>
+      <ul>
+        <li><a href="gguf-explained.html">GGUF விளக்கம்: உள்ளூர் LLM-களை செயல்படுத்தும் வடிவம்</a></li>
+        <li><a href="quantization-deep-dive.html">குவாண்டைசேஷன் ஆழமான பார்வை: Q4, Q5, மற்றும் Q8 எவ்வாறு தரத்தை மாற்றுகின்றன</a></li>
+        <li><a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="gguf-explained.html">GGUF விளக்கம் →</a>
+    </div>
+  </main>
+
+  <script>
+    const QUANTS = [
+      { label: "Q2_K", bits: 2.6 },
+      { label: "Q3_K", bits: 3.4 },
+      { label: "Q4_K_S", bits: 4.1 },
+      { label: "Q4_K_M", bits: 4.3 },
+      { label: "Q5_K_M", bits: 4.8 },
+      { label: "Q6_K", bits: 6.0 },
+      { label: "Q8_0", bits: 8.0 },
+      { label: "F16", bits: 16 },
+    ];
+
+    const params = document.getElementById("params");
+    const body = document.getElementById("results-body");
+
+    function render() {
+      const p = parseFloat(params.value) || 7;
+      const overhead = 0.1;
+      body.innerHTML = QUANTS.map((q) => {
+        const gb = (p * q.bits / 8 + overhead).toFixed(1);
+        return '<div class="result-row"><span>' + q.label + '</span><strong>' + gb + ' GB</strong></div>';
+      }).join("");
+    }
+
+    params.addEventListener("input", render);
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

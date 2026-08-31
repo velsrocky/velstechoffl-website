@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त Unix टाइमस्टैम्प कनवर्टर – सापेक्ष समय के साथ epoch सेकंड, मिलीसेकंड और मानव-पठनीय तिथियों के बीच परिवर्तन करें। वर्तमान टाइमस्टैम्प तुरंत कॉपी करें।" />
+  <title>Unix टाइमस्टैम्प कनवर्टर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/timestamp-converter.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/timestamp-converter.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/timestamp-converter.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/timestamp-converter.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/timestamp-converter.hi.html#webapp",
+  "name": "Unix टाइमस्टैम्प कनवर्टर | VelsTech",
+  "description": "सापेक्ष समय के साथ Unix टाइमस्टैम्प (सेकंड या मिलीसेकंड) और मानव-पठनीय तिथियों के बीच परिवर्तन करें। वर्तमान टाइमस्टैम्प तुरंत कॉपी करें।",
+  "url": "https://velstech.net/timestamp-converter.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/timestamp-converter.html" />
+  <meta property="og:title" content="Unix टाइमस्टैम्प कनवर्टर | VelsTech" />
+  <meta property="og:description" content="सापेक्ष समय के साथ Unix टाइमस्टैम्प (सेकंड या मिलीसेकंड) और मानव-पठनीय तिथियों के बीच परिवर्तन करें। वर्तमान टाइमस्टैम्प तुरंत कॉपी करें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Unix टाइमस्टैम्प कनवर्टर | VelsTech" />
+  <meta name="twitter:description" content="सापेक्ष समय के साथ Unix टाइमस्टैम्प (सेकंड या मिलीसेकंड) और मानव-पठनीय तिथियों के बीच परिवर्तन करें। वर्तमान टाइमस्टैम्प तुरंत कॉपी करें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">उपकरण</a> / टाइमस्टैम्प कनवर्टर</p>
+    <h1 class="title">Unix टाइमस्टैम्प कनवर्टर</h1>
+    <div class="meta">
+      <span>Epoch सेकंड ↔ मानव-पठनीय तिथि · मिलीसेकंड भी</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Unix टाइमस्टैम्प और मानव-पठनीय तिथियों के बीच, सेकंड और मिलीसेकंड दोनों में परिवर्तन
+        करें (JavaScript का <code>Date.now()</code> फ़ॉर्मेट)। सापेक्ष समय भी दिखाता है – लॉग
+        डीबग करते समय, JWT <code>exp</code> की जाँच करते समय, या APIs के साथ काम करते समय काम
+        आता है।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field full">
+            <span>Unix टाइमस्टैम्प (सेकंड या मिलीसेकंड)</span>
+            <input id="ts" class="input" type="text" spellcheck="false" placeholder="1724697600 or 1724697600000" />
+          </label>
+          <label class="field full">
+            <span>मानव तिथि (जैसे 2026-08-27 14:30 या 08/27/2026 2:30 PM)</span>
+            <input id="date" class="input" type="text" spellcheck="false" placeholder="2026-08-27 14:30" />
+          </label>
+        </div>
+
+        <div class="tool-btn-row" class="btn-row">
+          <button class="btn btn-primary" id="btn-now" type="button" title="वर्तमान Unix टाइमस्टैम्प (सेकंड) को क्लिपबोर्ड पर कॉपी करें" aria-label="वर्तमान टाइमस्टैम्प कॉपी करें">वर्तमान टाइमस्टैम्प कॉपी करें</button>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>सेकंड (Unix)</span><strong id="r-sec">–</strong></div>
+            <div class="result-row"><span>मिलीसेकंड (JS)</span><strong id="r-ms">–</strong></div>
+            <div class="result-row"><span>ISO 8601 (UTC)</span><strong id="r-iso">–</strong></div>
+            <div class="result-row"><span>स्थानीय समय</span><strong id="r-local">–</strong></div>
+            <div class="result-row total"><span>सापेक्ष समय</span><strong id="r-rel">–</strong></div>
+          </div>
+          <p class="tool-note">
+            अधिकांश APIs <strong>सेकंड</strong> का उपयोग करते हैं; JavaScript और कई डेटाबेस
+            <strong>मिलीसेकंड</strong> का उपयोग करते हैं। 10-अंकों की संख्या सेकंड है,
+            13 अंक मिलीसेकंड है।
+          </p>
+        </div>
+      </div>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="jwt-decoder.html">JWT डिकोडर – टोकन की समाप्ति जाँचें</a></li>
+        <li><a href="terminal-commands.html">आवश्यक टर्मिनल कमांड</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी उपकरण</a>
+      <a href="programming.html">प्रोग्रामिंग नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const tsInput = document.getElementById("ts");
+    const dateInput = document.getElementById("date");
+    const results = document.getElementById("results");
+    const verdict = document.getElementById("verdict");
+
+    function relTime(d) {
+      const diff = d - Date.now();
+      const abs = Math.abs(diff);
+      if (abs < 60000) return "just now";
+      if (abs < 3600000) return (diff < 0 ? "~" + Math.round(-diff / 60000) + " minutes ago" : "in ~" + Math.round(diff / 60000) + " minutes");
+      if (abs < 86400000) return (diff < 0 ? "~" + Math.round(-diff / 3600000) + " hours ago" : "in ~" + Math.round(diff / 3600000) + " hours");
+      return (diff < 0 ? "~" + Math.round(-diff / 86400000) + " days ago" : "in ~" + Math.round(diff / 86400000) + " days");
+    }
+
+    function show(d) {
+      results.hidden = false;
+      const sec = Math.floor(d.getTime() / 1000);
+      document.getElementById("r-sec").textContent = sec.toLocaleString("en-US");
+      document.getElementById("r-ms").textContent = d.getTime().toLocaleString("en-US");
+      document.getElementById("r-iso").textContent = d.toISOString().replace("T", " ").replace("Z", " UTC");
+      document.getElementById("r-local").textContent = d.toString();
+      document.getElementById("r-rel").textContent = relTime(d);
+      verdict.className = "result-verdict verdict-ok";
+      verdict.innerHTML = "✅ <strong>" + d.toUTCString() + "</strong>";
+    }
+
+    function fromTs(raw) {
+      if (!/^\d+$/.test(raw.trim())) return null;
+      const n = parseInt(raw.trim(), 10);
+      if (n < 1e12) return new Date(n * 1000);
+      return new Date(n);
+    }
+
+    function fromDate(raw) {
+      const s = raw.trim();
+      if (!s) return null;
+      const d = new Date(s);
+      if (!isNaN(d.getTime())) return d;
+      // try flexible formats: DD/MM/YYYY or MM/DD/YYYY with time
+      const m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})(?:[\sT](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+      if (m) {
+        const [_, a, b, y, hh, mm, ss] = m;
+        const year = y.length === 2 ? 2000 + parseInt(y, 10) : parseInt(y, 10);
+        const date = new Date(year, parseInt(a, 10) - 1, parseInt(b, 10), hh || 0, mm || 0, ss || 0);
+        if (!isNaN(date.getTime())) return date;
+      }
+      return null;
+    }
+
+    function showError(msg) {
+      results.hidden = false;
+      verdict.className = "result-verdict verdict-no";
+      verdict.innerHTML = "❌ " + msg;
+      ["r-sec", "r-ms", "r-iso", "r-local", "r-rel"].forEach((id) => document.getElementById(id).textContent = "–");
+    }
+
+    function renderFromTs() {
+      const d = fromTs(tsInput.value);
+      if (!d) { showError("Couldn't parse that timestamp."); return; }
+      show(d);
+    }
+
+    function renderFromDate() {
+      const d = fromDate(dateInput.value);
+      if (!d) { showError("Couldn't parse that date. Try YYYY-MM-DD HH:MM or 08/27/2026 2:30 PM."); return; }
+      show(d);
+    }
+
+    tsInput.addEventListener("input", renderFromTs);
+    dateInput.addEventListener("input", renderFromDate);
+
+    document.getElementById("btn-now").addEventListener("click", async () => {
+      const now = Math.floor(Date.now() / 1000);
+      try { await navigator.clipboard.writeText(String(now)); } catch {}
+      const btn = document.getElementById("btn-now");
+      btn.textContent = "Copied " + now + "!";
+      setTimeout(() => { btn.textContent = "Copy current timestamp"; }, 2000);
+    });
+
+    tsInput.value = String(Math.floor(Date.now() / 1000));
+    renderFromTs();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

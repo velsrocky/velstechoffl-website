@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त GGUF फ़ाइल आकार कैलकुलेटर – डाउनलोड करने से पहले किसी भी क्वांटाइज़ेशन (Q2–Q8) पर मॉडल कितना बड़ा होगा, अनुमान लगाएं। किसी भी पैरामीटर काउंट के लिए काम करता है।" />
+  <title>GGUF आकार कैलकुलेटर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/gguf-size-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/gguf-size-calculator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/gguf-size-calculator.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/gguf-size-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/gguf-size-calculator.hi.html#webapp",
+  "name": "GGUF आकार कैलकुलेटर | VelsTech",
+  "description": "डाउनलोड करने से पहले अनुमान लगाएं कि Q2 से Q8 तक एक क्वांटाइज़्ड मॉडल कितनी डिस्क स्पेस लेगा।",
+  "url": "https://velstech.net/gguf-size-calculator.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/gguf-size-calculator.html" />
+  <meta property="og:title" content="GGUF आकार कैलकुलेटर | VelsTech" />
+  <meta property="og:description" content="डाउनलोड करने से पहले अनुमान लगाएं कि Q2 से Q8 तक एक क्वांटाइज़्ड मॉडल कितनी डिस्क स्पेस लेगा।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GGUF आकार कैलकुलेटर | VelsTech" />
+  <meta name="twitter:description" content="डाउनलोड करने से पहले अनुमान लगाएं कि Q2 से Q8 तक एक क्वांटाइज़्ड मॉडल कितनी डिस्क स्पेस लेगा।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">उपकरण</a> / GGUF आकार कैलकुलेटर</p>
+    <h1 class="title">GGUF आकार कैलकुलेटर</h1>
+    <div class="meta">
+      <span>डाउनलोड करने से पहले GGUF फ़ाइल आकार का अनुमान लगाएं</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        सोच रहे हैं कि Q4_K_M बनाम Q8 पर एक मॉडल कितनी डिस्क स्पेस लेगा? पैरामीटर
+        काउंट दर्ज करें और यह हर सामान्य क्वांटाइज़ेशन स्तर के लिए अनुमानित फ़ाइल आकार दिखाता है –
+        मॉडल पेजों को एक-एक करके जाँचने की ज़रूरत नहीं।
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>पैरामीटर (अरबों में)</span>
+          <input type="number" id="params" class="input" value="7" min="1" max="500" step="1" />
+        </label>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows" id="results-body"></div>
+        </div>
+
+        <p class="tool-note">
+          अनुमान टोकनाइज़र और मेटाडेटा के लिए प्रति पैरामीटर ~1.25 बाइट ओवरहेड मानते हैं।
+          वास्तविक आकार मॉडल आर्किटेक्चर के अनुसार भिन्न होते हैं। प्रत्येक क्वांटाइज़ेशन स्तर का
+          अर्थ क्या है, इसके लिए <a href="gguf-explained.html">GGUF समझाया</a>
+          गाइड देखें।
+        </p>
+      </div>
+
+      <h2>संबंधित</h2>
+      <ul>
+        <li><a href="gguf-explained.html">GGUF समझाया: वह फ़ॉर्मेट जो लोकल LLM को काम करने योग्य बनाता है</a></li>
+        <li><a href="quantization-deep-dive.html">क्वांटाइज़ेशन गहराई से: Q4, Q5 और Q8 क्वालिटी को कैसे बदलते हैं</a></li>
+        <li><a href="llm-vram-calculator.html">LLM VRAM कैलकुलेटर</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी उपकरण</a>
+      <a href="gguf-explained.html">GGUF समझाया →</a>
+    </div>
+  </main>
+
+  <script>
+    const QUANTS = [
+      { label: "Q2_K", bits: 2.6 },
+      { label: "Q3_K", bits: 3.4 },
+      { label: "Q4_K_S", bits: 4.1 },
+      { label: "Q4_K_M", bits: 4.3 },
+      { label: "Q5_K_M", bits: 4.8 },
+      { label: "Q6_K", bits: 6.0 },
+      { label: "Q8_0", bits: 8.0 },
+      { label: "F16", bits: 16 },
+    ];
+
+    const params = document.getElementById("params");
+    const body = document.getElementById("results-body");
+
+    function render() {
+      const p = parseFloat(params.value) || 7;
+      const overhead = 0.1;
+      body.innerHTML = QUANTS.map((q) => {
+        const gb = (p * q.bits / 8 + overhead).toFixed(1);
+        return '<div class="result-row"><span>' + q.label + '</span><strong>' + gb + ' GB</strong></div>';
+      }).join("");
+    }
+
+    params.addEventListener("input", render);
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

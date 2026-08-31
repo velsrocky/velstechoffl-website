@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त क्रॉन एक्सप्रेशन जनरेटर – सादी भाषा से शेड्यूल चुनें और क्रॉन एक्सप्रेशन, अगले रन टाइम और कॉपी-पेस्ट रेडी लाइन प्राप्त करें। क्रॉन सिंटैक्स याद करने की ज़रूरत नहीं।" />
+  <title>क्रॉन जनरेटर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/cron-generator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/cron-generator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/cron-generator.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/cron-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/cron-generator.hi.html#webapp",
+  "name": "क्रॉन जनरेटर | VelsTech",
+  "description": "सादी भाषा में शेड्यूल चुनें और क्रॉन एक्सप्रेशन और अगले रन टाइम प्राप्त करें। क्रॉन सिंटैक्स याद करने की ज़रूरत नहीं।",
+  "url": "https://velstech.net/cron-generator.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/cron-generator.html" />
+  <meta property="og:title" content="क्रॉन जनरेटर | VelsTech" />
+  <meta property="og:description" content="सादी भाषा में शेड्यूल चुनें और क्रॉन एक्सप्रेशन और अगले रन टाइम प्राप्त करें। क्रॉन सिंटैक्स याद करने की ज़रूरत नहीं।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="क्रॉन जनरेटर | VelsTech" />
+  <meta name="twitter:description" content="सादी भाषा में शेड्यूल चुनें और क्रॉन एक्सप्रेशन और अगले रन टाइम प्राप्त करें। क्रॉन सिंटैक्स याद करने की ज़रूरत नहीं।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">उपकरण</a> / क्रॉन जनरेटर</p>
+    <h1 class="title">क्रॉन जनरेटर</h1>
+    <div class="meta">
+      <span>सादी भाषा का शेड्यूल → क्रॉन एक्सप्रेशन · अगले रन टाइम</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        चुनें कि आप कितनी बार कुछ चलाना चाहते हैं और यह सटीक
+        <strong>क्रॉन एक्सप्रेशन</strong> और <strong>अगले 5 रन टाइम</strong> जनरेट करता है।
+        मानक क्रॉन (Linux) और सामान्य <code>@daily</code> / <code>@weekly</code>
+        शॉर्टहैंड के लिए काम करता है। सिंटैक्स का अनुमान लगाना बंद करें – लाइन कॉपी करें और चलाएं।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>आवृत्ति</span>
+            <select id="freq" class="input">
+              <option value="every-hour">हर घंटे</option>
+              <option value="every-6h">हर 6 घंटे</option>
+              <option value="daily" selected>दिन में एक बार</option>
+              <option value="weekly">हफ्ते में एक बार</option>
+              <option value="monthly">महीने में एक बार</option>
+              <option value="weekday">केवल कार्यदिवस (सोम–शुक्र)</option>
+              <option value="custom">कस्टम (मिनट)</option>
+            </select>
+          </label>
+          <label class="field" id="time-field">
+            <span>दिन का समय</span>
+            <input type="time" id="time" class="input" value="03:00" />
+          </label>
+          <label class="field" id="min-field" hidden>
+            <span>हर N मिनट</span>
+            <input type="number" id="min" class="input" min="1" max="59" value="15" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-rows">
+            <div class="result-row"><span>क्रॉन एक्सप्रेशन</span><strong id="r-cron">–</strong></div>
+            <div class="result-row"><span>पठनीय</span><strong id="r-read">–</strong></div>
+            <div class="result-row"><span>कमांड लाइन</span><strong id="r-cmd">–</strong></div>
+          </div>
+          <p class="tool-note" id="r-next"></p>
+        </div>
+      </div>
+
+      <h2>संबंधित मार्गदर्शिकाएँ</h2>
+      <ul>
+        <li><a href="terminal-commands.html">आवश्यक टर्मिनल कमांड जो सभी को जानने चाहिए</a></li>
+        <li><a href="self-hosting-101.html">सेल्फ-होस्टिंग 101: आप घर पर क्या चला सकते हैं?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी उपकरण</a>
+      <a href="os.html">ऑपरेटिंग सिस्टम नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const freq = document.getElementById("freq");
+    const timeEl = document.getElementById("time");
+    const minEl = document.getElementById("min");
+    const timeField = document.getElementById("time-field");
+    const minField = document.getElementById("min-field");
+    const results = document.getElementById("results");
+
+    function render() {
+      const f = freq.value;
+      timeField.hidden = (f === "every-hour" || f === "every-6h" || f === "custom");
+      minField.hidden = (f !== "custom");
+
+      const [hh, mm] = timeEl.value ? timeEl.value.split(":").map(Number) : [0, 0];
+      let cron, read;
+      switch (f) {
+        case "every-hour": cron = "0 * * * *"; read = "At minute 0 of every hour"; break;
+        case "every-6h": cron = "0 */6 * * *"; read = "Every 6 hours at minute 0"; break;
+        case "daily": cron = mm + " " + hh + " * * *"; read = "Daily at " + pad(hh) + ":" + pad(mm); break;
+        case "weekly": cron = mm + " " + hh + " * * 0"; read = "Weekly on Sunday at " + pad(hh) + ":" + pad(mm); break;
+        case "monthly": cron = mm + " " + hh + " 1 * *"; read = "Monthly on the 1st at " + pad(hh) + ":" + pad(mm); break;
+        case "weekday": cron = mm + " " + hh + " * * 1-5"; read = "Weekdays (Mon–Fri) at " + pad(hh) + ":" + pad(mm); break;
+        case "custom": {
+          const n = Math.max(1, Math.min(59, parseInt(minEl.value, 10) || 15));
+          cron = "*/" + n + " * * * *"; read = "Every " + n + " minutes"; break;
+        }
+      }
+
+      results.hidden = false;
+      document.getElementById("r-cron").textContent = cron;
+      document.getElementById("r-read").textContent = read;
+      document.getElementById("r-cmd").textContent = cron + " /path/to/script.sh";
+      document.getElementById("r-next").innerHTML = "<strong>Next runs (from now):</strong> " + nextRuns(cron).join(", ");
+    }
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    /* Builds a predicate for each cron field from a standard cron token.
+       Supports: *, step values, ranges, lists, and single values. */
+    function fieldMatcher(token) {
+      const fields = [];
+      for (const part of String(token).split(",")) {
+        const stepMatch = part.match(/^\*\/(\d+)$/);
+        if (stepMatch) {
+          const step = parseInt(stepMatch[1], 10);
+          fields.push((v) => v % step === 0);
+        } else if (part === "*") {
+          fields.push(() => true);
+        } else if (part.includes("-")) {
+          const [a, b] = part.split("-").map(Number);
+          fields.push((v) => v >= a && v <= b);
+        } else {
+          const val = Number(part);
+          fields.push((v) => v === val);
+        }
+      }
+      return (v) => fields.some((f) => f(v));
+    }
+
+    function nextRuns(cronExpr, count) {
+      const parts = cronExpr.split(" ");
+      const [mm, hh, dom, mon, dow] = parts.map(fieldMatcher);
+      const out = [];
+      const now = new Date();
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), 0, 0);
+      const c = count || 5;
+      while (out.length < c && d.getTime() - now.getTime() < 365 * 24 * 60 * 60 * 1000) {
+        d.setMinutes(d.getMinutes() + 1);
+        if (mm(d.getMinutes()) && hh(d.getHours()) && dom(d.getDate()) && mon(d.getMonth() + 1) && dow(d.getDay())) {
+          out.push(d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }));
+        }
+      }
+      return out;
+    }
+
+    freq.addEventListener("change", render);
+    timeEl.addEventListener("change", render);
+    minEl.addEventListener("input", render);
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

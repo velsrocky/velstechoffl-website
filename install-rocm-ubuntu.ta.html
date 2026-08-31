@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="AMD Radeon (RDNA2/RDNA3) GPU களுக்காக Ubuntu 26.04 இல் ROCm 7.14 ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – apt அமைப்பிலிருந்து rocminfo சரிபார்ப்பு வரை." />
+  <title>Radeon GPU களுக்காக Ubuntu இல் ROCm நிறுவுதல் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/install-rocm-ubuntu.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/install-rocm-ubuntu.ta.html#article",
+  "headline": "Radeon GPU களுக்காக Ubuntu இல் ROCm நிறுவுதல்",
+  "description": "AMD Radeon (RDNA2/RDNA3) GPU களுக்காக Ubuntu 26.04 இல் ROCm 7.14 ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – apt அமைப்பிலிருந்து rocminfo சரிபார்ப்பு வரை.",
+  "url": "https://velstech.net/install-rocm-ubuntu.ta.html",
+  "datePublished": "2026-08-25T00:00:00Z",
+  "dateModified": "2026-08-25T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/install-rocm-ubuntu.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/install-rocm-ubuntu.ta.html"
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/install-rocm-ubuntu.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/install-rocm-ubuntu.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/install-rocm-ubuntu.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/install-rocm-ubuntu.ta.html" />
+  <meta property="og:title" content="Radeon GPU களுக்காக Ubuntu இல் ROCm நிறுவுதல் | VelsTech" />
+  <meta property="og:description" content="AMD Radeon (RDNA2/RDNA3) GPU களுக்காக Ubuntu 26.04 இல் ROCm 7.14 ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – apt அமைப்பிலிருந்து rocminfo சரிபார்ப்பு வரை." />
+  <meta property="og:image" content="https://velstech.net/og/install-rocm-ubuntu.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Radeon GPU களுக்காக Ubuntu இல் ROCm நிறுவுதல் | VelsTech" />
+  <meta name="twitter:description" content="AMD Radeon (RDNA2/RDNA3) GPU களுக்காக Ubuntu 26.04 இல் ROCm 7.14 ஐ நிறுவுவதற்கான படிப்படியான வழிகாட்டி – apt அமைப்பிலிருந்து rocminfo சரிபார்ப்பு வரை." />
+  <meta name="twitter:image" content="https://velstech.net/og/install-rocm-ubuntu.png" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tutorials.html">பயிற்சிகள்</a> / இந்தக் கட்டுரை</p>
+    <h1 class="title">Radeon GPU களுக்காக Ubuntu இல் ROCm நிறுவுதல்</h1>
+    <div class="meta">
+      <span class="tag">ROCm</span>
+      <span class="tag">Radeon</span>
+      <span class="tag">GPU</span>
+      <span>Aug 25, 2026</span>
+      <span>· 6 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        AMD இன் ROCm (Radeon Open Compute) தளம், PyTorch, TensorFlow, LLM அனுமானம் போன்ற
+        GPU-முடுக்கப்பட்ட பணிச்சுமைகளை AMD GPU களில் இயக்க உங்களை அனுமதிக்கிறது. ஆதரிக்கப்படும்
+        Radeon கார்டு இருந்தால் – RDNA2 (RX 6000 தொடர் / gfx1030) அல்லது RDNA3 (RX 7000
+        தொடர் / gfx1100) – இந்த வழிகாட்டி Ubuntu 26.04 LTS இல் ROCm 7.14 ஐ நிறுவுவதன்
+        மூலம் உங்களை அழைத்துச் செல்கிறது.
+      </p>
+
+      <p>
+        நான் இதை <strong>Radeon RX 6800M</strong> (gfx1031, RDNA2) இல் சோதித்தேன், கீழே
+        உள்ள அனைத்தும் உண்மையில் வேலை செய்தவை. இதே படிகள் பெரும்பாலான RDNA அடிப்படையிலான
+        கார்டுகளுக்கும் பொருந்தும்.
+      </p>
+
+      <h2>முன்நிபந்தனைகள்</h2>
+      <ul>
+        <li><a href="https://rocm.docs.amd.com/en/latest/install/rocm.html" target="_blank" rel="noopener">ஆதரிக்கப்படும் பட்டியலில்</a> இருந்து ஒரு AMD Radeon GPU</li>
+        <li>Ubuntu 26.04 LTS (Resolute Raccoon) நிறுவப்பட்டிருக்க வேண்டும்</li>
+        <li>ஒரு இணைய இணைப்பு</li>
+        <li>sudo சலுகைகள் கொண்ட ஒரு பயனர் கணக்கு</li>
+      </ul>
+
+      <h2>படி 1 – amdgpu-install ஸ்கிரிப்ட்டை நிறுவவும்</h2>
+      <p>
+        ROCm, GPU டிரைவர், ROCm ரன்டைம், கிராபிக்ஸ் கூறுகளை ஒன்றாகக் கையாள
+        <code>amdgpu-install</code> ஸ்கிரிப்ட்டைப் பயன்படுத்துகிறது. அதை AMD இன்
+        களஞ்சியத்திலிருந்து பதிவிறக்கி நிறுவவும்:
+      </p>
+
+      <pre>sudo apt update
+wget https://repo.radeon.com/amdgpu-install/31.40.1/ubuntu/resolute/amdgpu-install_31.40.1.314001-1_all.deb
+sudo apt install ./amdgpu-install_31.40.1.314001-1_all.deb</pre>
+
+      <p>
+        நீங்கள் வேறு Ubuntu பதிப்பில் இருந்தால் <code>resolute</code> ஐ <code>noble</code>
+        (24.04) அல்லது <code>jammy</code> (22.04) உடன் மாற்றவும்.
+      </p>
+
+      <h2>படி 2 – ROCm மற்றும் GPU டிரைவரை நிறுவவும்</h2>
+      <p>
+        பொருத்தமான பயன்பாட்டு வழக்கு (use case) மற்றும் GPU இலக்குடன்
+        <code>amdgpu-install</code> ஐ இயக்கவும்.
+      </p>
+
+      <pre>sudo amdgpu-install --usecase=rocm,graphics --gfxversion=gfx1031</pre>
+
+      <p>
+        <strong>முக்கியமானது:</strong> <code>auto</code> க்கு பதிலாக உங்கள் GPU இன் குறிப்பிட்ட
+        <code>gfx</code> இலக்கைப் பயன்படுத்தவும். தானியங்கி கண்டறிதல் சில நேரங்களில் சரியான
+        கட்டமைப்பைத் தவறவிடலாம், எனவே அதை வெளிப்படையாகக் குறிப்பிடுவது சுத்தமான நிறுவலை
+        அளிக்கிறது. உங்கள் GPU இன் gfx பதிப்பைக் கண்டறியவும்:
+      </p>
+      <ul>
+        <li><strong>RDNA2 (RX 6000 தொடர்):</strong> gfx1030, gfx1031, gfx1032</li>
+        <li><strong>RDNA3 (RX 7000 தொடர்):</strong> gfx1100, gfx1101, gfx1102</li>
+        <li><strong>RDNA3.5 (Ryzen AI 300):</strong> gfx1150, gfx1151</li>
+      </ul>
+      <p>
+        உறுதியாக தெரியவில்லையா? நிறுவிய பிறகு <code>rocminfo</code> இயக்கவும் (அல்லது உங்கள்
+        கார்டின் கட்டமைப்பை AMD இன் தளத்தில் பார்க்கவும்).
+      </p>
+
+      <blockquote>
+        <strong>சாதனக் குடும்பக் குறிப்பு:</strong> இன்ஸ்டாலர் உங்களை ஒரு சாதனக் குடும்பத்தைத்
+        தேர்ந்தெடுக்கக் கேட்கும்போது, உங்களுக்கு இரண்டு விருப்பங்கள் உள்ளன:
+        <ul>
+          <li>
+            <strong>All</strong> – ஒவ்வொரு AMD GPU கட்டமைப்பிற்கும் ரன்டைம் ஆதரவை நிறுவுகிறது.
+            குறுக்கு-தளத்தில் டெவலப் செய்கிறீர்களோ அல்லது பல கார்டுகளில் சோதிக்கிறீர்களோ என்றால்
+            நல்லது.
+          </li>
+          <li>
+            <strong>AMD Radeon</strong> – நுகர்வோர் Radeon GPU களை மட்டும் இலக்காகக் கொள்கிறது.
+            ஒரு ஒற்றை Radeon கார்டுக்கு இதுவே மெலிந்த, அதிக கவனம் செலுத்தும் தேர்வு.
+          </li>
+        </ul>
+        நீங்கள் உங்கள் சொந்த இயந்திரத்தை மட்டும் பயன்படுத்தினால், <strong>AMD Radeon</strong>
+        ஐத் தேர்ந்தெடுக்கவும். பிறகு Instinct அல்லது மற்ற கட்டமைப்புகளில் இயங்கக்கூடிய ஒன்றை
+        உருவாக்கினால், <strong>All</strong> ஐத் தேர்ந்தெடுக்கவும்.
+      </blockquote>
+
+      <h2>படி 3 – கூடுதல் நூலகங்களை நிறுவவும்</h2>
+      <p>
+        சில ROCm கருவிகள் சரியாக இயங்க <code>libatomic</code> மற்றும் <code>libquadmath</code>
+        நூலகங்கள் தேவை. பிறகு ஒரு தெளிவற்ற பிழையைச் சந்திக்காமல் இருக்க அவற்றை இப்போதே
+        நிறுவவும்:
+      </p>
+
+      <pre>sudo apt install libatomic1 libquadmath0</pre>
+
+      <h2>படி 4 – உங்கள் பயனரை render மற்றும் video குழுக்களில் சேர்க்கவும்</h2>
+      <p>
+        GPU அணுகல் Linux குழுக்கள் மூலம் கட்டுப்படுத்தப்படுகிறது. sudo இல்லாமல் AMD GPU
+        ஐப் பயன்படுத்த உங்கள் பயனர் <code>render</code> மற்றும் <code>video</code> குழுக்களில்
+        இருக்க வேண்டும்:
+      </p>
+
+      <pre>sudo usermod -a -G render,video $LOGNAME</pre>
+
+      <p>
+        குழு மாற்றம் பலனளிக்க வெளியேறி மீண்டும் உள்நுழையவும் (அல்லது மறுதொடக்கம் செய்யவும்).
+      </p>
+
+      <h2>படி 5 – மறுதொடக்கம்</h2>
+      <p>
+        கெர்னல் மாட்யூல் (amdgpu) மற்றும் ROCk டிரைவர் ஏற்றப்படுவதை மறுதொடக்கம் உறுதி
+        செய்கிறது:
+      </p>
+
+      <pre>sudo reboot</pre>
+
+      <h2>படி 6 – நிறுவலைச் சரிபார்க்கவும்</h2>
+      <p>
+        மறுதொடக்கத்திற்குப் பிறகு, உங்கள் GPU கண்டறியப்படுவதை உறுதிப்படுத்த
+        <code>rocminfo</code> இயக்கவும்:
+      </p>
+
+      <pre>rocminfo</pre>
+
+      <p>
+        உங்கள் GPU அதன் பெயர், gfx கட்டமைப்பு, கம்ப்யூட் யூனிட்களுடன் பட்டியலிடப்பட்டிருப்பதைக்
+        காண வேண்டும். ஆரோக்கியமான வெளியீடு இப்படி இருக்கும்:
+      </p>
+
+      <pre>*******
+Agent 2
+*******
+  Name:                    gfx1031
+  Marketing Name:          AMD Radeon RX 6800M
+  Compute Unit:            40
+  Device Type:             GPU
+  ...</pre>
+
+      <p>
+        கெர்னல் டிரைவர் ஏற்றப்பட்டுள்ளதையும் சரிபார்க்கலாம்:
+      </p>
+
+      <pre>ls /dev/kfd   # should exist
+ls /dev/dri/  # should show renderD* nodes</pre>
+
+      <h2>அடுத்து என்ன?</h2>
+      <p>
+        ROCm நிறுவப்பட்டவுடன், நீங்கள் இப்போது:
+      </p>
+      <ul>
+        <li>
+          <strong>ROCm ஆதரவுடன் PyTorch நிறுவலாம்</strong> –
+          <code>pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.1</code>
+        </li>
+        <li>
+          <strong>LLM களை உள்ளூரில் இயக்கலாம்</strong> – Ollama, LM Studio, மற்றும்
+          text-generation-webui போன்ற கருவிகள் அனைத்தும் ROCm ஐ ஆயத்தமாக ஆதரிக்கின்றன.
+        </li>
+        <li>
+          <strong>GPU புரோகிராமிங்கிற்கு HIP</strong> பயன்படுத்தலாம் – AMD இன்
+          CUDA-இணக்கமான கட்டமைப்பு.
+        </li>
+      </ul>
+
+      <p>
+        இன்ஸ்டாலர் உங்கள் GPU வைக் கண்டறியவில்லை என்றால், <code>--gfxversion</code> கொடியை
+        இருமுறை சரிபார்த்து <strong>All</strong> சாதனக் குடும்ப விருப்பத்தை முயற்சிக்கவும்.
+        சிக்கல்கள் ஏற்பட்டால், AMD இன் <a href="https://rocm.docs.amd.com/en/latest/install/rocm.html" target="_blank" rel="noopener">அதிகாரப்பூர்வ ROCm நிறுவல் வழிகாட்டியில்</a>
+        முழு விவரங்கள் உள்ளன.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="tutorials.html">← பயிற்சிகளுக்குத் திரும்பு</a>
+      <a href="index.html">முகப்பு</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="ஒவ்வொரு டெவலப்பரும் Git ஐ ஏன் பயன்படுத்துகிறார்கள், மற்றும் தினசரி வேலையில் 90% ஐ உள்ளடக்கும் சில கட்டளைகள்." />
+  <title>Git உடன் பதிப்பு கட்டுப்பாடு – முழு ஆரம்பநிலையாளர்களுக்கு | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/git-beginners.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/git-beginners.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/git-beginners.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/git-beginners.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/git-beginners.ta.html#article",
+  "headline": "Git உடன் பதிப்பு கட்டுப்பாடு – முழு ஆரம்பநிலையாளர்களுக்கு",
+  "description": "ஒவ்வொரு டெவலப்பரும் Git ஐ ஏன் பயன்படுத்துகிறார்கள், மற்றும் தினசரி வேலையில் 90% ஐ உள்ளடக்கும் சில கட்டளைகள்.",
+  "url": "https://velstech.net/git-beginners.ta.html",
+  "datePublished": "2026-08-24T00:00:00Z",
+  "dateModified": "2026-08-24T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/git-beginners.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/git-beginners.ta.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/git-beginners.ta.html" />
+  <meta property="og:title" content="Git உடன் பதிப்பு கட்டுப்பாடு – முழு ஆரம்பநிலையாளர்களுக்கு | VelsTech" />
+  <meta property="og:description" content="ஒவ்வொரு டெவலப்பரும் Git ஐ ஏன் பயன்படுத்துகிறார்கள், மற்றும் தினசரி வேலையில் 90% ஐ உள்ளடக்கும் சில கட்டளைகள்." />
+  <meta property="og:image" content="https://velstech.net/og/git-beginners.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Git உடன் பதிப்பு கட்டுப்பாடு – முழு ஆரம்பநிலையாளர்களுக்கு | VelsTech" />
+  <meta name="twitter:description" content="ஒவ்வொரு டெவலப்பரும் Git ஐ ஏன் பயன்படுத்துகிறார்கள், மற்றும் தினசரி வேலையில் 90% ஐ உள்ளடக்கும் சில கட்டளைகள்." />
+  <meta name="twitter:image" content="https://velstech.net/og/git-beginners.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="programming.html">நிரலாக்கம் &amp; வலை</a> / இந்த கட்டுரை</p>
+    <h1 class="title">Git உடன் பதிப்பு கட்டுப்பாடு – முழு ஆரம்பநிலையாளர்களுக்கு</h1>
+    <div class="meta">
+      <span class="tag">Git</span>
+      <span class="tag">Tools</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        ஒவ்வொரு டெவலப்பரும் Git ஐப் பயன்படுத்துகிறார்கள். இந்த தளமும் Git-இல் சேமிக்கப்பட்டுள்ளது. ஆனால் இது பூஜ்ஜியத்திலிருந்து அரிதாகவே விளக்கப்படுகிறது. நல்ல செய்தி: மன மாதிரியைப் புரிந்துகொண்டவுடன் Git எளிமையானது – மேலும்
+        தினசரி வேலையில் 90% க்கு உங்களுக்கு ஒரு சில கட்டளைகள் மட்டுமே தேவை.
+      </p>
+
+      <h2>Git என்ன பிரச்சினையை தீர்க்கிறது?</h2>
+      <p>
+        ஒரு ஆவணத்தைத் திருத்திக்கொண்டு, "இந்த பதிப்பு சிறப்பாக இருந்தது" என்று நினைப்பதை கற்பனை செய்யுங்கள். பதிப்பு கட்டுப்பாடு இல்லாமல், நீங்கள் நகல்களை சேமிப்பீர்கள்: <code>report_final.doc</code>,
+        <code>report_final_v2.doc</code>, <code>report_FINAL_actually.doc</code>. குழப்பம்.
+      </p>
+      <p>
+        Git உங்களுக்கு <strong>ஒவ்வொரு சேமிப்பு புள்ளியிலும் உங்கள் முழு திட்டத்தின் ஸ்னாப்ஷாட்டை</strong> வழங்குகிறது.
+        நீங்கள்:
+      </p>
+      <ul>
+        <li>எந்த கடந்த பதிப்புக்கும் திரும்பிச் செல்லலாம்</li>
+        <li>என்ன மாற்றப்பட்டது, எப்போது என்று துல்லியமாக பார்க்கலாம்</li>
+        <li>உங்கள் வேலை குறியீட்டை ஆபத்தில் ஆழ்த்தாமல் சோதனைகளை முயற்சிக்கலாம்</li>
+        <li>மற்றவர்களை மேலெழுதாமல் ஒத்துழைக்கலாம்</li>
+      </ul>
+
+      <h2>மன மாதிரி: சேமிப்புகள் மற்றும் சேமிப்பு-புள்ளிகள்</h2>
+      <p>
+        உங்களுக்குத் தேவையான இரண்டு கருத்துக்கள்:
+      </p>
+      <ul>
+        <li><strong>கமிட்</strong> – ஒரு சேமிப்பு புள்ளி. "fix login bug" போன்ற செய்தியுடன் கூடிய உங்கள் கோப்புகளின் ஸ்னாப்ஷாட்.</li>
+        <li><strong>ரெப்போசிட்டரி (ரெப்போ)</strong> – Git கண்காணிக்கும் ஒரு கோப்புறை. உங்கள் கமிட்கள் அனைத்தும் இங்கு வாழ்கின்றன.</li>
+      </ul>
+      <p>
+        கமிட்களை ஒரு வீடியோ கேமில் உள்ள சேமிப்பு புள்ளிகள் போல நினைத்துப் பாருங்கள். நீங்கள் அவற்றை தொடர்ந்து செய்கிறீர்கள், எனவே எப்போதும் பின்னோக்கிச் செல்லலாம். Git வரலாறு என்பது கமிட்களின் சங்கிலி மட்டுமே.
+      </p>
+
+      <h2>எல்லாவற்றையும் உள்ளடக்கும் 5 கட்டளைகள்</h2>
+      <p>
+        முழு ஆரம்பநிலையாளரின் கருவித்தொகுப்பு இதோ:
+      </p>
+      <pre>git init          # இந்த கோப்புறையை கண்காணிக்கத் தொடங்குங்கள் (ஒருமுறை செய்யவும்)
+git add .         # உங்கள் மாற்றங்களை நிலைநிறுத்துங்கள் (எதை சேமிக்க வேண்டும் என்பதை தேர்வு செய்யவும்)
+git commit -m "message"   # ஒரு சேமிப்பு புள்ளியை உருவாக்கவும்
+git status        # என்ன மாறியது? (தொடர்ந்து சரிபார்க்கவும்)
+git log           # கமிட்களின் வரலாற்றைப் பார்க்கவும்</pre>
+      <p>
+        <code>add</code> பின்னர் <code>commit</code> என்பது தாளம். முதலில் எதை சேமிக்க வேண்டும் என்பதை தேர்வு செய்கிறீர்கள்,
+        பின்னர் நீங்கள் ஸ்னாப்ஷாட்டை எடுக்கிறீர்கள். நீங்கள் <code>git status</code> ஐ தொடர்ந்து இயக்குவீர்கள் – இது ஒரு
+        பாதுகாப்பு சரிபார்ப்பு, ஒருபோதும் சுமையல்ல.
+      </p>
+
+      <h2>பிரான்ச்சிங்: இணை பிரபஞ்சங்கள்</h2>
+      <p>
+        ஒரு <strong>பிரான்ச்</strong> என்பது தனித்தனி வளர்ச்சிக் கோடு – முக்கிய வரியை பாதிக்காமல் நீங்கள் பரிசோதனை செய்யக்கூடிய திட்டத்தின் நகல்.
+      </p>
+      <pre>git branch new-feature   # ஒரு பிரான்ச்சை உருவாக்கவும்
+git switch new-feature   # அதற்கு நகரவும்
+# ...இங்கு வேலை செய்து கமிட் செய்யவும்...
+git switch main          # திரும்பிச் செல்லவும்
+git merge new-feature    # வேலையை main-க்கு கொண்டு வரவும்</pre>
+      <p>
+        தனி ஆரம்பநிலையாளர்களுக்கு, பிரான்ச்கள் விருப்பமானதாக உணர்கின்றன – முதலில் அவை அவ்வாறே உள்ளன. ஆனால்
+        அவற்றை ஆரம்பத்தில் கற்றுக்கொள்வது உண்மையான அணிகள் எவ்வாறு வேலை செய்கின்றன என்பதில் உங்களை வசதியாக்குகிறது. தங்க விதி:
+        <strong>ஆபத்தான ஒன்றை முயற்சிக்கும்போது நேரடியாக main-ல் கமிட் செய்யாதீர்கள்</strong>.
+      </p>
+
+      <h2>GitHub: கிளவுடில் Git</h2>
+      <p>
+        <strong>GitHub</strong> என்பது Git ரெப்போசிட்டரிகளுக்கான ஹோஸ்டிங் சேவை – உங்கள் குறியீட்டிற்கான Dropbox, மேலும் ஒத்துழைப்பு கருவிகள். அவற்றை இணைக்கும் கட்டளைகள்:
+      </p>
+      <pre>git clone URL        # உங்கள் கணினிக்கு ஒரு ரெப்போவை நகலெடுக்கவும் (தொடக்கம்)
+git push             # உங்கள் கமிட்களை பதிவேற்றவும்
+git pull             # மற்றவர்களின் கமிட்களை பதிவிறக்கவும் (அல்லது வேறு கணினியிலிருந்து உங்கள் சொந்தத்தை)</pre>
+      <p>
+        <code>push</code> உங்கள் சேமிப்புகளை GitHub-க்கு அனுப்புகிறது; <code>pull</code> அவற்றை கீழே கொண்டு வருகிறது.
+        இதுதான் இந்த வலைத்தளம் எவ்வாறு வெளியிடப்படுகிறது – ஒரு push GitHub Pages-ஐ வெளியிட தூண்டுகிறது.
+      </p>
+
+      <h2>தவறுகளை சரிசெய்தல் (நம்பிக்கை அளிக்கும் பகுதி)</h2>
+      <p>
+        பதிப்பு கட்டுப்பாட்டின் சிறந்த விஷயம்: எதுவும் நிரந்தரமானது அல்ல.
+      </p>
+      <pre>git restore file         # ஒரு கோப்பில் கமிட் செய்யப்படாத மாற்றங்களை நிராகரிக்கவும்
+git reset --hard HEAD    # கமிட் செய்யப்படாத மாற்றங்களை முழுவதுமாக நிராகரிக்கவும்
+git revert &lt;commit-id&gt;    # ஒரு கடந்த கமிட்டை பாதுகாப்பாக மீளமைக்கவும்
+git log                  # உங்களுக்குத் தேவையான எந்த commit-id-ஐயும் கண்டுபிடிக்கவும்</pre>
+      <p>
+        குழப்பமா? Restore செய்யுங்கள். எல்லாம் உடைந்ததா? Reset செய்யுங்கள். மோசமான ஒன்றை கமிட் செய்தீர்களா? Revert செய்யுங்கள்.
+        Git-ன் முழு வேலையும் நீங்கள் செய்ததை மீளமைக்க அனுமதிப்பதே.
+      </p>
+
+      <h2>முதல் நாளிலிருந்து நல்ல பழக்கங்கள்</h2>
+      <ul>
+        <li><strong>சிறியதாகவும் அடிக்கடியும் கமிட் செய்யுங்கள்.</strong> ஒவ்வொரு அம்சம்/திருத்தத்திற்கும் ஒரு சேமிப்பு புள்ளி, தெளிவான செய்தியுடன்.</li>
+        <li><strong>நேர்மையான கமிட் செய்திகளை எழுதுங்கள்.</strong> "fix login bug" என்பது "stuff" என்பதை விட சிறந்தது. எதிர்கால-நீங்கள் நன்றி சொல்வீர்கள்.</li>
+        <li><strong>ஆபத்தை எடுப்பதற்கு முன் கமிட் செய்யுங்கள்.</strong> பிறகு எப்போதும் பின்னோக்கிச் செல்லலாம்.</li>
+        <li><strong>push செய்வதற்கு முன் git status ஐ சரிபார்க்கவும்</strong>, எனவே என்ன வெளியே போகிறது என்பது உங்களுக்குத் தெரியும்.</li>
+      </ul>
+
+      <h2>ஒரு பொதுவான முதல் அமர்வு</h2>
+      <pre>$ cd ~/myproject
+$ git init                    # கண்காணிக்கத் தொடங்குங்கள்
+$ git add .
+$ git commit -m "எனது பயன்பாட்டின் ஆரம்ப பதிப்பு"
+$ git branch main             # முக்கிய பிரான்ச்சுக்கு பெயரிடுங்கள் (பெரும்பாலான அமைப்புகளில் ஏற்கனவே அமைக்கப்பட்டுள்ளது)
+# ... சில கோப்புகளைத் திருத்தவும் ...
+$ git status                  # "modified: index.html"
+$ git add .
+$ git commit -m "டார்க் மோட் டாக்கிளை சேர்க்கவும்"
+$ git log --oneline           # 2 கமிட்கள், நன்றாகவும் சுத்தமாகவும்</pre>
+
+      <p>
+        Git பெரியதாக தோன்றுகிறது, ஆனால் அது உண்மையில்: <strong>சேமிப்பு புள்ளிகள் (கமிட்), இணை கோடுகள்
+        (பிரான்ச்), மற்றும் ஒத்திசைவு (push/pull)</strong>. அந்த மூன்று கருத்துக்களில் தேர்ச்சி பெற்றால், நீங்கள்
+        பதிப்பு கட்டுப்பாட்டை ஒரு நிபுணரைப் போல பயன்படுத்துகிறீர்கள். மேலும் சிறந்த பகுதி – நீங்கள் தொடங்கியவுடன், அது இல்லாமல் நீங்கள் ஒருபோதும் வேலை செய்ய விரும்ப மாட்டீர்கள்.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="programming.html">← நிரலாக்கம் &amp; வலைக்கு திரும்பு</a>
+      <a href="index.html">முகப்பு</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

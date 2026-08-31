@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="RX 6800M-ல் 262K context-இல் Ornith 1.5 35B-A3B MoE (Q5_K/Q4_K) சோதிக்கப்பட்டது – ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, 28 CPU experts மற்றும் q8 KV உடன்." />
+  <title>RX 6800M-ல் 262K-இல் Ornith 35B MoE: ROCm vs Vulkan – VelsTech Lab | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.ta.html#article",
+  "headline": "RX 6800M-ல் 262K-இல் Ornith 35B MoE: ROCm vs Vulkan – VelsTech Lab",
+  "description": "RX 6800M-ல் 262K-இல் Ornith 1.5 35B-A3B MoE சோதிக்கப்பட்டது – ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, 28 CPU experts மற்றும் q8 KV உடன்.",
+  "url": "https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.ta.html",
+  "datePublished": "2026-08-27T00:00:00Z",
+  "dateModified": "2026-08-27T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/ornith-35b-moe-262k-rocm-vs-vulkan.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.ta.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/ornith-35b-moe-262k-rocm-vs-vulkan.ta.html" />
+  <meta property="og:title" content="RX 6800M-ல் 262K-இல் Ornith 35B MoE: ROCm vs Vulkan – VelsTech Lab | VelsTech" />
+  <meta property="og:description" content="RX 6800M-ல் 262K context-இல் Ornith 1.5 35B-A3B MoE (Q5_K/Q4_K) சோதிக்கப்பட்டது – ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, 28 CPU experts மற்றும் q8 KV உடன்." />
+  <meta property="og:image" content="https://velstech.net/og/ornith-35b-moe-262k-rocm-vs-vulkan.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RX 6800M-ல் 262K-இல் Ornith 35B MoE: ROCm vs Vulkan – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="RX 6800M-ல் 262K context-இல் Ornith 1.5 35B-A3B MoE (Q5_K/Q4_K) சோதிக்கப்பட்டது – ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, 28 CPU experts மற்றும் q8 KV உடன்." />
+  <meta name="twitter:image" content="https://velstech.net/og/ornith-35b-moe-262k-rocm-vs-vulkan.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="ai.html">AI</a> / <a href="index.html#lab">VelsTech Lab</a> / இந்த சோதனை</p>
+    <h1 class="title">RX 6800M-ல் 262K-இல் Ornith 35B MoE: ROCm vs Vulkan – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">MoE</span>
+      <span class="tag">Ornith 35B</span>
+      <span class="tag">RX 6800M</span>
+      <span>Aug 27, 2026</span>
+      <span>· 6 நிமிட வாசிப்பு</span>
+      <span>· Aug 27, 2026-ல் புதுப்பிக்கப்பட்டது</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab</span> இரண்டாவது அளவிடப்பட்ட Lab: ஒரே 12GB RX 6800M, ஒரே q8 KV, ஆனால் 28 CPU experts மற்றும் 262K context சாளரம் கொண்ட 35B MoE. சிறிய prompt, பெரிய KV ஒதுக்கீடு.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 இது உங்கள் GPU-க்கு பொருந்துமா?</div>
+        <p><a href="llm-vram-calculator.html">LLM VRAM Calculator</a> – உங்கள் quantization-க்கு 262K-இல் weights + KV · <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> – offload-க்கு முன் tok/s மேல் வரம்பு.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">கால்குலேட்டர்களைத் திறக்கவும் →</a>
+      </div>
+
+      <h2>நாங்கள் சோதித்தது</h2>
+      <ul>
+        <li><strong>GPU:</strong> RX 6800M 12GB (RDNA2, ~384 GB/s) – <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B 16K சோதனை</a>யின் அதே கார்டு, எனவே MoE vs dense வன்பொருளில் apples-to-apples</li>
+        <li><strong>Model:</strong> <code>Ornith-1.5-35B-A3B-AD-Q5_K-Q4_K.gguf</code> – 35B மொத்தம், 3B active (A3B MoE), Q5_K + Q4_K கலப்பு quant</li>
+        <li><strong>MoE CPU offload:</strong> <code>--n-cpu-moe 28</code> – 28 experts CPU-க்கு கட்டாயப்படுத்தப்பட்டனர் (எனவே <code>tensor overrides to CPU with mmap</code> எச்சரிக்கை)</li>
+        <li><strong>Context:</strong> <code>-c 262144 -fa on --cache-type-k q8_0 --cache-type-v q8_0</code>, <code>n_slots=1, kv_unified=false</code> – ஒரு slot, 262K KV pool ஒதுக்கப்பட்டது</li>
+        <li><strong>மற்றவை:</strong> <code>-ngl 999 --jinja --reasoning-preserve --parallel 1 --temp 0.6 --top-p 0.95 --top-k 20</code>, <code>n_threads=8</code></li>
+        <li><strong>Builds:</strong> Run 1 – <code>llama.cpp/build/bin/llama-server</code> (ROCm); Run 2 – <code>llama.cpp_vulkan/build-vulkan/bin/llama-server</code> (Vulkan)</li>
+      </ul>
+
+      <h2>அதை எப்படி இயக்கினோம்</h2>
+      <pre>llama-server \
+ -m Ornith-1.5-35B-A3B-AD-Q5_K-Q4_K.gguf \
+ -ngl 999 --n-cpu-moe 28 \
+ --cache-type-k q8_0 --cache-type-v q8_0 \
+ -c 262144 -fa on --jinja --reasoning-preserve \
+ --parallel 1 --temp 0.6 --top-p 0.95 --top-k 20</pre>
+      <p>இரண்டு ரன்களிலும் ஒரே 335-டோக்கன் prompt (<code>progress 322→331</code>), ~274 vs 307 tokens generate. Server: <code>listening on 127.0.0.1:8080</code>, <code>llama threadpool n_threads=8</code>.</p>
+
+      <h2>நாங்கள் அளந்தது</h2>
+      <pre>Run            Prompt eval                 Decode (tg)                 Total          Graphs
+─────────────────────────────────────────────────────────────────────────────────────────────
+ROCm           3995 ms /335 tok = 11.93 ms/tok = 83.84 tok/s   100:25.16 179:25.52 257:25.60 → 25.62 tok/s   14.65s /609 tok  272
+Vulkan         4029 ms /335 tok = 12.03 ms/tok = 83.13 tok/s   100:19.65 160:19.66 219:19.65 → 19.66 tok/s   19.59s /642 tok  305</pre>
+      <p><strong>முக்கிய கண்டுபிடிப்பு:</strong> 262K + MoE-இல், <strong>ROCm decode-இல் ~30% வேகமானது</strong> (25.62 vs 19.66). Prompt eval ~83 tok/s-இல் சமம் – 335 tokens 262K திறனுடன் ஒப்பிடும்போது அற்பம், எனவே prefill context-ஐ அழுத்துவதில்லை. மொத்த wall நேரம் decode-ஐ பிரதிபலிக்கிறது: ~600 tok-க்கு ROCm 14.65s vs Vulkan 19.59s.</p>
+
+      <h2>Logs உண்மையில் என்ன சொன்னது – மற்றும் என்ன உடைந்தது</h2>
+      <ol>
+        <li><code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> (ROCm run) – Qwen போலவே: நீங்கள் <code>-ngl 999</code>-ஐ கட்டாயப்படுத்தினீர்கள், எனவே <code>--fit</code> புறக்கணிக்கப்படுகிறது. <strong>சரிசெய்தல்: <code>-ngl 999</code>-ஐ நீக்கி fitted layers-ஐ log செய்யவும், அல்லது <code>-ngl 60</code> மற்றும் <code>--n-cpu-moe</code>-ஐ ஒன்றாக தெளிவாக அமைக்கவும்.</strong></li>
+        <li><code>W llama_model_loader: tensor overrides to CPU are used with mmap enabled - consider using --load-mode none for better performance</code> – <code>--n-cpu-moe 28</code> உடன் நீங்கள் உடனடியாக CPU RAM-க்கு நகலெடுக்கப்படும் tensors-ஐ mmap செய்கிறீர்கள். MoE CPU offload-க்கு <code>--load-mode none</code>-ஐ சேர்க்கவும்.</li>
+        <li><code>kv_unified=false, n_slots=1, n_ctx_slot=262144</code> – prompt 335 tokens ஆக இருந்தாலும் ஒரு slot, 262K KV pool <em>ஒதுக்கப்பட்டுள்ளது</em>. அந்த ஒதுக்கீடுதான் உங்களுக்கு q8 KV தேவைப்படுவதற்கான காரணம் – 262K-இல் f16 ~2× பெரியதாக இருக்கும், OOM ஆகலாம். இங்குள்ள decode வேகம் pool ஒதுக்கப்பட்ட நிலையில் உள்ளது, நிரப்பப்படவில்லை.</li>
+      </ol>
+
+      <h2>இது கால்குலேட்டர்களுக்கு எப்படி பொருந்துகிறது</h2>
+      <p>எடைகள் ~35B கலப்பு Q5/Q4 ≈ 13–14 GB (சராசரியாக Q5 0.66 + Q4 0.61). MoE-க்கு 262K-இல் KV q8 என்பது எளிய <code>2×layers×kv_heads×head_dim×2×context</code> அல்ல – MoE ஒவ்வொரு டோக்கனுக்கும் KV-ஐ பகிர்ந்து கொள்கிறது, எனவே நீங்கள் 35B-ஐ உள்ளிட்டால் எங்கள் <a href="llm-vram-calculator.html">VRAM Calculator</a> அதிகமாக மதிப்பிடும்; <code>3B active</code> + <code>28 CPU experts</code>-ஐ தனித்தனியாக உள்ளிடவும் அல்லது குறைக்கப்பட்ட KV உடன் custom model பயன்படுத்தவும். 3B active-இல் கூட, 262K q8 என்பது ~262K × ~0.5KB → முழுமையாக resident ஆக இருந்தால் ~130 GB – நீங்கள் <strong>resident அல்ல</strong>, MoE-sparse + q8 + CPU offload, எனவே முழு VRAM-ஐ கருதும் <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a>-இலிருந்து வரும் 60 tok/s bound அல்ல, 19–25 tok/s நம்பத்தகுந்தது.</p>
+
+      <details class="calc-method">
+        <summary>எப்படி கணக்கிடுகிறோம் – எண்களுக்குப் பின்னால் உள்ள சூத்திரங்கள்</summary>
+        <div class="calc-method-body">
+          <h4>VRAM: <a href="llm-vram-calculator.html">LLM VRAM Calculator</a></h4>
+          <pre>weights = params × bytes_per_weight / GiB
+kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes (f16) or ×1 (q8)
+kv_cache = kv_per_token × context × batch / GiB</pre>
+          <p>262K-இல் MoE-க்கு, ஒவ்வொரு டோக்கனுக்கான KV-க்கு மொத்த 35B அல்ல, active அளவுருக்களைப் பயன்படுத்தவும், அல்லது custom model-ஐ மாற்றவும்.</p>
+          <h4>Speed: <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a></h4>
+          <pre>decode_tok/s ≈ (memory_BW × 0.8) / bytes_per_token</pre>
+          <p>MoE ஒவ்வொரு டோக்கனுக்கும் குறைவான பைட்டுகளை decode செய்கிறது (35B அல்ல, active 3B), எனவே bound 35B dense-ஐ விட அதிகம். உங்கள் 25 tok/s என்பது bound-இல் ~40% – இடைவெளி CPU MoE + PCIe.</p>
+        </div>
+      </details>
+
+      <h2>இறுதி வரி</h2>
+      <p>Ornith 35B MoE 262K-இல் q8 KV + 28 CPU experts உடன் 12GB-இல் <strong>இயங்குகிறது</strong>, ஆனால் decode-இல் செலுத்துகிறீர்கள்: ROCm 25.6 tok/s குறுகிய பதில்களுக்கு பயன்படத்தக்கது, Vulkan 19.6 இங்கு மெதுவானது (Qwen 16K-வின் எதிர்மறை). இரண்டுக்கும் உகந்ததாக <code>--load-mode none</code> மற்றும் <code>-ngl 999</code> இல்லாமை தேவை. அடுத்த Lab <strong>ஒரே RX 6800M-ல் MoE vs dense</strong> ஆகும்: இந்த Ornith 35B-A3B (3B active) vs <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B dense 16K</a> – active அளவுருக்கள் vs context பரிமாற்றம், ஒரே கார்டு, இரண்டு என்ஜின்கள்.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 VelsTech Lab – அடுத்து MoE vs dense</div>
+        <p>ஒரே RX 6800M-ல் Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K)-ஐ ஒப்பிடுவோம் – ROCm vs Vulkan, q8 vs f16 KV, fitted layers log செய்யப்பட்ட நிலையில்.</p>
+        <a class="btn btn-primary" href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B 16K சோதனையைப் படிக்கவும் →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI-க்குத் திரும்பு</a>
+      <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B vs Ornith 35B – ஒப்பிடு</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

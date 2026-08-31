@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त chmod कैलकुलेटर – मालिक, समूह और अन्य के लिए पढ़ें/लिखें/निष्पादित अनुमतियाँ चुनें और तुरंत संख्यात्मक मोड (जैसे 755) और चलाने के लिए कमांड प्राप्त करें।" />
+  <title>chmod कैलकुलेटर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/chmod-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/chmod-calculator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/chmod-calculator.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/chmod-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/chmod-calculator.hi.html#webapp",
+  "name": "chmod कैलकुलेटर | VelsTech",
+  "description": "मालिक, समूह और अन्य के लिए पढ़ें/लिखें/निष्पादित अनुमतियाँ टॉगल करें और संख्यात्मक मोड (जैसे 755) और चलाने के लिए chmod कमांड प्राप्त करें।",
+  "url": "https://velstech.net/chmod-calculator.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/chmod-calculator.html" />
+  <meta property="og:title" content="chmod कैलकुलेटर | VelsTech" />
+  <meta property="og:description" content="मालिक, समूह और अन्य के लिए पढ़ें/लिखें/निष्पादित अनुमतियाँ टॉगल करें और संख्यात्मक मोड (जैसे 755) और चलाने के लिए chmod कमांड प्राप्त करें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="chmod कैलकुलेटर | VelsTech" />
+  <meta name="twitter:description" content="मालिक, समूह और अन्य के लिए पढ़ें/लिखें/निष्पादित अनुमतियाँ टॉगल करें और संख्यात्मक मोड (जैसे 755) और चलाने के लिए chmod कमांड प्राप्त करें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">टूल</a> / chmod कैलकुलेटर</p>
+    <h1 class="title">chmod कैलकुलेटर</h1>
+    <div class="meta">
+      <span>संख्यात्मक + प्रतीकात्मक अनुमतियाँ · चलाने के लिए तैयार कमांड</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        मालिक, समूह और अन्य के लिए पढ़ें/लिखें/निष्पादित टॉगल करें और यह तुरंत
+        <strong>संख्यात्मक मोड</strong> (जैसे <code>755</code>), <strong>प्रतीकात्मक
+        रूप</strong>, और सटीक <code>chmod</code> कमांड दिखाता है जिसे कॉपी किया जा सके। अब नंबर
+        तालिका याद करने की ज़रूरत नहीं।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <div class="preset-row">
+            <button class="preset-chip" data-bits="7,5,5" title="755 सेट करें – rwxr-xr-x (मालिक पूर्ण, समूह/अन्य पढ़ें+निष्पादित)" aria-label="अनुमतियाँ 755 पर सेट करें">755</button>
+            <button class="preset-chip" data-bits="6,4,4" title="644 सेट करें – rw-r--r-- (मालिक पढ़ें/लिखें, समूह/अन्य पढ़ें)" aria-label="अनुमतियाँ 644 पर सेट करें">644</button>
+            <button class="preset-chip" data-bits="6,0,0" title="600 सेट करें – rw------- (केवल मालिक पढ़ें/लिखें)" aria-label="अनुमतियाँ 600 पर सेट करें">600</button>
+            <button class="preset-chip" data-bits="7,0,0" title="700 सेट करें – rwx------ (केवल मालिक पूर्ण)" aria-label="अनुमतियाँ 700 पर सेट करें">700</button>
+            <button class="preset-chip" data-bits="7,7,7" title="777 सेट करें – rwxrwxrwx (सभी को पूर्ण – सावधानी से उपयोग करें)" aria-label="अनुमतियाँ 777 पर सेट करें">777</button>
+            <button class="preset-chip" data-bits="4,0,0" title="400 सेट करें – r-------- (केवल मालिक पढ़ें)" aria-label="अनुमतियाँ 400 पर सेट करें">400</button>
+          </div>
+
+          <fieldset class="field perm-group">
+            <legend>मालिक (u)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="4" /> पढ़ें (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="2" /> लिखें (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="owner" data-v="1" /> निष्पादित (1)</label>
+          </fieldset>
+          <fieldset class="field perm-group">
+            <legend>समूह (g)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="4" /> पढ़ें (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="2" /> लिखें (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="group" data-v="1" /> निष्पादित (1)</label>
+          </fieldset>
+          <fieldset class="field perm-group">
+            <legend>अन्य (o)</legend>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="4" /> पढ़ें (4)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="2" /> लिखें (2)</label>
+            <label class="perm-bit"><input type="checkbox" data-g="others" data-v="1" /> निष्पादित (1)</label>
+          </fieldset>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>संख्यात्मक मोड</span><strong id="r-num">–</strong></div>
+            <div class="result-row"><span>प्रतीकात्मक रूप</span><strong id="r-sym">–</strong></div>
+            <div class="result-row"><span>मालिक / समूह / अन्य</span><strong id="r-desc">–</strong></div>
+            <div class="result-row total"><span>कमांड (फ़ाइल)</span><strong id="r-cmd-file">–</strong></div>
+            <div class="result-row"><span>कमांड (निर्देशिका, पुनरावर्ती)</span><strong id="r-cmd-dir">–</strong></div>
+          </div>
+          <p class="tool-note">
+            विशेष बिट्स (setuid <code>4</code>, setgid <code>2</code>, sticky <code>1</code>)
+            को आगे जोड़ा जा सकता है, जैसे <code>4755</code> setuid के लिए – सामान्य उपयोग के लिए शायद ही कभी आवश्यक हो।
+          </p>
+        </div>
+      </div>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="terminal-commands.html">आवश्यक टर्मिनल कमांड जो सभी को पता होने चाहिए</a></li>
+        <li><a href="linux-beginners.html">शुरुआत करने वालों के लिए Linux: आरंभ करना</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी टूल</a>
+      <a href="os.html">ऑपरेटिंग सिस्टम नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const SYM = {
+      owner: "u", group: "g", others: "o",
+    };
+    const bits = { owner: 0, group: 0, others: 0 };
+    const checked = { owner: [false, false, false], group: [false, false, false], others: [false, false, false] };
+    const R = 4, W = 2, X = 1;
+
+    function value(group, v) {
+      const order = v === R ? 0 : v === W ? 1 : 2;
+      return checked[group][order];
+    }
+
+    function applyBits(o, g, o2) {
+      [[o, "owner"], [g, "group"], [o2, "others"]].forEach(([num, grp]) => {
+        checked[grp] = [!!(num & R), !!(num & W), !!(num & X)];
+      });
+      render();
+    }
+
+    function render() {
+      ["owner", "group", "others"].forEach((grp) => {
+        const sum = (checked[grp][0] ? R : 0) + (checked[grp][1] ? W : 0) + (checked[grp][2] ? X : 0);
+        bits[grp] = sum;
+        document.querySelectorAll('input[data-g="' + grp + '"]').forEach((cb) => {
+          cb.checked = checked[grp][cb.dataset.v === "4" ? 0 : cb.dataset.v === "2" ? 1 : 2];
+        });
+      });
+
+      const num = "" + bits.owner + bits.group + bits.others;
+      const sym = ["owner", "group", "others"]
+        .map((grp) => SYM[grp] + "=" + (checked[grp][0] ? "r" : "") + (checked[grp][1] ? "w" : "") + (checked[grp][2] ? "x" : "") + (bits[grp] ? "" : ""))
+        .join(",");
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-num").textContent = num;
+      document.getElementById("r-sym").textContent = "chmod " + sym;
+      document.getElementById("r-desc").textContent =
+        bits.owner + (bits.owner ? "" : "") + " / " + bits.group + " / " + bits.others;
+      document.getElementById("r-cmd-file").textContent = "chmod " + num + " file";
+      document.getElementById("r-cmd-dir").textContent = "chmod -R " + num + " directory/";
+
+      const verdict = document.getElementById("verdict");
+      verdict.className = "result-verdict";
+      if (bits.others === 7 || bits.others === 6) {
+        verdict.className += " verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>" + num + " gives " + (bits.others === 7 ? "full read+write+execute" : "read+write") + " to everyone.</strong> For public directories that's often intentional – just make sure you mean it.";
+      } else if (bits.owner === 0) {
+        verdict.className += " verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>Owner has no permissions.</strong> You may lock yourself out – this is usually a mistake.";
+      } else {
+        verdict.className += " verdict-ok";
+        verdict.innerHTML = "✅ <strong>" + num + " is set.</strong> Owner: " + describe(bits.owner) + ", group: " + describe(bits.group) + ", others: " + describe(bits.others) + ".";
+      }
+    }
+
+    function describe(n) {
+      if (n === 0) return "no access";
+      const parts = [];
+      if (n & R) parts.push("read");
+      if (n & W) parts.push("write");
+      if (n & X) parts.push("execute");
+      return parts.join("+");
+    }
+
+    document.querySelectorAll('input[data-g]').forEach((cb) => {
+      cb.addEventListener("change", () => {
+        const grp = cb.dataset.g;
+        const idx = cb.dataset.v === "4" ? 0 : cb.dataset.v === "2" ? 1 : 2;
+        checked[grp][idx] = cb.checked;
+        render();
+      });
+    });
+
+    document.querySelectorAll(".preset-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const [o, g, o2] = chip.dataset.bits.split(",").map(Number);
+        applyBits(o, g, o2);
+      });
+    });
+
+    applyBits(7, 5, 5);
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

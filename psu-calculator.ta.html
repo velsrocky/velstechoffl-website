@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச PC மின்சாரம் (PSU) கால்குலேட்டர் – உங்கள் கணினி அமைப்பிற்கான உச்ச மின் நுகர்வை மதிப்பிட்டு, சில நெகிழ்வு இடத்துடன் பரிந்துரைக்கப்பட்ட PSU வாட்மேஜைப் பெறுங்கள்." />
+  <title>PC மின்சாரம் (PSU) கால்குலேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/psu-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/psu-calculator.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/psu-calculator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/psu-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/psu-calculator.ta.html#webapp",
+  "name": "PC மின்சாரம் (PSU) கால்குலேட்டர் | VelsTech",
+  "description": "உங்கள் அமைப்பின் உச்ச மின் நுகர்வை மதிப்பிட்டு, சில நெகிழ்வு இடத்துடன் பரிந்துரைக்கப்பட்ட PSU வாட்மேஜைப் பெறுங்கள்.",
+  "url": "https://velstech.net/psu-calculator.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/psu-calculator.ta.html" />
+  <meta property="og:title" content="PC மின்சாரம் (PSU) கால்குலேட்டர் | VelsTech" />
+  <meta property="og:description" content="உங்கள் அமைப்பின் உச்ச மின் நுகர்வை மதிப்பிட்டு, சில நெகிழ்வு இடத்துடன் பரிந்துரைக்கப்பட்ட PSU வாட்மேஜைப் பெறுங்கள்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PC மின்சாரம் (PSU) கால்குலேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="உங்கள் அமைப்பின் உச்ச மின் நுகர்வை மதிப்பிட்டு, சில நெகிழ்வு இடத்துடன் பரிந்துரைக்கப்பட்ட PSU வாட்மேஜைப் பெறுங்கள்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / PSU கால்குலேட்டர்</p>
+    <h1 class="title">PC மின்சாரம் (PSU) கால்குலேட்டர்</h1>
+    <div class="meta">
+      <span>உச்ச நுகர்வை மதிப்பிடு · பரிந்துரைக்கப்பட்ட PSU வாட்மேஜைப் பெறு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        உங்கள் பாகங்களைச் சேருங்கள் – இது முழு அமைப்பிற்கும் உச்ச மின் நுகர்வை மதிப்பிட்டு,
+        வசதியான நெகிழ்வு இடத்துடன் ஒரு மின்சார விநியோகத்தை பரிந்துரைக்கிறது. வாங்குவதற்கு
+        முன்பே பயன்படுத்துங்கள் – மிகச் சிறிய PSU என்பது சுமையின் கீழ் திடீர்
+        செயலிழப்புகளுக்கு #1 காரணம்.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>CPU</span>
+            <select id="cpu" class="input"></select>
+          </label>
+
+          <div id="custom-cpu" class="calc-subgrid">
+            <label class="field">
+              <span>CPU TDP (W)</span>
+              <input id="c-cpu-w" class="input" type="number" min="1" step="1" value="100" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>GPU</span>
+            <select id="gpu" class="input"></select>
+          </label>
+
+          <div id="custom-gpu" class="calc-subgrid">
+            <label class="field">
+              <span>GPU TDP (W)</span>
+              <input id="c-gpu-w" class="input" type="number" min="0" step="1" value="250" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>RAM ஸ்டிக்குகள்</span>
+            <input id="ram" class="input" type="number" min="0" max="8" step="1" value="2" />
+          </label>
+
+          <label class="field">
+            <span>M.2 SSDகள்</span>
+            <input id="ssd" class="input" type="number" min="0" max="6" step="1" value="1" />
+          </label>
+
+          <label class="field">
+            <span>HDDகள்</span>
+            <input id="hdd" class="input" type="number" min="0" max="8" step="1" value="0" />
+          </label>
+
+          <label class="field">
+            <span>கேஸ் ஃபேன்கள்</span>
+            <input id="fans" class="input" type="number" min="0" max="12" step="1" value="3" />
+          </label>
+
+          <label class="field">
+            <span>லிக்விட் கூலர் (AIO)</span>
+            <select id="aio" class="input">
+              <option value="0">இல்லை</option>
+              <option value="8" selected>ஆம் (+8 W பம்ப்)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>RGB ஸ்ட்ரிப்கள்</span>
+            <input id="rgb" class="input" type="number" min="0" max="12" step="1" value="0" />
+          </label>
+
+          <label class="field">
+            <span>USB சாதனங்கள்</span>
+            <input id="usb" class="input" type="number" min="0" max="20" step="1" value="3" />
+          </label>
+
+          <label class="field">
+            <span>PSU நிலை</span>
+            <select id="age" class="input">
+              <option value="1" selected>புதிய / உயர் தரம்</option>
+              <option value="1.1">சில வயது பழையது</option>
+              <option value="1.25">பழைய / பட்ஜெட்</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>மதிப்பிடப்பட்ட உச்ச நுகர்வு</span><strong id="r-peak">–</strong></div>
+            <div class="result-row total"><span>பரிந்துரைக்கப்பட்ட PSU</span><strong id="r-psu">–</strong></div>
+            <div class="result-row"><span>அந்த PSU மீதான தொடர்ச்சியான சுமை</span><strong id="r-sustained">–</strong></div>
+          </div>
+          <p class="tool-note">
+            மதிப்பீடுகள் வழக்கமான கூறு மின் நுகர்வைப் பயன்படுத்துகின்றன, மோசமான சந்தர்ப்ப
+            நிலையற்ற ஸ்பைக்குகளை அல்ல – RTX 4090/5090 போன்ற கார்டுகள் தங்கள் TDPக்கு மேல்
+            கண நேரத்தில் ஸ்பைக் செய்யலாம், எனவே சந்தேகம் இருந்தால், ஒரு அளவு பெரியதை
+            தேர்வு செய்யுங்கள்.
+          </p>
+        </div>
+      </div>
+
+      <details class="calc-method">
+        <summary>இதை எப்படி கணக்கிடுகிறோம் – அனுமானங்கள் &amp; சூத்திரங்கள்</summary>
+        <div class="calc-method-body">
+          <p>ஆய்வக அளவீடு அல்ல – சுமையின் கீழ் செயலிழக்காமல் இருக்க ஒரு கட்டுப்பாடான உச்ச மதிப்பீடு. நிலையற்ற ஸ்பைக்குகள் (குறிப்பாக RTX 4090/5090 இல்) சுருக்கமாக TDP ஐ மீறலாம்.</p>
+          <h4>1. உச்ச நுகர்வு</h4>
+          <pre>peak = (cpu + gpu + ram×3W + ssd×3W + hdd×8W + fans×3W + aio + rgb×4W + usb×5W) × age_factor</pre>
+          <p>CPU/GPU TDP முன்னமைவுகளைப் பயன்படுத்துகின்றன (எ.கா., i7/R7 125 W, RTX 4090 450 W, RX 7900 XTX 355 W) அல்லது உங்கள் தனிப்பயன் வாட்மேஜை. சிறிய பாகங்கள் ஒன்றுக்கு சராசரியாக: RAM ஸ்டிக் 3 W, NVMe 3 W, HDD 8 W, ஃபேன் 3 W, AIO பம்ப் 8 W, RGB ஸ்ட்ரிப் 4 W, USB சாதனம் 5 W.</p>
+          <h4>2. பரிந்துரைக்கப்பட்ட PSU</h4>
+          <pre>recommended = ceil(peak × 1.30 / 50) × 50</pre>
+          <p>செயல்திறன், சத்தம் மற்றும் வயதானதற்கு 30% நெகிழ்வு இடம், பின்னர் அடுத்த 50 W படிக்கு (பொதுவான சில்லறை படி) மேல்நோக்கி வட்டமிடப்படுகிறது. <code>age_factor</code> 1.1 (சில வயது பழையது) அல்லது 1.25 (பழைய/பட்ஜெட் அலகு) எனில், நெகிழ்வு இடத்திற்கு முன் உச்சம் அதிகரிக்கப்படுகிறது.</p>
+          <h4>3. முடிவு</h4>
+          <p>≥400 W உயர்-நிலை GPUகளுக்கு ஸ்பைக்குகளுக்காக ஒரு படி உயர்ந்ததைக் கருத்தில் கொள்ள ஒரு எச்சரிக்கை வரும். இல்லையெனில் பரிந்துரைக்கப்பட்ட அளவு வசதியான 80 Plus Bronze-அல்லது-சிறந்த குறைந்தபட்சமாகக் காட்டப்படுகிறது. முழு அமைப்பு ஆலோசனை: <a href="first-pc-build.html">பாகங்களை எப்படி தேர்வு செய்வது</a>.</p>
+        </div>
+      </details>
+
+      <h2>தொடர்புடைய வழிகாட்டிகள்</h2>
+      <ul>
+        <li><a href="first-pc-build.html">உங்கள் முதல் PC அமைப்பிற்கு பாகங்களை எப்படி தேர்வு செய்வது</a></li>
+        <li><a href="best-gpu-for-local-llm.html">LLMகளை இயக்க சிறந்த GPU – மின்சாரமும் முக்கியம்</a></li>
+        <li><a href="ssd-vs-hdd.html">SSD vs HDD – எது மின்சாரத்தை இழுக்கிறது, ஏன்</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகளும்</a>
+      <a href="hardware.html">வன்பொருள் குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    const CPUS = [
+      { name: "Intel Core i3 / AMD Ryzen 3", w: 65 },
+      { name: "Intel Core i5 / AMD Ryzen 5", w: 65 },
+      { name: "Intel Core i5 K / Ryzen 5 X", w: 105 },
+      { name: "Intel Core i7 / AMD Ryzen 7", w: 125 },
+      { name: "Intel Core i9 / AMD Ryzen 9", w: 170 },
+      { name: "Threadripper / Xeon", w: 280 },
+      { name: "Custom CPU…", w: 100 },
+    ];
+
+    const GPUS = [
+      { name: "Integrated graphics only", w: 0 },
+      { name: "RTX 4060", w: 115 },
+      { name: "RTX 4070", w: 200 },
+      { name: "RTX 4070 Super", w: 220 },
+      { name: "RTX 4080 Super", w: 320 },
+      { name: "RTX 4090", w: 450 },
+      { name: "RTX 5080", w: 360 },
+      { name: "RTX 5090", w: 575 },
+      { name: "RX 7600", w: 165 },
+      { name: "RX 7700 XT", w: 245 },
+      { name: "RX 7800 XT", w: 263 },
+      { name: "RX 9070 XT", w: 304 },
+      { name: "RX 9080 XT", w: 350 },
+      { name: "RX 7900 XTX", w: 355 },
+      { name: "RX 6800M (mobile card)", w: 145 },
+      { name: "Custom GPU…", w: 250 },
+    ];
+
+    const cpuSel = document.getElementById("cpu");
+    const gpuSel = document.getElementById("gpu");
+    CPUS.forEach((c, i) => {
+      const o = document.createElement("option");
+      o.value = i; o.textContent = c.name; cpuSel.appendChild(o);
+    });
+    GPUS.forEach((g, i) => {
+      const o = document.createElement("option");
+      o.value = i; o.textContent = g.name; gpuSel.appendChild(o);
+    });
+
+    function syncCpuFields() {
+      const c = CPUS[cpuSel.value];
+      if (c) document.getElementById("c-cpu-w").value = c.w;
+    }
+    function syncGpuFields() {
+      const g = GPUS[gpuSel.value];
+      if (g) document.getElementById("c-gpu-w").value = g.w;
+    }
+
+    function calc() {
+      const cpuW = parseFloat(document.getElementById("c-cpu-w").value) || 1;
+      const gpuW = parseFloat(document.getElementById("c-gpu-w").value) || 0;
+
+      const ramW = (parseInt(document.getElementById("ram").value, 10) || 0) * 3;
+      const ssdW = (parseInt(document.getElementById("ssd").value, 10) || 0) * 3;
+      const hddW = (parseInt(document.getElementById("hdd").value, 10) || 0) * 8;
+      const fanW = (parseInt(document.getElementById("fans").value, 10) || 0) * 3;
+      const aioW = parseInt(document.getElementById("aio").value, 10) || 0;
+      const rgbW = (parseInt(document.getElementById("rgb").value, 10) || 0) * 4;
+      const usbW = (parseInt(document.getElementById("usb").value, 10) || 0) * 5;
+      const age = parseFloat(document.getElementById("age").value) || 1;
+
+      const peak = (cpuW + gpuW + ramW + ssdW + hddW + fanW + aioW + rgbW + usbW) * age;
+      const recommended = Math.ceil(peak * 1.3 / 50) * 50;
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-peak").textContent = Math.round(peak) + " W";
+      document.getElementById("r-psu").textContent = recommended + " W";
+      document.getElementById("r-sustained").textContent = Math.round(peak / recommended * 100) + "% of rated power";
+
+      const verdict = document.getElementById("verdict");
+      if (gpuW >= 400) {
+        verdict.className = "result-verdict verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>High-end GPU detected.</strong> For a " + gpuW + " W card, a " + recommended + " W unit is the minimum – consider going one tier higher (850 W+) for transient spikes.";
+      } else {
+        verdict.className = "result-verdict verdict-ok";
+        verdict.innerHTML = "✅ <strong>A " + recommended + " W PSU (80 Plus Bronze or better) is a comfortable fit</strong> for this build with ~30% headroom.";
+      }
+    }
+
+    cpuSel.addEventListener("change", () => { syncCpuFields(); calc(); });
+    gpuSel.addEventListener("change", () => { syncGpuFields(); calc(); });
+    ["c-cpu-w", "c-gpu-w", "ram", "ssd", "hdd", "fans", "aio", "rgb", "usb", "age"]
+      .forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", calc);
+      });
+
+    syncCpuFields();
+    syncGpuFields();
+    calc();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="இலவச GPU AI செயல்திறன் கால்குலேட்டர் – ஒரு குறிப்பிட்ட GPU-வில் LLM ஐ இயக்குவதற்கான டிகோட் டோக்கன்கள்/வி, ப்ராம்ப்ட் செயலாக்க வேகம் மற்றும் முதல் டோக்கன் நேரத்தை மதிப்பிடுங்கள்." />
+  <title>GPU AI செயல்திறன் கால்குலேட்டர் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/gpu-ai-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/gpu-ai-calculator.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/gpu-ai-calculator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/gpu-ai-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/gpu-ai-calculator.ta.html#webapp",
+  "name": "GPU AI செயல்திறன் கால்குலேட்டர் | VelsTech",
+  "description": "ஒரு குறிப்பிட்ட GPU-வில் LLM ஐ இயக்குவதற்கான tokens/sec, ப்ராம்ப்ட் செயலாக்க வேகம் மற்றும் முதல் டோக்கன் நேரத்தை மதிப்பிடுங்கள்.",
+  "url": "https://velstech.net/gpu-ai-calculator.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/gpu-ai-calculator.ta.html" />
+  <meta property="og:title" content="GPU AI செயல்திறன் கால்குலேட்டர் | VelsTech" />
+  <meta property="og:description" content="ஒரு குறிப்பிட்ட GPU-வில் LLM ஐ இயக்குவதற்கான tokens/sec, ப்ராம்ப்ட் செயலாக்க வேகம் மற்றும் முதல் டோக்கன் நேரத்தை மதிப்பிடுங்கள்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GPU AI செயல்திறன் கால்குலேட்டர் | VelsTech" />
+  <meta name="twitter:description" content="ஒரு குறிப்பிட்ட GPU-வில் LLM ஐ இயக்குவதற்கான tokens/sec, ப்ராம்ப்ட் செயலாக்க வேகம் மற்றும் முதல் டோக்கன் நேரத்தை மதிப்பிடுங்கள்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / GPU AI செயல்திறன்</p>
+    <h1 class="title">GPU AI செயல்திறன் கால்குலேட்டர்</h1>
+    <div class="meta">
+      <span>tokens/sec · முதல் டோக்கன் நேரம் · உருவாக்க வேகத்தை மதிப்பிடுங்கள்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        ஒரு GPU மற்றும் ஒரு மாடலைத் தேர்வு செய்யுங்கள், இது உள்ளூர் இன்ஃபரன்ஸ் எவ்வளவு வேகமாக இருக்கும் என்பதை மதிப்பிடுகிறது: <strong>டிகோட்</strong> வேகம் (மாடல் பதிலளிக்கும்போது வினாடிக்கு டோக்கன்கள் –
+        இது நினைவக-அலைவரிசை-கட்டுண்டது) மற்றும் <strong>ப்ராம்ப்ட் செயலாக்க</strong> வேகம்
+        (கணக்கீடு-கட்டுண்டது). மதிப்பீடுகள் மட்டுமே – உண்மையான எண்கள் உங்கள் எஞ்சின், டிரைவர்கள் மற்றும்
+        அமைப்புகளைப் பொறுத்தது.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>GPU</span>
+            <select id="gpu" class="input"></select>
+          </label>
+
+          <div id="custom-gpu" class="calc-subgrid">
+            <label class="field">
+              <span>VRAM (GB)</span>
+              <input id="c-vram" class="input" type="number" min="1" step="1" value="12" />
+            </label>
+            <label class="field">
+              <span>FP16 TFLOPS</span>
+              <input id="c-tf" class="input" type="number" min="0.1" step="0.1" value="22" />
+            </label>
+            <label class="field">
+              <span>நினைவக அலைவரிசை (GB/s)</span>
+              <input id="c-bw" class="input" type="number" min="1" step="1" value="400" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>மாடல் அளவுருக்கள் (B)</span>
+            <input id="params" class="input" type="number" min="0.5" step="0.5" value="8" list="params-list" />
+            <datalist id="params-list">
+              <option value="3"></option><option value="7"></option><option value="8"></option>
+              <option value="9"></option><option value="14"></option><option value="27"></option>
+              <option value="32"></option><option value="70"></option>
+            </datalist>
+          </label>
+
+          <label class="field">
+            <span>குவாண்டைசேஷன்</span>
+            <select id="quant" class="input"></select>
+          </label>
+
+          <label class="field">
+            <span>சூழல் நீளம் (டோக்கன்கள்)</span>
+            <input id="ctx" class="input" type="number" min="512" max="262144" step="512" value="8192" />
+          </label>
+
+          <label class="field">
+            <span>ப்ராம்ப்ட் நீளம் (டோக்கன்கள்)</span>
+            <input id="prompt" class="input" type="number" min="1" step="1" value="512" />
+          </label>
+
+          <label class="field">
+            <span>பதில் நீளம் (டோக்கன்கள்)</span>
+            <input id="answer" class="input" type="number" min="1" step="1" value="512" />
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>இந்த குவாண்டில் மாடல் அளவு</span><strong id="r-size">–</strong></div>
+            <div class="result-row"><span>டிகோட் வேகம்</span><strong id="r-decode">–</strong></div>
+            <div class="result-row"><span>ப்ராம்ப்ட் செயலாக்க வேகம்</span><strong id="r-prefill">–</strong></div>
+            <div class="result-row"><span>முதல் டோக்கன் நேரம்</span><strong id="r-ttft">–</strong></div>
+            <div class="result-row total"><span>பதிலை உருவாக்க நேரம்</span><strong id="r-gen">–</strong></div>
+          </div>
+          <p class="tool-note">
+            டிகோட் எடைகள் + KV கேச் VRAM-இல் இருக்கும் என்றும் நினைவக அலைவரிசையின் ~80% பயன்படுத்துகிறது என்றும் கருதுகிறது;
+            ப்ராம்ப்ட் செயலாக்கம் ~55% கணக்கீட்டு திறனை கருதுகிறது. MoE மாடல்கள் தங்கள் செயலில் உள்ள அளவுருக்களில் கணக்கிடுகின்றன,
+            எனவே உண்மையான ப்ரீஃபில் காட்டப்பட்டதை விட வேகமாக இருக்கலாம்.
+          </p>
+        </div>
+      </div>
+
+      <details class="calc-method">
+        <summary>நாங்கள் எவ்வாறு கணக்கிடுகிறோம் – அனுமானங்கள் &amp; சூத்திரங்கள்</summary>
+        <div class="calc-method-body">
+          <p>உண்மையான செயல்திறன் எஞ்சின், கெர்னல்கள், டிரைவர் மற்றும் குளிரூட்டலைப் பொறுத்தது. இவை நினைவக- மற்றும் கணக்கீடு-கட்டுண்ட <em>மேல் எல்லைகள்</em> ஆகும், அவை உணரப்பட்ட திறனால் அளவிடப்படுகின்றன, பெஞ்ச்மார்க்குகள் அல்ல.</p>
+          <h4>1. இது பொருந்துமா?</h4>
+          <pre>weights = params × bytes_per_quant / GiB
+kv_cache ≈ params × 16384 × context / GiB
+total = weights + kv_cache</pre>
+          <p>KV இங்கு தோராயமான 8B-கட்டமைப்பு தோராயத்தைப் பயன்படுத்துகிறது (8B-க்கு ~128 KB ஒரு டோக்கனுக்கு). <code>total &gt; vram</code> என்றால் பொருந்தாது என குறிக்கிறோம்; லேயர்கள்/ஹெட்கள்/டைமில் இருந்து உண்மையான KV மிகவும் துல்லியமானது – அதற்கு <a href="llm-vram-calculator.html">VRAM கால்குலேட்டரை</a> பயன்படுத்தவும்.</p>
+          <h4>2. டிகோட் வேகம் (நினைவக கட்டுண்டது)</h4>
+          <pre>bytes_per_token = weights × GiB + kv_per_token
+decode_tok/s = (memory_BW × 0.8) / bytes_per_token</pre>
+          <p>ஒவ்வொரு உருவாக்கப்பட்ட டோக்கனும் முழு மாடல் + KV ஐ படிக்கிறது. 0.8 என்பது ~80% அடையக்கூடிய அலைவரிசையை மாதிரியாக்குகிறது; குவாண்டைசேஷன் உதவுகிறது ஏனெனில் ஒரு டோக்கனுக்கு குறைந்த பைட்டுகள்.</p>
+          <h4>3. ப்ரீஃபில் / ப்ராம்ப்ட் செயலாக்கம் (கணக்கீடு கட்டுண்டது)</h4>
+          <pre>prefill_tok/s = (TFLOPS × 0.55) / (2 × params)</pre>
+          <p>ப்ராம்ப்ட் செயலாக்கம் ஒரு பெரிய matmul: ஒரு அளவுருவுக்கு ஒரு டோக்கனுக்கு ~2 FLOPs. 0.55 55% கணக்கீட்டு பயன்பாட்டை மாதிரியாக்குகிறது. MoE மாடல்கள் செயலில் உள்ள அளவுருக்களைப் பயன்படுத்துகின்றன, எனவே உண்மையான ப்ரீஃபில் அதிகமாக இருக்கலாம்.</p>
+          <h4>4. நேரங்கள்</h4>
+          <pre>TTFT = prompt_tokens / prefill_tok/s
+gen_time = answer_tokens / decode_tok/s</pre>
+          <p>மேலும் காண்க: <a href="how-much-vram-for-llm.html">உங்களுக்கு எவ்வளவு VRAM தேவை?</a> மற்றும் <a href="best-gpu-for-local-llm.html">உள்ளூர் LLM-களுக்கான சிறந்த GPU</a>.</p>
+        </div>
+      </details>
+
+      <h2>தொடர்புடைய வழிகாட்டிகள்</h2>
+      <ul>
+        <li><a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர் – இது பொருந்துமா?</a></li>
+        <li><a href="best-gpu-for-local-llm.html">உள்ளூர் LLM-களுக்கான சிறந்த GPU – எந்த அட்டையை வாங்குவது</a></li>
+        <li><a href="how-much-vram-for-llm.html">உங்களுக்கு உண்மையில் எவ்வளவு VRAM தேவை?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="hardware.html">வன்பொருள் குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    const GPUS = [
+      { name: "RTX 3060 12GB", vram: 12, tf: 12.9, bw: 360 },
+      { name: "RTX 4060 8GB", vram: 8, tf: 15.0, bw: 272 },
+      { name: "RTX 4060 Ti 16GB", vram: 16, tf: 22.1, bw: 288 },
+      { name: "RTX 4070 12GB", vram: 12, tf: 20.1, bw: 504 },
+      { name: "RTX 4070 Super 12GB", vram: 12, tf: 28.2, bw: 504 },
+      { name: "RTX 4070 Ti Super 16GB", vram: 16, tf: 44.3, bw: 672 },
+      { name: "RTX 4080 Super 16GB", vram: 16, tf: 52.5, bw: 736 },
+      { name: "RTX 4090 24GB", vram: 24, tf: 82.6, bw: 1008 },
+      { name: "RTX 5080 16GB", vram: 16, tf: 56.1, bw: 960 },
+      { name: "RTX 5090 32GB", vram: 32, tf: 104.8, bw: 1792 },
+      { name: "RX 7600 8GB", vram: 8, tf: 21.4, bw: 288 },
+      { name: "RX 7700 XT 12GB", vram: 12, tf: 36.9, bw: 432 },
+      { name: "RX 7800 XT 16GB", vram: 16, tf: 36.7, bw: 624 },
+      { name: "RX 9070 XT 16GB", vram: 16, tf: 48.7, bw: 644 },
+      { name: "RX 9080 XT 24GB", vram: 24, tf: 60.3, bw: 900 },
+      { name: "RX 7900 XTX 24GB", vram: 24, tf: 61.4, bw: 960 },
+      { name: "RX 6900 XT 16GB", vram: 16, tf: 23.0, bw: 512 },
+      { name: "RX 6800M 12GB", vram: 12, tf: 22.8, bw: 384 },
+      { name: "Custom GPU…", vram: 12, tf: 22.0, bw: 400 },
+    ];
+
+    const QUANTS = [
+      { name: "FP16 / BF16", bytes: 2.0 },
+      { name: "Q8_0 (≈8-bit)", bytes: 1.0625 },
+      { name: "Q6_K (≈6.5-bit)", bytes: 0.8125 },
+      { name: "Q5_K_M (≈5.5-bit)", bytes: 0.66 },
+      { name: "Q5_0", bytes: 0.65 },
+      { name: "Q4_K_M (≈4.8-bit)", bytes: 0.61 },
+      { name: "Q4_0", bytes: 0.56 },
+      { name: "INT4 (bitsandbytes)", bytes: 0.5 },
+    ];
+
+    const gpuSel = document.getElementById("gpu");
+    const quantSel = document.getElementById("quant");
+    GPUS.forEach((g, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = g.name;
+      gpuSel.appendChild(o);
+    });
+    QUANTS.forEach((q, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = q.name;
+      quantSel.appendChild(o);
+    });
+
+    function syncGpuFields() {
+      const g = GPUS[gpuSel.value];
+      if (!g) return;
+      document.getElementById("c-vram").value = g.vram;
+      document.getElementById("c-tf").value = g.tf;
+      document.getElementById("c-bw").value = g.bw;
+    }
+    function currentGpu() {
+      return {
+        vram: parseFloat(document.getElementById("c-vram").value) || 1,
+        tf: parseFloat(document.getElementById("c-tf").value) || 1,
+        bw: parseFloat(document.getElementById("c-bw").value) || 1,
+      };
+    }
+
+    const giB = 1073741824;
+    const fmtGB = (gb) => (gb >= 1 ? gb.toFixed(1) + " GB" : Math.round(gb * 1024) + " MB");
+    const fmtSec = (s) => {
+      if (s < 0.001) return (s * 1000).toFixed(0) + " ms";
+      if (s < 60) return s.toFixed(1) + " s";
+      const m = Math.floor(s / 60);
+      const sec = Math.round(s % 60);
+      return m + " min " + sec + " s";
+    };
+
+    function calc() {
+      const g = currentGpu();
+      const q = QUANTS[quantSel.value];
+      const params = parseFloat(document.getElementById("params").value) || 1;
+      const ctx = Math.max(1, parseInt(document.getElementById("ctx").value, 10) || 8192);
+      const prompt = Math.max(1, parseInt(document.getElementById("prompt").value, 10) || 512);
+      const answer = Math.max(1, parseInt(document.getElementById("answer").value, 10) || 512);
+
+      const weights = (params * 1e9 * q.bytes) / giB;
+      const kvPerTokBytes = params * 16384; // rough 8B-style arch (~128 KB/token per 8B params)
+      const kvCache = (kvPerTokBytes * ctx) / giB;
+      const total = weights + kvCache;
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-size").textContent = fmtGB(weights);
+
+      const verdict = document.getElementById("verdict");
+      if (total > g.vram) {
+        verdict.className = "result-verdict verdict-no";
+        verdict.innerHTML = "❌ <strong>Won't fully fit in VRAM.</strong> Model + KV cache ≈ " + fmtGB(total) + " vs " + g.vram + " GB available. Use a smaller quant, shorter context, or a higher-VRAM GPU.";
+      } else {
+        verdict.className = "result-verdict verdict-ok";
+        verdict.innerHTML = "✅ <strong>Fits in VRAM.</strong> Model + KV cache ≈ " + fmtGB(total) + " of " + g.vram + " GB – numbers below assume full GPU offload.";
+      }
+
+      const bytesPerTok = weights * giB + kvPerTokBytes;
+      const decodeTokPerSec = (g.bw * 1e9 * 0.8) / bytesPerTok;
+      const prefillTokPerSec = (g.tf * 1e12 * 0.55) / (2 * params * 1e9);
+
+      document.getElementById("r-decode").textContent = decodeTokPerSec.toFixed(1) + " tok/s";
+      document.getElementById("r-prefill").textContent = prefillTokPerSec.toFixed(0) + " tok/s";
+
+      const ttft = prompt / prefillTokPerSec;
+      const genTime = answer / decodeTokPerSec;
+      document.getElementById("r-ttft").textContent = fmtSec(ttft);
+      document.getElementById("r-gen").textContent = fmtSec(genTime);
+    }
+
+    gpuSel.addEventListener("change", () => {
+      syncGpuFields();
+      calc();
+    });
+    ["c-vram", "c-tf", "c-bw", "params", "ctx", "prompt", "answer", quantSel.id]
+      .forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", calc);
+      });
+
+    syncGpuFields();
+    calc();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

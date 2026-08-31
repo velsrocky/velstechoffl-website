@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त PC पावर सप्लाई कैलकुलेटर – अपने बिल्ड के लिए पीक बिजली खपत का अनुमान लगाएँ और सुरक्षित हेडरूम के साथ अनुशंसित PSU वाटेज पाएँ।" />
+  <title>PC पावर सप्लाई कैलकुलेटर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/psu-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/psu-calculator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/psu-calculator.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/psu-calculator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/psu-calculator.hi.html#webapp",
+  "name": "PC पावर सप्लाई कैलकुलेटर | VelsTech",
+  "description": "अपने बिल्ड की पीक बिजली खपत का अनुमान लगाएँ और सुरक्षित हेडरूम के साथ अनुशंसित PSU वाटेज पाएँ।",
+  "url": "https://velstech.net/psu-calculator.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/psu-calculator.html" />
+  <meta property="og:title" content="PC पावर सप्लाई कैलकुलेटर | VelsTech" />
+  <meta property="og:description" content="अपने बिल्ड की पीक बिजली खपत का अनुमान लगाएँ और सुरक्षित हेडरूम के साथ अनुशंसित PSU वाटेज पाएँ।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PC पावर सप्लाई कैलकुलेटर | VelsTech" />
+  <meta name="twitter:description" content="अपने बिल्ड की पीक बिजली खपत का अनुमान लगाएँ और सुरक्षित हेडरूम के साथ अनुशंसित PSU वाटेज पाएँ।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">उपकरण</a> / PSU कैलकुलेटर</p>
+    <h1 class="title">PC पावर सप्लाई कैलकुलेटर</h1>
+    <div class="meta">
+      <span>पीक बिजली खपत का अनुमान · अनुशंसित PSU वाटेज पाएँ</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        अपने हिस्से जोड़ें और यह पूरे सिस्टम की पीक बिजली खपत का अनुमान लगाता है, फिर
+        आरामदायक हेडरूम वाली पावर सप्लाई की सिफारिश करता है। खरीदने से पहले इसका उपयोग करें –
+        बहुत छोटा PSU लोड के दौरान अचानक बंद होने (शटडाउन) का #1 कारण है।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field">
+            <span>CPU</span>
+            <select id="cpu" class="input"></select>
+          </label>
+
+          <div id="custom-cpu" class="calc-subgrid">
+            <label class="field">
+              <span>CPU TDP (W)</span>
+              <input id="c-cpu-w" class="input" type="number" min="1" step="1" value="100" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>GPU</span>
+            <select id="gpu" class="input"></select>
+          </label>
+
+          <div id="custom-gpu" class="calc-subgrid">
+            <label class="field">
+              <span>GPU TDP (W)</span>
+              <input id="c-gpu-w" class="input" type="number" min="0" step="1" value="250" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>RAM स्टिक्स</span>
+            <input id="ram" class="input" type="number" min="0" max="8" step="1" value="2" />
+          </label>
+
+          <label class="field">
+            <span>M.2 SSD</span>
+            <input id="ssd" class="input" type="number" min="0" max="6" step="1" value="1" />
+          </label>
+
+          <label class="field">
+            <span>HDD</span>
+            <input id="hdd" class="input" type="number" min="0" max="8" step="1" value="0" />
+          </label>
+
+          <label class="field">
+            <span>केस पंखे</span>
+            <input id="fans" class="input" type="number" min="0" max="12" step="1" value="3" />
+          </label>
+
+          <label class="field">
+            <span>लिक्विड कूलर (AIO)</span>
+            <select id="aio" class="input">
+              <option value="0">नहीं</option>
+              <option value="8" selected>हाँ (+8 W पंप)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>RGB स्ट्रिप्स</span>
+            <input id="rgb" class="input" type="number" min="0" max="12" step="1" value="0" />
+          </label>
+
+          <label class="field">
+            <span>USB डिवाइस</span>
+            <input id="usb" class="input" type="number" min="0" max="20" step="1" value="3" />
+          </label>
+
+          <label class="field">
+            <span>PSU की स्थिति</span>
+            <select id="age" class="input">
+              <option value="1" selected>नया / उच्च गुणवत्ता</option>
+              <option value="1.1">कुछ साल पुराना</option>
+              <option value="1.25">पुराना / बजट</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="calc-results" id="results" hidden>
+          <div class="result-verdict" id="verdict"></div>
+          <div class="result-rows">
+            <div class="result-row"><span>अनुमानित पीक खपत</span><strong id="r-peak">–</strong></div>
+            <div class="result-row total"><span>अनुशंसित PSU</span><strong id="r-psu">–</strong></div>
+            <div class="result-row"><span>उस PSU पर निरंतर लोड</span><strong id="r-sustained">–</strong></div>
+          </div>
+          <p class="tool-note">
+            अनुमान विशिष्ट घटक बिजली खपत पर आधारित हैं, सबसे खराब स्थिति के क्षणिक स्पाइक्स पर
+            नहीं – RTX 4090/5090 जैसे कार्ड अपने TDP से काफी ऊपर क्षणिक रूप से स्पाइक कर सकते
+            हैं, इसलिए संदेह होने पर एक साइज़ बड़ा चुनें।
+          </p>
+        </div>
+      </div>
+
+      <details class="calc-method">
+        <summary>हम यह कैसे गणना करते हैं – धारणाएँ और सूत्र</summary>
+        <div class="calc-method-body">
+          <p>यह प्रयोगशाला माप नहीं है – एक सतर्क पीक अनुमान ताकि लोड में ट्रिप न हो। क्षणिक स्पाइक्स (विशेषकर RTX 4090/5090 पर) अभी भी थोड़ी देर के लिए TDP से अधिक हो सकते हैं।</p>
+          <h4>1. पीक खपत</h4>
+          <pre>peak = (cpu + gpu + ram×3W + ssd×3W + hdd×8W + fans×3W + aio + rgb×4W + usb×5W) × age_factor</pre>
+          <p>CPU/GPU TDP प्रीसेट (जैसे, i7/R7 125 W, RTX 4090 450 W, RX 7900 XTX 355 W) या आपका कस्टम वाटेज उपयोग करते हैं। छोटे हिस्सों का प्रति यूनिट औसत लिया जाता है: RAM स्टिक 3 W, NVMe 3 W, HDD 8 W, पंखा 3 W, AIO पंप 8 W, RGB स्ट्रिप 4 W, USB डिवाइस 5 W।</p>
+          <h4>2. अनुशंसित PSU</h4>
+          <pre>recommended = ceil(peak × 1.30 / 50) × 50</pre>
+          <p>दक्षता, शोर और उम्र बढ़ने के लिए 30% हेडरूम, फिर अगले 50 W टियर तक पूर्णांकित (सामान्य रिटेल चरण)। यदि <code>age_factor</code> 1.1 (कुछ साल पुराना) या 1.25 (पुराना/बजट यूनिट) है, तो हेडरूम से पहले पीक को बढ़ाया जाता है।</p>
+          <h4>3. फैसला</h4>
+          <p>हाई-एंड GPU ≥400 W को स्पाइक्स के लिए एक टियर ऊँचा विचार करने की चेतावनी मिलती है। अन्यथा अनुशंसित साइज़ को आरामदायक 80 Plus Bronze-या-बेहतर फ्लोर के रूप में दिखाया जाता है। पूरी बिल्ड सलाह: <a href="first-pc-build.html">पार्ट्स कैसे चुनें</a>।</p>
+        </div>
+      </details>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="first-pc-build.html">अपने पहले PC बिल्ड के लिए पार्ट्स कैसे चुनें</a></li>
+        <li><a href="best-gpu-for-local-llm.html">LLM चलाने के लिए सबसे अच्छा GPU – पावर भी मायने रखती है</a></li>
+        <li><a href="ssd-vs-hdd.html">SSD बनाम HDD – कौन कितनी बिजली खींचता है और क्यों</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी उपकरण</a>
+      <a href="hardware.html">हार्डवेयर नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const CPUS = [
+      { name: "Intel Core i3 / AMD Ryzen 3", w: 65 },
+      { name: "Intel Core i5 / AMD Ryzen 5", w: 65 },
+      { name: "Intel Core i5 K / Ryzen 5 X", w: 105 },
+      { name: "Intel Core i7 / AMD Ryzen 7", w: 125 },
+      { name: "Intel Core i9 / AMD Ryzen 9", w: 170 },
+      { name: "Threadripper / Xeon", w: 280 },
+      { name: "Custom CPU…", w: 100 },
+    ];
+
+    const GPUS = [
+      { name: "Integrated graphics only", w: 0 },
+      { name: "RTX 4060", w: 115 },
+      { name: "RTX 4070", w: 200 },
+      { name: "RTX 4070 Super", w: 220 },
+      { name: "RTX 4080 Super", w: 320 },
+      { name: "RTX 4090", w: 450 },
+      { name: "RTX 5080", w: 360 },
+      { name: "RTX 5090", w: 575 },
+      { name: "RX 7600", w: 165 },
+      { name: "RX 7700 XT", w: 245 },
+      { name: "RX 7800 XT", w: 263 },
+      { name: "RX 9070 XT", w: 304 },
+      { name: "RX 9080 XT", w: 350 },
+      { name: "RX 7900 XTX", w: 355 },
+      { name: "RX 6800M (mobile card)", w: 145 },
+      { name: "Custom GPU…", w: 250 },
+    ];
+
+    const cpuSel = document.getElementById("cpu");
+    const gpuSel = document.getElementById("gpu");
+    CPUS.forEach((c, i) => {
+      const o = document.createElement("option");
+      o.value = i; o.textContent = c.name; cpuSel.appendChild(o);
+    });
+    GPUS.forEach((g, i) => {
+      const o = document.createElement("option");
+      o.value = i; o.textContent = g.name; gpuSel.appendChild(o);
+    });
+
+    function syncCpuFields() {
+      const c = CPUS[cpuSel.value];
+      if (c) document.getElementById("c-cpu-w").value = c.w;
+    }
+    function syncGpuFields() {
+      const g = GPUS[gpuSel.value];
+      if (g) document.getElementById("c-gpu-w").value = g.w;
+    }
+
+    function calc() {
+      const cpuW = parseFloat(document.getElementById("c-cpu-w").value) || 1;
+      const gpuW = parseFloat(document.getElementById("c-gpu-w").value) || 0;
+
+      const ramW = (parseInt(document.getElementById("ram").value, 10) || 0) * 3;
+      const ssdW = (parseInt(document.getElementById("ssd").value, 10) || 0) * 3;
+      const hddW = (parseInt(document.getElementById("hdd").value, 10) || 0) * 8;
+      const fanW = (parseInt(document.getElementById("fans").value, 10) || 0) * 3;
+      const aioW = parseInt(document.getElementById("aio").value, 10) || 0;
+      const rgbW = (parseInt(document.getElementById("rgb").value, 10) || 0) * 4;
+      const usbW = (parseInt(document.getElementById("usb").value, 10) || 0) * 5;
+      const age = parseFloat(document.getElementById("age").value) || 1;
+
+      const peak = (cpuW + gpuW + ramW + ssdW + hddW + fanW + aioW + rgbW + usbW) * age;
+      const recommended = Math.ceil(peak * 1.3 / 50) * 50;
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("r-peak").textContent = Math.round(peak) + " W";
+      document.getElementById("r-psu").textContent = recommended + " W";
+      document.getElementById("r-sustained").textContent = Math.round(peak / recommended * 100) + "% of rated power";
+
+      const verdict = document.getElementById("verdict");
+      if (gpuW >= 400) {
+        verdict.className = "result-verdict verdict-warn";
+        verdict.innerHTML = "⚠️ <strong>High-end GPU detected.</strong> For a " + gpuW + " W card, a " + recommended + " W unit is the minimum – consider going one tier higher (850 W+) for transient spikes.";
+      } else {
+        verdict.className = "result-verdict verdict-ok";
+        verdict.innerHTML = "✅ <strong>A " + recommended + " W PSU (80 Plus Bronze or better) is a comfortable fit</strong> for this build with ~30% headroom.";
+      }
+    }
+
+    cpuSel.addEventListener("change", () => { syncCpuFields(); calc(); });
+    gpuSel.addEventListener("change", () => { syncGpuFields(); calc(); });
+    ["c-cpu-w", "c-gpu-w", "ram", "ssd", "hdd", "fans", "aio", "rgb", "usb", "age"]
+      .forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", calc);
+      });
+
+    syncCpuFields();
+    syncGpuFields();
+    calc();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

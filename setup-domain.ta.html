@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="ஒரு டொமைனை வாங்குவது, DNS பதிவுகளை உள்ளமைப்பது மற்றும் அதை GitHub Pages, ஒரு VPS அல்லது வீட்டு சர்வருடன் இணைப்பது எப்படி." />
+  <title>ஒரு டொமைனை அமைத்து அதை எங்கும் சுட்டிக்காட்டுதல் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/setup-domain.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/setup-domain.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/setup-domain.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/setup-domain.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/setup-domain.ta.html#article",
+  "headline": "ஒரு டொமைனை அமைத்து அதை எங்கும் சுட்டிக்காட்டுதல்",
+  "description": "ஒரு டொமைனை வாங்குவது, DNS பதிவுகளை உள்ளமைப்பது மற்றும் அதை GitHub Pages, ஒரு VPS அல்லது வீட்டு சர்வருடன் இணைப்பது எப்படி.",
+  "url": "https://velstech.net/setup-domain.ta.html",
+  "datePublished": "2026-08-24T00:00:00Z",
+  "dateModified": "2026-08-24T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/setup-domain.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/setup-domain.ta.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/setup-domain.ta.html" />
+  <meta property="og:title" content="ஒரு டொமைனை அமைத்து அதை எங்கும் சுட்டிக்காட்டுதல் | VelsTech" />
+  <meta property="og:description" content="ஒரு டொமைனை வாங்குவது, DNS பதிவுகளை உள்ளமைப்பது மற்றும் அதை GitHub Pages, ஒரு VPS அல்லது வீட்டு சர்வருடன் இணைப்பது எப்படி." />
+  <meta property="og:image" content="https://velstech.net/og/setup-domain.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ஒரு டொமைனை அமைத்து அதை எங்கும் சுட்டிக்காட்டுதல் | VelsTech" />
+  <meta name="twitter:description" content="ஒரு டொமைனை வாங்குவது, DNS பதிவுகளை உள்ளமைப்பது மற்றும் அதை GitHub Pages, ஒரு VPS அல்லது வீட்டு சர்வருடன் இணைப்பது எப்படி." />
+  <meta name="twitter:image" content="https://velstech.net/og/setup-domain.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="networking.html">நெட்வொர்க்கிங்</a> / இந்த கட்டுரை</p>
+    <h1 class="title">ஒரு டொமைனை அமைத்து அதை எங்கும் சுட்டிக்காட்டுதல்</h1>
+    <div class="meta">
+      <span class="tag">DNS</span>
+      <span class="tag">சுய-ஹோஸ்டிங்</span>
+      <span>Aug 24, 2026</span>
+      <span>· 7 நிமிட வாசிப்பு</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        ஒரு டொமைன் என்பது நீங்கள் சொந்தமாக்கக்கூடிய மிக சக்திவாய்ந்த இணைய ரியல் எஸ்டேட் துண்டு ஆகும். இது நீங்கள் கட்டுப்படுத்தும் ஒரு
+        நிரந்தர முகவரி – மேலும் அதை ஒரு வலைத்தளம், ஒரு சர்வர் அல்லது ஒரு வீட்டு
+        இயந்திரத்தில் சுட்டிக்காட்ட சில DNS பதிவுகள் மட்டுமே தேவை. இந்த தளம் இப்படித்தான் இயங்குகிறது.
+      </p>
+
+      <h2>டொமைனை வாங்குதல்</h2>
+      <p>
+        நீங்கள் ஒரு <strong>பதிவாளரிடமிருந்து</strong> ஒரு டொமைனை வாங்குகிறீர்கள் – ஒரு மேல்-நிலை டொமைனில் (TLD) பெயர்களை
+        விற்க அங்கீகரிக்கப்பட்ட ஒரு நிறுவனம். புத்திசாலித்தனமாக தேர்வு செய்யுங்கள்:
+      </p>
+      <ul>
+        <li>
+          <strong>Cloudflare Registrar</strong> – செலவு விலையில் விற்கிறது, எந்த மார்க்அப்பும் இல்லை, இலவச
+          மேலாண்மை. சிறந்த மதிப்பு.
+        </li>
+        <li>
+          <strong>Namecheap, Porkbun</strong> – மலிவானது மற்றும் ஆரம்பநிலையாளர்களுக்கு நட்பானது.
+        </li>
+        <li>
+          <strong>GoDaddy</strong> – வேலை செய்கிறது, ஆனால் செக் அவுட்டில் அப்செல்களை எதிர்பார்க்கவும்.
+        </li>
+      </ul>
+      <p>
+        TLD தேர்வு மக்கள் நினைப்பதை விட முக்கியமானது:
+      </p>
+      <ul>
+        <li><code>.com</code> – கிளாசிக், மிகவும் நம்பத்தகுந்தது, ஆனால் பெரும்பாலும் எடுக்கப்பட்டது.</li>
+        <li><code>.net</code>, <code>.org</code>, <code>.dev</code>, <code>.io</code> – திடமான மாற்றுகள்.</li>
+        <li>ஆடம்பரமான TLDகள் (<code>.xyz</code>, <code>.club</code>) – மலிவானவை, ஆனால் குறைவான தீவிரமானவை போல் தெரிகின்றன.</li>
+      </ul>
+      <p>
+        <strong>புதுப்பிப்பு விலையில்</strong> கவனமாக இருங்கள்: பல டொமைன்கள் முதல் ஆண்டு மலிவானவை
+        மற்றும் பின்னர் திடீரென அதிகரிக்கின்றன. Cloudflare புதுப்பிப்புகளையும் அதே விலையில் வைத்து இதைத் தவிர்க்கிறது.
+      </p>
+
+      <h2>DNS பதிவுகளைப் புரிந்துகொள்ளுதல்</h2>
+      <p>
+        ஒரு டொமைன் மட்டும் எதுவும் செய்யாது. நீங்கள் <strong>DNS பதிவுகளை</strong> பயன்படுத்தி அது எங்கு சுட்டிக்காட்டுகிறது என்பதை
+        உலகுக்குச் சொல்கிறீர்கள். நீங்கள் உண்மையில் பயன்படுத்தும் பதிவுகள்:
+      </p>
+      <pre>Type     Example                         Purpose
+──────────────────────────────────────────────────────────
+A        185.199.108.153                 IPv4 address
+AAAA     2606:4700:4700::1111            IPv6 address
+CNAME    velsrocky.github.io             alias to another name
+MX       mail.yourdomain.com             email delivery
+TXT      "v=spf1 ..."                    verification / security</pre>
+      <p>
+        A பதிவுகள் ஒரு டொமைனை ஒரு IP-க்கு மேப் செய்கின்றன. CNAME ஒரு டொமைனை மற்றொரு டொமைனுக்கு மேப் செய்கிறது – உங்களுக்கு ஒரு பெயரைக் கொடுக்கும் சேவைகளுக்கு பயனுள்ளது (உதாரணமாக <code>username.github.io</code>).
+      </p>
+
+      <h2>சூழ்நிலை A: GitHub Pages (இந்த தளம்)</h2>
+      <p>
+        ஒரு இலவச GitHub Pages தளத்துடன் ஒரு டொமைனை இணைக்க:
+      </p>
+      <pre>A        @      ->  185.199.108.153
+A        @      ->  185.199.109.153
+A        @      ->  185.199.110.153
+A        @      ->  185.199.111.153
+CNAME    www    ->  username.github.io</pre>
+      <ol>
+        <li>உங்கள் DNS வழங்குநரிடம் அந்த பதிவுகளைச் சேர்க்கவும்.</li>
+        <li>GitHub ரெப்போவில்: Settings → Pages → Custom domain → உங்கள் டொமைனை உள்ளிடவும்.</li>
+        <li>GitHub பதிவுகளை சரிபார்த்து தானாகவே ஒரு இலவச HTTPS சான்றிதழை வழங்குகிறது.</li>
+      </ol>
+
+      <h2>சூழ்நிலை B: ஒரு VPS அல்லது டெடிகேட்டட் சர்வர்</h2>
+      <p>
+        நீங்கள் ஒரு சர்வரை வாடகைக்கு எடுத்தால் (Linode, DigitalOcean, Hetzner, ஒரு VPS), உங்கள் டொமைனை அதன்
+        IP-யில் சுட்டிக்காட்டவும்:
+      </p>
+      <pre>A        @   ->  203.0.113.10      (your server's IP)
+CNAME    www ->  @                    (www follows the root)</pre>
+      <p>
+        பின்னர் உங்கள் வெப் சர்வரை (Nginx, Apache, Caddy) உங்கள் தளத்தை வழங்க உள்ளமைக்கவும் மற்றும்
+        இலவச <strong>Let's Encrypt</strong> சான்றிதழுடன் HTTPS-ஐ அமைக்கவும்.
+      </p>
+
+      <h2>சூழ்நிலை C: ஒரு வீட்டு சர்வர்</h2>
+      <p>
+        வீட்டு நெட்வொர்க்கிங் ஒரு அடுக்கை சேர்க்கிறது – உங்கள் வீட்டில் ஒரு பொது IP உள்ளது, NAT வழியாக ஒவ்வொரு சாதனத்தாலும்
+        பகிரப்படுகிறது. உங்களுக்குத் தேவை:
+      </p>
+      <ol>
+        <li>
+          <strong>போர்ட் ஃபார்வர்டிங்</strong> – வெப் ட்ராஃபிக்கை (போர்ட் 443) உங்கள் சர்வரின் தனிப்பட்ட IP-க்கு
+          அனுப்ப உங்கள் ரூட்டருக்குச் சொல்லுங்கள்.
+        </li>
+        <li>
+          <strong>ஒரு நிலையான பொது IP</strong> – வீட்டு இணைப்புகள் அடிக்கடி IP-களை மாற்றுகின்றன. உங்கள் IP மாறும்போது
+          DNS பதிவைப் புதுப்பிக்கும் ஒரு <strong>DDNS</strong> சேவையைப் பயன்படுத்தவும்.
+        </li>
+        <li>
+          <strong>HTTPS</strong> – Let's Encrypt DNS பதிவுகள் மூலம் உரிமையை சரிபார்க்க முடியும், எனவே இது
+          வீட்டு IP-களிலும் வேலை செய்கிறது.
+        </li>
+      </ol>
+      <blockquote>
+        பாதுகாப்பு குறிப்பு: ஒரு வீட்டு சர்வரை இணையத்தில் வெளிப்படுத்துவது உண்மையானது. எல்லாவற்றையும்
+        புதுப்பித்த நிலையில் வைக்கவும், SSH கீகளைப் பயன்படுத்தவும், மேலும் உங்கள் உண்மையான IP-யை மறைக்கும் கூடுதல் கேடயமாக Cloudflare-ன் இலவச ப்ராக்ஸியைக் கருத்தில் கொள்ளவும்.
+      </blockquote>
+
+      <h2>மின்னஞ்சல் மற்றும் சரிபார்ப்பு பதிவுகள்</h2>
+      <p>
+        <code>you@yourdomain.com</code> வேண்டுமா? அதற்கு உங்கள் மின்னஞ்சல் வழங்குநரை (Gmail/Workspace, Zoho, அல்லது ஒரு தனிப்பயன் மெயில் சர்வர்) சுட்டிக்காட்டும்
+        <strong>MX பதிவுகள்</strong> தேவை. வழங்குநர்கள்
+        உங்கள் டொமைன் அதன் மெயிலை சொந்தமாகக் கொண்டுள்ளது என்பதை நிரூபிக்க <strong>TXT பதிவுகளையும்</strong> (SPF, DKIM) கேட்கிறார்கள்.
+      </p>
+
+      <h2>பொதுவான சிக்கல்கள்</h2>
+      <ul>
+        <li><strong>பரப்புதல் நேரம் எடுக்கும்</strong> – DNS மாற்றங்கள் நிமிடங்கள் முதல் 48 மணி நேரம் வரை ஆகலாம் (நல்ல வழங்குநருடன் பொதுவாக சில நிமிடங்கள்). பொறுமையாக இருங்கள்.</li>
+        <li><strong>ஒரே பெயரில் A மற்றும் CNAME ஐ கலக்காதீர்கள்</strong> – A பதிவுகள் மூலம் ரூட்டை சுட்டிக்காட்டவும், அல்லது துணை டொமைன்களுக்கு CNAME பயன்படுத்தவும்.</li>
+        <li><strong>DNS க்கு முன் HTTPS</strong> – சில ஹோஸ்ட்கள் DNS தீரும் வரை சான்றிதழை வழங்காது. வரிசை: முதலில் DNS, பின்னர் HTTPS.</li>
+        <li><strong>GitHub Pages மற்றும் வீட்டு சர்வர்களுடன் பதிவுகளை <code>proxied: off</code> ஆக வைக்கவும்</strong> (சாம்பல் கிளவுட்) – Cloudflare-ன் ப்ராக்ஸி நேரடி இணைப்புகளை உடைக்கலாம்.</li>
+      </ul>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🌐 VelsTech CIDR / சப்நெட் கால்குலேட்டரை முயற்சிக்கவும்</div>
+        <p>ஒரு VPS அல்லது வீட்டு நெட்வொர்க்கிற்கான முகவரி வரம்புகளைக் கணக்கிடுகிறீர்களா? எந்த IP/ப்ரிஃபிக்ஸ்க்கும் நெட்வொர்க், பயன்படுத்தக்கூடிய ஹோஸ்ட்கள் மற்றும் ப்ராட்காஸ்ட்டை விநாடிகளில் பெறுங்கள்.</p>
+        <a class="btn btn-primary" href="cidr-calculator.html">கால்குலேட்டரைத் திறக்கவும் →</a>
+      </div>
+
+      <h2>அவ்வளவுதான்</h2>
+      <p>
+        பெயரை சொந்தமாக்குங்கள், சில பதிவுகளைச் சேர்க்கவும், உங்கள் டொமைன் நீங்கள் சொந்தமாக்கும் எங்கும் சுட்டிக்காட்டுகிறது. அது
+        இலவச ஸ்டேடிக் ஹோஸ்டிங், ஒரு வாடகை சர்வர் அல்லது உங்கள் கழுவறையில் உள்ள ஒரு பெட்டியாக இருந்தாலும் – DNS பதிவுகள்
+        பசையாகும், மேலும் அவை எவ்வாறு வேலை செய்கின்றன என்பதை இப்போது உங்களுக்குத் தெரியும்.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="networking.html">← நெட்வொர்க்கிங்கிற்குத் திரும்பு</a>
+      <a href="index.html">முகப்பு</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

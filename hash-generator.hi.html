@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="मुफ़्त हैश जनरेटर – किसी भी टेक्स्ट का MD5, SHA-1, SHA-256 और SHA-512 चेकसम तुरंत कंप्यूट करें। पूरी तरह आपके ब्राउज़र में चलता है।" />
+  <title>हैश जनरेटर (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/hash-generator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/hash-generator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/hash-generator.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/hash-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/hash-generator.hi.html#webapp",
+  "name": "हैश जनरेटर | VelsTech",
+  "description": "किसी भी टेक्स्ट का MD5, SHA-1, SHA-256 और SHA-512 हैश तुरंत कंप्यूट करें। कोई सर्वर अपलोड नहीं – आपके ब्राउज़र में चलता है।",
+  "url": "https://velstech.net/hash-generator.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/hash-generator.html" />
+  <meta property="og:title" content="हैश जनरेटर (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech" />
+  <meta property="og:description" content="किसी भी टेक्स्ट का MD5, SHA-1, SHA-256 और SHA-512 हैश तुरंत कंप्यूट करें। कोई सर्वर अपलोड नहीं – आपके ब्राउज़र में चलता है।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="हैश जनरेटर (MD5 / SHA-1 / SHA-256 / SHA-512) | VelsTech" />
+  <meta name="twitter:description" content="किसी भी टेक्स्ट का MD5, SHA-1, SHA-256 और SHA-512 हैश तुरंत कंप्यूट करें। कोई सर्वर अपलोड नहीं – आपके ब्राउज़र में चलता है।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tools.html">टूल्स</a> / हैश जनरेटर</p>
+    <h1 class="title">हैश जनरेटर</h1>
+    <div class="meta">
+      <span>MD5 · SHA-1 · SHA-256 · SHA-512 · आपके ब्राउज़र में चलता है</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        कोई भी टेक्स्ट टाइप या पेस्ट करें और तुरंत उसके <strong>MD5, SHA-1, SHA-256 और
+        SHA-512</strong> हैश प्राप्त करें। डाउनलोड की गई फ़ाइलों की जाँच करने, कॉन्फ़िग
+        टेस्ट करने या हैशिंग के बारे में सीखने के लिए उपयोगी। सब कुछ लोकल रूप से कंप्यूट
+        होता है – आपका इनपुट कभी आपके डिवाइस से बाहर नहीं जाता।
+      </p>
+
+      <div class="calc">
+        <label class="field">
+          <span>इनपुट टेक्स्ट</span>
+          <textarea id="input" class="tool-textarea" rows="4" spellcheck="false"></textarea>
+        </label>
+
+        <div class="calc-results" id="results">
+          <div class="result-rows">
+            <div class="result-row"><span>MD5</span><strong id="r-md5" class="hash-val">–</strong></div>
+            <div class="result-row"><span>SHA-1</span><strong id="r-sha1" class="hash-val">–</strong></div>
+            <div class="result-row"><span>SHA-256</span><strong id="r-sha256" class="hash-val">–</strong></div>
+            <div class="result-row"><span>SHA-512</span><strong id="r-sha512" class="hash-val">–</strong></div>
+          </div>
+          <p class="tool-note">
+            किसी फ़ाइल को हैश करना चाहते हैं, न कि टेक्स्ट की लाइन को? टर्मिनल का उपयोग करें –
+            <code>md5sum file</code>, <code>sha1sum file</code>, या
+            <code>sha256sum file</code> Linux और macOS पर।
+          </p>
+        </div>
+      </div>
+
+      <h2>हैशिंग क्यों मायने रखती है</h2>
+      <p>
+        हैश एक-तरफ़ा फ़िंगरप्रिंट होते हैं। एक ही इनपुट हमेशा एक ही हैश उत्पन्न करता है, लेकिन
+        आप हैश को उल्टा करके इनपुट नहीं प्राप्त कर सकते। यही कारण है कि डाउनलोड चेकसम के साथ
+        आते हैं – यदि फ़ाइल का हैश मेल खाता है, तो फ़ाइल स्थानांतरण के दौरान दूषित या
+        छेड़छाड़ नहीं की गई थी।
+      </p>
+      <p>
+        <strong>महत्वपूर्ण:</strong> MD5 और SHA-1 तेज़ हैं लेकिन पासवर्ड स्टोरेज या हमलावरों
+        के खिलाफ सुरक्षा के लिए <em>सुरक्षित नहीं</em> हैं। सुरक्षा-संबंधित किसी भी चीज़ के लिए
+        <strong>SHA-256</strong> या bcrypt जैसे विशेष पासवर्ड हैशर का उपयोग करें।
+      </p>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="password-managers.html">पासवर्ड मैनेजर: आपको एक की आवश्यकता क्यों है</a></li>
+        <li><a href="security-habits.html">वास्तव में आवश्यक केवल 5 सुरक्षा आदतें</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी टूल्स</a>
+      <a href="security.html">सुरक्षा नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("input");
+    const out = { md5: document.getElementById("r-md5"), sha1: document.getElementById("r-sha1"), sha256: document.getElementById("r-sha256"), sha512: document.getElementById("r-sha512") };
+
+    function hex(buf) {
+      return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function render() {
+      const raw = input.value;
+      const results = document.getElementById("results");
+      if (!raw) {
+        Object.values(out).forEach((el) => { el.textContent = "–"; });
+        results.style.opacity = "0.5";
+        return;
+      }
+      results.style.opacity = "1";
+      const enc = new TextEncoder().encode(raw);
+      out.sha1.textContent = hex(await crypto.subtle.digest("SHA-1", enc));
+      out.sha256.textContent = hex(await crypto.subtle.digest("SHA-256", enc));
+      out.sha512.textContent = hex(await crypto.subtle.digest("SHA-512", enc));
+      out.md5.textContent = md5(raw);
+    }
+
+    let raf = null;
+    input.addEventListener("input", () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(render);
+    });
+
+    /* MD5 – pure JS implementation (Web Crypto doesn't offer MD5) */
+    function md5(str) {
+      function rotl(x, n) { return (x << n) | (x >>> (32 - n)); }
+      function add32(a, b) { return (a + b) & 0xffffffff; }
+      const K = [];
+      for (let i = 0; i < 64; i++) K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 4294967296);
+      const bytes = [];
+      for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i);
+        bytes.push(c & 0xff, (c >> 8) & 0xff);
+      }
+      const origLen = bytes.length;
+      bytes.push(0x80);
+      while (bytes.length % 64 !== 56) bytes.push(0);
+      const bitLen = origLen * 8;
+      bytes.push(bitLen & 0xff, (bitLen >>> 8) & 0xff, (bitLen >>> 16) & 0xff, (bitLen >>> 24) & 0xff, 0, 0, 0, 0);
+      let a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
+      const S = [7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+      for (let i = 0; i < bytes.length; i += 64) {
+        const M = [];
+        for (let j = 0; j < 16; j++) M[j] = (bytes[i + j * 4]) | (bytes[i + j * 4 + 1] << 8) | (bytes[i + j * 4 + 2] << 16) | (bytes[i + j * 4 + 3] << 24);
+        let A = a0, B = b0, C = c0, D = d0;
+        for (let j = 0; j < 64; j++) {
+          let F, g;
+          if (j < 16) { F = (B & C) | (~B & D); g = j; }
+          else if (j < 32) { F = (D & B) | (~D & C); g = (5 * j + 1) % 16; }
+          else if (j < 48) { F = B ^ C ^ D; g = (3 * j + 5) % 16; }
+          else { F = C ^ (B | ~D); g = (7 * j) % 16; }
+          F = add32(F, add32(add32(A, K[j]), M[g]));
+          const temp = D; D = C; C = B;
+          B = add32(B, rotl(F, S[j]));
+          A = temp;
+        }
+        a0 = add32(a0, A); b0 = add32(b0, B); c0 = add32(c0, C); d0 = add32(d0, D);
+      }
+      const endian = (x) => [x & 0xff, (x >>> 8) & 0xff, (x >>> 16) & 0xff, (x >>> 24) & 0xff].map((b) => b.toString(16).padStart(2, "0")).join("");
+      return endian(a0) + endian(b0) + endian(c0) + endian(d0);
+    }
+
+    input.value = "VelsTech";
+    render();
+  </script>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=44"></script>
+</body>
+</html>

@@ -180,8 +180,8 @@ perl -pi -e 's/script\.js\?v=N/script.js?v=N+1/' -- *.html benchmarks/*.html
 ## Key SEO features
 - Per-article OG images (1200×630, dark theme, category pill)
 - BlogPosting + FAQPage + WebApplication + CollectionPage schema
-- sitemap.xml (EN + HI URLs) + robots.txt
-- `hreflang` `en` / `hi` / `x-default` alternates on articles
+- sitemap.xml (EN + HI + TA URLs) + robots.txt
+- `hreflang` `en` / `hi` / `ta` / `x-default` alternates on articles
 - Google Search Console verified (DNS TXT)
 - Cloudflare Web Analytics (Automatic Setup)
 - Canonical URLs on every page

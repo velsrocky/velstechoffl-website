@@ -21,8 +21,9 @@ browser widget  →  Cloudflare Worker proxy (chat-proxy.js)
 - The bubble uses a **chatbot** icon – `chat.js` renders
   `<img src="/chatbot.png" class="vt-bubble-img">` (PNG, full-res in
   `chatbot.png`) with an SVG fallback.
-- Glow pulse (`vt-bulbPulse`), pop-in (`vt-bubbleIn`) and hint tooltip
-  (`vt-bubble-hint`) are in `chat.css`.
+- Gentle bounce (`vt-bounce`), pop-in (`vt-bubbleIn`) and hint tooltip
+  (`vt-bubble-hint`) are in `chat.css`. Bounce pauses on hover and respects
+  `prefers-reduced-motion`.
 - A **pop-out hint** appears after 8s, on 40% scroll, or on first glossary hover
   (`setupBubbleHint()` in `chat.js`). It auto-hides after 6s, is localized
   (EN/TA/HI), and its dismissal persists in `vt-bubble-hint-dismissed`.

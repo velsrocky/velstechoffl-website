@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="क्वीन 27B रिज  को 12GB RX 6800M – ROCm 18.1 पर 3.7bpw पर परीक्षण किया गया था  तोक/सेकेंड 21.8 वाल्कन 21.8 तोक/सेकेंड  वॉल्कन 21.8 तोक/सेकेंड  16K कॉन्टेक्स्ट में डिकोड, प्रॉम्प्ट-इवैल ट्रेडऑफ, वीआरएएम फिट, और क्यों –ngl 999 ब्रेक --fit." /> />
+  <title>क्वीन 27B रिज 3.7 बीपीडब्ल्यू पर आरएक्स 6800M: आरओसीएम बनाम वुल्केन 16K – वेल्सटेक लैब | वेल्सटेक | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html#article",
+  "headline": "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab",
+  "description": "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.",
+  "url": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html",
+  "datePublished": "2026-08-27T00:00:00Z",
+  "dateModified": "2026-08-27T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/qwen-27b-ridge-rocm-vs-vulkan.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" />
+  <meta property="og:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech" />
+  <meta property="og:description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit." />
+  <meta property="og:image" content="https://velstech.net/og/qwen-27b-ridge-rocm-vs-vulkan.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K context, with prompt-eval tradeoffs and VRAM fit." />
+  <meta name="twitter:image" content="https://velstech.net/og/qwen-27b-ridge-rocm-vs-vulkan.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / <a href="index.html#lab">VelsTech Lab</a> / This experiment</p>
+    <h1 class="title">Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">Qwen</span>
+      <span class="tag">RX 6800M</span>
+      <span class="tag">llama.cpp</span>
+      <span>Aug 27, 2026</span>
+      <span>· 6 min read</span>
+      <span>· Updated Aug 27, 2026</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">वेल्सटेक लैब – जल्द ही आने वाला है</span>ये पहला मापित पोस्ट है जो लैब फॉर्मैट में है: सटीक हार्डवेयर, सॉफ्टवेयर, कमांड, और रॉ डेटा।<code>llama-server</code>समयांकन – जिसमें क्या टूट गया।</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">अपनी स्वयं की फिटनेस पहले चेक करें</div>
+        <p><a href="llm-vram-calculator.html">AI विश्लेषणात्मक संसाधन (AIAR) VRAM (VRAM) कैलकुलेटर 
+
+इस कैलकुलेटर का उपयोग AI मॉडल्स के लिए आवश्यक VRAM की मात्रा की गणना करने के लिए किया जाता है।</a>– 27 बिलियन 3.7 बीपीडी + 16K आपके VRAM में फिट है क्या?<a href="gpu-ai-calculator.html">GPU AI परफॉर्मेंस कैलकुलेटर</a>– अपेक्षा है कि – कितने टोकन प्रति सेकंड (tok/s) होंगे इससे पहले कि आप चलाएं।</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">गणना उपकरण खोलें</a>
+      </div>
+
+      <h2>जो हमने परीक्षण किया</h2>
+      <ul>
+        <li><strong>GPU</strong>AMD RX 6800M 12 GB – यह मोबाइल, RDNA2, 12 GB VRAM वाली बजट 12 GB कार्ड है, जिसकी ~384 GB/s की गति है, जो हम अक्सर स्थानीय AI के लिए सिफारिश करते हैं।</li>
+        <li><strong>मॉडल :</strong> <code>Qwen3.8-27B-Ridge-3.7bpw.gguf</code>– Qwen 27B वर्ग 3.7 बिट्स प्रति वज़न (~12.3 जीबी वज़न). Ridge विशिष्टता , न कि K-विशिष्टता।</li>
+        <li><strong>पृष्ठभूमि</strong> <code>-c 16384</code>VelsTech ke paas ek naya AI chatbot viksit kiya gaya hai jiska naam VelsChat hai. Yeh chatbot VelsChat ke users ko samvedansheel jawab de sakta hai.<code>--cache-type-k q8_0 --cache-type-v q8_0 -fa on</code>(Q8 KV में, फ्लैश ध्यान दें)</li>
+        <li><strong>भारित करना</strong> <code>-ngl 999 --fit on</code>पूरी तरह से सभी परतें; नीचे दिए गए चेतावनी को देखें</li>
+        <li><strong>प्रॉम्प्ट</strong>373 टोकन (दोनों रनों में एक ही प्रॉम्प्ट)<code>n_slots=4, n_ctx_slot=16384, kv_unified=true, n_threads=8</code></li>
+        <li><strong>निर्माण</strong>पहला परीक्षण –<code>/home/user-name/llama.cpp/build/bin/llama-server</code>(ROCm); कार्य 2 –<code>/home/user-name/llama.cpp_vulkan/build-vulkan/bin/llama-server</code>वुल्कैन</li>
+      </ul>
+
+      <h2>हमने उसे कैसे चलाया</h2>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Qwen3.8-27B-Ridge-3.7bpw.gguf \
+ -ngl 999 \
+ --cache-type-k q8_0 --cache-type-v q8_0 \
+ -c 16384 -fa on --fit on --reasoning-preserve --jinja</pre>
+      <p>दो पीछे-एंड, एक ही फ्लैग वाले सर्वर की रिपोर्ट 
+
+1. निम्नलिखित बैकेंड की जानकारी:
+- बैकेंड 1: NVIDIA V100 (16 GB) – 1200 MHz
+- बैकेंड 2: AMD Radeon Pro WX 8200 (8 GB) – 1750 MHz
+
+2. सर्वर की रिपोर्ट:
+- CPU: Intel Xeon Gold 6238R (26 Core, 2.2 GHz)
+- GPU: बैकेंड 1 में 4 NVIDIA V100 (16 GB) – 1200 MHz और बैकेंड 2 में 4 AMD Radeon Pro WX 8200 (8 GB) – 1750 MHz
+- RAM: 512 GB DDR4 – 3200 MHz
+- Storage: 2 TB SSD और 8 TB HDD
+- Operating System: Ubuntu 20.04 LTS
+
+3. प्रदर्शन की तुलना:
+- बैकेंड 1 में 1000 से अधिक टोकन प्रति सेकंड की दर से प<code>listening on http://127.0.0.1:8080</code>फिर एक 373-टोकन के प्रॉम्प्ट को प्रोसेस करता है और लगभग 228-243 टोकन (600 टोकन बजट, 0 से कट ऑफ) पैदा करता है।</p>
+
+      <h2>जो हमने मापा</h2>
+      <pre>Run            Prompt eval                Decode (tg)                Total
+─────────────────────────────────────────────────────────────────────────────
+ROCm  (build)  1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s   100:18.42  155:18.12  210:18.08 → 18.12 tok/s   14.24s / 601 tok  graphs reused 226
+Vulkan        2493 ms / 373 tok = 6.68 ms/tok = 149.6 tok/s   100:22.09  166:21.83  232:21.82 → 21.84 tok/s   13.57s / 616 tok  graphs reused 241</pre>
+      <p><strong>चुनावी नतीजे</strong>वुल्केन एक ओपन-सोर्स ग्राफिक्स एपीआई है जो ग्राफिक्स कार्ड के साथ संवाद करने के लिए डिज़ाइन किया गया है।<strong>decode की गति में लगभग 20% की तेजी</strong>(21.84 vs 18.12 शब्द/सेकंड) – चैटिंग के लिए महत्वपूर्ण बात है। ROCm लगभग 45% तेजी से प्रॉम्प्ट इवैल्यूएशन में है (217 vs 149 शब्द/सेकंड) – लंबे प्रॉम्प्ट के लिए पहला शब्द आउटपुट होने में लगने वाला समय। 615 शब्दों के लिए एंड-टू-एंड, Vulkan 0.67 सेकंड (13.57 vs 14.23) से जीतता है क्योंकि डीकोडिंग हावी है।</p>
+
+      <h2>लॉग्स में क्या लिखा था – और क्या टूट गया</h2>
+      <ol>
+        <li><code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code>आपको मजबूर किया गया<code>-ngl 999</code>so<code>--fit on</code>अनदेखा किया जाता है। 12 जीबी कार्ड पर यह 27 बिलियन q8-KV रन आंशिक रूप से ऑफलोड करना चाहिए; 999 छुपा हुआ है कि वास्तव में कितने लेयर फिट होते हैं।<strong>अगली बार चलाने के लिए सुधार<code>-ngl 999</code>Kya?<code>--fit on</code>चुनें या निर्धारित करें<code>-ngl 60</code>विश्लेषण<code>n_gpu_layers</code>.</strong></li>
+        <li>14× <code>W model has unused tensor blk.64.* (size ~20KB–73MB)</code>– मॉडल हेडर में 65 ब्लॉक (0-64) का विज्ञापन किया गया है, लेकिन ब्लॉक 64 Qwen3 है।<code>nextn</code>संभाव्य शीर्ष<code>eh_proj/enorm/hnorm/shared_head_norm</code>ल्लामा.cpp को निर्माण के दौरान ही ध्यान में रखता है, जब बातचीत के दौरान नहीं तो यह उसे अनदेखा करता है।<code>--jinja --reasoning-preserve</code>इस बनावट में.  कोई भी गलती नहीं है, लेकिन आप ~300 एमबी का मृत वजन लोड करते हैं।</li>
+        <li><code>kv_unified=true, n_slots=4, n_ctx_slot=16384</code>– चार स्लॉट एक ही KV पूल को साझा करते हैं। यदि आप 16K प्रति पैरलल रिक्वेस्ट के साथ मार्टिन करें, तो सिंगल-स्लॉट टेस्ट द्वारा दिखाए गए से भी तेजी से OOM हो जाएंगे।</li>
+      </ol>
+
+      <h2>कैलकुलेटरों के साथ इसका मैपिंग कैसे होता है</h2>
+      <p>वज़न<code>27B × 0.4625 bytes (3.7bpw/8) ≈ 12.5 GB</code>KV q8 16K mein: hamari<a href="llm-vram-calculator.html">वीआरएएम कैलकुलेटर</a>अनुमान ~1.0 GB 8K के साथ<code>2×layers×kv_heads×head_dim×2 bytes×context</code>– 16K Q8 पर यह ~2.2 GB है, जिसमें 6% अतिरिक्त भार + 0.25 GB शामिल है → कुल ~15.6 GB, जो 12 GB से बहुत ऊपर है। यह बात साबित करती है कि यह कुछ हद तक ऑफलोड हुआ (सिस्टम RAM के माध्यम से) – जो ~18-21 tok/s को समझाता है vs<a href="gpu-ai-calculator.html">GPU AI परफॉर्मेंस कैलकुलेटर</a>उच्चतम सीमा ~30 टोकन/सेकंड (tok/s) है अगर पूरी तरह से निवासी है। यह अंतर ही ऑफलोड कर चुकाने का है।</p>
+
+      <details class="calc-method">
+        <summary>सूत्रों के पीछे की गणना करने के लिए – नंबरों के फार्मूले 
+
+फार्मूलों की गणना करने के लिए, हमें कुछ महत्वपूर्ण कारकों का पता लगाना होगा जैसे कि GPU की गति (GPU क्लॉक स्पीड), VRAM की मात्रा और CPU की गति (CPU क्लॉक स्पीड)। 
+
+1. GPU की गति (GPU क्लॉक स्पीड) को मिलाकर, हम GPU की कुल क्षमता को निकाल सकते हैं जो हमें GPU के टोकन प्रति सेकंड (tok/s) की दर देता है।
+
+2. VRAM की मात्रा को जोड़कर, हम GPU की कुल क्षमता को निकाल सकते हैं जो हमें GPU के टोकन प्रति सेकंड (tok/s) की दर देता है।
+
+3. CPU की गति (CPU क्ल</summary>
+        <div class="calc-method-body">
+          <p>कैलकुलेटरों के समान तरीके से, जिन्हें आप सत्यापित करने के लिए जोड़ सकते हैं।</p>
+          <h4>VRAM (Video RAM)<a href="llm-vram-calculator.html">LLM VRAM कैलकुलेटर 
+
+LLM का VRAM कैलकुलेटर एक उपकरण है जो LLM (लर्निंग लैंग्वेज मॉडल) के लिए आवश्यक VRAM (VRAM) की मात्रा को निर्धारित करने में मदद करता है। 
+
+यह कैलकुलेटर LLM के आकार, GPU की गति, और VRAM की आवश्यकताओं के आधार पर VRAM की आवश्यक मात्रा की गणना करता है। 
+
+LLM VRAM कैलकुलेटर में निम्नलिखित विवरण हैं:
+
+- LLM आकार: यह LLM के आकार को दर्शाता है, जो इसके पैरामीटर और वजन को दर्शाता है।
+- GPU गति: यह GPU की गति को दर्शाता है, जो इसे किस गति से काम करने की अनुमत</a></h4>
+          <pre>weights = params × bytes_per_weight / GiB
+kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes
+kv_cache = kv_per_token × context × batch / GiB</pre>
+          <h4>गति:<a href="gpu-ai-calculator.html">GPU – AI प्रदर्शन गणनकारी</a></h4>
+          <pre>decode_tok/s ≈ (memory_BW × 0.8) / bytes_per_token</pre>
+          <p>आपके द्वारा मापा गया 18-21 tok/s 30 tok/s सीमा से नीचे है क्योंकि byte_per_token में PCIe + RAM ऑफलोड शामिल है, VRAM BW के अलावा केवल।</p>
+        </div>
+      </details>
+
+      <h2>अंतिम निष्कर्ष</h2>
+      <p>एक 12 जीबी RX 6800M पर 16K पर Qwen 27B Ridge 3.7 बीपीडब्ल्यू<strong>काम करता है, लेकिन पूरी तरह से निवासी नहीं है।</strong>यदि आप चैट (decode-वर्जित) करते हैं, तो Vulkan का +20% वास्तविक है। यदि आप लंबे दस्तावेज़ प्रदान करते हैं, तो ROCm का तेजी से प्री-फिल मैटर्स अधिक महत्वपूर्ण है। एक लैब के फैसले के लिए:<strong>उपयुक्त लेकिन ऑफलोड किया गया</strong>– 18-21 टॉक प्रति सेकंड (tok/s) की अपेक्षा 16K क्वांटाइजेशन 8 (q8) KV के साथ, 32K पर धीमा होने की उम्मीद है। आराम से निवासी बनने के लिए,<code>c 8192</code>VelsTech  – VelsChat  का उपयोग AI प्रौद्योगिकी में एक महत्वपूर्ण भूमिका निभाता है। यह चैटबॉट्स और व्यक्तिगत सहायक कार्यक्षमता को विकसित करने के लिए LLMs का उपयोग करता है, जैसे कि ChatGPT और Claude। 
+
+इन LLMs को GPU और CPU द्वारा संचालित किया जाता है, जिनमें VRAM और RAM की बड़ी मात्रा होती है। इसके अलावा, वे Q4 और Q5 प्रोसेसरों का उपयोग करते हैं, जो  GHz की उच्च गति पर चलते हैं। 
+
+इन LLMs में KV cache, RAG, MoE और ROCm जैसे प्रमुख घटक होते हैं, जो उन्हें तेजी से और कुशलता से कार्य करने में मदद करते हैं। इसके अलावा, वे Vulkan और CUDA जैसे API का उपय<code>q8_0→f16</code>अगर आपके पास स्पेस है या 16/24 जीबी तक बढ़ने के लिए तैयार हैं ।</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">विश्लेषणात्मक प्रयोगशाला</div>
+        <p>अगले मॉडल के साथ<code>--fit on</code>बिना<code>-ngl 999</code>(प्रदर्शित करें फिट किए गए परतें)<code>q8_0 vs f16</code>KV – 16K में। फिर 70B रेंज क्लाउड के लिए है।</p>
+        <a class="btn btn-primary" href="index.html#lab">वेल्सटेक लैब में वापस</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="best-gpu-for-local-llm.html">Best GPU for local LLMs</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=41"></script>
+</body>
+</html>

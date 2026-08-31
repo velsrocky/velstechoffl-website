@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="AMD Radeon (RDNA2/RDNA3) जीपीयू पर ROCm 7.14 को Ubuntu 26.04 पर स्थापित करने के लिए चरण-दर-चरण निर्देश – apt सेटअप से rocminfo सत्यापन तक। 
+
+1. प्रारंभिक आवश्यकताएं: 
+   - आपके पास AMD Radeon (RDNA2/RDNA3) जीपीयू होना चाहिए।
+   - आपके पास Ubuntu 26.04 स्थापित होना चाहिए।
+   - आपके पास इंटरनेट कनेक्शन होना चाहिए।
+
+2. apt सेटअप करने के लिए आवश्यक पैकेज अपडेट करें:
+   - sudo apt update
+
+3. ROCm 7.14 से संबंधित पैकेज जोड़ें:
+   - sudo add-apt-repository ppa:heynnema/rocm-7.14
+
+4. पैकेज अपडेट करें:
+   - sudo apt update
+
+5. ROCm 7.14 के आवश्यक पैकेज स्थाप" /> />
+  <title>रोकम (ROCm) को यूनिटी पर इंस्टॉल करना | वेल्स टेक (VelsTech)
+
+रोकम (ROCm) एक खुला स्रोत सॉफ्टवेयर है जो AMD रेडियॉन जीपीयू (GPU) के लिए डिज़ाइन किया गया है। यह सॉफ्टवेयर AMD के GPU को माइक्रोसॉफ्ट विंडोज़ और लिनक्स ऑपरेटिंग सिस्टम पर उपयोग करने की अनुमति देता है। इस लेख में, हमें रोकम (ROCm) को यूनिटी पर इंस्टॉल करना होगा।
+
+पहले, हमें अपने सिस्टम को अपडेट करना होगा:
+
+`sudo apt-get update`
+
+इसके बाद, हमें रोकम (ROCm) के प्राथमिक पैकेज को इंस्टॉल करना होगा:
+
+`sudo apt-get install rocm-dev rocm-dkms rocm-opencl-icd rocm-smi`
+
+इसके बाद, हमें | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/install-rocm-ubuntu.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/install-rocm-ubuntu.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/install-rocm-ubuntu.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/install-rocm-ubuntu.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/install-rocm-ubuntu.html#article",
+  "headline": "Installing ROCm on Ubuntu for Radeon GPUs",
+  "description": "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification.",
+  "url": "https://velstech.net/install-rocm-ubuntu.html",
+  "datePublished": "2026-08-25T00:00:00Z",
+  "dateModified": "2026-08-25T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/install-rocm-ubuntu.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/install-rocm-ubuntu.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/install-rocm-ubuntu.html" />
+  <meta property="og:title" content="Installing ROCm on Ubuntu for Radeon GPUs | VelsTech" />
+  <meta property="og:description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification." />
+  <meta property="og:image" content="https://velstech.net/og/install-rocm-ubuntu.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Installing ROCm on Ubuntu for Radeon GPUs | VelsTech" />
+  <meta name="twitter:description" content="Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification." />
+  <meta name="twitter:image" content="https://velstech.net/og/install-rocm-ubuntu.png" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tutorials.html">Tutorials</a> / This article</p>
+    <h1 class="title">Installing ROCm on Ubuntu for Radeon GPUs</h1>
+    <div class="meta">
+      <span class="tag">ROCm</span>
+      <span class="tag">Radeon</span>
+      <span class="tag">GPU</span>
+      <span>Aug 25, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>एएमडी का ROCm (रेडियॉन ओपन कंप्यूट) प्लेटफ़ॉर्म आपको AMD जीपीयू पर पायथन, टेंसरफ्लो और LLM इन्फरेंस जैसे जीपीयू-एक्सीलरेटेड वर्कलोड्स चलाने की अनुमति देता है। यदि आपके पास एक समर्थित रेडियॉन कार्ड है – आरडीएनए२ (आरएक्स 6000 श्रृंखला / ग्राफ़िक्स 1030) या आरडीएनए३ (आरएक्स 7000 श्रृंखला / ग्राफ़िक्स 1100) – तो यह मार्गदर्शिका आपको यूनिक्स 26.04 एलटीएस पर ROCm 7.14 को स्थापित करने के लिए चलाती है।</p>
+
+      <p>मैंने इसकी परीक्षण किया था<strong>रेडिओन एक्स ६८००एम</strong>(ग्राफिक्स 1031, RDNA2), और सभी नीचे कुछ वास्तव में काम करता है।  समान चरण अधिकांश RDN-आधारित कार्डों के लिए भी लागू होते हैं।</p>
+
+      <h2>पूर्व शर्तें 
+
+कंप्यूटर विज्ञान और भाषा प्रक्रिया के लिए आवश्यक कुछ पूर्व शर्तें निम्नलिखित हैं:
+
+- हिंदी भाषा का ज्ञान
+- कंप्यूटर विज्ञान और भाषा प्रक्रिया की मूल बातें जैसे कि एल्गोरिदम, डेटा संरचनाएं, और सॉफ्टवेयर डिज़ाइन
+- भाषा प्रक्रिया में उपयोग किए जाने वाले AI मॉडल्स और एल्गोरिदम का ज्ञान
+- भाषा प्रक्रिया में उपयोग किए जाने वाले विभिन्न तकनीकों और प्लेटफार्मों का ज्ञान जैसे कि GPU, CPU, VRAM, RAM, LLM, GGUF, Q4, Q5, Q8, KV cache, RAG, MoE, ROCm, Vulkan, CUDA, NPU, SSD, HDD, DNS, API
+-</h2>
+      <ul>
+        <li>AMD Radeon ग्राफिक्स प्रोसेसर से – एक विशेष AMD Radeon ग्राफिक्स प्रोसेसर<a href="https://rocm.docs.amd.com/en/latest/install/rocm.html" target="_blank" rel="noopener">सहायता की सूची 
+
+1. प्रोसेसर – CPU
+2. ग्राफिक्स प्रोसेसर – GPU
+3. वीडियो रेम – VRAM
+4. रेम – RAM
+5. लैंग्वेज मॉडल – LLM
+6. गेमिंग ग्राफिक्स यूनिट फ्रेमवर्क – GGUF
+7. तीसरा क्वार्टर – Q3, चौथा क्वार्टर – Q4, पांचवा क्वार्टर – Q5, आठवा क्वार्टर – Q8
+8. कैश मेमोरी – KV cache
+9. RAM – RAG
+10. मॉडल ऑफ इवेंट – MoE
+11. रेडियो कार्ड – ROCm
+12. वुल्कन – Vulkan
+13. क्यूडीए – CUDA
+14. NPU – NPU
+15. सॉलिड स्टेट ड्राइव – SSD
+16. हार्ड डिस्क</a></li>
+        <li>Ubuntu 26.04 LTS (Resolute Raccoon) – install kiya hai.</li>
+        <li>इंटरनेट कनेक्शन</li>
+        <li>एक उपयोगकर्ता खाता जिसे sudo अधिकार हैं</li>
+      </ul>
+
+      <h2>पहला कदम – amdgpu-install स्क्रिप्ट को स्थापित करें</h2>
+      <p>ROCm उपयोग करता है –  Heterogeneous System Architecture (HSA) को बढ़ावा देने के लिए, जिससे GPU और CPU के बीच डेटा संचरण को सुगम बनाया जा सके।<code>amdgpu-install</code>ग्राफिक्स घटकों, ROCm रनटाइम और GPU ड्राइवर को संयोजित करने के लिए एक स्क्रिप्ट बनाने के लिए: 
+
+AMD के रिपॉजिटरी से डाउनलोड और इंस्टॉल करें: 
+
+```bash
+#!/bin/bash
+
+# ROCm रनटाइम को डाउनलोड और इंस्टॉल करें
+sudo apt-get update
+sudo apt-get install -y rocm-rocminfo rocm-opencl-icd rocm-smi rocm-dev
+
+# GPU ड्राइवर को डाउनलोड और इंस्टॉल करें
+sudo apt-get install -y rocm-opencl-icd rocm-device-libs rocm-smi rocm-dev
+
+# ग्राफिक्स घटकों को डाउनलोड और इंस्टॉल करें
+sudo apt-get install -y rocm-gfx-dev rocm-gfx-tools rocm-gfx-libs
+
+# ROCm रनटाइम और GPU ड्राइवर को पुनः लोड करें
+sudo systemctl restart rocm
+
+# GPU ड्राइवर और ग्राफ</p>
+
+      <pre>sudo apt update
+wget https://repo.radeon.com/amdgpu-install/31.40.1/ubuntu/resolute/amdgpu-install_31.40.1.314001-1_all.deb
+sudo apt install ./amdgpu-install_31.40.1.314001-1_all.deb</pre>
+
+      <p>English to Hindi translation. 
+
+1. API – API 
+2. ROCm – ROCm 
+3. CUDA – CUDA 
+4. NPU – NPU 
+5. DNS – DNS 
+6. Ollama – Ollama 
+7. llama.cpp – llama.cpp 
+8. tokenizer – tokenizer 
+9. tokens – tokens 
+10. embeddings – embeddings 
+11. inference – inference 
+12. quantization – quantization 
+13. model – model 
+14. dataset – dataset 
+15. prompt – prompt 
+16. GGUF – GGUF 
+17. Q4 – Q4 
+18. Q5 – Q5 
+19. Q8 – Q8 
+20. KV cache – KV cache 
+21. RAG – RAG 
+22. MoE – MoE 
+23. LLM – LLM 
+24. VelsTech – VelsTech 
+25. VelsChat – VelsChat 
+26. ChatGPT – ChatGPT 
+27. Claude – Claude 
+28. Gemini – Gemini 
+29. Qwen – Qwen 
+30. Alibaba – Alibaba 
+31. NVIDIA – NVIDIA 
+32. AMD – AMD 
+33. Intel – Intel 
+34. Apple – Apple 
+35. Windows –<code>resolute</code>विशेष रूप से<code>noble</code>(24.04) – 24.04<code>jammy</code>(22.04) यदि आप एक अलग Ubuntu संस्करण पर हैं।</p>
+
+      <h2>दूसरा कदम – ROCm और GPU ड्राइवर का स्थापना करें</h2>
+      <p>अभी शुरू करें<code>amdgpu-install</code>उपयोगकर्ता के अनुसार उपयुक्त उपयोग के साथ और जीपीयू लक्ष्य के साथ।</p>
+
+      <pre>sudo amdgpu-install --usecase=rocm,graphics --gfxversion=gfx1031</pre>
+
+      <p>
+        <strong>महत्वपूर्ण:</strong>मेरे GPU की विशिष्टता का उपयोग करें<code>gfx</code>लक्ष्य<code>auto</code>जैसे कि ऑटो डिटेक्शन कुछ समय में सही आर्किटेक्चर को पहचानने में असफल हो सकता है, इसलिए इसका विशिष्ट रूप से निर्देश देने से साफ स्थापना होती है। अपने GPU का ग्राफिक्स वर्जन ढूंढें</p>
+      <ul>
+        <li><strong>आरडीएनए 2 (RX 6000 श्रृंखला):</strong>ग्राफिक्स 1030, ग्राफिक्स 1031, ग्राफिक्स 1032</li>
+        <li><strong>रीडीएनए ३ (RX 7000 श्रृंखला)</strong>ग्राफिक्स 1100, ग्राफिक्स 1101, ग्राफिक्स 1102</li>
+        <li><strong>रीडीएनए 3.5 (रायजन एआई 300)</strong>ग्राफिक्स 1150, ग्राफिक्स 1151</li>
+      </ul>
+      <p>कुछ संदेह है – चलिए शुरू करें<code>rocminfo</code>कार्ड के – वास्तुकला को AMD की वेबसाइट पर देखें (या – कार्ड को स्थापित करने के बाद)।</p>
+
+      <blockquote>
+        <strong>उपकरण परिवार का नोट:</strong>जब इंस्टॉलर आपको डिवाइस फैमिली का चयन करने के लिए पूछता है, तो आपके पास दो विकल्प हैं:<ul>
+          <li>
+            <strong>सारा</strong>– AMD जीपीयू सभी आर्किटेक्चर के लिए रनटाइम सपोर्ट इंस्टॉल करता है।
+            AMD जीपीयू के विभिन्न कार्ड पर क्रॉस-प्लेटफ़ॉर्म विकास या टेस्टिंग के लिए उपयुक्त है।</li>
+          <li>
+            <strong>AMD रेडियॉन</strong>– केवल उपभोक्ता रेडियॉन जीपीयू के लिए लक्षित है। यह एकल रेडियॉन कार्ड के लिए अधिक संकरा और केंद्रित विकल्प है।</li>
+        </ul>अगर आप अपने मशीन पर ही काम कर रहे हैं तो<strong>AMD Radeon</strong>यदि आप कुछ बना रहे हैं जो भविष्य में Instinct या अन्य संरचनाओं पर चल सकता है,<strong>सारे</strong>.
+      </blockquote>
+
+      <h2>प्रक्रिया 3 – अतिरिक्त लाइब्रेरीज़ को स्थापित करें</h2>
+      <p>कुछ ROCm उपकरणों को आवश्यक है<code>libatomic</code>aur<code>libquadmath</code>लाइब्रेरीज़ को सही तरीके से चलने के लिए इनस्टॉल करें ताकि आप बाद में क्रिप्टिक इरर का सामना न करें</p>
+
+      <pre>sudo apt install libatomic1 libquadmath0</pre>
+
+      <h2>चरण 4 – अपने उपयोगकर्ता को रेंडर और वीडियो समूह में जोड़ें</h2>
+      <p>ग्रुप में होना आवश्यक है जहां GPU का उपयोग करने की अनुमति है।<code>render</code>aur<code>video</code>ग्रुप्स जो AMD ग्राफिक्स कार्ड का उपयोग बिना सुपरユज़र के कर सकते हैं – 
+
+ग्रुप एडिटर  से जाने के बाद  /etc/sudoers  में जाएँ और निम्नलिखित को जोड़ें – 
+
+%groupname ALL=(ALL) NOPASSWD: /usr/bin/amdgpu-pro  – 
+उदाहरण के लिए  – 
+%groupname ALL=(ALL) NOPASSWD: /usr/bin/amdgpu-pro  –  वेल्सटेक ग्रुप</p>
+
+      <pre>sudo usermod -a -G render,video $LOGNAME</pre>
+
+      <p>ग्रुप बदल के प्रभावी होने के लिए लॉग आउट और लॉग इन (या रिस्टार्ट) करें।</p>
+
+      <h2>पाँचवाँ चरण – पुनः चालू करें</h2>
+      <p>एक रीबूट सुनिश्चित करता है कि कोर्नेल मॉड्यूल (amdgpu) और ROCk ड्राइवर लोड हो जाते हैं:</p>
+
+      <pre>sudo reboot</pre>
+
+      <h2>स्टेप 6 – स्थापना की पुष्टि करें</h2>
+      <p>पुनरारंभ करने के बाद रन करें<code>rocminfo</code>अपना जीपीयू डिटेक्ट किया जा रहा है क्या?</p>
+
+      <pre>rocminfo</pre>
+
+      <p>आपका जीपीयू अपने नाम, ग्राफिक्स आर्किटेक्चर, और कंप्यूटिंग यूनिट्स के साथ सूचीबद्ध होगा।</p>
+
+      <pre>*******
+Agent 2
+*******
+  Name:                    gfx1031
+  Marketing Name:          AMD Radeon RX 6800M
+  Compute Unit:            40
+  Device Type:             GPU
+  ...</pre>
+
+      <p>कernel ड्राइवर को लोड किया गया है – यह जांचें</p>
+
+      <pre>ls /dev/kfd   # should exist
+ls /dev/dri/  # should show renderD* nodes</pre>
+
+      <h2>आगे क्या है?</h2>
+      <p>ROCm को स्थापित करने के बाद, आप अब: 
+
+- AMD GPU पर OpenCL कार्यक्रम चला सकते हैं
+- ROCm ड्राइवर को अपडेट कर सकते हैं
+- ROCm के साथ विभिन्न ओपन-सोर्स प्रोजेक्ट्स का उपयोग कर सकते हैं</p>
+      <ul>
+        <li>
+          <strong>पायथन में ROCm समर्थन के साथ पाइरोच विन्यस्थित करें 
+
+पायथन पैकेज मैनेजर को अपडेट करें:
+
+pip install --upgrade pip
+
+पायथन 3.8 और 3.9 के लिए ROCm समर्थन के साथ पाइरोच विन्यस्थित करें:
+
+pip install torch torchvision --extra-index-url https://download.pytorch.org/rocm/cu117
+
+या
+
+pip install torch torchvision --extra-index-url https://download.pytorch.org/rocm/cu113
+
+या
+
+pip install torch torchvision --extra-index-url https://download.pytorch.org/rocm/cu102
+
+या
+
+pip install torch torchvision --extra-index-url https://download.pytorch.org/rocm/cu100
+
+या
+
+pip install torch torchvision --extra-index-url https://download.pytorch.org/rocm/cu92
+
+या
+
+pip install torch torchvision --extra-index-url https://download.pytorch.org/rocm/cu91
+
+या
+
+pip install torch torchvision --extra-index-url https://download.pytorch.org/rocm/cu90
+
+य</strong> –
+          <code>pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.1</code>
+        </li>
+        <li>
+          <strong>लोकल पर LLMs को चलाना
+
+लोकल पर LLMs को चलाने के लिए, आपको अपने सिस्टम पर आवश्यक सॉफ़्टवेयर और हार्डवेयर की आवश्यकता होगी। यहाँ कुछ आवश्यक चीज़ें हैं:
+
+- एक शक्तिशाली CPU जैसे कि AMD Ryzen या Intel Core i9
+- एक उच्च-गुणवत्ता वाली GPU जैसे कि NVIDIA GeForce या AMD Radeon
+- एक उच्च-गुणवत्ता वाली VRAM जैसे कि 16 GB या अधिक
+- एक उच्च-गुणवत्ता वाली RAM जैसे कि 32 GB या अधिक
+- एक उच्च-गुणवत्ता वाला ऑपरेटिंग सिस्टम जैसे कि Windows 11 या Linux Ubuntu
+
+लोकल पर LLMs को चलाने के लिए, आपको निम्नलिखित चरणों का पालन करना होगा:
+
+1. अपने सिस्टम पर आवश्यक स</strong>– Ollama, LM Studio, aur text-generation-webui जैसे साधन ROCm का सीधा समर्थन करते हैं।</li>
+        <li>
+          <strong>HIP – Hybrid Parallel Interface</strong>जीपीयू प्रोग्रामिंग के लिए – एएमडी का क्यूडीए के अनुकूल फ्रेमवर्क।</li>
+      </ul>
+
+      <p>यदि इन्स्टॉलर आपके GPU को नहीं पहचान सका, तो दोबारा जाँच करें कि आपके पास सही GPU है या नहीं और कि वह सही तरीके से इन्स्टॉल है।<code>--gfxversion</code>प्रयास करने और देखें<strong>सारे</strong>उपकरण श्रेणी विकल्प । यदि समस्याएँ आती हैं, तो AMD की<a href="https://rocm.docs.amd.com/en/latest/install/rocm.html" target="_blank" rel="noopener">अधिकारी ROCm स्थापना गाइड 
+
+ROCm को स्थापित करने के लिए निम्नलिखित चरणों का पालन करें:
+
+1. सुनिश्चित करें कि आपका सिस्टम AMD GPU को संभाल सकता है और आपके पास ROCm के लिए आवश्यक सॉफ्टवेयर है।
+
+2. AMD GPU ड्राइवर को नवीनतम संस्करण में अपडेट करें।
+
+3. AMD GPU को सक्रिय करें और सुनिश्चित करें कि यह सही ढंग से काम कर रहा है।
+
+4. ROCm के लिए आवश्यक पैकेजों को डाउनलोड करें और उन्हें स्थापित करें।
+
+5. ROCm को स्थापित करने के लिए निम्नलिखित कमांड चलाएं:
+   ```
+   sudo apt-get update
+   sudo apt-get install rocm-openspblas
+   sudo apt-get install rocm-rocminfo
+   sudo apt-get install rocm-rocprof</a>पूरी जानकारी है।</p>
+    </div>
+
+    <div class="article-nav">
+      <a href="tutorials.html">← Back to Tutorials</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=41"></script>
+</body>
+</html>

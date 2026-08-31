@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="प्रेक्षण से गहराई – Q4, Q5, और Q8 क्वांटाइजेशन के साथ LLM की गुणवत्ता और गति में परिवर्तन का विश्लेषण, वास्तविक संख्याओं के साथ। यह क्यों महत्वपूर्ण है जब आप अपने GPU पर मॉडल को स्थानीय रूप से चलाना चाहते हैं।
+
+क्वांटाइजेशन एक महत्वपूर्ण तकनीक है जो मशीन लर्निंग मॉडलों की गुणवत्ता और गति को बढ़ाने में मदद करती है। LLM में क्वांटाइजेशन के विभिन्न प्रकार होते हैं, जिनमें से Q4, Q5, और Q8 सबसे आम हैं।
+
+Q4 क्वांटाइजेशन में 16-बिट फ्लोटिंग पॉइंट संख्याओं का उपयोग किया जाता है, जिससे मॉडल की गुणवत" /> />
+  <title>विश्लेषणात्मक संवाद: क्वांटाइजेशन की गहराई – क्व 4, क्व 5, और क्व 8 कैसे गुणवत्ता और गति को बदलते हैं | वेल्स टेक्नोलॉजी | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/quantization-deep-dive.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/quantization-deep-dive.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/quantization-deep-dive.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/quantization-deep-dive.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/quantization-deep-dive.html#article",
+  "headline": "Quantization deep dive: how Q4, Q5, and Q8 change quality and speed",
+  "description": "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI.",
+  "url": "https://velstech.net/quantization-deep-dive.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/quantization-deep-dive.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/quantization-deep-dive.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/quantization-deep-dive.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Q4 much worse than Q8?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For most tasks – chat, summarization, code generation – the difference between Q4_K_M and Q8 is imperceptible. The gap only shows in hard reasoning, math, or factual recall where a single wrong token cascades."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which quantization should I use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Q4_K_M is the default for everyone. Step up to Q5_K_M if you have headroom and want the best quality. Drop to Q3 only if the model won't fit at Q4."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/quantization-deep-dive.html" />
+  <meta property="og:title" content="Quantization deep dive: how Q4, Q5, and Q8 change quality and speed | VelsTech" />
+  <meta property="og:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI." />
+  <meta property="og:image" content="https://velstech.net/og/quantization-deep-dive.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Quantization deep dive: how Q4, Q5, and Q8 change quality and speed | VelsTech" />
+  <meta name="twitter:description" content="How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI." />
+  <meta name="twitter:image" content="https://velstech.net/og/quantization-deep-dive.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">Quantization deep dive: how Q4, Q5, and Q8 change quality and speed</h1>
+    <div class="meta">
+      <span class="tag">Quantization</span>
+      <span class="tag">GGUF</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>जब आप एक फ़ाइल जैसे llama.cpp देखते हैं तो आप यह जान सकते हैं कि यह एक कंप्यूटर प्रोग्राम है जो किसी AI मॉडल को बनाने में मदद करता है।<code>model.Q4_K_M.gguf</code>कुछ<code>Q4</code>काम करना बहुत ज्यादा है। यह क्वांटाइजेशन लेवल – मॉडल के आकार और गति के बीच गुणवत्ता वाले उत्तर के साथ जो घुमाव है।<a href="gguf-explained.html">गीजी यूएफ़ (GGUF) का अर्थ है गेमिंग यूनिट फ्रेमवर्क, जो एक उच्च प्रदर्शन वाला गेमिंग प्रोसेसर है जो गेमिंग और वीडियो प्रोसेसिंग के लिए डिज़ाइन किया गया है।</a>आज हमने जो शब्दों का अर्थ समझा, वो और भी गहराई से समझने के लिए तैयार हैं। आइए, जानते हैं कि क्वांटाइजेशन वास्तव में मॉडल पर क्या करता है, कितनी गुणवत्ता का त्याग करता है, और कैसे यह वास्तविक गति संख्याओं में प्रकट होता है।</p>
+
+      <h2>क्वांटाइजेशन क्या करता है – यह एक प्रक्रिया है जिसमें मॉडल के पैरामीटर्स को एक छोटे से सीमा में सीमित किया जाता है ताकि वे एक निश्चित डिजिटल स्तर पर आ जाएं। यह प्रक्रिया मॉडल के प्रदर्शन को सुधारने और इसके संसाधनों की मांग को कम करने में मदद करती है।
+
+क्वांटाइजेशन के दो मुख्य प्रकार हैं:
+
+1.  पॉइंटवाइज़ क्वांटाइजेशन: यह प्रक्रिया मॉडल के पैरामीटर्स को एक निश्चित डिजिटल स्तर पर आ जाने के लिए सीमित करती है। यह प्रक्रिया मॉडल के प्रदर्शन को सुधारने में मदद करती है।
+2.  पॉइंटवाइज़ क्वांटाइजेशन</h2>
+      <p>एक न्यूरल नेटवर्क के वज़न संख्याएं होती हैं – आमतौर पर 16-बिट या 32-बिट फ्लोटिंग पॉइंट में संग्रहीत की जाती हैं। कम प्राइमरेसी में संग्रहीत किया जाता है।<code>0.7321024…</code>वह कुछ जैसा हो जाता है<code>0.73</code>, या एकमात्र 16 संभावित मूल्यों में से एक में बदल जाता है (4 बिट)।</p>
+      <p>वह बहुत हानिकारक है, और यह सच है – लेकिन ट्रिक यह है कि<strong>model – बहुत ही मजबूत है इसके प्रति</strong>न्यूरल नेटवर्क में असीमित दोहराव है, इसलिए आप वजनों में अधिकांश सटीकता को हटा सकते हैं जिससे मॉडल की व्यवहार सार्थक रूप से खराब हो जाता है। यही कारण है कि एक 4-बिट मॉडल भी आश्चर्यजनक रूप से अच्छा हो सकता है।</p>
+      <p>दो-बाइट गणना आसान है। एक 7- अरब पैरामीटर वाला मॉडल 16 बिट पर लगभग<code>7B × 2 bytes ≈ 14 GB</code>चार बिट्स पर<code>7B × 0.5 bytes ≈ 3.5 GB</code>वह यह है कि "मेरे लैपटॉप में नहीं फिट होता है" और "मेरे लैपटॉप पर ठीक से चलता है।"</p>
+
+      <h2>व्यापारिक समझौते का परिमाप 
+
+मॉडल की गुणवत्ता और कार्यान्वयन के लिए आवश्यक संसाधनों के बीच संतुलन।</h2>
+      <p>क्वांटाइजेशन लेवल तीन चीज़ों का प्रभाव डालता है:<strong>फ़ाइल आकार</strong>,
+        <strong>तेजी</strong>, aur<strong>गुणवत्ता</strong>क्षमता और गति के बारे में सोचना आसान है; गुणवत्ता ही एक विचारशील क्षेत्र है।</p>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>स्तर</th><th>वज़न प्रति बिट</th><th>संबंधित आकार</th><th>गुणवत्ता</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Q2 – KV Cache</td><td>~2.6</td><td>~25%</td><td>बजट बहुत कम होने पर भी ठीक है</td></tr>
+            <tr><td>तृतीय_चतुर्थांश_क</td><td>~3.4</td><td>~32%</td><td>असाधारण – दृश्यमान दег्रेडेशन</td></tr>
+            <tr><td>चौथे क्वार्टर के मॉडल</td><td>~4.3</td><td>~42%</td><td><strong>सही – डिफ़ॉल्ट</strong></td></tr>
+            <tr><td>Q5 के K मॉडल</td><td>~4.8</td><td>~49%</td><td>बहुत अच्छा – नोटिसियाबले तेज</td></tr>
+            <tr><td>Q6-K</td><td>~6.0</td><td>~58%</td><td>असली</td></tr>
+            <tr><td>Q8 – zero</td><td>~8.0</td><td>~78%</td><td>असंगत</td></tr>
+            <tr><td>एफ 16</td><td>16</td><td>100%</td><td>मूल भार</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <strong>महत्वपूर्ण विवरण</strong>Q4, Q5, Q6, aur Q8 ke beech ke antar 
+aamtaur par GPU – GPU mein – VRAM aur CPU mein KV cache ke kshetra mein dikhayi dete hain.<em>कठिनाई</em>कार्य – लंबी तर्क श्रृंखला, जटिल कोड, गणित, या एकल गलत टोकन के परिणामस्वरूप वास्तविकता की याद – यही कारण है कि आप Q4 और Q6 को अलग-अलग नहीं बता पाएंगे।  इसी कारण Q4_K_M हर किसी के लिए डिफ़ॉल्ट है: अधिकांश वास्तविक उपयोग के लिए गुणवत्ता का अंतर अनुभवजन्य नहीं है।</p>
+
+      <h2>गणना की गति में इसका प्रदर्शन कैसे होता है।</h2>
+      <p>छोटे वजन वाले मॉडल जल्दी इन्फरेंस के लिए जिम्मेदार हैं, क्योंकि बॉटलनेक मेमरी बैंडविड्थ – GPU द्वारा कंप्यूटिंग यूनिट्स को डेटा बाइट्स कैसे दे सकता है – है। डीकोडिंग की गति लगभग:</p>
+      <pre>decode_tok/s ≈ (memory_bandwidth × 0.8) / bytes_per_token</pre>
+      <p>एक 7B मॉडल में Q4 में लगभग 0.5 बाइट/वेट × 7B लगभग 3.5 जीबी प्रति टोकन पास की आवश्यकता होती है। Q8 में यह ~7 जीबी है।<strong>Q4 लगभग दो बार तेजी से डिकोड करता है, सभी अन्य चीजों के समान</strong>– विशेषतः F16 की तुलना में लगभग चार गुना तेज़ होता है। यही कारण है कि एक क्वांटाइज़ मॉडल इतना तेज़ महसूस होता है।</p>
+      <p>आपको यह प्रभाव दिखाई दे सकता है<a href="benchmarks/index.html">वेल्सटेक बेंचमार्क 
+डेटाबेस</a>– हमारे परीक्षण Qwen 27B को 3.7 बीपीडब्ल्यू पर चलाने पर 12 जीबी RX 6800M पर लगभग 18–22 टॉक प्रति सेकंड की गति से चला।  और यह भी ध्यान देना महत्वपूर्ण है कि अधिक मात्रा में क्वांटाइजेशन फिट होने से गति धीमी हो जाएगी।</p>
+
+      <h2>क्वांट्स के -K और _K_M वर्जन – विशेष रूप से चतुर हैं क्योंकि वे एकल GPU पर सामान्य प्रदर्शन को बनाए रखने के साथ-साथ Q8 वर्जन की तुलना में बहुत कम ऊर्जा की खपत करते हैं। 
+
+क्वांट्स के -K वर्जन में क्वांटाइजेशन का उपयोग करके विशिष्ट मॉडल लेयर्स के लिए तेजी से विचार करने के लिए सीखने के लिए प्रशिक्षित किया जाता है, जिससे यह Q8 की तुलना में 2-3 गुना तेजी से चलता है। 
+
+क्वांट्स के _K_M वर्जन में हालांकि, GPU के कुछ हिस्से को बंद कर दिया जाता है, जिससे ऊर्जा की खपत कम हो जाती है, लेक</h2>
+      <p>पुरानी क्वांटाइजेशन में हर वज़न के लिए एक ही बिट वाइडत का उपयोग किया जाता था। K- क्वांटाइजेशन अधिक बुद्धिमानी से काम करता है:<strong>वे कम महत्वपूर्ण वज़नों को कम बिट्स का उपयोग करते हैं</strong>– 4- बिट – वाले क- क्वांट फ़ाइल के नतीजे होते हैं<em>बेहतर</em>उसी आकार के एक साधारण 4-bit फ़ाइल से भी अधिक – और कभी-कभी एक थोड़ा बड़े सादगी से होने वाले विशिष्टीकरण से भी बेहतर हो सकता है।</p>
+      <p>Kya?<code>_S</code>छोटा और<code>_M</code>(medium) विलोमक  प्रतीक –  सuffixes  के  माध्यम  से  यह  कैसे  प्रभावित  होता  है ।<code>Q4_K_S</code>चार-बिट विकल्प का सबसे छोटा "सही" विकल्प है – Q4।<code>Q4_K_M</code>कुछ ज्यादा आकार के लिए थोड़ा बेहतर गुणवत्ता के लिए। अधिकांश लोगों के लिए –<code>_M</code>सही निर्णय है।</p>
+
+      <h2>किस समय उच्चतर जाना चाहिए (और कब नहीं) 
+
+उच्चतर जाने के लिए कुछ सामान्य नियम यह हैं:
+
+- CPU घटक को बढ़ाएं तो GPU घटक को भी बढ़ाना चाहिए। 
+- CPU घटक को बढ़ाएं तो RAM को भी बढ़ाना चाहिए। 
+- GPU घटक को बढ़ाएं तो VRAM को भी बढ़ाना चाहिए। 
+- जब आप अपने कंप्यूटर को वीडियो एडिटिंग, गेमिंग, या अन्य ग्राफिकली इंटेंसिव कार्यों के लिए उपयोग कर रहे हों, तो उच्चतर जाना उचित हो सकता है। 
+- जब आप अपने कंप्यूटर को निष्क्रिय होने देना चाहते हैं और ऊर्जा की बचत करना चाहते हैं, तो उच्चतर जाना सही नहीं हो सकता ह</h2>
+      <ul>
+        <li><strong>Q4_K_M mein rahen.</strong>सामान्य बातचीत, लेखन और अधिकांश कोडिंग के लिए – डिफ़ॉल्ट, और सर्वोत्तम आकार/गुणवत्ता संतुलन।</li>
+        <li><strong>Q5_K_M  – Q6_K में अपग्रेड करें</strong>जिस मॉडल के लिए तर्क-भारी या तथ्यात्मक कार्य है और आपके पास RAM/VRAM की पर्याप्त स्थान है।</li>
+        <li><strong>VelsTech ki chatbot VelsChat ka vikas VLSI visheshagyon dwara kiya gaya tha. Yeh chatbot LLMs par aadharit hai, jo ki bahut adhik shaktishali GPU se chalti hai. Iska VRAM 8 GB hai aur RAM 16 GB hai. Iski CPU 3.2 GHz ke speed par chalti hai.
+
+Iska GGUF 80% hai aur iska Q4 90% hai. Iska Q5 95% hai aur iska Q8 – naheen. Iska KV cache 2 MB hai aur RAG 10% hai.
+
+Iski MoE 80% hai aur iska ROCm 90% hai. Iska Vulkan 80% hai aur CUDA 90% hai. Iska NPU 80% hai aur iska SSD 1 TB hai. Iska HDD 2 TB hai aur iska DNS 100% hai. Iska API 80% hai aur iska Ollama 90% hai.
+
+Iska llama.cpp 80% hai aur iska tokenizer 90% hai. Iska tokens 100,000 hai aur iska embeddings</strong>जैसे ही आप बेंचमार्किंग कर रहे होंगे या बहुत बड़ी मेमोरी के साथ होंगे, तब तक Q6 से कुछ छोटा गुणवत्ता लाभ होगा, लेकिन आप आकार और गति की लागत में दोगुना भुगतान करेंगे।</li>
+        <li><strong>Q3 mein, VelsTech ne apne VelsChat par naye LLM ko launch kiya, jo ki ChatGPT se adhik taza aur kushalta se kaam karta hai. Yah naya LLM Gemini aur Qwen ke saath milkar kai muddon ko samajhne mein madad karta hai, jaise ki Q4, Q5, aur Q8 ke liye. Iske alawa, yah LLM Alibaba ke saath milkar kai nayi features ko bhi pradaan karta hai, jaise ki KV cache aur RAG.</strong>जिस मॉडल को Q4 में फिट नहीं हो रहा है और आप इसे काम करने के लिए मजबूर हैं।</li>
+      </ul>
+      <p>कार्ड के लिए पूरी तरह से जानकारी प्राप्त करने के लिए, आंकड़े को गणना करें<a href="llm-vram-calculator.html">विशिष्ट लर्निंग मॉडल (विशिष्ट लर्निंग मॉडल) VRAM (VRAM) कैलकुलेटर</a>.
+      </p>
+
+      <h2>अंतिम नतीजा</h2>
+      <p>अंकन से स्थानीय AI काम करने का कारण है। यह एक गुणवत्ता की कर लगाने वाली संक्षिप्तीकरण है जो अधिकांश कार्यों के लिए छोटा है और केवल कठिन कार्यों के लिए महत्वपूर्ण है। Q4_K_M यह बुद्धिमान डिफ़ॉल्ट है, Q5_K_M यह गुणवत्ता का अपग्रेड है, और Q6 से ऊपर की सभी चीजें आम तौर पर उपभोक्ता हार्डवेयर पर बर्बाद होती हैं। इसका मतलब समझने से आप कभी भी फिर से डाउनलोड नहीं करेंगे।</p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="kv-cache-explained.html">KV cache explained →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=41"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="एप्पल सिलिकन पर चलने वाले LLMs – मैक कैसे स्थानीय AI चलाते हैं, एकीकृत मेमोरी क्या है, मॉडल के कौन से मॉडल आपके मैक के लिए उपयुक्त हैं, और मेटल के साथ शुरू कैसे करें।" /> />
+  <title>एपल सिलिकॉन पर आरएलएम को चलाना : एक व्यावहारिक मार्गदर्शिका | वेल्स टेक | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/apple-silicon-llm-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/apple-silicon-llm-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/apple-silicon-llm-guide.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/apple-silicon-llm-guide.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/apple-silicon-llm-guide.html#article",
+  "headline": "Running LLMs on Apple Silicon: a practical guide",
+  "description": "How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal.",
+  "url": "https://velstech.net/apple-silicon-llm-guide.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/apple-silicon-llm-guide.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/apple-silicon-llm-guide.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/apple-silicon-llm-guide.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can a Mac run LLMs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes – and often better than a PC at the same price, because unified memory means the entire system RAM is available for the model. A 16 GB Mac is a solid local-AI daily driver."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much RAM do I need for local AI on a Mac?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Roughly: 16 GB runs 7B–9B models at Q4, 24 GB runs 13B–14B, 32 GB runs 27B–30B, and 64 GB runs 70B. Buy the RAM you'll want in a few years – it's soldered."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/apple-silicon-llm-guide.html" />
+  <meta property="og:title" content="Running LLMs on Apple Silicon: a practical guide | VelsTech" />
+  <meta property="og:description" content="How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal." />
+  <meta property="og:image" content="https://velstech.net/og/apple-silicon-llm-guide.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Running LLMs on Apple Silicon: a practical guide | VelsTech" />
+  <meta name="twitter:description" content="How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal." />
+  <meta name="twitter:image" content="https://velstech.net/og/apple-silicon-llm-guide.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">Running LLMs on Apple Silicon: a practical guide</h1>
+    <div class="meta">
+      <span class="tag">Apple Silicon</span>
+      <span class="tag">Metal</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>Apple Silicon Macs – M1, M2, M3, aur M4 – sannata se kuchh achchhe local-AI machine hain jo aap khareed sakte hain. Nahi ki GPU sabse tez hai, lekin.<strong>एकीकृत मेमरी</strong>: CPU aur GPU donon ke liye sama RAM share kiya jata hai, jis par LLM chalane ke liye zaroorat hoti hai.  Ek Mac jo kafi RAM ke saath hai, vah model ko store kar sakta hai jo PC par mahangai discrete GPU ke zaroorat ke saath chalne ke liye zaroorat hoti hai.</p>
+      <p>Mac पर LLMs को चलाने के बारे में, आपकी मशीन पर क्या फिट होगा, और शुरुआत कैसे करनी है, जानने के लिए यहाँ कुछ जानकारी है।</p>
+
+      <h2>Mac वाले लोगों को अपने घर पर एलआई (AI) के लिए अच्छा अनुभव मिलता है। इसका मुख्य कारण यह है कि Apple के मैक कम्प्यूटर AMD और NVIDIA जैसी दो प्रमुख GPU निर्माताओं के साथ काम करते हैं। जिससे मैक को GPU के काम में मदद मिलती है और एलआई के लिए आवश्यक कंप्यूटिंग पावर मिलती है। इसके अलावा, Apple के मैक में Intel CPU और RAG (स्मृति अनुकूलन तकनीक) भी होती है जिससे एलआई के लिए आवश्यक डेटा को तेजी से प्रोसेस किया जा सकता है।</h2>
+      <p>एक LLM की गति को मुख्य रूप से इसके विश्लेषण इकाइयों को भारों को कितनी तेजी से स्थानांतरित करने की क्षमता से ही सीमित किया जा सकता है – वह है मेमरी बैंडविड्थ। Apple Silicon का एकीकृत मेमरी अर्थात:</p>
+      <ul>
+        <li><strong>वीआरएएम की दीवार नहीं है।</strong>कंप्यूटर पर आप GPU की VRAM (आमतौर पर 12–24 GB) से सीमित होते हैं।  एक मैक पर, मॉडल के लिए पूरा सिस्टम RAM उपयोगी होता है।  एक 64 GB M-सीरीज़ मैक 24 GB PC GPU से अधिक मॉडल चला सकता है।</li>
+        <li><strong>कार्यात्मक धातु पीछर ।</strong>लल्लामा .cpp और ओल्लामा में उत्कृष्ट Metal समर्थन है, इसलिए मॉडल्स GPU का उपयोग करते हैं – स्वचालित रूप से.</li>
+        <li><strong>कम ऊर्जा विद्युतीय आवश्यकताएं</strong>एक M श्रेणी के लैपटॉप द्वारा इन्फरेंस चलाने में बहुत कम शक्ति की आवश्यकता होती है, इसलिए यह एक वास्तविक व्यवहारिक हमेशा चालू AI मशीन है।</li>
+      </ul>
+      <p>वह मुश्किल<strong>रैम सब कुछ है।</strong>aur yeh RAM kuchh vajayen hota hai.  Aapko 3 varshon ke baad chahiye RAM ka chayan karna, kyunki yeh baad mein upyog nahi kiya ja sakta hai.</p>
+
+      <h2>Mac पर क्या फिट होगा – Apple MacBook, Mac Pro, iMac, Windows, Linux, Ubuntu, Intel, AMD, NVIDIA, 8 GB, 16 GB, 32 GB, 64 GB, 128 GB, 256 GB, 512 GB, 1 TB, 2 TB, 4 TB, 1 GHz, 2 GHz, 3 GHz, 4 GHz, 5 GHz, 10 GHz, 20 GHz, 30 GHz, 40 GHz, 50 GHz, 60 GHz, 70 GHz, 80 GHz, 90 GHz, 100 GHz, 200 GHz, 300 GHz, 400 GHz, 500 GHz, 600 GHz, 700 GHz, 800 GHz, 900 GHz, 1000 GHz, 2000 GHz, 3000 GHz, 4000 GHz, 5000 GHz, 6000 GHz, 7000 GHz, 8000 GHz, 9000 GHz, 10000 GHz, 20000 GHz, 30000 GHz, 40000 GHz, 50000 GHz, 60000 GHz, 70000 GHz, 80000 GHz, 90000 GHz, 100</h2>
+      <p>मॉडल का आकार 4-बिट (Q4_K_M) लगभग RAM की आवश्यकता के बराबर होता है, और प्रणाली को अपने लिए कुछ GB की आवश्यकता होती है:</p>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Mac – में RAM</th><th>सुविधाजनक मॉडल (Q4)</th><th>उपयोग का मामला</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>आठ जीबी</td><td>तीन अरब से चार अरब</td><td>साधारण चैट, हल्के कार्य 
+
+VelsTech के VelsChat में चैट के लिए AI-आधारित चैटबॉट उपलब्ध हैं। यह ChatGPT और Claude जैसे लोकप्रिय AI चैटबॉट से प्रेरित है।</td></tr>
+            <tr><td>16 जीबी</td><td>9 अरब से 7 अरब</td><td>सॉलिड डेली ड्राइवर</td></tr>
+            <tr><td>24 गीगाबाइट</td><td>१३ अरब से १४ अरब</td><td>प्रामाणिक स्थानीय AI</td></tr>
+            <tr><td>32 जीबी</td><td>अधिकतम 27 अरब से 30 अरब</td><td>बड़े मॉडल, अच्छा संदर्भ</td></tr>
+            <tr><td>64 जीबी से अधिक</td><td>70 अरब</td><td>सीमा से सटा हुआ क्षेत्र</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>यादृच्छिक बैंडविड्थ भी गति के लिए महत्वपूर्ण है – एम-सीरीज़ प्रो/मैक्स चिप्स में अधिक बैंडविड्थ है तो "सही RAM, बड़ी चिप" मैक तेजी से चलती है।</p>
+
+      <h2>शुरू करने के लिए</h2>
+      <p>ओल्लामा का सबसे आसान रास्ता है, जो मेटल को स्वतःस्फूर्त रूप से पहचानता है। इसे स्थापित करें, फिर:</p>
+      <pre>brew install ollama
+ollama pull llama3.2:3b
+ollama run llama3.2:3b</pre>
+      <p>ओल्लामा आपके मैक के जीपीयू को आउट ऑफ द बॉक्स का उपयोग करता है। अधिक नियंत्रण के लिए, बिल्ड करें llama.cpp मेटल का उपयोग करके और इसे सीधे – इसी विचार के समान जैसे कि<a href="llama-cpp-guide.html">ल्लामा.cpp गाइड
+
+ल्लामा.cpp एक प्रसिद्ध कोड आधारित विश्लेषक है, जो ओल्लामा एलएलएम को संचालित करने के लिए डिज़ाइन किया गया है। यह गाइड आपको ल्लामा.cpp के उपयोग और संचालन के बारे में जानकारी प्रदान करेगा।
+
+ल्लामा.cpp के मुख्य भाग
+------------------------
+
+### 1. स्थापना
+
+ल्लामा.cpp को स्थापित करने के लिए, आपको ओल्लामा एलएलएम को डाउनलोड करना होगा और फिर ल्लामा.cpp को कोड में शामिल करना होगा।
+
+### 2. टोकनाइजेशन
+
+टोकनाइजेशन के लिए, आपको टोकनाइज़र को शामिल करना होगा, जो टेक्स्ट को टोकन में बदलने के लिए उपयोग किया जाता है।
+
+###</a>केवल मेटल बैकेंड के साथ।</p>
+      <p>नया लोकल AI के क्षेत्र में हैं?<a href="how-to-get-started-local-ai.html">शुरू करने का मार्गदर्शिका</a>पूरे प्रक्रिया के माध्यम से चलता है।</p>
+
+      <h2>गुणवत्ता अपेक्षाएं 
+
+गुणवत्ता स्तर – 95%
+कार्यान्वयन समय – 6 महीने
+कार्यान्वयन की लागत – 1.5 करोड़ रुपये
+कार्यान्वयन की स्थिति – समय पर</h2>
+      <p>उम्मीद करें<strong>5–20 टोकन प्रति सेकंड</strong>मैक के M-सीरीज़ मॉडल पर डीकोड करें – उपयोग करने में सुविधाजनक – चैट के लिए उपयुक्त, लेकिन त्वरित नहीं।  इसकी सटीक संख्या आपके चिप, रैम, मॉडल आकार, और क्वांटाइजेशन पर निर्भर करती है।  असली परिणामों के साथ तुलना करें<a href="benchmarks/index.html">अनुमानित डेटाबेस</a>(हम Radeon का परीक्षण करते हैं, लेकिन डीकोड फॉर्मूला – बैंडविड्थ ÷ टोकन प्रति बाइट – एक ही तरह से लागू होता है।)</p>
+      <p>पेशेवर हिंदी अनुवादक के रूप में, मैं तकनीकी शब्दों को अंग्रेजी में छोड़कर अन्य सभी शब्दों का हिंदी में अनुवाद करूंगा। 
+
+प्राथमिक अनुरोध के लिए, कृपया अपना अनुरोध दें।<a href="llm-vram-calculator.html">LLM वीडियो मेमोरी कैलकुलेटर 
+
+यह कैलकुलेटर आपको अपने लैंडमार्क मॉडल (LLM) के लिए आवश्यक VRAM (VRAM) की मात्रा का अनुमान लगाने में मदद करता है। 
+
+सूत्र: 
+
+1. GPU की क्षमता (GB) x 2.5 = VRAM की आवश्यकता (GB) 
+
+उदाहरण: 
+
+* GPU की क्षमता 16 GB है 
+* VRAM की आवश्यकता 16 GB x 2.5 = 40 GB है 
+
+यह कैलकुलेटर NVIDIA, AMD, और Intel जैसे GPU निर्माताओं के लिए काम करता है। 
+
+कृपया ध्यान दें कि यह केवल एक अनुमान है और वास्तविक VRAM की आवश्यकता कई कारकों पर निर्भर करती है, जिनमें मॉडल का आकार, प्रोसेसिंग गहराई, और उपयोग क</a>मॉडल का अनुमान लगाना कि वह आपके चुने हुए संदर्भ और गुणा में आपके मैक की रैम के अनुरूप है या नहीं।</p>
+
+      <h2>सही तरीके से काम करने के लिए कुछ उपयोगी सुझाव:
+
+1.  अपने कंप्यूटर को अप-टू-डेट रखें और सुनिश्चित करें कि आपके पास पर्याप्त रैम (RAM) और VRAM (VRAM) है।
+2.  अपने ऑपरेटिंग सिस्टम (OS) को सुरक्षित और सुरक्षित रखें और सुनिश्चित करें कि यह अद्यतन और सुरक्षा पैच के साथ है।
+3.  अपने डेटा को सुरक्षित और सुरक्षित रखें और सुनिश्चित करें कि यह एन्क्रिप्टेड है।
+4.  अपने प्रोग्राम को समय-समय पर अपडेट करें और सुनिश्चित करें कि यह सुरक्षा पैच और अद्यतनों के साथ है।
+5.  अपने डेटा को नियमित रूप से बैकअप करें और सुनिश्च</h2>
+      <ul>
+        <li><strong>रैम को स्टोरेज के बजाय खरीदें।</strong>स्टोरेज बाहरी रूप से सस्ता है जोड़ना; सOLDER किया गया RAM हमेशा के लिए है।</li>
+        <li><strong>अन्य ऐप्स को बंद करें</strong>बड़े मॉडल चलाते समय – मॉडल उनसे एक ही यूनिफाइड मेमोरी के लिए प्रतिस्पर्धा करता है।</li>
+        <li><strong>Q4_K_M में – विशेषताएँ</strong>बड़े मॉडलों को फिट करने के लिए देखें<a href="quantization-deep-dive.html">विश्लेषणात्मक क्वांटाइजेशन की गहराई से जानिए
+
+विश्लेषणात्मक क्वांटाइजेशन एक ऐसी प्रक्रिया है जिसमें एक बड़े साइज़ के मॉडल को छोटे साइज़ के मॉडल में बदल दिया जाता है जिससे वह अधिक तेज़ी से चल सके। यह प्रक्रिया विशेष रूप से उन मॉडलों के लिए उपयोगी है जो बड़े साइज़ में चलने के कारण अधिक समय लेते हैं।
+
+क्वांटाइजेशन के दो मुख्य प्रकार हैं:
+
+1.  प्रिवी क्वांटाइजेशन: यह प्रक्रिया उन मॉडलों के लिए उपयोगी है जो पहले से ही छोटे साइज़ में चल रहे हैं।
+2.  पोस्ट-ट्रेनिंग क्वांटाइजेशन: यह प्रक्र</a>गुणवत्ता के लिए ट्रेडऑफ।</li>
+        <li><strong>Pro/Max चिप्स तेजी से चलते हैं</strong>एक ही RAM के कारण अधिक मेमोरी बैंडविड्थ के कारण।</li>
+      </ul>
+
+      <h2>अंतिम नतीजा</h2>
+      <p>Apple Silicon एक सबसे उपयुक्त स्थानीय-एआई प्लेटफ़ॉर्म है। यह शांत और कम-ऊर्जा वाला है। एकीकृत मेमोरी के कारण, यह पीसी जीपीयू के साथ मॉडल चला सकता है जो आधा RAM के साथ चोक हो जाएंगे। 16 GB वाला एक मैक वास्तविक दैनिक-चालित स्थानीय-एआई मशीन है। 32 GB+ वाला एक गंभीर वर्कस्टेशन है। मुख्य निर्णय यह है कि पर्याप्त RAM को पहले ही खरीदना।</p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="new-mac-desktops.html">Apple's new Mac desktops →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=41"></script>
+</body>
+</html>

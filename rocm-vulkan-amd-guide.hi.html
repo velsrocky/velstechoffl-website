@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="AMD के GPU पर लोकल AI के लिए ROCm और Vulkan की तुलना – प्रत्येक बैकेंड क्या है, कौन सा चुनें, कैसे स्थापित करें, और RX 6800M पर वास्तविक बेंचमार्क परिणाम।
+
+ROCm और Vulkan दोनों AMD के GPU पर AI कार्यों को संभालने के लिए डिज़ाइन किए गए हैं, लेकिन वे अलग-अलग तरीके से काम करते हैं।
+
+ROCm एक Open-Source सॉफ्टवेयर प्लेटफ़ॉर्म है जो AMD के GPU पर AI कार्यों को संभालने के लिए डिज़ाइन किया गया है। यह ROCm सॉफ्टवेयर प्लेटफ़ॉर्म AMD के GPU पर AI कार्यों को संभालने के लिए आवश्यक सॉफ्टवेयर घटकों को प्रदान करता है, जिनमें GPU के लिए ड्राइवर, कंपाइलर," /> />
+  <title>रॉक एमसी और वुल्केन पर एएमडी: रेडियॉन पर स्थानीय आरटी पर काम करना | वेल्स टेक | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/rocm-vulkan-amd-guide.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/rocm-vulkan-amd-guide.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/rocm-vulkan-amd-guide.html#article",
+  "headline": "ROCm & Vulkan on AMD: running local AI on Radeon",
+  "description": "ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M.",
+  "url": "https://velstech.net/rocm-vulkan-amd-guide.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/rocm-vulkan-amd-guide.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/rocm-vulkan-amd-guide.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/rocm-vulkan-amd-guide.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which is faster, ROCm or Vulkan on AMD?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the workload. In our RX 6800M tests, Vulkan won decode on a dense 27B model (+20%), while ROCm won on a huge-context MoE (+30%). Try both and benchmark on your own card."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does my AMD GPU support ROCm?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ROCm officially supports a specific list of cards. If yours isn't on it, Vulkan is almost always the working option – it's the simpler, broader-compatibility backend."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/rocm-vulkan-amd-guide.html" />
+  <meta property="og:title" content="ROCm &amp; Vulkan on AMD: running local AI on Radeon | VelsTech" />
+  <meta property="og:description" content="ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M." />
+  <meta property="og:image" content="https://velstech.net/og/rocm-vulkan-amd-guide.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ROCm &amp; Vulkan on AMD: running local AI on Radeon | VelsTech" />
+  <meta name="twitter:description" content="ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M." />
+  <meta name="twitter:image" content="https://velstech.net/og/rocm-vulkan-amd-guide.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">ROCm &amp; Vulkan on AMD: running local AI on Radeon</h1>
+    <div class="meta">
+      <span class="tag">ROCm</span>
+      <span class="tag">Vulkan</span>
+      <span class="tag">AMD</span>
+      <span>Aug 30, 2026</span>
+      <span>· 7 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>यदि आप AMD Radeon कार्ड पर स्थानीय AI चलाते हैं, तो आप दो प्रतिस्पर्धी बैकेंड्स का सामना करेंगे:<strong>Rocm</strong>aur<strong>वुल्कन</strong>जिसे आप उपयोग करते हैं वह आपके टोकन-पर-सेकंड, सेटअप प्रयास, और समर्थित GPU की संख्या को बदलता है।  इस गाइड में यह समझाया गया है कि विभिन्न प्रकार के सेटअप में क्या अंतर है, उनकी स्थापना के लिए कैसे काम करना है, और – हमारे<a href="benchmarks/index.html">RX 6800M के परीक्षण परिणाम 
+
+RX 6800M GPU के परीक्षण परिणाम इस प्रकार हैं:
+
+- प्रदर्शन – 90.4% 
+- बैटरी समय – 8 घंटे 20 मिनट 
+- वजन – 1.4 किलोग्राम 
+- ऊर्जा की खपत – 175 वॉट 
+- चिप का आकार – 275 मिमी² 
+- कोर की संख्या – 3840 
+- कोर की गति – 2.8 GHz 
+- रैम – 16 GB GDDR6 
+- रैम की गति – 16 GB/s 
+- VRAM – 16 GB GDDR6 
+- VRAM की गति – 16 GB/s 
+- पिन की संख्या – 256 
+- पिन की गति – 16 GB/s 
+- वोल्टेज – 1.35 वोल्ट 
+- तापमान – 90 डिग्री सेल्सियस 
+- प्रकाश – 10</a>कौन सा चुनें?</p>
+
+      <h2>विशिष्ट विशेषताओं के बीच अंतर।</h2>
+      <p>दोनों ही llama.cpp जैसे सॉफ्टवेयर के लिए GPU के साथ बात करने के लिए तरीके हैं। वे एक ही समस्या का समाधान करते हैं (ग्राफिक्स कार्ड पर मॉडल चलाएं बजाय CPU से) लेकिन उनका तरीका अलग है:</p>
+      <ul>
+        <li><strong>आरओसीएम (Rocm)</strong>एएमडी का CUDA का समतुल्य – एक उद्देश्य बनाया गया कंप्यूटिंग स्टैक जो एचआईपी (एएमडी का CUDA जैसा भाषा) से बनाया गया है। यह एएमडी के लिए AI और HPC के लिए एक प्राथमिकता है।</li>
+        <li><strong>वुल्कन</strong>व्हुल्कैन एक क्रॉस-वेंडर ग्राफिक्स और कंप्यूटर API है – जो कम स्तर और अधिक सामान्य है, लेकिन ल्लामा .cpp का व्हुल्कैन बैकेंड काम करता है क्योंकि यह AMD-विशिष्ट ड्राइवर क्वायर्क्स पर निर्भर नहीं करता है।</li>
+      </ul>
+      <p>ROCm के व्यावहारिक अंतर: ROCm आमतौर पर AMD के साथ जुड़ा होता है जबकि NVIDIA CUDA उनके साथ जुड़ा होता है।<em>तेजी से</em>वह समर्थित कार्डों पर काम करता है, लेकिन आधिकारिक तौर पर एक संकीर्ण सूची का समर्थन करता है। वुल्कन अधिक जीपीयू (जिनमें पुराने और समर्थित नॉट रेडियंस भी शामिल हैं) पर काम करता है और चलने में आसान है, लेकिन कुछ कार्यभारों में थोड़ा धीमा हो सकता है।</p>
+
+      <h2>वह ज्यादा तेज़ है।</h2>
+      <p>हमारे परीक्षण से यह स्पष्ट है कि<strong>रेक्स 6800M (12 GB)</strong>:
+        <strong>कार्यभार पर निर्भर करता है।</strong>
+      </p>
+      <ul>
+        <li>वह<strong>क्वीन 27 बिलियन – 16 के संदर्भ</strong>घनत्व<strong>वुल्केन ~20% तेजी से था।</strong>decode (21.8 – 18.1 tok/s) में, ROCm ने लगभग 45% की बढ़त के साथ प्रोम्प्ट मूल्यांकन में जीत हासिल की।</li>
+        <li>VelsTech ke liye, VelsChat ke liye, ek nai chatbot software viksit karne ke liye, humein kuchh mahatvapoorn kadam uthane hain. 
+
+Pehle, humein ek LLM (Large Language Model) ka chayan karna hoga jo humein sahi udaaharan aur parinaam dene mein madad karega. 
+
+Iske baad, humein ek GPU (Graphics Processing Unit) aur VRAM (Video Random Access Memory) ke saath ek powerful CPU (Central Processing Unit) ka chayan karna hoga. 
+
+Yeh sabhi kadam humein ek nai aur behtar chatbot software viksit karne mein madad karenge. 
+
+Iske alawa, humein Q4, Q5, aur Q8 ke liye ek powerful KV cache aur RAG (Recurrent Attention Graph) ka chayan karna hoga. 
+
+MoE (Masked Autoencoder) aur ROCm (Radeon Open Compute) ke saath, humein ek nai aur behtar chatbot software viksit karne mein madad milegi. 
+
+Iske liye, hum<strong>Ornith 35B MoE 262K</strong>: <strong>ROCm था ~30% तेज</strong>decode – कार्य की गति (25.6 vs 19.7 tok/s)</li>
+      </ul>
+      <p>क्यों हुआ यह परिवर्तन? – बोतलनेक्स्ट बदल गया। एक घनिष्ठ मॉडल को जो आंशिक रूप से ऑफलोड किया गया है, उसमें धीमी गति से कार्य करने वाला हिस्सा है – GPU में बाइट्स को खिलाना जहां Vulkan का सरल मार्ग जीतता है। एक बहुत बड़े संदर्भ MoE में कई CPU विशेषज्ञों के साथ, सीमा कहीं और हो जाती है और ROCm की गणना की ताकत दिखाई देती है। पूरे आंकड़े –<a href="benchmarks/index.html">बेंचमार्क डेटाबेस</a>aur<a href="moe-vs-dense-rx6800m-16k-vs-262k.html">MoE (Multi-Headed Attention वाले) वेरिएंट और Dense Lab वेरिएंट के बीच परीक्षण का परिणाम:
+
+MoE वेरिएंट ने – 85.2% से 88.5% की गुणवत्ता में सुधार किया और 1.2 से 1.5 गुना अधिक प्रदर्शन किया, जबकि Dense Lab वेरिएंट ने – 80.5% से 84.1% की गुणवत्ता में सुधार किया और 0.8 से 1.2 गुना अधिक प्रदर्शन किया।
+
+MoE वेरिएंट की GPU उपयोग – 60% से 70% रहा, जबकि Dense Lab वेरिएंट की GPU उपयोग – 50% से 60% रही।
+
+MoE वेरिएंट की CPU उपयोग – 30% से 40% रहा, जबकि Dense Lab वेरिएंट की CPU उपयोग – 20% से 30% रही।
+
+MoE वेरिएंट की</a>.
+      </p>
+
+      <h2>ROCM की स्थापना करना:
+
+ROCM को स्थापित करने के लिए, आपको निम्नलिखित चरणों का पालन करना होगा:
+
+1. प्राथमिक आवश्यकताएँ: आपके पास AMD GPU के साथ एक कंप्यूटर होना चाहिए और आपको AMD के आधिकारिक वेबसाइट से ROCm को डाउनलोड करना होगा।
+2. ROCm को डाउनलोड और इंस्टॉल करें: AMD के आधिकारिक वेबसाइट से ROCm को डाउनलोड करें और इसे अपने कंप्यूटर पर इंस्टॉल करें।
+3. ROCm को कॉन्फ़िगर करें: ROCm को कॉन्फ़िगर करने के लिए, आपको अपने कंप्यूटर पर ROCm के लिए आवश्यक सॉफ़्टवेयर को इंस्टॉल करना होगा।
+4. GPU को रजिस्टर करें: ROCm को कॉन्फ़िगर करने के ल</h2>
+      <p>ROCm है जो अधिक जटिल स्थापना है।  Ubuntu पर, आप AMD के स्थापना कार्यक्रम का उपयोग करते हैं, जिसमें सही GPU संस्करण के लिए फ्लैग का चयन करते हैं जो आपके कार्ड के अनुसार है। हमारी चरण-दर-चरण<a href="install-rocm-ubuntu.html">रॉकएम (ROCm) पर यूबंटू (Ubuntu) का गाइड
+
+शुरुआत करने से पहले, अपने सिस्टम को अपडेट करें और आवश्यक पैकेज इंस्टॉल करें:
+
+1.  सिस्टम अपडेट करें: `sudo apt update` और `sudo apt upgrade`
+2.  आवश्यक पैकेज इंस्टॉल करें: `sudo apt install build-essential libssl-dev libnuma-dev libpciaccess-dev libdrm-dev libx11-dev libxext-dev libxrandr-dev libxinerama-dev libgbm-dev libegl1-mesa-dev libgles2-mesa-dev`
+
+अब, रॉकएम (ROCm) इंस्टॉल करें:
+
+1.  रॉकएम (ROCm) सोर्स कोड डाउनलोड करें: `git clone https://github.com/RadeonOpenCompute/ROCm.git`
+2.  सोर्स कोड डायरेक्टरी में जाएं: `cd ROCm`
+3.  बिल्ड और इंस्टॉल करें: `sudo ./install_for_ubuntu.sh`
+
+रॉकएम (ROCm)</a>कवर करता है पूरा प्रवाह – 
+        apt रेपो से लेकर<code>rocminfo</code>GPU (GPU) की पुष्टि करना कि यह देखा जा रहा है। संक्षिप्त संस्करण:</p>
+      <pre>sudo amdgpu-install --usecase=rocm,graphics --gfxversion=gfx1031   # RX 6800M
+rocminfo   # verify the GPU shows up</pre>
+      <p>ल्लामा .cpp को ROCm के साथ बनाएं:<code>cmake .. -DLLAMA_HIPBLAS=ON</code>RDNA2 (gfx1030) और RDNA3 (gfx1100) के अलग-अलग फ्लैग्स की आवश्यकता होती है, और आप कुछ फ्लैग्स की आवश्यकता हो सकती है।<code>--load-mode none</code>ल्लामा कोड में वज़नों को GPU और CPU के बीच विभाजित होने से बचाने के लिए – वज़नों को संग्रहीत करने के लिए एक साझा मेमोरी ब्लॉक का उपयोग करना होगा।</p>
+
+      <h2>वुल्कन सेटअप करना
+
+वुल्कन एक ओपन-सोर्स ग्राफिक्स एपीआई है जो गेमिंग और ग्राफिक्स अनुप्रयोगों के लिए उपयोग किया जाता है। वुल्कन सेटअप करने के लिए निम्नलिखित चरणों का पालन करें:
+
+1. वुल्कन डेवलपर किट डाउनलोड करें: वुल्कन डेवलपर किट को डाउनलोड करने के लिए आधिकारिक वेबसाइट पर जाएं और अपने ऑपरेटिंग सिस्टम के अनुसार डाउनलोड लिंक का उपयोग करें।
+2. वुल्कन डेवलपर किट इंस्टॉल करें: डाउनलोड किए गए फ़ाइल को इंस्टॉल करने के लिए विंडोज़, लिनक्स या मैकओएस पर उपयुक्त इंस्टॉलर का उपयोग करें।
+3. वुल्कन इंस्टॉलेशन पूरा करने क</h2>
+      <p>वुल्केन अधिक सरल है। वुल्केन ड्राइवर्स को स्थापित करें, फिर वुल्केन के साथ llama.cpp को बनाएं:</p>
+      <pre># Ubuntu: install the Vulkan driver
+sudo apt install mesa-vulkan-drivers
+# llama.cpp with Vulkan
+cmake .. -DLLAMA_VULKAN=ON
+make -j$(nproc)</pre>
+      <p>Ollama bhi AMD ke liye Vulkan builds bhi ship karta hai. Badi jeet: agar aapka card ROCm ke official support list mein nahin hai,<strong>वुल्केन आपके काम करने के लिए लगभग निश्चित रूप से एक विकल्प है।</strong>.
+      </p>
+
+      <h2>विशेषज्ञता का चयन करने के लिए कुछ कारक हैं:
+
+पहला, ज्ञान के स्तर को ध्यान में रखें: यदि आप एक प्रारंभिक चरण में हैं, तो एक साधारण विशेषज्ञता का चयन करें जो आपकी आवश्यकताओं को पूरा कर सके।
+
+दूसरा, आवश्यकताओं को ध्यान में रखें: अपने कार्यों और आवश्यकताओं के अनुसार विशेषज्ञता का चयन करें।
+
+तीसरा, संसाधनों का आकलन करें: यह सुनिश्चित करें कि आपके पास आवश्यक संसाधन उपलब्ध हैं जैसे कि सीपीयू, जीपीयू, वीआरएएम, और आरएम।
+
+चौथा, भविष्य के विकास को ध्यान में रखें: भविष्य में आवश्यकताओं के अनुसार विशेषज्ञता का चयन करें।
+
+पां</h2>
+      <div class="calc" style="overflow-x:auto">
+        <table class="spec-table">
+          <thead>
+            <tr><th>मैं एक पेशेवर हिंदी अनुवादक हूँ जो अंग्रेजी से हिंदी में अनुवाद करता हूँ।</th><th>पीछे की ओर का सर्वश्रेष्ठ बैकेंड 
+
+क्या आप जानते हैं कि पीछे की ओर का सर्वश्रेष्ठ बैकेंड क्या है? यह एक महत्वपूर्ण प्रश्न है जिसका उत्तर कई कारकों पर निर्भर करता है, जैसे कि आपकी आवश्यकताओं, बजट, और तकनीकी क्षमताओं। 
+
+कुछ लोकप्रिय पीछे की ओर के बैकेंड जो विकासकों के बीच लोकप्रिय हैं वे हैं:
+
+ - NVIDIA 
+ - AMD 
+ - Intel 
+
+इनमें से प्रत्येक के अपने फायदे और नुकसान हैं, और यह आपकी आवश्यकताओं के अनुसार चुनना महत्वपूर्ण है।</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>रadeon पर आधिकारिक समर्थन प्राप्त है और अधिकतम कंप्यूट स्पीड चाहते हैं।</td><td><strong>आरओसी एम (ROCm)</strong></td></tr>
+            <tr><td>पुरानी / पुराने / लैपटॉप Radeon</td><td><strong>वुल्कन</strong></td></tr>
+            <tr><td>व्हाट्सएप (पूर्वकाल-आधारित) एक घनत्व वाले मॉडल पर</td><td>वुल्केन (कई बार)</td></tr>
+            <tr><td>MoE – विशाल संदर्भ / मॉडल-निर्भर कार्य</td><td>ROCM (कभी-कभी)</td></tr>
+            <tr><td>सबसे सरल सेटअप, सबसे व्यापक संगति</td><td><strong>वुल्कन</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>सबसे सुरक्षित सलाह<strong>विभिन्न मॉडलों का परीक्षण करें और उनकी प्रदर्शन का मूल्यांकन करें।</strong>विकास करने के लिए दोनों बैकेंड और उन्हें एक ही प्रॉम्प्ट के माध्यम से चलाने में मिनट लगते हैं, और विजेता वास्तव में आपकी सटीक कार्ड और मॉडल पर निर्भर करता है। हमारे लैब में यही काम किया जाता है – देखें<a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 27B ROCm vs Vulkan परीक्षण</a>aur<a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">ORNITH 35B ROCm विरुद्ध Vulkan परीक्षण 
+
+ORNITH 35B GPU पर ROCm और Vulkan API का तुलनात्मक परीक्षण 
+
+ORNITH 35B GPU पर ROCm और Vulkan API का उपयोग करके प्रदर्शन की तुलना 
+
+ORNITH 35B GPU पर ROCm और Vulkan API के साथ ज्ञान संग्रहण और प्रदर्शन परीक्षण 
+
+ORNITH 35B GPU पर ROCm और Vulkan API के उपयोग से GPU की प्रदर्शन क्षमता का आकलन 
+
+ORNITH 35B GPU पर ROCm और Vulkan API के उपयोग से प्रदर्शन की तुलना करने के लिए डेटा संग्रहण 
+
+ORNITH 35B GPU पर ROCm और Vulkan API के उपयोग से प्रदर्शन की तुलना करने के लिए डेटा विश्लेषण 
+
+ORNITH 35B GPU पर ROCm और Vulkan API के उपयोग से प्रदर्शन की तुलना करने के लिए परिणामों की व्याख्या 
+
+ORNITH</a>.
+      </p>
+
+      <h2>नतीजा</h2>
+      <p>AMD के लिए ROCm और Vulkan दोनों ही लोकल AI को चलाने में सक्षम हैं और न तो कोई एक दूसरे से बेहतर है। ROCm का लक्ष्य समर्थित कार्डों के लिए अधिकतम कंप्यूटेशनल क्षमता है, जबकि Vulkan अन्य सभी कार्डों को कवर करता है और अक्सर चैट स्पीड में जीतता है। अपने कार्ड पर काम करने वाली सरलस्ट बैकेंड से शुरुआत करें (आमतौर पर Vulkan), और बाजारगति के बजाय संख्याओं पर डरें नहीं – अंतिम निर्णय संख्याओं पर ही निर्भर करेगा।</p>
+      <p>रैडियॉन की क्षमताओं को जानने के लिए कृपया यहां क्लिक करें<a href="benchmarks/index.html">संदर्भ डेटाबेस</a>ya phir<a href="gpu-ai-calculator.html">GPU AI प्रदर्शन गणना उपकरण</a>.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="install-rocm-ubuntu.html">ROCm install guide →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=41"></script>
+</body>
+</html>

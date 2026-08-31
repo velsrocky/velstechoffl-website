@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="KV कैश – क्यों लंबे संदर्भ खिड़कियां मेमोरी खाती हैं, कैसे टोकन की संख्या से कैश बढ़ता है, और अपने GPU के लिए इसका आकलन कैसे किया जाए। 
+
+KV कैश एक GPU की एक महत्वपूर्ण सुविधा है जो प्रोसेसिंग की गति को बढ़ावा देती है। यह एक मेमोरी है जिसमें पिछले इनपुट के अनुक्रम के साथ-साथ उनके संबंधित आउटपुट को संग्रहीत किया जाता है। जब एक मॉडल को एक लंबे संदर्भ खिड़की के साथ प्रशिक्षित किया जाता है, तो इसका अर्थ है कि मॉडल को अपने पिछले इनपुट के कई टोकन को संग्रहीत करना होगा। इससे KV कैश की मेमोरी की आवश्यकता" /> />
+  <title>KV स्मृति – संदर्भ विंडो के कारण क्यों खाता है यादगार स्मृति 
+
+KV cache एक प्रकार की स्मृति है जो CPU और GPU दोनों के बीच डेटा को संग्रहीत करने के लिए उपयोग की जाती है। यह स्मृति एक विशेष प्रकार की स्मृति है जो CPU और GPU के बीच डेटा को तेजी से एक्सेस करने के लिए डिज़ाइन की गई है। 
+
+संदर्भ विंडो KV cache के लिए एक महत्वपूर्ण कारक है। संदर्भ विंडो एक ऐसी स्थिति है जिसमें CPU और GPU एक ही समय में एक से अधिक डेटा पॉइंट्स को एक्सेस करते हैं। जब CPU और GPU एक ही समय में एक से अधिक डेटा पॉइंट्स को एक्सेस करते हैं, तो यह संदर्भ विंडो | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/kv-cache-explained.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/kv-cache-explained.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/kv-cache-explained.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/kv-cache-explained.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/kv-cache-explained.html#article",
+  "headline": "KV cache explained: why context windows eat memory",
+  "description": "Why longer context windows eat memory, how the key-value cache grows with tokens, and how to calculate it for your own GPU.",
+  "url": "https://velstech.net/kv-cache-explained.html",
+  "datePublished": "2026-08-30T00:00:00Z",
+  "dateModified": "2026-08-30T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/kv-cache-explained.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/kv-cache-explained.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/kv-cache-explained.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does the KV cache affect speed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes – a larger KV cache means more data to read per token, which slows decode. Quantizing the KV cache (q8, q4) helps both memory and speed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much memory does the KV cache use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the model architecture and context. For a 7B model at 8K context, roughly 1 GB. At 32K, about 4 GB. At 128K, it can be 12 GB or more."
+      }
+    }
+  ]
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/kv-cache-explained.html" />
+  <meta property="og:title" content="KV cache explained: why context windows eat memory | VelsTech" />
+  <meta property="og:description" content="Why longer context windows eat memory, how the key-value cache grows with tokens, and how to calculate it for your own GPU." />
+  <meta property="og:image" content="https://velstech.net/og/kv-cache-explained.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="KV cache explained: why context windows eat memory | VelsTech" />
+  <meta name="twitter:description" content="Why longer context windows eat memory, how the key-value cache grows with tokens, and how to calculate it for your own GPU." />
+  <meta name="twitter:image" content="https://velstech.net/og/kv-cache-explained.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
+    <h1 class="title">KV cache explained: why context windows eat memory</h1>
+    <div class="meta">
+      <span class="tag">KV Cache</span>
+      <span class="tag">VRAM</span>
+      <span class="tag">Local AI</span>
+      <span>Aug 30, 2026</span>
+      <span>· 6 min read</span>
+    </div>
+
+    <div class="article-body">
+      <p>"यह मॉडल 128K संदर्भ का समर्थन करता है – यह शानदार लगता है – जब तक कि आप इसे चलाने की कोशिश नहीं करते और अपने मेमोरी के बारे में सोचते हैं कि यह कहीं चला गया है।  दोषी यह है<strong>KV – कैश</strong>: LLM के वह हिस्से की बात करते हैं जो हर बार कॉन्टेक्स्ट के प्रत्येक टोकन के साथ बढ़ते हैं, और यही कारण है कि बड़ा कॉन्टेक्स्ट विंडो वास्तविक जीबी में खर्च करता है।</p>
+      <p>यह गाइड KV कैश क्या है, इसके क्यों ऐसा स्केल करता है, और किसी भी संदर्भ विंडो के लिए कितनी मेमोरी की आवश्यकता होती है, इसकी गणना कैसे करनी है, इन सभी के बारे में जानकारी प्रदान करता है।<em>आपका</em>हार्डवेयर</p>
+
+      <h2>KV cache क्या है 
+
+KV cache एक प्रकार का कैश होता है जो कुंजी और मूल्य के जोड़ों को संग्रहीत करता है। यह एक डेटा स्ट्रक्चर है जो डेटा को तेजी से प्राप्त करने और एक्सेस करने के लिए डिज़ाइन किया गया है। KV cache में डेटा को कुंजी और मूल्य के रूप में संग्रहीत किया जाता है, जिससे डेटा को तेजी से एक्सेस किया जा सकता है।</h2>
+      <p>LLM के द्वारा टोकन को प्रोसेस करने के दौरान, बहुत सारी गणना होती है – और महत्वपूर्ण रूप से, यह परिणामों की आवश्यकता है<em>पहले</em>प्रत्येक टोकन के लिए आगे की समझ के लिए पिछले की दृष्टि की गणना प्रति स्तर पर दो चीजों से की जाती है:<strong>कुंजी</strong>– इस टोकन द्वारा प्रदान की जाने वाली सुविधाएं<strong>मूल्य</strong>विवरण</p>
+      <p>कुछ पिछले टोकन के लिए कुंजी-मूल्यों को हर नई टोकन के लिए फिर से गणना करने की बजाय – जो पीढ़ी को दोगुना होने का कारण बनता – मॉडल उन्हें संग्रहीत करता है।<strong>KV cache</strong>हर टोकन का कॉन्टेक्स्ट में जोड़ा गया एक निश्चित मात्रा से जुड़ा होता है, हर लेयर और हर ध्यान केंद्रित करने वाले हेड में।</p>
+
+      <h2>क्यों यह मेमोरी को लाइनरी तरीके से खाता है जब कॉन्टेक्स्ट बढ़ता है।</h2>
+      <p>कुंजी तथ्य<strong>KV कैश का आकार टोकन की संख्या के साथ बढ़ता है, न कि मॉडल के आकार के साथ।</strong>मजबूती से परिचितता = अधिक कैश की गई कुंजियाँ और मूल्य। दोहराएं परिचितता और आप लगभग डबल कैश की गई कुंजियों और मूल्यों की गणना कर सकते हैं।</p>
+      <p>एक घनिष्ठ मॉडल का लगभग आकार है: 
+
+- 100 MB – 1 GB 
+
+कई मामलों में, एक घनिष्ठ मॉडल का आकार 5-10 MB भी हो सकता है, जैसे कि Gemini, Qwen और Alibaba के मॉडल।</p>
+      <pre>KV cache ≈ layers × kv_heads × head_dim × 2 × bytes_per_value × context</pre>
+      <p>वास्तविक संख्याएँ मॉडल के डिज़ाइन पर निर्भर करती हैं।  प्रैक्टिकल बिंदु: एक मध्यम आकार के मॉडल के लिए जैसे कि 7B या 13B, KV कैश एक बड़े कॉन्टेक्स्ट (कहीं 32K या 128K) में आसानी से वेट्स के आकार से मेल खा सकता है या उनसे अधिक हो सकता है।</p>
+
+      <h2>वास्तविक संख्याएँ</h2>
+      <p>वास्तव में देखने के लिए,<a href="llm-vram-calculator.html">विशिष्ट ज्ञान प्राप्त करने वाले विश्लेषणकारी (विशेषज्ञ) मेमोरी आवश्यकता निर्धारक</a>वजनों का विभाजन और KV कैश को आपके सटीक मॉडल के लिए, गणना, और संदर्भ के लिए तोड़ता है। 
+
+कुछ कार्य किए गए उदाहरण:</p>
+      <ul>
+        <li>एक 7 अरब पैरामीटर वाला मॉडल Q4 में<strong>आठ क्यू कॉन्टेक्स्ट</strong>KV cache है लगभग 1 GB – एक छोटा सा टुकड़ा लगभग 4 GB के कुल से –।</li>
+        <li>वही मॉडल<strong>32K कॉन्टेक्स्ट</strong>KV cache बढ़कर ~4 GB तक पहुंच गया है, जो वेट्स के अनुसार है।</li>
+        <li>एक 32B मॉडल में Q4 में<strong>64K संदर्भ</strong>KV cache ke alawa hi 8–12 GB ki capacity ho sakti hai – jisse kai GPUs ke vishey se adhik hoti hai.</li>
+      </ul>
+      <p>उसी मॉडल के लिए भी "8K कॉन्टेक्स्ट पर चलाता है" और "128K कॉन्टेक्स्ट पर चलाता है" पूरी तरह से अलग हार्डवेयर आवश्यकताएं हैं।</p>
+
+      <h2>सिस्टम को गति प्रदान करने के लिए GPU का उपयोग करें। 
+सिस्टम की गति को बढ़ाने के लिए CPU को अपग्रेड करें। 
+वीडियो मेमोरी को बढ़ाने के लिए VRAM को बढ़ाएं। 
+सिस्टम की गति को बढ़ाने के लिए RAM को बढ़ाएं। 
+LLM का उपयोग करके सिस्टम की गति को बढ़ाएं। 
+GGUF का उपयोग करके सिस्टम की गति को बढ़ाएं। 
+क्वार्टर 4 (Q4) और क्वार्टर 5 (Q5) का उपयोग करके सिस्टम की गति को बढ़ाएं। 
+क्वार्टर 8 (Q8) का उपयोग करके सिस्टम की गति को बढ़ाएं। 
+KV कैश का उपयोग करके सिस्टम की गति को बढ़ाएं। 
+RAG का उपयोग करके</h2>
+      <p>यदि KV कैश आपकी मेमोरी को खा रहा है, तो आपके पास कुछ हैंडल हैं:</p>
+      <ul>
+        <li><strong>कॉन्टेक्स्ट विंडो को कम करें<code>-c</code>)</strong>– एक ही सबसे बड़ा लीवर.</li>
+        <li><strong>KV कैश को क्वांटाइज करें<code>q8_0</code>, <code>q4_0</code>)</strong>– 8-भिट या 4-भिट में कुंजी-मूल्य संग्रह करने से लगभग आधा या चौथाई कैश स्टोरेज हो जाती है, जो अधिकांश कार्यों के लिए गुणवत्ता में बहुत कम गिरावट के साथ।</li>
+        <li><strong>MoE – विशिष्ट प्रकार के मॉडलों का उपयोग करें या लंबी संदर्भ-आधारित अनुकूलित मॉडलों का उपयोग करें</strong>– MoE वाले मॉडल जैसे<a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">ornith 35B</a>KV को टोकन्स के बीच साझा करने से कैश छोटा हो जाता है, जो एक घनिष्ठ मॉडल के मुकाबले छोटा होता है।</li>
+        <li><strong>भार स्थानांतरित करना</strong>– llama.cpp में KV कैश का एक हिस्सा सिस्टम RAM में रखने की अनुमति है, लेकिन इसका मतलब है कि गति कम हो जाएगी।</li>
+      </ul>
+      <p>आपके द्वारा देखा जा सकता है कि Q8 KV प्रभाव में वृद्धि हुई है।<a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen 
+27 अरब लैब टेस्ट</a>, Q8 KV – 16K का आकार (केवल कुछ ही) 12 GB कार्ड पर पूरक ऑफलोड के साथ ठीक से फिट होता है।</p>
+
+      <h2>मॉडल में मॉड्यूलर एग्जीक्यूशन (MoE) के विपरीत घनिष्ठ नेटवर्क (dense) क्यों भिन्न होते हैं?
+
+MoE में मॉड्यूलर प्रॉम्प्ट (MP) के साथ एक मॉड्यूलर नेटवर्क होता है, जिसमें प्रत्येक मॉड्यूल एक छोटा सा नेटवर्क होता है जो एक विशिष्ट टास्क को पूरा करता है। इसके विपरीत, घनिष्ठ नेटवर्क में सभी न्यूरॉन्स एक ही टास्क को पूरा करने के लिए एक साथ जुड़े होते हैं।
+
+MoE में प्रत्येक मॉड्यूल को एक विशिष्ट टास्क के लिए प्रशिक्षित किया जाता है, जिससे मॉडल की प्रदर्शन क्षमता बढ़ जाती है। इसके विपरीत, घनिष्ठ नेट</h2>
+      <p>एक घनिष्ठ मॉडल प्रत्येक टोकन को सभी अपने पैरामीटर्स के माध्यम से प्रसंस्कृत करता है। एक MoE मॉडल प्रत्येक टोकन को केवल कुछ "विशेषज्ञ" स्तरों के माध्यम से – लेकिन KV कैश एक अलग कहानी है। क्योंकि ध्यान सभी टोकन के लिए साझा किया जाता है, चाहे वे किसी विशेषज्ञ ने संभाले हुए भी हों, MoE मॉडल KV कैश को रखने में सक्षम होते हैं।<em>छोटा</em>KV cache pr token mein kuchh settingon mein hota hai. 
+Yeh ek vajah hai ki ek 35B MoE 262K context par chal sakta hai jabki 35B dense model kabhi bhi nahin chal sakta tha.<a href="moe-vs-dense-rx6800m-16k-vs-262k.html">मॉडल आफ इवेंट्स (MoE) बनाम घनिष्ठ लैब टेस्ट (Dense Lab Test)
+
+MoE बनाम घनिष्ठ लैब टेस्ट एक महत्वपूर्ण परीक्षण है जो प्रत्येक मॉडल की प्रदर्शन क्षमता को मापता है। MoE मॉडल आफ इवेंट्स (MoE) प्रोटोकॉल का उपयोग करता है, जिसमें विभिन्न लेयरों के बीच इवेंट प्रसार को संभालने के लिए एक विशेष डिज़ाइन किया गया है। दूसरी ओर, Dense Lab Test घनिष्ठ लैब टेस्ट प्रोटोकॉल का उपयोग करता है, जिसमें एक ही लेयर में सभी पैरामीटर्स को संभालने के लिए डिज़ाइन किया गया है।
+
+MoE बनाम घनिष्ठ लैब टेस्ट के बीच मुख्य अंतर यह है कि MoE म</a>मुख्य–मुख्य मुकाबले के लिए।</p>
+
+      <h2>मुख्य बिंदु</h2>
+      <p>KV cache है LLMs का छुपा हुआ मेमरी खर्च, और यह हर टोकन के साथ बढ़ता है। जब एक मॉडल कहता है कि यह "128K तक का समर्थन करता है", तो यह एक ऊपरी सीमा है, न कि एक सिफारिश। वास्तव में आवश्यक कॉन्टेक्स्ट का उपयोग करें, KV cache को क्वांटाइज करें, और जांच करें कि<a href="llm-vram-calculator.html">वीआरएएम कैलकुलेटर</a>पहले आपका – और
+        आपका मॉडल मेमोरी का एक छोटा सा हिस्सा में चलेगा।</p>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="flash-attention-guide.html">Flash Attention &amp; speculative decoding →</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=13"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=41"></script>
+</body>
+</html>

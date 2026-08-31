@@ -93,6 +93,34 @@ function applyLang(lang) {
   }
 }
 
+// On load, if the user's stored language is ta/hi and this page is the English
+// variant, bounce to the translated page so navigation between pages stays in
+// the chosen language (internal links point at English .html files).
+function redirectToLangVariant() {
+  try {
+    const lang = getLang();
+    if (lang === "en") return;
+    const path = location.pathname.split("/").pop() || "index.html";
+    const baseUrl = location.origin + location.pathname.replace(/[^/]+$/, "");
+    // Already on the correct variant -> nothing to do.
+    if ((lang === "ta" && path.endsWith(".ta.html")) ||
+        (lang === "hi" && path.endsWith(".hi.html"))) return;
+    // Only redirect plain English pages.
+    if (!path.endsWith(".html") || path.endsWith(".hi.html") || path.endsWith(".ta.html")) return;
+    const suffix = lang === "ta" ? ".ta.html" : ".hi.html";
+    const target = path.replace(/\.html$/, suffix);
+    if (target === path) return;
+    // HEAD-check so we never redirect to a non-existent variant.
+    fetch(baseUrl + target, { method: "HEAD" })
+      .then(r => { if (r.ok) location.replace(baseUrl + target + location.search + location.hash); })
+      .catch(() => {});
+  } catch {}
+}
+
+// Keep the chosen language across pages: if the stored lang is ta/hi and we
+// landed on an English page, redirect to the translated variant right away.
+redirectToLangVariant();
+
 /* Amazon Associates tracking ID – ONE place to change it site-wide.
    Every <a data-amazon="search query"> is rewritten to an Amazon.in
    keyword link carrying this tag. */

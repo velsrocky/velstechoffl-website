@@ -77,6 +77,7 @@ const TOOLS_META = {
   "password-generator.html": { title: "Password Generator | VelsTech", desc: "Generate strong random passwords with adjustable length and character sets. Runs entirely in your browser." },
   "text-case-converter.html": { title: "Text Case Converter | VelsTech", desc: "Convert text to uppercase, lowercase, title case, sentence case, or camelCase instantly. Runs entirely in your browser." },
   "uuid-generator.html": { title: "UUID Generator | VelsTech", desc: "Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser." },
+  "playground.html": { title: "LLM Playground – Chat with AI models | VelsTech", desc: "Full LLM Playground – chat with multiple models, adjust temperature, top-p, max tokens, system prompt, and share conversations. Powered by VelsTech's AI proxy." },
 };
 
 const CATEGORY_META = {

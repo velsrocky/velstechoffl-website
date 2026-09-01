@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0f14">
+<meta name="description" content="Full LLM Playground – chat with multiple models, adjust temperature, top-p, max tokens, system prompt, and share conversations.">
+<title>LLM Playground – VelsTech</title>
+<link rel="canonical" href="https://velstech.net/playground.html">
+<link rel="icon" href="logo.svg">
+<link rel="stylesheet" href="styles.css?v=40">
+<style>
+  :root { --vt-accent: #4cc2ff; --vt-accent-deep: #2f8fd8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0b0f14; color: #e6edf3; font-family: system-ui, -apple-system, sans-serif; display: flex; height: 100vh; overflow: hidden; }
+  a { color: var(--vt-accent); }
+  /* ── sidebar ── */
+  .sidebar { width: 300px; min-width: 260px; background: #11161d; border-right: 1px solid #1f2733; display: flex; flex-direction: column; overflow-y: auto; padding: 16px; gap: 14px; }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .sidebar .brand { font-size: 13px; opacity: .6; margin-bottom: 8px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 12px; font-weight: 600; opacity: .8; display: flex; justify-content: space-between; }
+  .field select, .field input, .field textarea { background: #0b0f14; border: 1px solid #1f2733; border-radius: 8px; color: #e6edf3; padding: 8px 10px; font-size: 13px; font-family: inherit; }
+  .field textarea { resize: vertical; min-height: 60px; }
+  .field input[type="range"] { padding: 0; accent-color: var(--vt-accent); }
+  .field .val { color: var(--vt-accent); font-weight: 700; }
+  .sidebar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sidebar-actions button { flex: 1; padding: 8px; border: 1px solid #1f2733; border-radius: 8px; background: #0b0f14; color: #e6edf3; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .sidebar-actions button:hover { border-color: var(--vt-accent); }
+  .sidebar-actions .btn-primary { background: var(--vt-accent); color: #06121f; border-color: var(--vt-accent); }
+  .sidebar-actions .btn-primary:hover { opacity: .9; }
+  .model-select { display: flex; gap: 4px; align-items: center; }
+  .model-select select { flex: 1; }
+  .model-select .status { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .status.online { background: #22c55e; }
+  .status.loading { background: #facc15; animation: pulse 1s infinite; }
+  .status.offline { background: #ef4444; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .token-count { font-size: 11px; opacity: .6; text-align: right; margin-top: -2px; }
+  .count { color: var(--vt-accent); }
+  /* ── chat area ── */
+  .chat-area { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .chat-header { padding: 12px 20px; border-bottom: 1px solid #1f2733; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .chat-header h1 { font-size: 16px; font-weight: 700; }
+  .chat-header .toggle-sidebar { display: none; background: none; border: none; color: #e6edf3; font-size: 20px; cursor: pointer; padding: 4px; }
+  .messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .msg { max-width: 85%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.55; word-wrap: break-word; }
+  .msg.user { align-self: flex-end; background: var(--vt-accent); color: #06121f; border-bottom-right-radius: 4px; }
+  .msg.assistant { align-self: flex-start; background: #11161d; border: 1px solid #1f2733; border-bottom-left-radius: 4px; }
+  .msg code { background: rgba(127,127,127,.22); padding: 1px 5px; border-radius: 5px; font-family: ui-monospace, monospace; font-size: 13px; }
+  .msg pre { background: #060a0f; border: 1px solid #1f2733; border-radius: 8px; padding: 12px; overflow-x: auto; font-size: 13px; line-height: 1.4; }
+  .msg pre code { background: none; padding: 0; }
+  .msg p { margin: 0 0 8px; }
+  .msg p:last-child { margin-bottom: 0; }
+  .msg ul, .msg ol { margin: 4px 0; padding-left: 20px; }
+  .msg table { border-collapse: collapse; margin: 8px 0; font-size: 13px; }
+  .msg th, .msg td { border: 1px solid #1f2733; padding: 6px 10px; text-align: left; }
+  .msg th { background: #1f2733; }
+  .msg .typing { display: inline-flex; gap: 3px; }
+  .msg .typing span { width: 6px; height: 6px; border-radius: 50%; background: #6b7280; animation: dot 1.4s infinite; }
+  .msg .typing span:nth-child(2) { animation-delay: .2s; }
+  .msg .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes dot { 0%,60%,100%{opacity:.3} 30%{opacity:1} }
+  .msg-actions { display: flex; gap: 6px; margin-top: 6px; opacity: 0; transition: opacity .15s; }
+  .msg:hover .msg-actions { opacity: 1; }
+  .msg-actions button { background: none; border: 1px solid #1f2733; border-radius: 6px; color: #9aa8b8; cursor: pointer; font-size: 11px; padding: 3px 8px; }
+  .msg-actions button:hover { color: #e6edf3; border-color: #4b5563; }
+  .input-area { padding: 12px 20px; border-top: 1px solid #1f2733; display: flex; gap: 8px; flex-shrink: 0; }
+  .input-area textarea { flex: 1; resize: none; background: #11161d; border: 1px solid #1f2733; border-radius: 10px; color: #e6edf3; padding: 10px 14px; font: inherit; font-size: 14px; max-height: 140px; min-height: 44px; }
+  .input-area textarea:focus { outline: none; border-color: var(--vt-accent); }
+  .input-area button { flex: none; width: 44px; height: 44px; border: none; border-radius: 10px; background: var(--vt-accent); color: #06121f; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .input-area button:disabled { opacity: .4; cursor: default; }
+  .input-area button svg { width: 20px; height: 20px; }
+  .empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #6b7280; text-align: center; padding: 40px; gap: 8px; }
+  .empty-state h2 { font-size: 20px; color: #9aa8b8; }
+  .empty-state p { font-size: 14px; max-width: 400px; line-height: 1.5; }
+  /* ── mobile ── */
+  @media (max-width: 720px) {
+    .sidebar { position: fixed; left: -300px; top: 0; bottom: 0; z-index: 100; transition: left .2s; }
+    .sidebar.open { left: 0; }
+    .chat-header .toggle-sidebar { display: block; }
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 99; }
+    .overlay.show { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <h2>LLM Playground</h2>
+  <p class="brand"><a href="index.html">VelsTech</a> · <a href="ai.html">AI</a></p>
+
+  <div class="field">
+    <label for="model">Model</label>
+    <div class="model-select">
+      <select id="model"></select>
+      <span class="status" id="model-status"></span>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="sysprompt">System prompt</label>
+    <textarea id="sysprompt" rows="4">You are a helpful, friendly AI assistant. Be concise and accurate.</textarea>
+  </div>
+
+  <div class="field">
+    <label>Temperature <span class="val" id="temp-val">1.0</span></label>
+    <input type="range" id="temperature" min="0" max="2" step="0.05" value="1.0">
+  </div>
+
+  <div class="field">
+    <label>Top-p <span class="val" id="topp-val">1.0</span></label>
+    <input type="range" id="top-p" min="0" max="1" step="0.05" value="1.0">
+  </div>
+
+  <div class="field">
+    <label>Max tokens <span class="val" id="maxt-val">2048</span></label>
+    <input type="range" id="max-tokens" min="64" max="8192" step="64" value="2048">
+  </div>
+
+  <div class="sidebar-actions">
+    <button onclick="newChat()">New chat</button>
+    <button onclick="copyChat()">Copy</button>
+    <button class="btn-primary" onclick="shareChat()">Share</button>
+  </div>
+
+  <div class="token-count">Tokens: <span class="count" id="tokens">0</span></div>
+</aside>
+
+<main class="chat-area">
+  <header class="chat-header">
+    <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+    <h1>Playground</h1>
+    <span style="font-size:12px;opacity:.6" id="live-model">—</span>
+  </header>
+
+  <div class="messages" id="messages">
+    <div class="empty-state" id="empty-state">
+      <h2>🧪 LLM Playground</h2>
+      <p>Pick a model, adjust the settings, and start chatting. Messages stream in real time — no refresh needed.</p>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <textarea id="input" rows="1" placeholder="Type a message…" aria-label="Message"></textarea>
+    <button id="send" aria-label="Send" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</main>
+
+<script>
+(function() {
+  'use strict';
+
+  var PROXY = 'https://chat.velstech.net';
+  var $ = function(id) { return document.getElementById(id); };
+  var input = $('input');
+  var sendBtn = $('send');
+  var messages = $('messages');
+  var empty = $('empty-state');
+  var modelSelect = $('model');
+  var modelStatus = $('model-status');
+  var liveModel = $('live-model');
+  var abortController = null;
+  var chatHistory = [];
+
+  function loadModels() {
+    modelStatus.className = 'status loading';
+    fetch(PROXY + '/api/models').then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function(data) {
+      modelSelect.innerHTML = '';
+      var stored = '';
+      try { stored = localStorage.getItem('pg-model') || ''; } catch(e) {}
+      (data.models || []).forEach(function(m) {
+        var opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m.replace(/^@cf\//, '');
+        modelSelect.appendChild(opt);
+      });
+      var found = false;
+      for (var i = 0; i < modelSelect.options.length; i++) {
+        if (modelSelect.options[i].value === stored) { modelSelect.value = stored; found = true; break; }
+      }
+      modelStatus.className = 'status online';
+      updateLiveModel();
+    }).catch(function() {
+      modelStatus.className = 'status offline';
+      modelSelect.innerHTML = '<option value="">Offline</option>';
+    });
+  }
+
+  modelSelect.addEventListener('change', function() {
+    try { localStorage.setItem('pg-model', modelSelect.value); } catch(e) {}
+    updateLiveModel();
+  });
+  function updateLiveModel() { liveModel.textContent = modelSelect.value || '\u2014'; }
+
+  var ranges = { temperature: 'temp-val', 'top-p': 'topp-val', 'max-tokens': 'maxt-val' };
+  Object.keys(ranges).forEach(function(id) {
+    var el = $(id);
+    try { var saved = localStorage.getItem('pg-' + id); if (saved !== null) el.value = saved; } catch(e) {}
+    el.addEventListener('input', function() {
+      try { localStorage.setItem('pg-' + id, el.value); } catch(e) {}
+      $(ranges[id]).textContent = el.value;
+    });
+    $(ranges[id]).textContent = el.value;
+  });
+  (function() {
+    var el = $('sysprompt');
+    try { var saved = localStorage.getItem('pg-sysprompt'); if (saved !== null) el.value = saved; } catch(e) {}
+    el.addEventListener('input', function() { try { localStorage.setItem('pg-sysprompt', el.value); } catch(e) {} });
+  })();
+
+  input.addEventListener('input', function() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 140) + 'px'; });
+  input.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+
+  function sendMessage() {
+    var text = input.value.trim();
+    if (!text || sendBtn.disabled) return;
+    input.value = ''; input.style.height = 'auto';
+    empty.hidden = true;
+    addMessage('user', esc(text));
+    chatHistory.push({ role: 'user', content: text });
+    sendBtn.disabled = true;
+    var statusEl = addMessage('assistant', '<div class="typing"><span></span><span></span><span></span></div>');
+
+    abortController = new AbortController();
+    var payload = {
+      messages: [{ role: 'system', content: $('sysprompt').value }].concat(chatHistory),
+      model: modelSelect.value || '@cf/meta/llama-3.1-8b-instruct',
+      stream: true,
+      temperature: parseFloat($('temperature').value),
+      top_p: parseFloat($('top-p').value),
+      max_tokens: parseInt($('max-tokens').value, 10)
+    };
+
+    fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal,
+      body: JSON.stringify(payload)
+    }).then(function(res) {
+      if (!res.ok || !res.body) {
+        return res.json().catch(function() { return {}; }).then(function(e) {
+          throw new Error((e && e.detail) || ('HTTP ' + res.status));
+        });
+      }
+      var reader = res.body.getReader();
+      var decoder = new TextDecoder();
+      var buf = '', acc = '';
+      var done = false;
+      function pump() {
+        return reader.read().then(function(r) {
+          if (r.done) return;
+          buf += decoder.decode(r.value, { stream: true });
+          var idx;
+          while ((idx = buf.indexOf('\n\n')) >= 0) {
+            var chunk = buf.slice(0, idx);
+            buf = buf.slice(idx + 2);
+            var m = chunk.match(/^data:\s*(.+)$/m);
+            if (!m) continue;
+            var data = m[1];
+            if (data === '[DONE]') { done = true; break; }
+            try {
+              var j = JSON.parse(data);
+              var delta = (j.choices && j.choices[0] && (j.choices[0].delta && j.choices[0].delta.content || j.choices[0].text)) || '';
+              if (delta) { acc += delta; statusEl.innerHTML = renderMarkdown(acc); }
+            } catch(err) {}
+          }
+          if (done) return;
+          return pump();
+        });
+      }
+      return pump().then(function() {
+        chatHistory.push({ role: 'assistant', content: acc });
+        updateTokens();
+      });
+    }).catch(function(e) {
+      if (e.name !== 'AbortError') statusEl.innerHTML = '<span style="color:#f87171">Error: ' + esc(e.message) + '</span>';
+    }).then(function() {
+      sendBtn.disabled = false;
+      abortController = null;
+      input.focus();
+    });
+  }
+
+  function newChat() {
+    chatHistory = [];
+    var els = messages.querySelectorAll('.msg');
+    for (var i = 0; i < els.length; i++) els[i].remove();
+    empty.hidden = false;
+    updateTokens();
+  }
+
+  function copyChat() {
+    var text = chatHistory.map(function(m) { return (m.role === 'user' ? 'You' : 'AI') + ':\n' + m.content; }).join('\n\n');
+    navigator.clipboard.writeText(text).catch(function() {});
+  }
+
+  function shareChat() {
+    if (!chatHistory.length) return;
+    var data = { model: modelSelect.value, history: chatHistory };
+    var enc = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    var url = location.origin + location.pathname + '#share=' + encodeURIComponent(enc);
+    navigator.clipboard.writeText(url).then(function() {
+      var btn = document.querySelector('.sidebar-actions .btn-primary');
+      var orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = orig; }, 1500);
+    }).catch(function() {});
+  }
+
+  function loadShared() {
+    try {
+      var m = location.hash.match(/share=([^&]+)/);
+      if (!m) return;
+      var data = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
+      if (data.history && data.history.length) {
+        chatHistory = data.history;
+        empty.hidden = true;
+        chatHistory.forEach(function(msg) { addMessage(msg.role, renderMarkdown(msg.content)); });
+        updateTokens();
+        var found = false;
+        for (var i = 0; i < modelSelect.options.length; i++) {
+          if (modelSelect.options[i].value === data.model) { modelSelect.value = data.model; found = true; break; }
+        }
+        if (found) updateLiveModel();
+      }
+    } catch(err) {}
+  }
+
+  function addMessage(role, html) {
+    var div = document.createElement('div');
+    div.className = 'msg ' + role;
+    div.innerHTML = html;
+    messages.appendChild(div);
+    div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    return div;
+  }
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function renderMarkdown(text) {
+    text = esc(text);
+    var blocks = [];
+    text = text.replace(/```([\s\S]*?)```/g, function(m, code) {
+      blocks.push('<pre><code>' + code + '</code></pre>');
+      return '\u0000B' + (blocks.length - 1) + '\u0000';
+    });
+    text = text.replace(/^### (.+)$/gm, '<h4>$1</h4>');
+    text = text.replace(/^## (.+)$/gm, '<h3>$1</h3>');
+    text = text.replace(/^# (.+)$/gm, '<h2>$1</h2>');
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+    var lines = text.split('\n');
+    var out = '', inUl = false, inOl = false;
+    for (var i = 0; i < lines.length; i++) {
+      var t = lines[i].trim();
+      if (!t) { if (inUl) { out += '</ul>'; inUl = false; } if (inOl) { out += '</ol>'; inOl = false; } continue; }
+      if (/^[-*]\s+/.test(t)) {
+        if (inOl) { out += '</ol>'; inOl = false; }
+        if (!inUl) { out += '<ul>'; inUl = true; }
+        out += '<li>' + t.replace(/^[-*]\s+/, '') + '</li>';
+        continue;
+      }
+      if (/^\d+\.\s+/.test(t)) {
+        if (inUl) { out += '</ul>'; inUl = false; }
+        if (!inOl) { out += '<ol>'; inOl = true; }
+        out += '<li>' + t.replace(/^\d+\.\s+/, '') + '</li>';
+        continue;
+      }
+      if (inUl) { out += '</ul>'; inUl = false; }
+      if (inOl) { out += '</ol>'; inOl = false; }
+      out += '<p>' + t + '</p>';
+    }
+    if (inUl) out += '</ul>';
+    if (inOl) out += '</ol>';
+    out = out.replace(/\u0000B(\d+)\u0000/g, function(m, i) { return blocks[+i]; });
+    return out;
+  }
+
+  function updateTokens() {
+    var total = chatHistory.reduce(function(s, m) { return s + m.content.split(/\s+/).filter(Boolean).length; }, 0);
+    $('tokens').textContent = Math.round(total * 1.3).toLocaleString();
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+
+  loadModels();
+  loadShared();
+  input.focus();
+
+  window.sendMessage = sendMessage;
+  window.newChat = newChat;
+  window.copyChat = copyChat;
+  window.shareChat = shareChat;
+  window.toggleSidebar = toggleSidebar;
+})();
+
+</script>
+</body>
+</html>

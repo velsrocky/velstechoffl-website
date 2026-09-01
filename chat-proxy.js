@@ -90,12 +90,24 @@ export default {
       return new Response(null, {
         headers: {
           "Access-Control-Allow-Origin": origin,
-          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type",
           "Access-Control-Max-Age": "86400",
           "Vary": "Origin",
         },
       });
+    }
+
+    // GET /api/models -> list models the playground can offer.
+    if (request.method === "GET" && new URL(request.url).pathname === "/api/models") {
+      const list = (env.PLAYGROUND_MODELS && JSON.parse(env.PLAYGROUND_MODELS)) || [
+        "@cf/meta/llama-3.1-8b-instruct",
+        "@cf/meta/llama-3.2-3b-instruct",
+        "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+        "@cf/qwen/qwen2.5-7b-instruct",
+        "@cf/qwen/qwen3-8b",
+      ];
+      return json(JSON.stringify({ models: list }), 200, origin);
     }
 
     const ip =
@@ -151,6 +163,9 @@ async function handleOpenAI(payload, env, origin, model) {
       model: model,
       messages: payload.messages,
       stream: payload.stream !== false,
+      temperature: payload.temperature,
+      top_p: payload.top_p,
+      max_tokens: payload.max_tokens,
     }),
   });
 

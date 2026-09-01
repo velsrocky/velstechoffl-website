@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use." />
+  <title>Config Generator Studio | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/config-generator.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/config-generator.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/config-generator.html#webapp",
+  "name": "Config Generator Studio | VelsTech",
+  "description": "Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use.",
+  "url": "https://velstech.net/config-generator.html",
+  "datePublished": "2026-09-01",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/config-generator.html" />
+  <meta property="og:title" content="Config Generator Studio | VelsTech" />
+  <meta property="og:description" content="Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Config Generator Studio | VelsTech" />
+  <meta name="twitter:description" content="Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+
+  <style>
+    /* ---- Config Generator Studio (self-contained) ---- */
+    .cg-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0 0;
+    }
+    .cg-tab {
+      padding: 10px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .cg-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .cg-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .cg-panel { display: none; margin: 0; }
+    .cg-panel.active { display: block; }
+
+    .cg-section {
+      grid-column: 1 / -1;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 6px 0 0;
+    }
+
+    .cg-rows { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .cg-row { display: grid; grid-template-columns: 1fr 1fr 32px; gap: 8px; align-items: center; }
+    .cg-row-input { padding: 8px 10px; }
+    .cg-row-del {
+      width: 32px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 1.15rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .cg-row-del:hover { color: #f472b6; border-color: rgba(244, 114, 182, 0.5); }
+    .cg-add { font-size: 0.85rem; padding: 8px 14px; margin-top: 8px; }
+
+    .cg-preview { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .cg-preview-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .cg-preview-title {
+      font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .cg-actions { display: flex; gap: 8px; }
+    .cg-actions .btn { padding: 8px 16px; font-size: 0.85rem; }
+
+    .cg-pre {
+      margin: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #0b0f14;
+      color: #dbe4ee;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+      min-height: 120px;
+      white-space: pre;
+      tab-size: 2;
+    }
+    .cg-pre code { background: transparent; font-family: inherit; }
+
+    .tok-cm  { color: #5b6b7e; font-style: italic; }
+    .tok-st  { color: #e2b86b; }
+    .tok-num { color: #c58be8; }
+    .tok-kw  { color: #4cc2ff; }
+    .tok-opt { color: #8be9fd; }
+
+    /* Light syntax theme for the preview */
+    body.cg-light .cg-pre { background: #f6f8fa; color: #24292e; }
+    body.cg-light .tok-cm  { color: #6a737d; font-style: italic; }
+    body.cg-light .tok-st  { color: #032f62; }
+    body.cg-light .tok-num { color: #005cc5; }
+    body.cg-light .tok-kw  { color: #d73a49; }
+    body.cg-light .tok-opt { color: #e36209; }
+
+    .cg-toggles { display: flex; flex-wrap: wrap; gap: 14px; }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Config Generator Studio</p>
+    <h1 class="title">Config Generator Studio</h1>
+    <div class="meta">
+      <span>docker-compose.yml · systemd .service · llama-server command</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Three config generators in one place. Fill in a few fields and get a
+        <strong>copy-paste ready</strong> Docker Compose file, a systemd unit, or a
+        full <code>llama-server</code> command with the right library path exported.
+        The preview updates live as you type – everything runs in your browser.
+      </p>
+
+      <div class="cg-tabs" role="tablist" aria-label="Config type">
+        <button type="button" class="cg-tab active" data-tab="docker" role="tab" aria-selected="true">Docker Compose</button>
+        <button type="button" class="cg-tab" data-tab="systemd" role="tab" aria-selected="false">systemd service</button>
+        <button type="button" class="cg-tab" data-tab="llama" role="tab" aria-selected="false">llama-server</button>
+      </div>
+
+      <!-- ============ Docker Compose ============ -->
+      <div class="calc cg-panel active" id="panel-docker">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Image</span>
+            <select id="d-image" class="input">
+              <option value="nginx" selected>nginx</option>
+              <option value="postgres">postgres</option>
+              <option value="redis">redis</option>
+              <option value="ollama">ollama</option>
+              <option value="llama-cpp">llama.cpp server</option>
+              <option value="custom">Custom…</option>
+            </select>
+          </label>
+
+          <label class="field" id="d-custom-wrap" hidden>
+            <span>Custom image</span>
+            <input id="d-custom-image" class="input" type="text" placeholder="ghcr.io/user/image:tag" />
+          </label>
+
+          <label class="field">
+            <span>Service name</span>
+            <input id="d-service" class="input" type="text" placeholder="nginx" />
+          </label>
+
+          <label class="field">
+            <span>Restart policy</span>
+            <select id="d-restart" class="input">
+              <option value="no">no</option>
+              <option value="always" selected>always</option>
+              <option value="unless-stopped">unless-stopped</option>
+              <option value="on-failure">on-failure</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Network mode</span>
+            <select id="d-network" class="input">
+              <option value="bridge" selected>bridge (default)</option>
+              <option value="host">host</option>
+              <option value="none">none</option>
+              <option value="custom">custom network…</option>
+            </select>
+          </label>
+
+          <label class="field" id="d-network-name-wrap" hidden>
+            <span>Network name</span>
+            <input id="d-network-name" class="input" type="text" placeholder="my-net" />
+          </label>
+
+          <p class="cg-section">Ports</p>
+          <div class="calc-subgrid" style="grid-column:1/-1">
+            <div class="field" style="grid-column:1/-1">
+              <div class="cg-rows" id="docker-ports" data-def="docker-ports"></div>
+              <button type="button" class="btn btn-ghost cg-add" data-add="docker-ports">+ Add port</button>
+            </div>
+          </div>
+
+          <p class="cg-section">Volumes</p>
+          <div class="calc-subgrid" style="grid-column:1/-1">
+            <div class="field" style="grid-column:1/-1">
+              <div class="cg-rows" id="docker-volumes" data-def="docker-volumes"></div>
+              <button type="button" class="btn btn-ghost cg-add" data-add="docker-volumes">+ Add volume</button>
+            </div>
+          </div>
+
+          <p class="cg-section">Environment variables</p>
+          <div class="calc-subgrid" style="grid-column:1/-1">
+            <div class="field" style="grid-column:1/-1">
+              <div class="cg-rows" id="docker-env" data-def="docker-env"></div>
+              <button type="button" class="btn btn-ghost cg-add" data-add="docker-env">+ Add variable</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cg-preview">
+          <div class="cg-preview-head">
+            <span class="cg-preview-title">docker-compose.yml</span>
+            <div class="cg-actions">
+              <button type="button" class="btn btn-ghost cg-theme">Theme: Dark</button>
+              <button type="button" class="btn btn-primary cg-copy" data-copy="docker">Copy</button>
+            </div>
+          </div>
+          <pre class="cg-pre"><code id="preview-docker"></code></pre>
+        </div>
+
+        <p class="tool-note">
+          Volumes use <code>host:container</code> paths. Host paths are resolved
+          relative to the compose file; absolute paths and named volumes
+          (<code>name:/path</code>) work too. Custom networks are created with the
+          <code>bridge</code> driver.
+        </p>
+      </div>
+
+      <!-- ============ systemd ============ -->
+      <div class="calc cg-panel" id="panel-systemd">
+        <div class="calc-grid">
+          <label class="field">
+            <span>Service name</span>
+            <input id="s-name" class="input" type="text" placeholder="myapp" />
+          </label>
+
+          <label class="field">
+            <span>Description</span>
+            <input id="s-desc" class="input" type="text" placeholder="My application service" />
+          </label>
+
+          <label class="field">
+            <span>User (optional)</span>
+            <input id="s-user" class="input" type="text" placeholder="www-data" />
+          </label>
+
+          <label class="field">
+            <span>WorkingDirectory</span>
+            <input id="s-workdir" class="input" type="text" placeholder="/opt/myapp" />
+          </label>
+
+          <label class="field" style="grid-column:1/-1">
+            <span>ExecStart</span>
+            <input id="s-exec" class="input" type="text" placeholder="/usr/bin/python3 /opt/myapp/app.py" />
+          </label>
+
+          <label class="field">
+            <span>Restart policy</span>
+            <select id="s-restart" class="input">
+              <option value="no">no</option>
+              <option value="always" selected>always</option>
+              <option value="on-failure">on-failure</option>
+              <option value="on-abnormal">on-abnormal</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>RestartSec (s)</span>
+            <input id="s-restartsec" class="input" type="number" min="0" step="1" value="5" />
+          </label>
+
+          <p class="cg-section">Environment variables</p>
+          <div class="calc-subgrid" style="grid-column:1/-1">
+            <div class="field" style="grid-column:1/-1">
+              <div class="cg-rows" id="systemd-env" data-def="systemd-env"></div>
+              <button type="button" class="btn btn-ghost cg-add" data-add="systemd-env">+ Add variable</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cg-preview">
+          <div class="cg-preview-head">
+            <span class="cg-preview-title" id="systemd-filename">myapp.service</span>
+            <div class="cg-actions">
+              <button type="button" class="btn btn-ghost cg-theme">Theme: Dark</button>
+              <button type="button" class="btn btn-primary cg-copy" data-copy="systemd">Copy</button>
+            </div>
+          </div>
+          <pre class="cg-pre"><code id="preview-systemd"></code></pre>
+        </div>
+
+        <p class="tool-note">
+          Drop the generated file into <code>/etc/systemd/system/</code>, then run
+          <code>sudo systemctl daemon-reload</code> and
+          <code>sudo systemctl enable --now myapp</code>.
+        </p>
+      </div>
+
+      <!-- ============ llama-server ============ -->
+      <div class="calc cg-panel" id="panel-llama">
+        <div class="calc-grid">
+          <label class="field">
+            <span>llama.cpp lib dir</span>
+            <input id="l-libdir" class="input" type="text" value="/usr/local/lib/llama.cpp" />
+          </label>
+
+          <label class="field" style="grid-column:1/-1">
+            <span>Model path</span>
+            <input id="l-model" class="input" type="text" placeholder="/models/llama-3.1-8b-instruct.Q4_K_M.gguf" />
+          </label>
+
+          <label class="field">
+            <span>GPU layers (-ngl)</span>
+            <input id="l-ngl" class="input" type="number" min="0" step="1" value="99" />
+          </label>
+
+          <label class="field">
+            <span>Context length (-c)</span>
+            <input id="l-ctx" class="input" type="number" min="256" step="256" value="8192" />
+          </label>
+
+          <label class="field">
+            <span>Cache type</span>
+            <select id="l-cache" class="input">
+              <option value="none">none</option>
+              <option value="q8_0" selected>q8_0</option>
+              <option value="f16">f16</option>
+              <option value="q4_0">q4_0</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Threads (-t)</span>
+            <input id="l-threads" class="input" type="number" min="1" step="1" value="8" />
+          </label>
+
+          <label class="field">
+            <span>CPU MoE threads (--cpu-moe)</span>
+            <input id="l-cpumoe" class="input" type="number" min="0" step="1" value="0" />
+          </label>
+
+          <label class="field">
+            <span>Parallel slots (--parallel)</span>
+            <input id="l-parallel" class="input" type="number" min="1" step="1" value="1" />
+          </label>
+
+          <div class="field" style="grid-column:1/-1">
+            <span>Options</span>
+            <div class="cg-toggles">
+              <label class="perm-bit"><input type="checkbox" id="l-fa" checked /> Flash attention (-fa)</label>
+              <label class="perm-bit"><input type="checkbox" id="l-jinja" checked /> Jinja chat template (--jinja)</label>
+            </div>
+          </div>
+
+          <label class="field" style="grid-column:1/-1">
+            <span>Custom flags (one per line)</span>
+            <textarea id="l-custom" class="input" rows="3" style="resize:vertical;font-family:'SF Mono','Cascadia Code',Consolas,monospace;min-height:64px" placeholder="--mlock&#10;--numa 1"></textarea>
+          </label>
+        </div>
+
+        <div class="cg-preview">
+          <div class="cg-preview-head">
+            <span class="cg-preview-title">llama-server.sh</span>
+            <div class="cg-actions">
+              <button type="button" class="btn btn-ghost cg-theme">Theme: Dark</button>
+              <button type="button" class="btn btn-primary cg-copy" data-copy="llama">Copy</button>
+            </div>
+          </div>
+          <pre class="cg-pre"><code id="preview-llama"></code></pre>
+        </div>
+
+        <p class="tool-note">
+          The generated command first exports <code>LD_LIBRARY_PATH</code> so
+          <code>llama-server</code> finds its shared libraries, then starts the
+          server. <code>-fa</code> is skipped automatically for Vulkan builds if you
+          prefer – just uncheck it.
+        </p>
+      </div>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="llama-cpp-guide.html">llama.cpp guide – build, run, and serve local models</a></li>
+        <li><a href="docker-compose-generator.html">Docker Compose quick generator</a></li>
+        <li><a href="flash-attention-guide.html">Flash attention – what it is and when it helps</a></li>
+        <li><a href="self-hosting-101.html">Self-hosting 101: what can you run at home?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="self-hosting-101.html">Self-hosting notes</a>
+    </div>
+  </main>
+
+  <script>
+    const byId = (id) => document.getElementById(id);
+
+    /* ---------- dynamic row definitions ---------- */
+    const ROW_DEFS = {
+      "docker-ports":   { cols: [{ ph: "Host port" }, { ph: "Container port" }],
+                          str: (v) => (v[0] && v[1]) ? v[0] + ":" + v[1] : null },
+      "docker-volumes": { cols: [{ ph: "Host path" }, { ph: "Container path" }],
+                          str: (v) => (v[0] && v[1]) ? v[0] + ":" + v[1] : null },
+      "docker-env":     { cols: [{ ph: "KEY" }, { ph: "VALUE" }],
+                          str: (v) => (v[0] && v[1]) ? v[0] + "=" + v[1] : null },
+      "systemd-env":    { cols: [{ ph: "KEY" }, { ph: "VALUE" }],
+                          str: (v) => (v[0] && v[1]) ? v[0] + "=" + v[1] : null },
+    };
+
+    const IMAGE_TAGS = {
+      nginx:     "nginx:latest",
+      postgres:  "postgres:16",
+      redis:     "redis:7",
+      ollama:    "ollama/ollama:latest",
+      "llama-cpp": "ghcr.io/ggml-org/llama.cpp:server",
+    };
+
+    const DEFAULT_PORTS = {
+      nginx:     [["8080", "80"], ["8443", "443"]],
+      postgres:  [["5432", "5432"]],
+      redis:     [["6379", "6379"]],
+      ollama:    [["11434", "11434"]],
+      "llama-cpp": [["8080", "8080"]],
+    };
+
+    /* ---------- dynamic rows ---------- */
+    function addRow(cont, def, init) {
+      const row = document.createElement("div");
+      row.className = "cg-row";
+      def.cols.forEach((c, i) => {
+        const inp = document.createElement("input");
+        inp.className = "input cg-row-input";
+        inp.placeholder = c.ph;
+        inp.setAttribute("aria-label", c.ph);
+        inp.type = "text";
+        if (init && init[i]) inp.value = init[i];
+        row.appendChild(inp);
+      });
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "cg-row-del";
+      del.textContent = "\u00d7";
+      del.title = "Remove row";
+      del.setAttribute("aria-label", "Remove row");
+      row.appendChild(del);
+      cont.appendChild(row);
+    }
+
+    function rowsOf(id) {
+      const cont = byId(id);
+      const def = ROW_DEFS[cont.dataset.def];
+      return Array.from(cont.querySelectorAll(".cg-row"))
+        .map((row) => {
+          const vals = Array.from(row.querySelectorAll(".cg-row-input")).map((i) => i.value.trim());
+          return def.str(vals);
+        })
+        .filter(Boolean);
+    }
+
+    function seedRows() {
+      addRow(byId("docker-ports"), ROW_DEFS["docker-ports"], ["8080", "80"]);
+      addRow(byId("docker-ports"), ROW_DEFS["docker-ports"], ["8443", "443"]);
+      addRow(byId("docker-volumes"), ROW_DEFS["docker-volumes"], ["./html", "/usr/share/nginx/html"]);
+      addRow(byId("docker-env"), ROW_DEFS["docker-env"], ["TZ", "UTC"]);
+      addRow(byId("docker-env"), ROW_DEFS["docker-env"], ["", ""]);
+      addRow(byId("systemd-env"), ROW_DEFS["systemd-env"], ["NODE_ENV", "production"]);
+      addRow(byId("systemd-env"), ROW_DEFS["systemd-env"], ["", ""]);
+    }
+
+    /* ---------- generators ---------- */
+    function yamlKey(s) {
+      const k = String(s).toLowerCase().replace(/[^a-z0-9_.-]+/g, "-").replace(/^-+|-+$/g, "");
+      return k || "app";
+    }
+
+    function genDocker() {
+      const imgSel = byId("d-image").value;
+      const image = imgSel === "custom"
+        ? (byId("d-custom-image").value.trim() || "my-image:latest")
+        : IMAGE_TAGS[imgSel];
+      const svc = byId("d-service").value.trim() || (imgSel === "custom" ? "app" : imgSel);
+      const restart = byId("d-restart").value;
+      const netSel = byId("d-network").value;
+      const netName = byId("d-network-name").value.trim();
+      const ports = rowsOf("docker-ports");
+      const volumes = rowsOf("docker-volumes");
+      const env = rowsOf("docker-env");
+
+      const L = [];
+      L.push("services:");
+      L.push("  " + yamlKey(svc) + ":");
+      L.push("    image: " + image);
+      L.push("    container_name: " + yamlKey(svc));
+      if (netSel === "custom") {
+        L.push("    networks:");
+        L.push("      - " + yamlKey(netName || "mynet"));
+      } else {
+        L.push("    network_mode: " + netSel);
+      }
+      L.push("    restart: " + restart);
+      if (ports.length) {
+        L.push("    ports:");
+        ports.forEach((p) => L.push('      - "' + p + '"'));
+      }
+      if (volumes.length) {
+        L.push("    volumes:");
+        volumes.forEach((v) => L.push("      - " + v));
+      }
+      if (env.length) {
+        L.push("    environment:");
+        env.forEach((e) => L.push("      - " + e));
+      }
+      if (netSel === "custom") {
+        L.push("networks:");
+        L.push("  " + yamlKey(netName || "mynet") + ":");
+        L.push("    driver: bridge");
+      }
+      return L.join("\n") + "\n";
+    }
+
+    function genSystemd() {
+      const name = byId("s-name").value.trim() || "myapp";
+      const desc = byId("s-desc").value.trim();
+      const user = byId("s-user").value.trim();
+      const wd = byId("s-workdir").value.trim();
+      const exec = byId("s-exec").value.trim();
+      const restart = byId("s-restart").value;
+      const restartSec = byId("s-restartsec").value;
+      const env = rowsOf("systemd-env");
+
+      const L = [];
+      L.push("[Unit]");
+      L.push("Description=" + (desc || name));
+      L.push("After=network-online.target");
+      L.push("Wants=network-online.target");
+      L.push("");
+      L.push("[Service]");
+      L.push("Type=simple");
+      if (user) L.push("User=" + user);
+      if (wd) L.push("WorkingDirectory=" + wd);
+      if (exec) L.push("ExecStart=" + exec);
+      L.push("Restart=" + restart);
+      if (restartSec) L.push("RestartSec=" + restartSec);
+      env.forEach((e) => L.push("Environment=" + e));
+      L.push("");
+      L.push("[Install]");
+      L.push("WantedBy=multi-user.target");
+      return L.join("\n") + "\n";
+    }
+
+    function genLlama() {
+      const libDir = byId("l-libdir").value.trim() || "/usr/local/lib/llama.cpp";
+      const model = byId("l-model").value.trim();
+      const ngl = byId("l-ngl").value;
+      const ctx = byId("l-ctx").value;
+      const cache = byId("l-cache").value;
+      const threads = byId("l-threads").value;
+      const cpuMoe = byId("l-cpumoe").value;
+      const fa = byId("l-fa").checked;
+      const jinja = byId("l-jinja").checked;
+      const parallel = byId("l-parallel").value;
+      const custom = byId("l-custom").value
+        .split("\n").map((s) => s.trim()).filter(Boolean);
+
+      const args = [];
+      if (model) args.push("-m " + model);
+      if (ngl) args.push("-ngl " + ngl);
+      if (ctx) args.push("-c " + ctx);
+      if (cache && cache !== "none") {
+        args.push("--cache-type-k " + cache);
+        args.push("--cache-type-v " + cache);
+      }
+      if (threads) args.push("-t " + threads);
+      if (cpuMoe && cpuMoe !== "0") args.push("--cpu-moe " + cpuMoe);
+      if (fa) args.push("-fa");
+      if (jinja) args.push("--jinja");
+      if (parallel) args.push("--parallel " + parallel);
+      custom.forEach((c) => args.push(c));
+
+      const L = [];
+      L.push("export LD_LIBRARY_PATH=" + libDir + ":$LD_LIBRARY_PATH");
+      L.push("");
+      if (!args.length) {
+        L.push("llama-server");
+      } else {
+        L.push("llama-server \\");
+        args.forEach((a, i) => L.push("  " + a + (i < args.length - 1 ? " \\" : "")));
+      }
+      return L.join("\n") + "\n";
+    }
+
+    /* ---------- syntax highlighting ---------- */
+    const HL = {
+      yaml: /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_.-]*)(?=:)/g,
+      ini:  /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_.-]*)(?==)/g,
+      bash: /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\b\d+(?:\.\d+)?\b)|(--?[A-Za-z0-9][A-Za-z0-9-]*)|(\$[A-Za-z_][A-Za-z0-9_]*)/g,
+    };
+
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function hl(text, re) {
+      return String(text).split("\n").map((line) => {
+        let comment = "";
+        let body = line;
+        const ci = line.search(/(^|\s)[#;]/);
+        if (ci !== -1) { body = line.slice(0, ci); comment = line.slice(ci); }
+        re.lastIndex = 0;
+        let out = "";
+        let last = 0;
+        let m;
+        while ((m = re.exec(body)) !== null) {
+          out += esc(body.slice(last, m.index));
+          let cls;
+          if (m[1]) cls = "st";
+          else if (m[2]) cls = "num";
+          else if (m[3]) cls = "kw";
+          else cls = "opt";
+          out += '<span class="tok-' + cls + '">' + esc(m[0]) + "</span>";
+          last = m.index + m[0].length;
+        }
+        out += esc(body.slice(last));
+        if (comment) out += '<span class="tok-cm">' + esc(comment) + "</span>";
+        return out;
+      }).join("\n");
+    }
+
+    /* ---------- render ---------- */
+    const _out = { docker: "", systemd: "", llama: "" };
+
+    function render() {
+      _out.docker = genDocker();
+      _out.systemd = genSystemd();
+      _out.llama = genLlama();
+
+      byId("preview-docker").innerHTML = hl(_out.docker, HL.yaml);
+      byId("preview-systemd").innerHTML = hl(_out.systemd, HL.ini);
+      byId("preview-llama").innerHTML = hl(_out.llama, HL.bash);
+
+      byId("systemd-filename").textContent =
+        (byId("s-name").value.trim() || "myapp") + ".service";
+    }
+
+    /* ---------- tabs ---------- */
+    function switchTab(tab) {
+      document.querySelectorAll(".cg-tab").forEach((b) => {
+        const on = b.dataset.tab === tab;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      document.querySelectorAll(".cg-panel").forEach((p) => {
+        p.classList.toggle("active", p.id === "panel-" + tab);
+      });
+    }
+
+    /* ---------- copy ---------- */
+    async function copyText(t) {
+      try {
+        await navigator.clipboard.writeText(t);
+        return true;
+      } catch (e) {
+        const ta = document.createElement("textarea");
+        ta.value = t;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch (_) { ok = false; }
+        document.body.removeChild(ta);
+        return ok;
+      }
+    }
+
+    function flash(btn, label, text) {
+      const orig = btn.textContent;
+      btn.textContent = label;
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1400);
+      const _ = text;
+    }
+
+    /* ---------- theme toggle ---------- */
+    function refreshThemeButtons() {
+      const light = document.body.classList.contains("cg-light");
+      document.querySelectorAll(".cg-theme").forEach((b) => {
+        b.textContent = light ? "Theme: Light" : "Theme: Dark";
+      });
+    }
+    function toggleTheme() {
+      document.body.classList.toggle("cg-light");
+      refreshThemeButtons();
+    }
+
+    /* ---------- image / network presets ---------- */
+    function applyImagePreset() {
+      const img = byId("d-image").value;
+      byId("d-custom-wrap").hidden = img !== "custom";
+      if (img !== "custom" && DEFAULT_PORTS[img]) {
+        const cont = byId("docker-ports");
+        cont.innerHTML = "";
+        DEFAULT_PORTS[img].forEach((pair) => addRow(cont, ROW_DEFS["docker-ports"], pair));
+      }
+      render();
+    }
+    function applyNetworkPreset() {
+      byId("d-network-name-wrap").hidden = byId("d-network").value !== "custom";
+      render();
+    }
+
+    /* ---------- events ---------- */
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      if (t.classList.contains("cg-add")) {
+        const cont = byId(t.dataset.add);
+        addRow(cont, ROW_DEFS[cont.dataset.def]);
+        render();
+      } else if (t.classList.contains("cg-row-del")) {
+        const row = t.closest(".cg-row");
+        if (row) { row.parentNode.removeChild(row); render(); }
+      } else if (t.classList.contains("cg-tab")) {
+        switchTab(t.dataset.tab);
+      } else if (t.classList.contains("cg-copy")) {
+        copyText(_out[t.dataset.copy]).then(() => flash(t, "Copied!", ""));
+      } else if (t.classList.contains("cg-theme")) {
+        toggleTheme();
+      }
+    });
+
+    document.addEventListener("input", (e) => {
+      if (e.target.closest(".cg-panel")) render();
+    });
+    document.addEventListener("change", (e) => {
+      if (e.target.id === "d-image") applyImagePreset();
+      else if (e.target.id === "d-network") applyNetworkPreset();
+      else if (e.target.closest(".cg-panel")) render();
+    });
+
+    /* ---------- init ---------- */
+    seedRows();
+    applyImagePreset();
+    applyNetworkPreset();
+    refreshThemeButtons();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

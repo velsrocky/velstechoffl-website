@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Compare LLM models, quantizations, and GPUs side-by-side – see VRAM requirements, expected tok/s, and whether your hardware can run it." />
+  <title>Model Comparison Wizard | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/model-comparison.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/model-comparison.html#webapp",
+  "name": "Model Comparison Wizard | VelsTech",
+  "description": "Compare LLM models, quantizations, and GPUs side-by-side – see VRAM requirements, expected tok/s, and whether your hardware can run it.",
+  "url": "https://velstech.net/model-comparison.html",
+  "inLanguage": "en",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/model-comparison.html" />
+  <meta property="og:title" content="Model Comparison Wizard | VelsTech" />
+  <meta property="og:description" content="Compare LLM models, quantizations, and GPUs side-by-side – see VRAM requirements, expected tok/s, and whether your hardware can run it." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Model Comparison Wizard | VelsTech" />
+  <meta name="twitter:description" content="Compare LLM models, quantizations, and GPUs side-by-side – see VRAM requirements, expected tok/s, and whether your hardware can run it." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
+    .mc-pick {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .mc-opt {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      cursor: pointer;
+      font-size: 0.85rem;
+      user-select: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .mc-opt:hover {
+      border-color: var(--accent);
+    }
+    .mc-opt.checked {
+      border-color: var(--accent);
+      background: rgba(76, 194, 255, 0.08);
+    }
+    .mc-opt input {
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+    .mc-opt strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.85rem;
+      line-height: 1.3;
+    }
+    .mc-opt small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+    .mc-wrap {
+      overflow-x: auto;
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+    }
+    table.mc {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 920px;
+    }
+    .mc th, .mc td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .mc thead th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--bg-soft);
+    }
+    .mc thead th.kvgroup {
+      text-align: center;
+      color: var(--accent);
+      border-bottom: none;
+    }
+    .mc thead tr:last-child th {
+      border-bottom: 1px solid var(--border);
+    }
+    .mc th.rowhead, .mc td.rowhead {
+      text-align: left;
+      position: sticky;
+      left: 0;
+      background: var(--bg-soft);
+      z-index: 1;
+    }
+    .mc tbody tr:hover td {
+      background: rgba(76, 194, 255, 0.05);
+    }
+    .mc tbody tr:hover td.rowhead {
+      background: var(--bg-soft);
+    }
+    .mc td.rowhead strong {
+      color: var(--text);
+    }
+    .mc td.rowhead small {
+      display: block;
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 0.72rem;
+    }
+    .mc .num {
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+    }
+    .mc td.total .num {
+      font-weight: 700;
+    }
+    .mc td.total small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 400;
+    }
+    .mc .tag {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .tag-ok { color: #3ddc97; background: rgba(61, 220, 151, 0.12); border: 1px solid rgba(61, 220, 151, 0.4); }
+    .tag-tight { color: #fb9a3c; background: rgba(251, 146, 60, 0.12); border: 1px solid rgba(251, 146, 60, 0.4); }
+    .tag-no { color: #f472b6; background: rgba(244, 114, 182, 0.12); border: 1px solid rgba(244, 114, 182, 0.4); }
+    .mc-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 4px;
+    }
+    .mc-chip {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--bg);
+    }
+    .mc-chip strong { color: var(--text); }
+    .mc-chip.accent { border-color: var(--accent); color: var(--accent); }
+    .mc-empty {
+      margin: 20px 0 4px;
+      padding: 16px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: var(--bg);
+    }
+    .mc-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .mc-row input {
+      accent-color: var(--accent);
+    }
+    @media (max-width: 640px) {
+      .mc-opt { flex: 1 1 44%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tools.html">Tools</a> / Model Comparison Wizard</p>
+    <h1 class="title">Model Comparison Wizard</h1>
+    <div class="meta">
+      <span>Models × quantizations × GPUs — VRAM, tok/s, and whether it fits · Updated 2026-09-01</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Pick any combination of models and quantizations, choose a GPU, and this wizard builds a
+        side-by-side comparison: weight size, KV cache across context lengths, total VRAM needed,
+        expected decode speed, and a straight <strong>fits / tight / won't fit</strong> verdict.
+        Runs entirely in your browser – nothing is uploaded.
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field" style="grid-column: 1 / -1;">
+            <span>Models to compare</span>
+            <div class="mc-pick" id="model-pick"></div>
+          </label>
+
+          <label class="field" style="grid-column: 1 / -1;">
+            <span>Quantizations</span>
+            <div class="mc-pick" id="quant-pick"></div>
+          </label>
+
+          <label class="field">
+            <span>GPU</span>
+            <select id="gpu" class="input"></select>
+          </label>
+
+          <label class="field">
+            <span>Context for total VRAM</span>
+            <select id="ctx" class="input"></select>
+          </label>
+
+          <label class="field" style="justify-content: flex-end;">
+            <span>&nbsp;</span>
+            <span class="mc-row">
+              <input type="checkbox" id="kv-toggle" checked />
+              <span>Show KV cache at all context lengths</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="tool-btn-row" style="margin-top: 18px;">
+          <button type="button" class="btn btn-primary" id="compare-btn">Compare</button>
+          <button type="button" class="btn btn-ghost" id="reset-btn">Reset</button>
+        </div>
+
+        <div id="results">
+          <div class="mc-summary" id="mc-summary" hidden></div>
+
+          <div class="mc-wrap" id="mc-table-wrap" hidden></div>
+
+          <div class="mc-empty" id="mc-empty" hidden>
+            Select at least one model and one quantization to build the comparison.
+          </div>
+
+          <p class="tool-note" id="mc-note" hidden>
+            Rough estimates. Real usage varies with the exact model build, tokenizer, CUDA/compute-graph
+            overhead, and your inference engine. KV cache assumes FP16. Decode speed assumes you're
+            memory-bandwidth-bound at ~85% of peak – typical for llama.cpp / vLLM with a single stream.
+          </p>
+        </div>
+      </div>
+
+      <details class="calc-method">
+        <summary>How this works – assumptions &amp; formulas</summary>
+        <div class="calc-method-body">
+          <p>This is an estimate, not a lab measurement. The numbers below match the live calculator logic.</p>
+          <h4>1. Model weight size</h4>
+          <pre>weights = parameters × bytes_per_weight / GiB</pre>
+          <p>Bytes per weight per quantization: Q2_K 0.35, Q3_K_M 0.45, Q4_K_M 0.61, Q5_K_M 0.66, Q6_K 0.8125, Q8_0 1.0625, FP16 2.0. Example: 8B params at Q4_K_M ≈ 8e9 × 0.61 / 1.07e9 ≈ 4.5 GB.</p>
+          <h4>2. KV cache</h4>
+          <pre>kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes
+kv_cache = kv_per_token × context / GiB</pre>
+          <p>The <code>×2</code> covers K and V; the trailing <code>×2 bytes</code> assumes FP16 KV (the default for most engines). The table shows KV at 8K, 16K, 32K, 64K, 128K and 262K contexts so you can see how long context dominates memory.</p>
+          <h4>3. Total VRAM</h4>
+          <pre>total = weights + kv_cache + (weights + kv_cache) × 0.06 + 0.25 GB</pre>
+          <p>6% covers CUDA context / engine buffers, plus a fixed 0.25 GB floor.</p>
+          <h4>4. Does it fit?</h4>
+          <p><code>total ≤ vram × 0.95</code> → <strong>fits</strong>; up to <code>vram × 1.05</code> → <strong>tight</strong> (run with reduced KV, or watch OOM); otherwise <strong>won't fit</strong>.</p>
+          <h4>5. Decode tok/s</h4>
+          <pre>tok/s ≈ memory_bandwidth × 0.85 / (active_params × bytes_per_weight)</pre>
+          <p>Decoding is memory-bound: each token reads the active weights once. MoE models use <em>active</em> params (only the routed experts), which is why a 30B-total / 3B-active MoE decodes like a much smaller model. Dense models use full params. ~85% utilization accounts for overhead.</p>
+        </div>
+      </details>
+
+      <h2>Related guides</h2>
+      <ul>
+        <li><a href="how-much-vram-for-llm.html">How much VRAM do you need for 7B/14B/32B? – the table &amp; context math</a></li>
+        <li><a href="gpu-ai-calculator.html">GPU AI Performance Calculator – how fast will it run?</a></li>
+        <li><a href="gguf-size-calculator.html">GGUF size calculator</a></li>
+        <li><a href="kv-cache-explained.html">KV cache explained – why context length eats memory</a></li>
+        <li><a href="best-gpu-for-local-llm.html">Best GPU for local LLMs – benchmarks &amp; picks</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← All tools</a>
+      <a href="ai.html">AI &amp; ML notes</a>
+    </div>
+  </main>
+
+  <script>
+    const MODELS = [
+      { name: "Mistral 7B", params: 7.3, active: 7.3, layers: 32, kv: 8, hd: 128 },
+      { name: "Llama 3.1 8B", params: 8.0, active: 8.0, layers: 32, kv: 8, hd: 128 },
+      { name: "Qwen 2.5 14B", params: 14.8, active: 14.8, layers: 48, kv: 8, hd: 128 },
+      { name: "Gemma 3 27B", params: 27.0, active: 27.0, layers: 46, kv: 4, hd: 128 },
+      { name: "Qwen 2.5 32B", params: 32.8, active: 32.8, layers: 64, kv: 8, hd: 128 },
+      { name: "Qwen 3 30B-A3B (MoE)", params: 30.5, active: 3.0, layers: 48, kv: 4, hd: 128 },
+      { name: "Llama 3.3 70B", params: 70.6, active: 70.6, layers: 80, kv: 8, hd: 128 },
+      { name: "GLM-4 110B (120B-class)", params: 110.0, active: 110.0, layers: 96, kv: 8, hd: 128 },
+    ];
+
+    const QUANTS = [
+      { name: "Q2_K (≈2.9-bit)", bytes: 0.35 },
+      { name: "Q3_K_M (≈3.7-bit)", bytes: 0.45 },
+      { name: "Q4_K_M (≈4.8-bit)", bytes: 0.61 },
+      { name: "Q5_K_M (≈5.5-bit)", bytes: 0.66 },
+      { name: "Q6_K (≈6.5-bit)", bytes: 0.8125 },
+      { name: "Q8_0 (≈8.5-bit)", bytes: 1.0625 },
+      { name: "FP16 / BF16", bytes: 2.0 },
+    ];
+
+    const GPUS = [
+      { name: "RTX 4090", vram: 24, bw: 1008 },
+      { name: "RTX 5070 Ti", vram: 16, bw: 896 },
+      { name: "RTX 4060 Ti", vram: 16, bw: 288 },
+      { name: "RX 9070 XT", vram: 16, bw: 640 },
+      { name: "RX 7900 XTX", vram: 24, bw: 960 },
+      { name: "RX 6800M", vram: 12, bw: 384 },
+      { name: "RX 7600 XT", vram: 16, bw: 288 },
+    ];
+
+    const CTX = [
+      { tokens: 8192, label: "8K" },
+      { tokens: 16384, label: "16K" },
+      { tokens: 32768, label: "32K" },
+      { tokens: 65536, label: "64K" },
+      { tokens: 131072, label: "128K" },
+      { tokens: 262144, label: "262K" },
+    ];
+
+    const DEFAULTS = { models: [1, 2, 4], quants: [2, 5], gpu: 0, ctx: 0 };
+
+    const GiB = 1073741824;
+    const fmt = (gb) => gb >= 1 ? gb.toFixed(1) + " GB" : Math.max(1, Math.round(gb * 1024)) + " MB";
+
+    const modelPick = document.getElementById("model-pick");
+    const quantPick = document.getElementById("quant-pick");
+    const gpuSel = document.getElementById("gpu");
+    const ctxSel = document.getElementById("ctx");
+    const kvToggle = document.getElementById("kv-toggle");
+
+    let modelBoxes = [];
+    let quantBoxes = [];
+
+    function pill(box, html, checked) {
+      const lab = document.createElement("label");
+      lab.className = "mc-opt" + (checked ? " checked" : "");
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.checked = checked;
+      lab.appendChild(input);
+      const span = document.createElement("span");
+      span.innerHTML = html;
+      lab.appendChild(span);
+      box.appendChild(lab);
+      return input;
+    }
+
+    function buildSelections() {
+      modelPick.innerHTML = "";
+      quantPick.innerHTML = "";
+      modelBoxes = MODELS.map((m, i) =>
+        pill(modelPick,
+          "<strong>" + m.name + "</strong><small>" + m.params.toFixed(1) + "B params · " + m.layers + " layers</small>",
+          DEFAULTS.models.indexOf(i) !== -1));
+      quantBoxes = QUANTS.map((q, i) =>
+        pill(quantPick,
+          "<strong>" + q.name.split(" (")[0] + "</strong><small>" + q.bytes + " bytes/weight</small>",
+          DEFAULTS.quants.indexOf(i) !== -1));
+      gpuSel.innerHTML = "";
+      GPUS.forEach((g, i) => {
+        const o = document.createElement("option");
+        o.value = i;
+        o.textContent = g.name + " · " + g.vram + " GB · " + g.bw + " GB/s";
+        gpuSel.appendChild(o);
+      });
+      gpuSel.value = DEFAULTS.gpu;
+      ctxSel.innerHTML = "";
+      CTX.forEach((c, i) => {
+        const o = document.createElement("option");
+        o.value = i;
+        o.textContent = c.label + " (" + c.tokens.toLocaleString() + " tokens)";
+        ctxSel.appendChild(o);
+      });
+      ctxSel.value = DEFAULTS.ctx;
+    }
+
+    const weightsGB = (m, q) => (m.params * 1e9 * q.bytes) / GiB;
+    const kvPerTokBytes = (m) => 2 * m.layers * m.kv * m.hd * 2; // K+V, FP16
+    const kvGB = (m, tokens) => (kvPerTokBytes(m) * tokens) / GiB;
+    const totalGB = (w, kv) => w + kv + (w + kv) * 0.06 + 0.25;
+    const tokps = (m, q, g) => (g.bw * 0.85) / (m.active * q.bytes);
+
+    function fitClass(total, g) {
+      if (total <= g.vram * 0.95) return "ok";
+      if (total <= g.vram * 1.05) return "tight";
+      return "no";
+    }
+
+    function render() {
+      const g = GPUS[gpuSel.value];
+      const ctx = CTX[ctxSel.value];
+      const showKv = kvToggle.checked;
+      const models = MODELS.filter((_, i) => modelBoxes[i].checked);
+      const quants = QUANTS.filter((_, i) => quantBoxes[i].checked);
+
+      const summary = document.getElementById("mc-summary");
+      const wrap = document.getElementById("mc-table-wrap");
+      const empty = document.getElementById("mc-empty");
+      const note = document.getElementById("mc-note");
+
+      const rows = [];
+      models.forEach((m) => quants.forEach((q) => {
+        const w = weightsGB(m, q);
+        const kvs = CTX.map((c) => kvGB(m, c.tokens));
+        const total = totalGB(w, kvGB(m, ctx.tokens));
+        rows.push({ m, q, w, kvs, total, fit: fitClass(total, g), tps: tokps(m, q, g) });
+      }));
+
+      if (!rows.length) {
+        summary.hidden = true;
+        wrap.hidden = true;
+        note.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+      empty.hidden = true;
+      note.hidden = false;
+      summary.hidden = false;
+
+      const nOk = rows.filter((r) => r.fit === "ok").length;
+      const nTight = rows.filter((r) => r.fit === "tight").length;
+      const nNo = rows.filter((r) => r.fit === "no").length;
+      summary.innerHTML =
+        '<span class="mc-chip accent">' + rows.length + " combinations</span>" +
+        '<span class="mc-chip">GPU: <strong>' + g.name + "</strong> · " + g.vram + " GB · " + g.bw + " GB/s</span>" +
+        '<span class="mc-chip">Total VRAM at <strong>' + ctx.label + "</strong> (" + ctx.tokens.toLocaleString() + " tokens)</span>" +
+        '<span class="mc-chip">Fits: <strong style="color:#3ddc97">' + nOk + "</strong></span>" +
+        '<span class="mc-chip">Tight: <strong style="color:#fb9a3c">' + nTight + "</strong></span>" +
+        '<span class="mc-chip">Won\'t fit: <strong style="color:#f472b6">' + nNo + "</strong></span>";
+
+      wrap.hidden = false;
+      wrap.innerHTML = "";
+      const tbl = document.createElement("table");
+      tbl.className = "mc";
+      const thead = document.createElement("thead");
+      const tr1 = document.createElement("tr");
+      const tr2 = document.createElement("tr");
+
+      const th = (text) => {
+        const el = document.createElement("th");
+        el.textContent = text;
+        return el;
+      };
+
+      const th1 = th("Model"); th1.rowSpan = 2; th1.className = "rowhead";
+      const th2 = th("Quant"); th2.rowSpan = 2;
+      const th3 = th("Weights"); th3.rowSpan = 2;
+      tr1.appendChild(th1); tr1.appendChild(th2); tr1.appendChild(th3);
+      if (showKv) {
+        const kvg = th("KV cache size at context");
+        kvg.colSpan = CTX.length;
+        kvg.className = "kvgroup";
+        tr1.appendChild(kvg);
+      }
+      const th4 = th("Total VRAM"); th4.rowSpan = 2;
+      const th5 = th("Fits " + g.name + "?"); th5.rowSpan = 2;
+      const th6 = th("Decode tok/s"); th6.rowSpan = 2;
+      tr1.appendChild(th4); tr1.appendChild(th5); tr1.appendChild(th6);
+      thead.appendChild(tr1);
+      if (showKv) {
+        CTX.forEach((c) => tr2.appendChild(th(c.label)));
+        thead.appendChild(tr2);
+      }
+      tbl.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+      rows.forEach((r) => {
+        const tr = document.createElement("tr");
+        const cModel = document.createElement("td");
+        cModel.className = "rowhead";
+        cModel.innerHTML = "<strong>" + r.m.name + "</strong><small>" + r.m.params.toFixed(1) +
+          "B" + (r.m.active !== r.m.params ? " · " + r.m.active.toFixed(1) + "B active" : "") +
+          " · " + r.m.layers + "L</small>";
+        tr.appendChild(cModel);
+
+        const cQuant = document.createElement("td");
+        cQuant.className = "num";
+        cQuant.textContent = r.q.name.split(" (")[0];
+        tr.appendChild(cQuant);
+
+        const cW = document.createElement("td");
+        cW.className = "num";
+        cW.textContent = fmt(r.w);
+        tr.appendChild(cW);
+
+        if (showKv) {
+          r.kvs.forEach((kv) => {
+            const td = document.createElement("td");
+            td.className = "num";
+            td.textContent = fmt(kv);
+            tr.appendChild(td);
+          });
+        }
+
+        const cTotal = document.createElement("td");
+        cTotal.className = "total";
+        const pct = Math.round((r.total / g.vram) * 100);
+        cTotal.innerHTML = "<span class=\"num\" style=\"color:" +
+          (r.fit === "ok" ? "#3ddc97" : r.fit === "tight" ? "#fb9a3c" : "#f472b6") +
+          "\">" + fmt(r.total) + "</span><small>" + pct + "% of VRAM</small>";
+        tr.appendChild(cTotal);
+
+        const cFit = document.createElement("td");
+        cFit.innerHTML = "<span class=\"tag tag-" + r.fit + "\">" +
+          (r.fit === "ok" ? "Fits" : r.fit === "tight" ? "Tight" : "Won't fit") + "</span>";
+        tr.appendChild(cFit);
+
+        const cTps = document.createElement("td");
+        cTps.className = "num";
+        cTps.textContent = Math.round(r.tps) + " t/s";
+        tr.appendChild(cTps);
+
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      wrap.appendChild(tbl);
+    }
+
+    ["model-pick", "quant-pick"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", (e) => {
+        if (e.target.type === "checkbox") {
+          e.target.closest(".mc-opt").classList.toggle("checked", e.target.checked);
+          render();
+        }
+      });
+    });
+    gpuSel.addEventListener("change", render);
+    ctxSel.addEventListener("change", render);
+    kvToggle.addEventListener("change", render);
+    document.getElementById("compare-btn").addEventListener("click", () => {
+      render();
+      document.getElementById("results").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      buildSelections();
+      kvToggle.checked = true;
+      render();
+    });
+
+    buildSelections();
+    render();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

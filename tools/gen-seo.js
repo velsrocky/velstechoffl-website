@@ -78,6 +78,14 @@ const TOOLS_META = {
   "text-case-converter.html": { title: "Text Case Converter | VelsTech", desc: "Convert text to uppercase, lowercase, title case, sentence case, or camelCase instantly. Runs entirely in your browser." },
   "uuid-generator.html": { title: "UUID Generator | VelsTech", desc: "Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser." },
   "playground.html": { title: "LLM Playground – Chat with AI models | VelsTech", desc: "Full LLM Playground – chat with multiple models, adjust temperature, top-p, max tokens, system prompt, and share conversations. Powered by VelsTech's AI proxy." },
+  "benchmark-explorer.html": { title: "LLM Benchmark Explorer | VelsTech", desc: "Browse and compare LLM benchmarks across GPUs, models, and backends – filter by hardware, sort by tok/s, and see real tested results." },
+  "model-comparison.html": { title: "Model Comparison Wizard | VelsTech", desc: "Compare LLM models, quantizations, and GPUs side-by-side – VRAM requirements, expected tok/s, and whether your hardware can run it." },
+  "vram-budget-planner.html": { title: "VRAM Budget Planner | VelsTech", desc: "Visual VRAM budget planner – pick a GPU, model, and context length to see a bar chart of weights, KV cache, overhead, and whether it fits." },
+  "prompt-library.html": { title: "Prompt Library & Editor | VelsTech", desc: "Browse prompt templates, fill in variables, test them against an AI model, and save your own prompts. Copy anywhere or chat directly." },
+  "notes.html": { title: "Markdown Notes | VelsTech", desc: "Private Markdown notes that stay in your browser – no account, no server. Write, preview, search, and copy your notes." },
+  "bookmarks.html": { title: "Bookmarks & Reading List | VelsTech", desc: "Save, tag, and search your reading list right in the browser – no account needed. Import URLs, export JSON, mark things done." },
+  "config-generator.html": { title: "Config Generator Studio | VelsTech", desc: "Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use." },
+  "rag-ask.html": { title: "RAG: Ask Your File | VelsTech", desc: "Upload a text file and ask questions about it. The content is chunked, scored, and sent to an AI model with the relevant context." },
 };
 
 const CATEGORY_META = {

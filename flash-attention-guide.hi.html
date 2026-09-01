@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="एटेंशन फ्लैश और स्पेकुलेटिव डिकोडिंग का अर्थ – दो तकनीकें जो एलएलएम को तेज और कम मेमोरी का उपयोग करती हैं। ये कैसे काम करती हैं और क्यों महत्वपूर्ण हैं व्हाट्सएप चैटबॉट के लिए।" /> />
-  <title>एटेंशन फ्लैश और अनुमानित डीकोडिंग: एलएलएम को तेज करना | वेल्स टेक | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/flash-attention-guide.html" />
+  <meta name="description" content="Flash Attention और speculative decoding क्या हैं – दो तकनीकें जो LLMs को तेज़ बनाती हैं और कम memory इस्तेमाल करती हैं, और local AI के लिए क्यों ज़रूरी हैं।" />
+  <title>Flash Attention और speculative decoding: LLMs को तेज़ बनाना | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/flash-attention-guide.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/flash-attention-guide.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/flash-attention-guide.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/flash-attention-guide.html" />
@@ -14,13 +14,13 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/flash-attention-guide.html#article",
-  "headline": "Flash Attention & speculative decoding: making LLMs faster",
-  "description": "How Flash Attention and speculative decoding make LLMs faster and use less memory – and why they matter for running models locally.",
-  "url": "https://velstech.net/flash-attention-guide.html",
+  "@id": "https://velstech.net/flash-attention-guide.hi.html#article",
+  "headline": "Flash Attention और speculative decoding: LLMs को तेज़ बनाना",
+  "description": "Flash Attention और speculative decoding क्या हैं – दो तकनीकें जो LLMs को तेज़ बनाती हैं और कम memory इस्तेमाल करती हैं, और local AI के लिए क्यों ज़रूरी हैं।",
+  "url": "https://velstech.net/flash-attention-guide.hi.html",
   "datePublished": "2026-08-30T00:00:00Z",
   "dateModified": "2026-08-30T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/flash-attention-guide.png",
   "author": {
     "@type": "Person",
@@ -36,29 +36,29 @@
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/flash-attention-guide.html"
+  "mainEntityOfPage": "https://velstech.net/flash-attention-guide.hi.html"
 }
   </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://velstech.net/flash-attention-guide.html#faq",
+  "@id": "https://velstech.net/flash-attention-guide.hi.html#faq",
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Do I need to configure Flash Attention?",
+      "name": "क्या मुझे Flash Attention को configure करना होगा?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No – it's enabled automatically by llama.cpp, Ollama, and LM Studio on supported GPUs. You just benefit silently."
+        "text": "नहीं – यह llama.cpp, Ollama और LM Studio द्वारा supported GPUs पर अपने आप enable हो जाता है। आपको बस इसका फ़ायदा चुपचाप मिलता है।"
       }
     },
     {
       "@type": "Question",
-      "name": "Does speculative decoding change the output?",
+      "name": "क्या speculative decoding output को बदल देता है?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. The big model verifies the draft's guesses, so the final output is identical to running the big model alone – just faster."
+        "text": "नहीं। बड़ा model draft के अनुमानों को verify करता है, इसलिए अंतिम output अकेले बड़ा model चलाने जैसा ही होता है – बस तेज़।"
       }
     }
   ]
@@ -66,111 +66,102 @@
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/flash-attention-guide.html" />
-  <meta property="og:title" content="Flash Attention &amp; speculative decoding: making LLMs faster | VelsTech" />
-  <meta property="og:description" content="How Flash Attention and speculative decoding make LLMs faster and use less memory – and why they matter for running models locally." />
-  <meta property="og:image" content="https://velstech.net/og/flash-attention-guide.png" />
+  <meta property="og:url" content="https://velstech.net/flash-attention-guide.hi.html" />
+  <meta property="og:title" content="Flash Attention और speculative decoding: LLMs को तेज़ बनाना | VelsTech" />
+  <meta property="og:description" content="Flash Attention और speculative decoding क्या हैं – दो तकनीकें जो LLMs को तेज़ बनाती हैं और कम memory इस्तेमाल करती हैं, और local AI के लिए क्यों ज़रूरी हैं।" />
+  <meta property="og:image" content="https://velstech.net/flash-attention-guide.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Flash Attention &amp; speculative decoding: making LLMs faster | VelsTech" />
-  <meta name="twitter:description" content="How Flash Attention and speculative decoding make LLMs faster and use less memory – and why they matter for running models locally." />
+  <meta name="twitter:title" content="Flash Attention और speculative decoding: LLMs को तेज़ बनाना | VelsTech" />
+  <meta name="twitter:description" content="Flash Attention और speculative decoding क्या हैं – दो तकनीकें जो LLMs को तेज़ बनाती हैं और कम memory इस्तेमाल करती हैं, और local AI के लिए क्यों ज़रूरी हैं।" />
   <meta name="twitter:image" content="https://velstech.net/og/flash-attention-guide.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
-    <h1 class="title">Flash Attention &amp; speculative decoding: making LLMs faster</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="ai.html">AI</a> / यह लेख</p>
+    <h1 class="title">Flash Attention और speculative decoding: LLMs को तेज़ बनाना</h1>
     <div class="meta">
       <span class="tag">Flash Attention</span>
       <span class="tag">Speculative Decoding</span>
       <span class="tag">Local AI</span>
       <span>Aug 30, 2026</span>
-      <span>· 6 min read</span>
+      <span>· 6 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>दो तकनीकें शांति से अधिकांश तेजी से LLM इन्फरेंस को चलाती हैं आज:<strong>धुंधला 
-        संचार का ध्यान</strong>aur<strong>संभाव्य अनुवाद</strong>वे आधुनिक इंजन की गति को इतनी आसानी से हासिल करने के पीछे कारण हैं जो कुछ साल पहले असंभव लग रहे थे। न तो कोई नया मॉडल है – वे बुद्धिमान तरीके हैं जिसमें काम किया जाता है।<em>चालू करें</em>मौजूदा मॉडल।</p>
-      <p>वे क्या करते हैं, कैसे काम करते हैं और क्या वे आपके स्थानीय एआई के लिए महत्वपूर्ण हैं जो आप अपने हार्डवेयर पर चलाते हैं।</p>
-
-      <h2>फ्लैश ध्यान: कम मेमोरी, तेज ध्यान</h2>
-      <p>ध्यान प्रत्येक ट्रांसफॉर्मर का हृदय है, लेकिन इसका एक समस्या है: मानक तरीके से इसकी गणना करने से एक बड़ा मध्यवर्ती मैट्रिक्स सामग्रित होता है –<code>seq_len × seq_len</code>राम में (SRAM) तेजी से डाला जाता है, धीमी राम (GPU VRAM) में डालता है, फिर इसे पुनः प्राप्त करता है। वह चक्र पूरी तरह से व्यर्थ है।</p>
       <p>
-        <strong>एटेंशन फ्लैश</strong>ध्यान स्कोर की गणना और उपभोग को पुनर्संरचित करने के लिए गणित<em>टाइल्स</em>कार्य सेट को तेज SRAM में रखने और बड़े मध्यवर्ती मैट्रिक्स को VRAM में कभी नहीं लिखने के परिणामस्वरूप</p>
-      <ul>
-        <li><strong>यह बहुत कम मेमोरी का उपयोग करता है।</strong>– अब quadratic intermediate matrix की आवश्यकता नहीं है, इसलिए लंबे कॉन्टेक्स्ट्स पहले से ही फिट हो रहे हैं।</li>
-        <li><strong>ज्यादा तेजी से</strong>– यह मेमोरी बैंडविड्थ पर निर्भर करता है, और कम स्लो मेमोरी राउंड ट्रिप्स करने से बड़ा फायदा होता है।</li>
-        <li><strong>वही उत्तर देता है</strong>– यह गणितीय रूप से समान है, लेकिन अधिक कुशलता से गणना की जाती है।</li>
-      </ul>
-      <p>यही कारण है कि आधुनिक मॉडल 128K–1M संदर्भ विंडो का दावा करने में सक्षम हैं। फ्लैश के बिना, ध्यान केंद्रित करने के बिना, इतना संदर्भ GPU मेमोरी को कुछ ही सेकंड में पार कर जाता। आपको यह "चुनने" की आवश्यकता नहीं है – इंजन इसे आपके GPU की सहायता के साथ स्वचालित रूप से सक्षम करता है, और आप इसके बारे में ध्यान नहीं देते हैं।</p>
-
-      <h2>अटकल भरी डीकोडिंग: अनुमान लगाएं, सत्यापित करें, छोड़ दें</h2>
-      <p>LLMs एक टोकन को एक बार में पैदा करते हैं और प्रत्येक चरण में पूरा मॉडल पास होता है – सीरियल और धीमा।<strong>अनुमानात्मक डिकोडिंग</strong>विरोधी को एक चतुर उपाय से निपटने के लिए</p>
-      <ol>
-        <li>एक छोटा, तेज़ "ड्राफ्ट" मॉडल आगे आने वाले कुछ टोकनों (उदाहरण के लिए ४–८) का अनुमान लगाता है एक साथ।</li>
-        <li>बड़ा मॉडल<strong>परस्पर में अनुकूलित अनुमानों की पुष्टि करता है</strong>एक ही प्रयास में।</li>
-        <li>बड़े मॉडल से सहमत होने वाले किसी भी टोकन को अक्सर एक वेरिफिकेशन पास की लागत में सुरक्षित रखा जाता है – अक्सर 2–4 टोकन।</li>
-      </ol>
-      <p>जीत: आपको लगभग एक की कीमत पर कई टोकन मिलते हैं, इसलिए प्रभावी उत्पादन गति बढ़ जाती है – अक्सर 1.5–3 गुना<strong>वितरण को बदले बिना</strong>बड़ा मॉडल सत्य का स्रोत है; ड्राफ्ट बस एक तेजी से है।</p>
-      <p>यह सबसे अच्छा काम करता है जब ड्राफ्ट मॉडल बड़े मॉडल को अच्छी तरह से अनुमान लगाने में सक्षम होता है (उदाहरण के लिए, एक छोटा भाई जो एक ही परिवार का है)। उपभोक्ता हार्डवेयर पर, llama.cpp और ओल्लामा ड्राफ्ट मॉडलों का समर्थन करते हैं, और यह सबसे अधिक स्पष्ट है जब आप लंबे उत्तरों को उत्पन्न करते हैं तो चैट में गति में वृद्धि।</p>
-
-      <h2>लोकल एआई के लिए यह क्या है:
-
-लोकल एआई के लिए यह एक बड़ी चुनौती है क्योंकि यह सुनिश्चित करना है कि लोकल मशीन पर एआई मॉडल काम करें। लोकल मशीन पर एआई मॉडल को ट्रेन करने के लिए पर्याप्त संसाधनों की आवश्यकता होती है, जैसे कि उच्च प्रदर्शन वाले GPU और पर्याप्त RAM। इसके अलावा, लोकल मशीन पर एआई मॉडल को ट्रेन करने के लिए डेटा भी आवश्यक है, जो अक्सर बड़े आकार का होता है।
-
-लोकल एआई के लिए एक और चुनौती यह है कि यह सुनिश्चित करना है कि लोकल मशीन पर एआई मॉडल का प्रदर्शन अच्छा हो। इसके लिए, लोकल मशीन के CPU और GPU का प्रदर्शन अच्छा ह</h2>
-      <p>दोनों तकनीकें ही हैं जिनकी वजह से आधुनिक लोकल AI का गंतव्य इतना तेज़ लगता है:</p>
-      <ul>
-        <li><strong>एटेंशन फ्लैश</strong>LLM – GGUF विशेषता Ollama पर समर्थित GPU (NVIDIA, AMD – ROCm/Vulkan, Apple) पर मैन्युअली सक्षम नहीं है, बल्कि यह Ollama द्वारा स्वचालित रूप से सक्षम हो जाती है। यह आपको एक ही हार्डवेयर पर बड़े कॉन्टेक्स्ट विंडोज चलाने की अनुमति देती है।</li>
-        <li><strong>अनुमानात्मक व्याख्या</strong>आपको एक मुफ़्त गति बढ़ावा देता है जब आप एक ड्राफ्ट मॉडल प्रदान करते हैं – आप बड़े मॉडल की गुणवत्ता को बनाए रखते हैं लेकिन तेजी से उत्पन्न करते हैं।</li>
-        <li>साथ में<a href="quantization-deep-dive.html">संख्या संग्रहण</a>किसी भी प्रबंधित<a href="kv-cache-explained.html">KV cache (Key-Value Cache)</a>वे चार पिलर हैं जो वास्तविक स्थानीय निष्कर्ष के लिए आवश्यक हैं।</li>
-      </ul>
-      <p>अभ्यास में, आप इन्हें हाथ से नहीं समायोजित करते – इंजन करता है। लेकिन जानते हुए कि वे मौजूद हैं, समझ में आता है कि वही मॉडल क्यों विभिन्न गतियों पर चल सकता है जो आपके बैकेंड और फ्लैग्स पर निर्भर करता है, जो कि हम Q4 में मापते हैं।<a href="benchmarks/index.html">मूल्यांकन डेटाबेस</a>.
+        दो तकनीकें चुपचाप आज के ज़्यादातर तेज़ LLM inference को चलाती हैं: <strong>Flash Attention</strong> और <strong>speculative decoding</strong>। इन्हीं की वजह से आधुनिक engine ऐसी speeds हासिल कर लेते हैं जो कुछ साल पहले असंभव लगती थीं। दोनों कोई नया model नहीं हैं – वे मौजूदा models को <em>चलाने</em> के ज़्यादा समझदार तरीके हैं।
+      </p>
+      <p>
+        यहाँ बताया गया है कि वे क्या करते हैं, कैसे काम करते हैं, और आपके अपने hardware पर चलने वाले local AI के लिए उनका क्या मतलब है।
       </p>
 
-      <h2>लाभ प्राप्त करने के लिए क्या करना होगा</h2>
+      <h2>Flash Attention: कम memory, तेज़ attention</h2>
+      <p>
+        Attention हर transformer का दिल है, लेकिन इसमें एक समस्या है: इसे compute करने का standard तरीका एक बहुत बड़ा intermediate matrix – <code>seq_len × seq_len</code> – को तेज़ memory (SRAM) में बनाता है, फिर उसे धीमी memory (GPU VRAM) में डालता है और वापस पढ़ता है। यह round trip पूरी तरह बर्बादी है।
+      </p>
+      <p>
+        <strong>Flash Attention</strong> गणित को इस तरह restructure करता है कि attention scores को <em>tiles</em> में compute करके वहीं consume कर लिया जाता है, working set तेज़ SRAM में रहता है और बड़ा intermediate matrix कभी VRAM में write ही नहीं होता। नतीजा:
+      </p>
       <ul>
-        <li><strong>अपने इंजन को नवीनतम रखें</strong>– llama.cpp, Ollama, aur LM Studio vartaman build mein Flash Attention aur anumatiya-decoding support ship karte hain. Purane version se performance par chehre hain.</li>
-        <li><strong>अधुनात्मक GPU का उपयोग करें</strong>–  फ्लैश ध्यान को एक पर्याप्त SRAM वाला GPU की आवश्यकता होती है; पिछले ~5 साल के किसी भी चीज़ से ठीक है ।</li>
-        <li><strong>मॉडल के लिए एक मसौदा तैयार करें जिसमें अंदाजी निर्माण के लिए विशिष्टता जोड़ी हो 
-
-विशिष्टता जोड़ी के लिए मसौदा मॉडल:
-
-1. नाम: अंदाजी निर्माण विशिष्टता जोड़ी (Speculative Decoding Specialization)
-2. वर्णन: यह मॉडल विशिष्टता जोड़ी को विशेष रूप से अंदाजी निर्माण के लिए डिज़ाइन किया गया है, जिससे यह विशिष्टता जोड़ी अधिक कुशलता से और तेजी से अंदाजी निर्माण कर सके।
-3. मॉडल डिज़ाइन:
- * CPU: 2.5 GHz
- * GPU: NVIDIA GeForce RTX 3080
- * VRAM: 12 GB
- * RAM: 32 GB
- * LLM: Gemini 2.0
- * GGUF: Q8
- * Q4: 0.8
- * Q5</strong>– उदाहरण के लिए, अपने मुख्य मॉडल की एक छोटी सी GGUF को बनाएं और उसे अपने इंजन की सेटिंग में ड्राफ्ट के रूप में पारित करें।</li>
+        <li><strong>बहुत कम memory इस्तेमाल</strong> – quadratic intermediate matrix नहीं, इसलिए लंबे contexts वहाँ भी fit हो जाते हैं जहाँ पहले नहीं होते थे।</li>
+        <li><strong>तेज़ है</strong> – यह memory-bandwidth-bound है, और कम slow-memory round trips करना बड़ा फ़ायदा देता है।</li>
+        <li><strong>वही उत्तर देता है</strong> – यह गणितीय रूप से बराबर है, बस ज़्यादा efficiently compute किया गया।</li>
       </ul>
-      <p>यदि आप लोकल एआई के बारे में नए हैं और सिर्फ एक मॉडल चलाना चाहते हैं,<a href="how-to-get-started-local-ai.html">शुरुआत करने के लिए गाइड
+      <p>
+        यही वजह है कि आधुनिक models 128K–1M context windows का दावा कर पाते हैं। Flash Attention के बिना, इतना context सेकंडों में GPU memory को भर देता। आपको इसे "use" करना नहीं चुनना – engines आपके GPU के support करते ही इसे अपने आप enable कर देते हैं, और आपको चुपचाप फ़ायदा मिलता है।
+      </p>
 
-वेल्सटेक इंजीनियरिंग कॉलेज (VelsTech) में गाइड
+      <h2>Speculative decoding: अनुमान लगाओ, verify करो, skip करो</h2>
+      <p>
+        LLMs एक बार में एक token generate करते हैं, और हर step एक पूरा model pass है – serial और धीमा। <strong>Speculative decoding</strong> इस serial bottleneck पर एक चालाक trick से हमला करता है:
+      </p>
+      <ol>
+        <li>एक छोटा, तेज़ "draft" model अगले कुछ tokens (मान लें 4–8) का एक साथ अनुमान लगाता है।</li>
+        <li>बड़ा model <strong>अनुमानों को parallel में verify करता है</strong>, एक ही pass में।</li>
+        <li>जिन tokens से बड़ा model सहमत होता है, वे रख लिए जाते हैं – अक्सर 2–4 tokens – एक ही verification pass की लागत पर।</li>
+      </ol>
+      <p>
+        फ़ायदा: लगभग एक की कीमत पर आपको कई tokens मिल जाते हैं, इसलिए effective generation speed बढ़ जाती है – अक्सर 1.5–3× – <strong>output distribution बदले बिना</strong>। बड़ा model ही सच का स्रोत है; draft सिर्फ speed-up है।
+      </p>
+      <p>
+        यह सबसे अच्छा तब काम करता है जब draft model बड़े model का अनुमान लगाने में अच्छा हो (जैसे उसी family का छोटा sibling)। consumer hardware पर, llama.cpp और Ollama draft models को support करते हैं, और speed-up सबसे ज़्यादा chat में दिखता है जहाँ आप लंबे जवाब generate करते हैं।
+      </p>
 
-चैटबॉट विकास के लिए आवश्यक सॉफ्टवेयर और उपकरण
+      <h2>Local AI के लिए इसका क्या मतलब है</h2>
+      <p>
+        दोनों तकनीकें ही वजह हैं कि आधुनिक local AI इतना तेज़ लगता है:
+      </p>
+      <ul>
+        <li><strong>Flash Attention</strong> llama.cpp / Ollama द्वारा supported GPUs (NVIDIA, AMD via ROCm/Vulkan, Apple) पर अपने आप enable हो जाता है। यह आपको उसी hardware पर बड़े context windows चलाने देता है।</li>
+        <li><strong>Speculative decoding</strong> जब आप draft model देते हैं तो मुफ्त speed boost देता है – बड़े model की quality बनी रहती है, पर generation तेज़ होता है।</li>
+        <li><a href="quantization-deep-dive.html">quantization</a> और managed <a href="kv-cache-explained.html">KV cache</a> के साथ मिलकर, ये practical local inference के चार pillars हैं।</li>
+      </ul>
+      <p>
+        व्यवहार में, आप इन्हें हाथ से tune नहीं करते – engine कर देता है। लेकिन यह जानना कि ये मौजूद हैं, समझाता है कि वही model आपके backend और flags के हिसाब से बहुत अलग speeds पर क्यों चल सकता है, जिसे हम <a href="benchmarks/index.html">benchmark database</a> में मापते हैं।
+      </p>
 
-चैटबॉट विकास के लिए आवश्यक कौशल और ज्ञान
+      <h2>फ़ायदा कैसे लें</h2>
+      <ul>
+        <li><strong>अपना engine updated रखें</strong> – llama.cpp, Ollama और LM Studio मौजूदा builds में Flash Attention और speculative decoding support ship करते हैं। पुराने versions performance table पर छोड़ देते हैं।</li>
+        <li><strong>आधुनिक GPU इस्तेमाल करें</strong> – Flash Attention को पर्याप्त SRAM वाला GPU चाहिए; पिछले ~5 साल का कोई भी GPU ठीक है।</li>
+        <li><strong>speculative decoding के लिए draft model जोड़ें</strong> – जैसे अपने main model की ही family का छोटा GGUF, और उसे engine के config में draft के रूप में pass करें।</li>
+      </ul>
+      <p>
+        अगर आप local AI में नए हैं और बस एक model चलाना चाहते हैं, तो <a href="how-to-get-started-local-ai.html">getting started guide</a> पूरा flow कवर करती है; ये optimizations पर्दे के पीछे हो जाती हैं।
+      </p>
 
-चैटबॉट विकास के लिए आवश्यक संसाधन और सामग्री
-
-चैटबॉट विकास के लिए आवश्यक प्रोटोकॉल और नियम
-
-चैटबॉट विकास के लिए आवश्यक मानकों और प्रोटोकॉल</a>सारे प्रक्रियाओं को कवर करता है; ये अनुकूलन पीछे की दीवार पर होते हैं।</p>
-
-      <h2>अंतिम नतीजा</h2>
-      <p>एटेंशन और अनुमानात्मक डीकोडिंग की तकनीकें – ये बस हार्डवेयर का स्मार्ट तरीका है –। एक मेमोरी की बचत और एटेंशन की गति को बढ़ाती है; दूसरी पीढ़ी को सस्ती पुष्टि के साथ ओवरलैप करती है। दोनों आधुनिक इंजीन्स में मुफ्त प्रदर्शन हैं, और दोनों ही 2026 में गंभीर मॉडल्स को स्थानीय रूप से चलाने की प्रैक्टिकलिटी का हिस्सा हैं।</p>
+      <h2>Bottom line</h2>
+      <p>
+        Flash Attention और speculative decoding कोई जादू नहीं हैं – वे आपके पास मौजूद hardware को ज़्यादा समझदारी से इस्तेमाल करने के तरीके हैं। एक memory बचाता है और attention को तेज़ करता है; दूसरा cheap verification के साथ generation को overlap करता है। दोनों आधुनिक engines पर मुफ्त performance हैं, और दोनों ही वजह हैं कि 2026 में serious models को locally चलाना practical है।
+      </p>
     </div>
 
     <div class="article-nav">
-      <a href="ai.html">← Back to AI</a>
+      <a href="ai.html">← AI पर वापस जाएँ</a>
       <a href="benchmarks/index.html">See benchmark results →</a>
     </div>
   </main>

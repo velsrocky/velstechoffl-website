@@ -4,32 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="ल्लामा .cpp गाइड – कैसे लोकल पर Linux, macOS, और Windows पर GGUF मॉडल चलाएं। स्थापित करें, निर्देशित करें, चलाएं, और इंजन के पीछे ओल्लामा के साथ मॉडल को बेंचमार्क करें। 
-
-GGUF मॉडल को चलाने के लिए ल्लामा .cpp गाइड का उपयोग करने के लिए निम्नलिखित चरणों का पालन करें:
-
-1.  ल्लामा .cpp को स्थापित करें: ल्लामा .cpp को अपने सिस्टम पर स्थापित करने के लिए, निम्नलिखित कमांड का उपयोग करें:
-    *   Linux और macOS: `git clone https://github.com/salesforce/llama.git` और `cd llama` का उपयोग करके ल्लामा .cpp को क्लोन करें और फिर `mkdir build && cd build` और `cmake ..` का उपयोग करके इसे" /> />
-  <title>ल्लामा .cpp गाइड:  स्थानीय रूप से GGUF मॉडल चलाएं | वेल्सटेक
-
-सामग्री:
-
-1. आवश्यक सॉफ्टवेयर और प्लग-इन्स
-2. स्थानीय मॉडल चलाने के लिए आवश्यक सेटिंग्स
-3. मॉडल चलाने के लिए कोड स्निपेट
-
-1. आवश्यक सॉफ्टवेयर और प्लग-इन्स:
-
-- विंडोज़ 10 या 11
-- जावा 8 या उच्चतर
-- नेविगेटर 7.2.0 या उच्चतर
-- वेल्सचैट वेबसाइट से ल्लामा मॉडल डाउनलोड करें
-
-2. स्थानीय मॉडल चलाने के लिए आवश्यक सेटिंग्स:
-
-- जावा में ल्लामा मॉडल को लोड करने के लिए, आप निम्नलिखित कोड का उपयोग कर सकते हैं:
-  ल्लामा ल्ल | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/llama-cpp-guide.html" />
+  <meta name="description" content="llama.cpp गाइड – Linux, macOS और Windows पर GGUF model को locally कैसे चलाएँ। इंस्टॉल, कॉन्फ़िगर, रन और benchmark करें, Ollama के पीछे का engine।" />
+  <title>llama.cpp गाइड: GGUF model को locally चलाएँ | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/llama-cpp-guide.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/llama-cpp-guide.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/llama-cpp-guide.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/llama-cpp-guide.html" />
@@ -37,13 +14,13 @@ GGUF मॉडल को चलाने के लिए ल्लामा .cp
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/llama-cpp-guide.html#article",
-  "headline": "llama.cpp guide: run GGUF models locally",
-  "description": "Complete guide to llama.cpp – install it, run GGUF models, enable GPU acceleration, and read the benchmark output. The engine behind Ollama, explained.",
-  "url": "https://velstech.net/llama-cpp-guide.html",
+  "@id": "https://velstech.net/llama-cpp-guide.hi.html#article",
+  "headline": "llama.cpp गाइड: GGUF model को locally चलाएँ",
+  "description": "llama.cpp गाइड – Linux, macOS और Windows पर GGUF model को locally कैसे चलाएँ। इंस्टॉल, कॉन्फ़िगर, रन और benchmark करें, Ollama के पीछे का engine।",
+  "url": "https://velstech.net/llama-cpp-guide.hi.html",
   "datePublished": "2026-08-30T00:00:00Z",
   "dateModified": "2026-08-30T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/llama-cpp-guide.png",
   "author": {
     "@type": "Person",
@@ -59,29 +36,29 @@ GGUF मॉडल को चलाने के लिए ल्लामा .cp
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/llama-cpp-guide.html"
+  "mainEntityOfPage": "https://velstech.net/llama-cpp-guide.hi.html"
 }
   </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://velstech.net/llama-cpp-guide.html#faq",
+  "@id": "https://velstech.net/llama-cpp-guide.hi.html#faq",
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Do I need llama.cpp if I use Ollama?",
+      "name": "क्या Ollama उपयोग करने पर भी llama.cpp की आवश्यकता है?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No – Ollama wraps llama.cpp and handles installation, downloads, and GPU detection for you. Learning llama.cpp is useful for benchmarking and fine-tuning, but not required to run local AI."
+        "text": "नहीं – Ollama llama.cpp को wrap करता है और installation, downloads और GPU detection आपके लिए संभाल लेता है। llama.cpp सीखना benchmarking और fine-tuning के लिए उपयोगी है, लेकिन local AI चलाने के लिए ज़रूरी नहीं है।"
       }
     },
     {
       "@type": "Question",
-      "name": "How do I speed up llama.cpp?",
+      "name": "llama.cpp को कैसे तेज़ करें?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Offload more layers to your GPU with -ngl 999 if VRAM allows, make sure you built with the right backend (CUDA/ROCm/Vulkan), and use the highest quantization that still fits in memory."
+        "text": "यदि VRAM अनुमति दे तो -ngl 999 के साथ अधिक layers को GPU पर offload करें, सुनिश्चित करें कि आपने सही backend (CUDA/ROCm/Vulkan) के साथ build किया है, और memory में fit होने वाली उच्चतम quantization का उपयोग करें।"
       }
     }
   ]
@@ -89,190 +66,119 @@ GGUF मॉडल को चलाने के लिए ल्लामा .cp
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/llama-cpp-guide.html" />
-  <meta property="og:title" content="llama.cpp guide: run GGUF models locally | VelsTech" />
-  <meta property="og:description" content="Complete guide to llama.cpp – install, run GGUF models, configure GPU acceleration, and benchmark performance on your hardware." />
+  <meta property="og:url" content="https://velstech.net/llama-cpp-guide.hi.html" />
+  <meta property="og:title" content="llama.cpp गाइड: GGUF model को locally चलाएँ | VelsTech" />
+  <meta property="og:description" content="llama.cpp गाइड – Linux, macOS और Windows पर GGUF model को locally कैसे चलाएँ। इंस्टॉल, कॉन्फ़िगर, रन और benchmark करें, Ollama के पीछे का engine।" />
   <meta property="og:image" content="https://velstech.net/og/llama-cpp-guide.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="llama.cpp guide: run GGUF models locally | VelsTech" />
-  <meta name="twitter:description" content="Complete guide to llama.cpp – install, run GGUF models, configure GPU acceleration, and benchmark performance on your hardware." />
+  <meta name="twitter:title" content="llama.cpp गाइड: GGUF model को locally चलाएँ | VelsTech" />
+  <meta name="twitter:description" content="llama.cpp गाइड – Linux, macOS और Windows पर GGUF model को locally कैसे चलाएँ। इंस्टॉल, कॉन्फ़िगर, रन और benchmark करें, Ollama के पीछे का engine।" />
   <meta name="twitter:image" content="https://velstech.net/og/llama-cpp-guide.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
-    <h1 class="title">llama.cpp guide: run GGUF models locally</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="ai.html">AI</a> / यह लेख</p>
+    <h1 class="title">llama.cpp गाइड: GGUF model को locally चलाएँ</h1>
     <div class="meta">
       <span class="tag">llama.cpp</span>
       <span class="tag">GGUF</span>
       <span class="tag">Local AI</span>
       <span>Aug 30, 2026</span>
-      <span>· 7 min read</span>
+      <span>· 7 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>ओल्लामा, एलएम स्टूडियो, और अधिकांश अन्य स्थानीय एआई टूल्स को चालू करने वाला ल्लामा .cpp इंजन है। यह एक सी++ लाइब्रेरी है जो जीजूएफ मॉडल्स को लोड करता है और आपके CPU, GPU, या दोनों पर चलाता है, जिसमें नेविटिया क्यूडीए, एमडी आरओसीएम, और वुल्केन का समर्थन शामिल है।</p>
-      <p>यह गाइड मूलभूत बातों को कवर करती है: कैसे इसे स्थापित करें, कैसे एक मॉडल चलाएं, कैसे अपना GPU सक्षम करें, और कैसे बेंचमार्क आउटपुट पढ़ें। गाइड के अंत में आप सटीक रूप से जान जाएंगे कि<code>1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s</code>क्या ये पर्याप्त तेज़ हैं (और क्या यह तेज़ होना पर्याप्त है)।</p>
+      <p>
+        llama.cpp वह engine है जिस पर Ollama, LM Studio और अधिकांश अन्य local AI tools अंदर ही अंदर चलते हैं। यह एक C++ library है जो GGUF model को लोड करती है और उन्हें आपके CPU, GPU या दोनों पर चलाती है, जिसमें NVIDIA CUDA, AMD ROCm और Vulkan का support है।
+      </p>
+      <p>
+        यह गाइड basics कवर करती है: इसे कैसे इंस्टॉल करें, model कैसे चलाएँ, अपना GPU कैसे enable करें, और benchmark output को कैसे पढ़ें। अंत तक आप ठीक से जान जाएँगे कि <code>1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s</code> का क्या अर्थ है (और क्या यह पर्याप्त तेज़ है)।
+      </p>
 
-      <h2>स्थापना 
-
-1. विंडोज़ 10 या उच्चतर पर चलने वाले कंप्यूटर पर वेल्सटेक वेल्सचैट को डाउनलोड और इंस्टॉल करें। 
-
-2. विंडोज़ 10 या उच्चतर पर चलने वाले कंप्यूटर पर क्लाउड और चैटजीपीटी को डाउनलोड और इंस्टॉल करें। 
-
-3. क्लाउड और चैटजीपीटी को एक साथ जोड़ने के लिए अपने क्लाउड खाते में जाएं और चैटजीपीटी को एक्सेस करें। 
-
-4. अपने वेल्सचैट ऐप में जाएं और क्लाउड और चैटजीपीटी को जोड़ने के लिए निर्देशों का पालन करें। 
-
-5. वेल्सचैट को क्लाउड और चैटजीपीटी से जोड़ने के बाद, आप चैटजीपीटी से जुड़े</h2>
-      <p>लल्ला .cpp प्राप्त करने का सबसे आसान तरीका स्रोत से बनाना है। इसके लिए आपको एक C++ कंपाइलर की आवश्यकता है।<code>cmake</code>:
+      <h2>Installation</h2>
+      <p>
+        llama.cpp प्राप्त करने का सबसे आसान तरीका इसे source से build करना है। आपको C++ compiler और <code>cmake</code> चाहिए:
       </p>
       <pre>git clone https://github.com/ggerganov/llama.cpp
 cd llama.cpp
 mkdir build && cd build
 cmake .. -DLLAMA_METAL=OFF
 make -j$(nproc)</pre>
-      <p>GPU (GPU) को गति प्रदान करने के लिए सही फ्लैग जोड़ें: 
-
--cuda-gpu-arch=sm_80</p>
+      <p>
+        GPU acceleration के लिए सही flag जोड़ें:
+      </p>
       <ul>
-        <li><strong>नेवीडिया CUDA</strong> <code>cmake .. -DLLAMA_CUDA=ON</code></li>
-        <li><strong>एएमडी आरओसीएम:</strong> <code>cmake .. -DLLAMA_HIPBLAS=ON</code></li>
-        <li><strong>वुल्कन</strong> <code>cmake .. -DLLAMA_VULKAN=ON</code></li>
-        <li><strong>एप्पल मेटल</strong> <code>cmake .. -DLLAMA_METAL=ON</code></li>
+        <li><strong>NVIDIA CUDA:</strong> <code>cmake .. -DLLAMA_CUDA=ON</code></li>
+        <li><strong>AMD ROCm:</strong> <code>cmake .. -DLLAMA_HIPBLAS=ON</code></li>
+        <li><strong>Vulkan:</strong> <code>cmake .. -DLLAMA_VULKAN=ON</code></li>
+        <li><strong>Apple Metal:</strong> <code>cmake .. -DLLAMA_METAL=ON</code></li>
       </ul>
-      <p>यदि आप Ubuntu पर AMD कार्ड के साथ हैं<a href="install-rocm-ubuntu.html">ROCM स्थापना गाइड
+      <p>
+        यदि आप Ubuntu पर AMD card के साथ हैं, तो <a href="install-rocm-ubuntu.html">ROCm installation guide</a> prerequisites कवर करती है।
+      </p>
 
-ROCM (Radeon Open Compute) को स्थापित करने के लिए निम्नलिखित चरणों का पालन करें:
-
-**पहला चरण: प्राथमिक आवश्यकताएँ**
-
-- एक AMD Radeon GPU होना आवश्यक है।
-- एक Linux या Ubuntu परिचालन प्रणाली होनी आवश्यक है।
-- प्रारंभिक स्थापना के लिए 1 GB से अधिक स्थान आवश्यक है।
-
-**दूसरा चरण: पैकेजों को अपडेट करें**
-
-- अपने Linux या Ubuntu परिचालन प्रणाली को अपडेट करें।
-- कमांड प्रॉम्प्ट में निम्नलिखित कमांड चलाएँ: `sudo apt update` और `sudo apt upgrade`
-
-**तीसरा चरण: ROCm को डाउनलोड और स्थापित करें**
-
-- AMD की आधिकारिक वेबसाइट से ROCm को डाउनलोड करें।
-- डाउनलोड किए गए फ़ाइल को अपने Linux</a>प्रारंभिक आवश्यकताओं का पूर्वावलोकन करता है।</p>
-
-      <h2>मॉडल चलाना</h2>
-      <p>डाउनलोड करें एक GGUF फ़ाइल<a href="gguf-explained.html">GGUF (GPT-3.5 GYM Unified Framework)  –  एक ऐसी तकनीकी प्रणाली है जो चैटबॉट्स को विभिन्न प्रकार की भाषा प्रक्रियाओं में सुधार करने में मदद करती है। यह प्रणाली विभिन्न भाषा मॉडलों को एकीकृत करती है और उन्हें एक ही प्लेटफ़ॉर्म पर चलने की अनुमति देती है, जिससे चैटबॉट्स को अधिक प्रभावी ढंग से काम करने में मदद मिलती है।</a>जिसके लिए (एक से चुनें) फिर:</p>
+      <h2>Model चलाना</h2>
+      <p>
+        एक GGUF फ़ाइल डाउनलोड करें (कौन सी चुनें इसके लिए <a href="gguf-explained.html">GGUF explained</a> देखें), फिर चलाएँ:
+      </p>
       <pre>./build/bin/llama-cli -m path/to/model.q4_k_m.gguf -p "Hello, who are you?" -n 256</pre>
-      <p>यह मॉडल को लोड करता है, प्रॉम्प्ट को चलाता है, और 256 टोकन पैदा करता है। निकाले गए आउटपुट में समय संबंधी जानकारी होती है जो आपको बताती है कि यह कितनी तेजी से चला है।</p>
+      <p>
+        यह model को लोड करता है, prompt चलाता है और 256 tokens generate करता है। output में timing जानकारी शामिल होती है जो बताती है कि यह कितनी तेज़ चला:
+      </p>
       <pre>1713 ms / 373 tok = 4.60 ms/tok = 217.6 tok/s
 eval time = 1713 ms / 373 tok (4.60 ms/tok, 217.6 tok/s)</pre>
-      <p>पहला संख्या है<strong>प्रॉम्प्ट मूल्यांकन</strong>(hamari model ki kshamata ki utaar-chadhaav)  dusra hamaari 
+      <p>
+        पहला नंबर <strong>prompt eval</strong> है (model आपका सवाल कितनी तेज़ी से पढ़ता है)। दूसरा <strong>decode</strong> है (वह उत्तर कितनी तेज़ी से generate करता है)। chat के लिए decode speed मायने रखती है – यह text की वह stream है जो आप देखते हैं। लंबे documents के लिए prompt eval अधिक महत्वपूर्ण है।
+      </p>
 
-(in this context, 'hamari' means 'our', 'kshamata' means 'ability' or 'capacity', 'utaar-chadhaav' means 'range' or 'scope')<strong>अर्थ ग्रहण करें</strong>चैट के लिए, उत्तर की गति कितनी जल्दी होती है – यही वह गति है जिसे आप देखते हैं। लंबे दस्तावेजों के लिए, प्रोम्प्ट की मूल्यांकन गति का अधिक महत्व होता है।</p>
-
-      <h2>GPU (GPU) में तेजी</h2>
-      <p>प्रारंभिक llama.cpp कार्यान्वयन GPU पर लेयर्स ऑफलोड करने के लिए डिफ़ॉल्ट रूप से CPU पर चलता है। GPU पर लेयर्स ऑफलोड करने के लिए अपने GPU का उपयोग करने के लिए निम्नलिखित का उपयोग करें: 
-
-1. GPU को CUDA या ROCm से जोड़ें।
-2. GPU को Vulkan API से जोड़ें।
-3. GPU को NVIDIA, AMD, या Intel के GPU ड्राइवर से जोड़ें।
-4. GPU को अपने सिस्टम में जोड़ें, जैसे कि NVIDIA GeForce, AMD Radeon, या Intel Iris GPU।
-5. GPU को अपने सिस्टम के RAM से जोड़ें।
-6. GPU को अपने सिस्टम के VRAM से जोड़ें।
-7. GPU को अपने सिस्टम के GPU कैश से जोड़ें, जैसे कि KV cache।
-8. GPU को अपने सिस्टम के LLM मॉडल<code>-ngl</code>GPU layer की संख्या</p>
+      <h2>GPU acceleration</h2>
+      <p>
+        डिफ़ॉल्ट रूप से llama.cpp CPU पर चलता है। layers को अपने GPU पर offload करने के लिए <code>-ngl</code> flag (GPU layers की संख्या) का उपयोग करें:
+      </p>
       <pre>./build/bin/llama-cli -m model.gguf -p "Hello" -n 256 -ngl 999</pre>
       <p>
-        <code>-ngl 999</code>सारा स्तर GPU में डाल देता है। यदि आपके पास सीमित VRAM है, तो<code>-ngl N</code>jahan N layeron ke liye jagah hai.<a href="llm-vram-calculator.html">LLM VRAM (VRAM) कैलकुलेटर 
+        <code>-ngl 999</code> सभी layers को GPU पर offload कर देता है। यदि आपके पास सीमित VRAM है, तो <code>-ngl N</code> का उपयोग करें जहाँ N fit होने वाले layers की संख्या है। <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> अनुमान लगाने में मदद कर सकता है।
+      </p>
+      <p>
+        ROCm वाले AMD GPU के लिए आपको GPU और CPU में weights को बाँटने से बचाने के लिए <code>--load-mode none</code> की आवश्यकता हो सकती है। <a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen ROCm vs Vulkan benchmark</a> दिखाता है कि व्यवहार में यह कैसे काम करता है।
+      </p>
 
-LLM VRAM (VRAM) कैलकुलेटर एक उपकरण है जो आपको अपने वर्चुअल रियलिटी (VR) और ग्राफिक्स कार्यों के लिए आवश्यक VRAM की मात्रा की गणना करने में मदद करता है। यह कैलकुलेटर आपको अपने GPU की विशिष्ट विशेषताओं और आवश्यकताओं के आधार पर VRAM की आवश्यकता की गणना करने में सक्षम बनाता है।
+      <h2>अपने hardware को benchmark करना</h2>
+      <p>
+        llama.cpp का built-in timing output ही आपको चाहिए। ज्ञात परिणामों से तुलना करने के लिए समान parameters (model, quantization, context, backend) का उपयोग करें और decode tok/s नोट करें। फिर <a href="benchmarks/index.html">VelsTech benchmark database</a> में देखें कि आपका hardware कैसा प्रदर्शन करता है।
+      </p>
 
-GPU की विशेषताएं:
-
-- CPU: – 
-- VRAM: – 
-- GPU क्लॉक स्पीड: – 
-- ग्राफिक्स रैम (VRAM) क्लॉक स्पीड: – 
-
-गणना:
-
-1. GPU क्लॉक स्पीड को GPU क्लॉक स्पीड के साथ गुणा करें: 
-2. ग्राफिक्स रैम (VRAM)</a>क्या मैं अनुमान लगा सकता हूँ?</p>
-      <p>AMD के GPU के साथ ROCm का उपयोग करते समय आपको आवश्यक हो सकता है AMD के GPU के साथ ROCm का उपयोग करते समय आपको निम्नलिखित चीजों की आवश्यकता हो सकती है – 
-
-AMD के GPU के साथ ROCm का उपयोग करने के लिए आपको AMD के GPU को सही तरीके से स्थापित करना होगा और ROCm को सही तरीके से इंस्टॉल करना होगा।<code>--load-mode none</code>वजनों को GPU और CPU के बीच बांटने से बचने के लिए<a href="qwen-27b-ridge-rocm-vs-vulkan.html">Qwen
-ROCm वुल्केन बेंचमार्क 
-
-में हम Qwen पर ROCm और Vulkan की तुलना करेंगे।
-
-प्रदर्शन परिणाम
-ROCm वुल्केन
-GPU – 5000 – 10.5 GB GPU – 5000 – 10.5 GB
-CPU – AMD Ryzen 9 5900X – 3.7 GHz CPU – AMD Ryzen 9 5900X – 3.7 GHz
-VRAM – 16 GB GDDR6 – 1.35 GHz VRAM – 16 GB GDDR6 – 1.35 GHz
-RAM – 64 GB DDR4 – 3200 MHz RAM – 64 GB DDR4 – 3200 MHz
-LLM – 6 GB – 512 MB LLM – 6 GB – 512 MB
-
-बेंचमार्क परिणाम
-ROCm वुल्केन
-GGUF – 1200 – 1500 GGUF – 1200 – 1500
-Q4 – 80 – 120 Q4 – 80 – 120
-Q5 – 60 – 90 Q5 – 60 – 90
-Q</a>वास्तविक जीवन में इसका कैसे प्रदर्शन होता है, इसका उदाहरण दिखाता है।</p>
-
-      <h2>अपने हार्डवेयर का बेंचमार्किंग
-
-अपने हार्डवेयर की प्रदर्शन क्षमता को जानने के लिए, हमें कई प्रक्रियाओं का पालन करना होगा। इसमें हार्डवेयर के घटकों को पहचानना, उनकी स्पीड और क्षमता को मापना, और उन्हें संबंधित परीक्षणों में शामिल करना शामिल है।
-
-प्रोसेसर (CPU) का बेंचमार्किंग:
-CPU का बेंचमार्किंग करने के लिए, हमें एक विशिष्ट प्रोग्राम का उपयोग करना होगा जो CPU की गति और क्षमता को मापता है। इसे आमतौर पर बेंचमार्किंग टूल्स के रूप में जाना जाता है, जैसे कि Geekbench या Cinebench।
-
-ग्राफिक्स कार्ड (GPU) का बेंचम</h2>
-      <p>llama.cpp के अंदर ही समय के आउटपुट की आवश्यकता है। ज्ञात परिणामों के साथ तुलना करने के लिए, समान पैरामीटर (मॉडल, क्वांटाइजेशन, कॉन्टेक्स्ट, बैकएंड) का उपयोग करें और डिकोड किए गए टोकन की दर को नोट करें। फिर,<a href="benchmarks/index.html">वेल्सटेक बेंचमार्क डेटाबेस</a>अपने हार्डवेयर की क्षमता को जानने के लिए।</p>
-
-      <h2>फ्लैग्स की सूची – 
-
-1. –help – सहायता पृष्ठ दिखाएँ
-2. –version – सॉफ्टवेयर की संस्करण संख्या दिखाएँ
-3. –log – लॉग फ़ाइल दिखाएँ
-4. –silent – चुपचाप चलें (स्थिति प्रदर्शित न करें)
-5. –log-level – लॉग का स्तर निर्धारित करें (जैसे कि DEBUG, INFO, WARN, ERROR)
-6. –gpu – GPU का उपयोग करें (प्रारंभिक कार्यभार के लिए)
-7. –cpu – CPU का उपयोग करें (प्रारंभिक कार्यभार के लिए)
-8. –vram – VRAM का उपयोग करें (प्रारंभिक कार्यभार के लिए)
-9. –ram – RAM का उपयोग करें (प्रारंभिक कार्यभार के लिए)
-10. –llm – LLM (बड़ा भाषा</h2>
+      <h2>मुख्य flags चीट-शीट</h2>
       <div class="calc" style="overflow-x:auto">
         <table class="spec-table">
           <thead>
-            <tr><th>ध्वज</th><th>यह क्या करता है 
-
-यह एक मशीन लर्निंग आधारित चैटबॉट है, जो उपयोगकर्ताओं के साथ बातचीत करने के लिए डिज़ाइन किया गया है।</th></tr>
+            <tr><th>Flag</th><th>क्या करता है</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>-m</code></td><td>GGUF मॉडल फ़ाइल का रास्ता</td></tr>
-            <tr><td><code>-p</code></td><td>प्रॉम्प्ट टेक्स्ट</td></tr>
-            <tr><td><code>-n</code></td><td>token banane ke liye sankhya</td></tr>
-            <tr><td><code>-c</code></td><td>संदर्भ आकार (उदाहरण के लिए)<code>-c 16384</code>सोलह लाख)</td></tr>
-            <tr><td><code>-ngl</code></td><td>GPU (GPU) पर आउटलोड करने के लिए स्तर – 999 सभी</td></tr>
-            <tr><td><code>-t</code></td><td>संचार गणना (मानक: सभी प्रोसेसर कोर)</td></tr>
-            <tr><td><code>--repeat-penalty</code></td><td>दोहराव को दंडित करें (मानक 1.1)</td></tr>
-            <tr><td><code>--temp</code></td><td>नमूना तापमान (0.0 = निर्धारित, 1.0 = रचनात्मक)</td></tr>
+            <tr><td><code>-m</code></td><td>GGUF model फ़ाइल का path</td></tr>
+            <tr><td><code>-p</code></td><td>Prompt text</td></tr>
+            <tr><td><code>-n</code></td><td>Generate करने के लिए tokens की संख्या</td></tr>
+            <tr><td><code>-c</code></td><td>Context size (जैसे <code>-c 16384</code> 16K के लिए)</td></tr>
+            <tr><td><code>-ngl</code></td><td>GPU पर offload करने के लिए layers (999 = सभी)</td></tr>
+            <tr><td><code>-t</code></td><td>Thread count (default: सभी cores)</td></tr>
+            <tr><td><code>--repeat-penalty</code></td><td>Repetition को penalize करें (default 1.1)</td></tr>
+            <tr><td><code>--temp</code></td><td>Sampling temperature (0.0 = deterministic, 1.0 = creative)</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h2>अगामी कदम</h2>
-      <p>llama.cpp  है  आधार।  अधिकांश  लोग  कभी  भी  इसे  सीधे  उपयोग  नहीं  करते  –  वे  Ollama का  उपयोग  करते  हैं, जो  इसे  एक  उपयोगकर्ता-मित्र  CLI और  API  में  लपेटता  है।  लेकिन  llama.cpp  कैसे  काम  करता  है,  इसका  ज्ञान  होना  आपको  Ollama  के  बारे  में  समझने  में  मदद  करता  है,  और  यह  ज्ञान  आवश्यक  है<a href="benchmarks/index.html">अनुमोदन परीक्षण</a>VelsTech ki local AI mein shuruat karein, jahan aap VelsChat, ChatGPT, aur Claude jaise chatbots ke saath prashn uttar kar sakte hain.<a href="how-to-get-started-local-ai.html">शुरुआत करना</a>निर्देश – यह Ollama का उपयोग करता है, जो llama.cpp पर आधारित है।</p>
+      <h2>अगले कदम</h2>
+      <p>
+        llama.cpp नींव है। अधिकांश लोग इसे सीधे कभी उपयोग नहीं करते – वे Ollama का उपयोग करते हैं, जो इसे user-friendly CLI और API में wrap करता है। लेकिन यह जानना कि llama.cpp कैसे काम करता है, आपको यह समझने में मदद करता है कि Ollama क्या कर रहा है, और यह <a href="benchmarks/index.html">benchmarking</a> और fine-tuning के लिए आवश्यक है। यदि आप local AI में नए हैं, तो <a href="how-to-get-started-local-ai.html">getting started</a> गाइड से शुरू करें – यह Ollama का उपयोग करती है, जो llama.cpp पर बना है।
+      </p>
     </div>
 
     <div class="article-nav">
-      <a href="ai.html">← Back to AI</a>
+      <a href="ai.html">← AI पर वापस जाएँ</a>
       <a href="gguf-explained.html">GGUF explained →</a>
     </div>
   </main>

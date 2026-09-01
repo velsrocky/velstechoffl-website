@@ -4,23 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="RAG (Re-Adaptive Generalist)  –  ek local question-answering system hai jo aapke apne documents ke sath ek LLM aur embeddings ka upyog karke banaya ja sakta hai.
-
-RAG  –  kya hai?
--------------------
-
-RAG ek machine learning model hai jo question-answering task mein madad karta hai. Yeh model aapke documents ke sath embeddings banate hai, jo questions ko answer karne ke liye upyog kiye ja sakte hain.
-
-RAG  –  kaise kaam karta hai?
----------------------------
-
-RAG ka kaam yeh hai:
-
-1.  Documents ko embeddings banate hain: RAG aapke documents ko embeddings banata hai, jo unki mahatva aur mahatvapurn bhaagon ko darshate hain.
-2.  Questions ko embeddings banate hain: RAG questions ko embeddings banata hai, jo unki mahatva aur mahatvapurn bhaagon ko darshate hain.
-3.  Embeddings ko match karta hai: RAG embeddings ko match karta hai, jo questions ko answer karne ke li" /> />
-  <title>RAG से शुरू – अपने दस्तावेजों के बारे में पूछें | वेल्स टेक | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/rag-from-scratch.html" />
+  <meta name="description" content="RAG from scratch – अपने दस्तावेज़ों पर LLM और embeddings के साथ local question-answering system बनाएँ। RAG क्या है, कैसे काम करता है और एक कामकाजी उदाहरण।" />
+  <title>RAG from scratch: अपने दस्तावेज़ों से सवाल पूछें | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/rag-from-scratch.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/rag-from-scratch.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/rag-from-scratch.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/rag-from-scratch.html" />
@@ -28,13 +14,13 @@ RAG ka kaam yeh hai:
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/rag-from-scratch.html#article",
-  "headline": "RAG from scratch: ask questions about your own documents",
-  "description": "What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings.",
-  "url": "https://velstech.net/rag-from-scratch.html",
+  "@id": "https://velstech.net/rag-from-scratch.hi.html#article",
+  "headline": "RAG from scratch: अपने दस्तावेज़ों से सवाल पूछें",
+  "description": "RAG from scratch – अपने दस्तावेज़ों पर LLM और embeddings के साथ local question-answering system बनाएँ। RAG क्या है, कैसे काम करता है और एक कामकाजी उदाहरण।",
+  "url": "https://velstech.net/rag-from-scratch.hi.html",
   "datePublished": "2026-08-30T00:00:00Z",
   "dateModified": "2026-08-30T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/rag-from-scratch.png",
   "author": {
     "@type": "Person",
@@ -50,29 +36,29 @@ RAG ka kaam yeh hai:
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/rag-from-scratch.html"
+  "mainEntityOfPage": "https://velstech.net/rag-from-scratch.hi.html"
 }
   </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://velstech.net/rag-from-scratch.html#faq",
+  "@id": "https://velstech.net/rag-from-scratch.hi.html#faq",
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is RAG?",
+      "name": "RAG क्या है?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "RAG (Retrieval-Augmented Generation) lets an LLM answer questions using your own documents. It retrieves the few relevant chunks for a question, then has the model answer using only that context – no retraining needed."
+        "text": "RAG (Retrieval-Augmented Generation) LLM को आपके अपने documents का उपयोग करके सवालों का जवाब देने देता है। यह सवाल के लिए कुछ प्रासंगिक chunks retrieve करता है, फिर model को सिर्फ उसी context का उपयोग करके जवाब देने देता है – retraining की ज़रूरत नहीं।"
       }
     },
     {
       "@type": "Question",
-      "name": "Can RAG run entirely locally?",
+      "name": "क्या RAG पूरी तरह locally चल सकता है?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. With a local LLM and a small embedding model (both via Ollama), the whole load-embed-retrieve-generate pipeline runs offline and private."
+        "text": "हाँ। Local LLM और छोटे embedding model (दोनों Ollama के ज़रिए) के साथ पूरा load-embed-retrieve-generate pipeline offline और private चलता है।"
       }
     }
   ]
@@ -80,93 +66,85 @@ RAG ka kaam yeh hai:
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/rag-from-scratch.html" />
-  <meta property="og:title" content="RAG from scratch: ask questions about your own documents | VelsTech" />
-  <meta property="og:description" content="What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings." />
+  <meta property="og:url" content="https://velstech.net/rag-from-scratch.hi.html" />
+  <meta property="og:title" content="RAG from scratch: अपने दस्तावेज़ों से सवाल पूछें | VelsTech" />
+  <meta property="og:description" content="RAG from scratch – अपने दस्तावेज़ों पर LLM और embeddings के साथ local question-answering system बनाएँ। RAG क्या है, कैसे काम करता है और एक कामकाजी उदाहरण।" />
   <meta property="og:image" content="https://velstech.net/og/rag-from-scratch.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="RAG from scratch: ask questions about your own documents | VelsTech" />
-  <meta name="twitter:description" content="What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings." />
+  <meta name="twitter:title" content="RAG from scratch: अपने दस्तावेज़ों से सवाल पूछें | VelsTech" />
+  <meta name="twitter:description" content="RAG from scratch – अपने दस्तावेज़ों पर LLM और embeddings के साथ local question-answering system बनाएँ। RAG क्या है, कैसे काम करता है और एक कामकाजी उदाहरण।" />
   <meta name="twitter:image" content="https://velstech.net/og/rag-from-scratch.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
-    <h1 class="title">RAG from scratch: ask questions about your own documents</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="ai.html">AI</a> / यह लेख</p>
+    <h1 class="title">RAG from scratch: अपने दस्तावेज़ों से सवाल पूछें</h1>
     <div class="meta">
       <span class="tag">RAG</span>
       <span class="tag">Embeddings</span>
       <span class="tag">Local AI</span>
       <span>Aug 30, 2026</span>
-      <span>· 7 min read</span>
+      <span>· 7 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>एक एलएएम ज्ञात है कि वह किस पर प्रशिक्षित हुआ है – लेकिन आपके नोट्स, आपके पीडीएफ, आपके कोड, या आपकी कंपनी के दस्तावेज नहीं।<strong>RAG (Reactor for Asynchronous Generation)</strong>(Retrieval-Augmented Generation) – सुधार करता है कि एक मॉडल प्रश्नों का उत्तर देने के लिए – 
+      <p>
+        LLM वही जानता है जिस पर वह train हुआ है – लेकिन आपके notes, PDFs, code या कंपनी के docs नहीं। <strong>RAG</strong> (Retrieval-Augmented Generation) इसे ठीक करता है, model को <em>आपके</em> documents का उपयोग करके सवालों का जवाब देने देकर, बिना retraining के। "chat with your PDF" apps इसी तरह काम करती हैं, और आप इसे पूरी तरह अपनी मशीन पर local LLM के साथ बना सकते हैं।
+      </p>
+      <p>
+        यह गाइड RAG के चार moving parts समझाती है और एक working, local-first उदाहरण के साथ walkthrough देती है।
+      </p>
 
-        मॉडल को प्रश्नों का उत्तर देने की अनुमति देता है<em>आपका</em>दस्तावेज़, बिना पुनः प्रशिक्षण के बनाए।
-यही कैसे "अपने पीडीएफ से बात करें" ऐप्स काम करते हैं, और आप इसे पूरी तरह से अपने स्वयं के कंप्यूटर पर एक स्थानीय एलएलएम के साथ बना सकते हैं।</p>
-      <p>इस गाइड में RAG के चार गतिशील भागों का वर्णन किया गया है और एक कार्यात्मक, स्थानीय-सर्वप्रथम उदाहरण के माध्यम से इसका विवरण किया गया है।</p>
-
-      <h2>RAG के चार हिस्से हैं:
-
-1. **Tokenizer** – टोकनाइज़र 
-2. **Tokenizer** के बाद के **Embeddings** – टोकनाइज़र के बाद के एम्बेडिंग्स 
-3. **Inference** – इन्फरेंस 
-4. **Post-processing** – पोस्ट-प्रोसेसिंग</h2>
+      <h2>RAG के चार हिस्से</h2>
       <ol>
-        <li><strong>लोड करना</strong>– अपने दस्तावेज़ों (PDF, मार्कडाउन, टेक्स्ट) को टेक्स्ट के छोटे हिस्सों में पढ़ें।</li>
-        <li><strong>विवरणीकरण</strong>– प्रत्येक टुकड़ा को एक वेक्टर (एक संख्याओं का सूची जो उसके अर्थ को पकड़ती है) बनाने के लिए एक एम्बेडिंग मॉडल का उपयोग करें।</li>
-        <li><strong>प्राप्त करें</strong>– जब प्रश्न आता है, तो इसे भी एम्बेड करें और वह चंक ढूंढें जिनके वेक्टर इसे सबसे करीब हैं।</li>
-        <li><strong>मॉडल को बनाने के लिए हमें काफी जानकारी की आवश्यकता होती है। यह जानकारी हमें एक डेटासेट से मिलती है, जिसमें विभिन्न प्रकार के डेटा शामिल होते हैं। इन डेटा को हम मॉडल में शामिल करके उसे ट्रेन करते हैं।</strong>– LLM को प्राप्त किए गए टुकड़ों के साथ-साथ प्रश्न भी दें और केवल उसी संदर्भ में उत्तर दें।</li>
+        <li><strong>Load</strong> – अपने documents (PDF, markdown, text) को text के chunks में पढ़ें।</li>
+        <li><strong>Embed</strong> – हर chunk को embedding model से vector (संख्याओं की सूची जो अर्थ capture करती है) में बदलें।</li>
+        <li><strong>Retrieve</strong> – सवाल आने पर उसे भी embed करें और उन chunks को ढूँढें जिनके vectors सबसे करीब हैं।</li>
+        <li><strong>Generate</strong> – LLM को retrieved chunks के साथ सवाल दें, और उसे सिर्फ उसी context का उपयोग करके जवाब देने दें।</li>
       </ol>
-      <p>वही पूरा जादू है। LLM कभी भी आपके पूरे दस्तावेज़ सेट को नहीं देखता है – केवल वही कुछ उपयुक्त हिस्से, जो इसे जमीनी संदर्भ के रूप में प्रयोग करता है। इसलिए उत्तर सटीक होते हैं और इसलिए आपको किसी चीज़ को फिर से प्रशिक्षित करने की आवश्यकता नहीं होती है।</p>
+      <p>
+        यही पूरी तरकीब है। LLM आपका पूरा document set कभी नहीं देखता – सिर्फ कुछ प्रासंगिक chunks, जिन्हें वह grounded context के रूप में इस्तेमाल करता है। इसीलिए जवाब सटीक होते हैं और आपको retrain करने की ज़रूरत नहीं पड़ती।
+      </p>
 
-      <h2>पहला कदम: डेटा लोड करना और टुकड़ों में विभाजित करना</h2>
-      <p>प्रारंभिक बिंदु को छोटे भागों में विभाजित करने के लिए एक साधारण तरीका पायथन में निम्नलिखित है:
-
-```python
-def chunk_document(document, chunk_size=200):
-    chunks = []
-    for i in range(0, len(document), chunk_size):
-        chunk = document[i:i + chunk_size]
-        chunks.append(chunk)
-    return chunks
-
-document = "यह प्रारंभिक बिंदु को छोटे भागों में विभाजित करने के लिए एक साधारण तरीका है।"
-chunks = chunk_document(document)
-
-# प्रत्येक भाग को स्वतंत्र रूप से प्रिंट करें
-for i, chunk in enumerate(chunks):
-    print(f"चंक {i+1}: {chunk}")
-```
-
-इस उदाहरण में, `chunk_document` फ़ंक्शन एक दिए गए दस्तावेज़ को छोटे भागों में विभाजित करता है। यह फ़ंक्शन `chunk_size` पैरामीटर के म</p>
+      <h2>Step 1: Load और chunk</h2>
+      <p>
+        अपने documents को कुछ सौ characters के chunks में बाँटें, थोड़े overlap के साथ। Overlap क्यों? ताकि chunk boundary पर फँसा context खो न जाए। Python में एक आसान तरीका:
+      </p>
       <pre>import re
 text = open("notes.md").read()
 chunks = [text[i:i+500] for i in range(0, len(text), 400)]  # 500 chars, 100 overlap</pre>
-      <p>विभिन्न उपकरण<a href="https://docs.llamaindex.ai" target="_blank" rel="noopener">लम्मा इंडेक्स</a>aur<a href="https://langchain.com" target="_blank" rel="noopener">लैंगचेन</a>बेहतर सेगमेंटेशन का सीधा से सीधा सुझाव, लेकिन विचार एक ही है।</p>
+      <p>
+        <a href="https://docs.llamaindex.ai" target="_blank" rel="noopener">LlamaIndex</a> और <a href="https://langchain.com" target="_blank" rel="noopener">LangChain</a> जैसे tools out of the box smarter chunking संभाल लेते हैं, लेकिन idea वही है।
+      </p>
 
-      <h2>स्टेप 2: इम्बेड</h2>
-      <p>एक एम्बेडिंग मॉडल टेक्स्ट को एक वेक्टर – एक स्थिर आकार की संख्याओं की सूची में – में परिवर्तित करता है, जहां समान अर्थ एक दूसरे के करीब होते हैं। एक छोटा एम्बेडिंग मॉडल किसी भी CPU पर तेजी से काम करता है, इसलिए यह सस्ता है। ओल्लामा के पास कई हैं, जैसे<code>nomic-embed-text</code>:
+      <h2>Step 2: Embed</h2>
+      <p>
+        Embedding model text को vector में बदलता है – numbers की fixed-size list – जहाँ similar meaning करीब होते हैं। छोटा embedding model किसी भी CPU पर तेज़ चलता है, इसलिए यह सस्ता है। Ollama के पास कई हैं, जैसे <code>nomic-embed-text</code>:
       </p>
       <pre>ollama pull nomic-embed-text</pre>
-      <p>वेक्टर्स को संग्रहीत करने के लिए हर टुकड़ा में एम्बेड करें (एक साधारण JSON या SQLite फ़ाइल काफी है व्यक्तिगत उपयोग के लिए; वेक्टर डेटाबेस जैसे कि Chroma या Qdrant बड़े पैमाने पर उपयोग के लिए हैं)।</p>
+      <p>
+        हर chunk को embed करें और vectors को store करें (personal use के लिए साधारण JSON या SQLite file काफ़ी है; Chroma या Qdrant जैसे vector databases scale के लिए हैं)।
+      </p>
 
-      <h2>चरण 3: प्राप्त करें</h2>
-      <p>जब कोई प्रश्न पूछता है, तो उसे एकी ही मॉडल में एम्बेड करें, फिर उन बिट्स की खोज करें जिनके वेक्टर सबसे अधिक समान हैं । 'साम्य' आमतौर पर कॉसाइन साम्य – छोटा कोण वाले वेक्टर का मतलब अधिक संबंधित अर्थ है । टॉप 3–5 बिट्स को चुनें ।</p>
+      <h2>Step 3: Retrieve</h2>
+      <p>
+        जब सवाल आता है, तो उसे same model से embed करें, फिर उन chunks को ढूँढें जिनके vectors सबसे similar हैं। "Similarity" आमतौर पर cosine similarity है – vectors के बीच छोटा angle मतलब ज़्यादा related meaning। Top 3–5 chunks चुनें:
+      </p>
       <pre>import numpy as np
 # assume emb(q) is the question vector, emb(chunks) is a matrix
 scores = emb(chunks) @ emb(q) / (norms * norm_q)   # cosine sim
 top = np.argsort(scores)[::-1][:5]                  # top 5 chunk indices</pre>
-      <p>यदि प्रश्न और एक टुकड़े में समान शब्द या अवधारणाएं होती हैं, तो वे उच्च रैंक करेंगे – यही रैग को सही पाराग्रहों को ढूंढने में मदद करता है जैसे कि LLM सभी को देखे बिना।</p>
+      <p>
+        अगर सवाल और chunk में similar शब्द या concepts हैं, तो वे high rank करेंगे – इसी तरह RAG LLM को सब दिखाए बिना सही passages ढूँढ लेता है।
+      </p>
 
-      <h2>चौथे चरण: उत्पन्न करें</h2>
-      <p>अंत में, प्रोम्प्ट के साथ प्राप्त टुकड़ों को संदर्भ के रूप में LLM को प्रेरित करें। जादू यह है कि निर्देश है:<em>वेल्स टेक के एक पेशेवर हिंदी अनुवादक के रूप में, मैं आपके प्रश्नों का उत्तर देने के लिए तैयार हूँ।</em>.
+      <h2>Step 4: Generate</h2>
+      <p>
+        अंत में, retrieved chunks को context के रूप में LLM को prompt करें। जादू instruction में है: <em>सिर्फ इसी context का उपयोग करके जवाब दें</em>।
       </p>
       <pre>system: You are a helpful assistant. Answer the question using ONLY the
 context below. If the answer isn't there, say you don't know.
@@ -177,39 +155,33 @@ Context:
 --- chunk 11 ---
 
 Question: What did the notes say about X?</pre>
-      <p>लोकल मॉडल (उदाहरण के लिए, 7 बिलियन के माध्यम से Ollama) के साथ, यह पूरी तरह से ऑफलाइन चलने में सक्षम है।<a href="how-to-get-started-local-ai.html">स्थानीय AI मार्गदर्शक</a>मॉडल को चलाने के लिए निम्नलिखित चरणों का पालन करें: 
+      <p>
+        Local model (जैसे Ollama के ज़रिए 7B) के साथ यह पूरी तरह offline चलता है। <a href="how-to-get-started-local-ai.html">local AI guide</a> बताता है कि model कैसे चलाएँ; <a href="better-prompts.html">prompting guide</a> समझाता है कि "सिर्फ context का उपयोग करो" instruction इतनी ज़रूरी क्यों है।
+      </p>
 
-1. मॉडल को डाउनलोड करें और इसे अपने कंप्यूटर पर स्थापित करें।
-2. आवश्यक सॉफ्टवेयर और लाइब्रेरी को इंस्टॉल करें।
-3. मॉडल को लोड करें और इसे एक GPU (GPU) पर चलाएं।
-4. मॉडल को ट्रेन करने के लिए डेटासेट को प्रदान करें।
-5. मॉडल को टेस्ट करें और इसकी प्रदर्शन को मूल्यांकन करें।<a href="better-prompts.html">प्रोम्प्टिंग गाइड</a>– परिस्थिति के आधार पर ही संदर्भ का प्रयोग करने के निर्देश का क्यों बहुत महत्व है।</p>
+      <h2>एक आसान shortcut: Ollama + Open WebUI</h2>
+      <p>
+        अगर आप code नहीं लिखना चाहते, तो <a href="https://openwebui.com" target="_blank" rel="noopener">Open WebUI</a> में RAG built-in है: document upload करें, और यह आपके local Ollama models के सामने खुद chunk, embed और retrieve कर देता है। यह RAG try करने का सबसे तेज़ तरीका है – ऊपर वाला "from scratch" version बताता है कि अंदर कैसे काम होता है।
+      </p>
 
-      <h2>ओल्लामा + ओपन वेब यूआई</h2>
-      <p>अगर आप कोड नहीं लिखना चाहते हैं<a href="https://openwebui.com" target="_blank" rel="noopener">वेब यूआई खोलें</a>RAG mein in – build kiya gaya hai: ek document upload karna, aur yeh chunks karke, embed karna, aur aapke liye automatically retrieve karta hai
-        isse aapko speed se try karne mein madad milegi – iske alawa, "from scratch" version isse aasani se kaam karne ke liye use kiya jata hai.</p>
-
-      <h2>रैग की कार्यशीलता (और जब यह काम नहीं करता है)
-
-रैग (Reinforced Actor-GCritic) एक प्रकार का आर्टिफ़िशियल इंटेलिजेंस मॉडल है, जो कई कार्यों को एक साथ करने में सक्षम है। यह मॉडल एक एक्ट्र (actor) और एक क्रिटिक (critic) को एक साथ जोड़ता है, जो एक दूसरे की कार्यशीलता को बढ़ावा देते हैं।
-
-रैग की कार्यशीलता के कई कारक होते हैं, जिनमें से कुछ इस प्रकार हैं:
-
-1. **डेटा क्वालिटी**: रैग की कार्यशीलता डेटा की गुणवत्ता पर निर्भर करती है। यदि डेटा उच्च गुणवत्ता वाला है, तो रैग की कार्यशीलता भी अच्छी होगी।
-2. **</h2>
+      <h2>RAG कब काम करता है (और कब नहीं)</h2>
       <ul>
-        <li><strong>बहुत अच्छे हैं:</strong>प्रमाणों की खोज करना, दस्तावेजों में आधारित उत्तर, संदर्भ ("तीसरे खंड से यह है"), निजी डेटा।</li>
-        <li><strong>विशेषज्ञता:</strong>विभिन्न दस्तावेजों में सारांश बनाना (प्राप्त करें फिर सारांश बनाएं)।</li>
-        <li><strong>अनुकूल नहीं हैं:</strong>गणित या बहुस्तरीय तर्क (whole corpus के लिए, यानी agent + tools, अलग जानवर के लिए) के लिए, या जब उत्तर से कई अलग-अलग टुकड़ों से संदर्भ की आवश्यकता होती है।</li>
+        <li><strong>बहुत अच्छा:</strong> आपके docs में facts ढूँढना, जवाबों को grounding देना, citations ("यह section 3 से है"), private data।</li>
+        <li><strong>ठीक-ठाक:</strong> कई documents में summarization (retrieve फिर summarize)।</li>
+        <li><strong>बहुत अच्छा नहीं:</strong> पूरे corpus पर math या multi-step reasoning (वह agents + tools हैं, अलग चीज़), या जब जवाब के लिए कई disconnected chunks से context चाहिए हो।</li>
       </ul>
-      <p>चंक साइज और रिट्रीवल काउंट ही दो महत्वपूर्ण सेटिंग्स हैं। बहुत कम या छोटे चंक्स – संदर्भ की कमी । बहुत सारे चंक्स – LLM विचलित हो जाता है या उत्तर लंबा हो जाता है। शुरुआत में ~500-चर चंक्स और टॉप-5 रिट्रीवल से शुरू करें, फिर सेटिंग्स को समायोजित करें।</p>
+      <p>
+        Chunk size और retrieval count दो सबसे अहम knobs हैं। बहुत कम या बहुत छोटे chunks → context गायब। बहुत ज़्यादा → LLM distract हो जाता है या जवाब लंबा हो जाता है। ~500-char chunks और top-5 retrieval से शुरू करें, फिर tune करें।
+      </p>
 
-      <h2>अंतिम नतीजा</h2>
-      <p>RAG – चार चरण हैं: लोड, एम्बेड, रिट्रीव, जेनरेट – जिन्हें आप पूरी तरह से स्थानीय रूप से चला सकते हैं। यह एक आम LLM को एक ऐसे मॉडल में बदल देता है जो वास्तव में आपके दस्तावेज़ जानता है, जिसमें जमीनी आधारित, संदर्भित उत्तर होते हैं और फिर से प्रशिक्षण की आवश्यकता नहीं होती है। चाहे आप एक लाइब्रेरी का उपयोग करें या ऊपर दिए गए चरणों का उपयोग करें, यह अवधारणा एक ही है, और यह एक ऐसी चीज़ है जिस पर आप एक स्थानीय मॉडल के ऊपर सबसे उपयोगी चीज़ बना सकते हैं।</p>
+      <h2>निष्कर्ष</h2>
+      <p>
+        RAG है load, embed, retrieve, generate – चार steps जिन्हें आप पूरी तरह locally चला सकते हैं। यह general LLM को ऐसा model बना देता है जो सच में आपके documents जानता है, grounded, citable जवाबों के साथ और बिना retraining के। चाहे आप library इस्तेमाल करें या ऊपर वाले raw steps, concept वही है, और यह local model पर बनाई जा सकने वाली सबसे उपयोगी चीज़ों में से एक है।
+      </p>
     </div>
 
     <div class="article-nav">
-      <a href="ai.html">← Back to AI</a>
+      <a href="ai.html">← AI पर वापस जाएँ</a>
       <a href="local-vs-cloud-ai.html">Local vs cloud AI →</a>
     </div>
   </main>

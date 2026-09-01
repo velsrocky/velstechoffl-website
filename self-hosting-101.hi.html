@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="रास्पबेरी पाई या पुराने लैपटॉप पर चलाने के लिए सेवाएँ जो मीडिया सर्वर से व्यक्तिगत क्लाउड तक ले जाती हैं।" /> />
-  <title>स्व-होस्टिंग 101: घर पर क्या चलाया जा सकता है | वेल्सटेक | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/self-hosting-101.html" />
+  <meta name="description" content="Media server से personal cloud तक – वे services जो आप Raspberry Pi या पुराने laptop पर चला सकते हैं।" />
+  <title>Self-hosting 101: घर पर क्या चला सकते हैं? | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/self-hosting-101.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/self-hosting-101.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/self-hosting-101.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/self-hosting-101.html" />
@@ -14,13 +14,13 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/self-hosting-101.html#article",
-  "headline": "Self-hosting 101: what can you run at home?",
-  "description": "From a media server to a personal cloud – services you can run on a Raspberry Pi or old laptop.",
-  "url": "https://velstech.net/self-hosting-101.html",
+  "@id": "https://velstech.net/self-hosting-101.hi.html#article",
+  "headline": "Self-hosting 101: घर पर क्या चला सकते हैं?",
+  "description": "Media server से personal cloud तक – वे services जो आप Raspberry Pi या पुराने laptop पर चला सकते हैं।",
+  "url": "https://velstech.net/self-hosting-101.hi.html",
   "datePublished": "2026-08-24T00:00:00Z",
   "dateModified": "2026-08-24T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/self-hosting-101.png",
   "author": {
     "@type": "Person",
@@ -36,145 +36,116 @@
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/self-hosting-101.html"
+  "mainEntityOfPage": "https://velstech.net/self-hosting-101.hi.html"
 }
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/self-hosting-101.html" />
-  <meta property="og:title" content="Self-hosting 101: what can you run at home? | VelsTech" />
-  <meta property="og:description" content="From a media server to a personal cloud – services you can run on a Raspberry Pi or old laptop." />
+  <meta property="og:url" content="https://velstech.net/self-hosting-101.hi.html" />
+  <meta property="og:title" content="Self-hosting 101: घर पर क्या चला सकते हैं? | VelsTech" />
+  <meta property="og:description" content="Media server से personal cloud तक – वे services जो आप Raspberry Pi या पुराने laptop पर चला सकते हैं।" />
   <meta property="og:image" content="https://velstech.net/og/self-hosting-101.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Self-hosting 101: what can you run at home? | VelsTech" />
-  <meta name="twitter:description" content="From a media server to a personal cloud – services you can run on a Raspberry Pi or old laptop." />
+  <meta name="twitter:title" content="Self-hosting 101: घर पर क्या चला सकते हैं? | VelsTech" />
+  <meta name="twitter:description" content="Media server से personal cloud तक – वे services जो आप Raspberry Pi या पुराने laptop पर चला सकते हैं।" />
   <meta name="twitter:image" content="https://velstech.net/og/self-hosting-101.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="networking.html">Networking</a> / This article</p>
-    <h1 class="title">Self-hosting 101: what can you run at home?</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="networking.html">नेटवर्किंग</a> / यह लेख</p>
+    <h1 class="title">Self-hosting 101: घर पर क्या चला सकते हैं?</h1>
     <div class="meta">
       <span class="tag">Self-hosting</span>
       <span class="tag">Projects</span>
       <span>Aug 24, 2026</span>
-      <span>· 7 min read</span>
+      <span>· 7 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>स्व-आश्रयण का अर्थ है कि आप अपने स्वयं के उपकरणों पर अपने स्वयं के सेवाओं को चलाने के बजाय किसी और के क्लाउड का भुगतान करने के बजाय। यह निजी है, यह एक अच्छा तरीका है सीखने का, और कई चीजों के लिए यह लगभग कुछ भी नहीं लगता है। यहाँ यह है जो घर पर होस्ट करने योग्य है – और यह नहीं है।</p>
+      <p>
+        Self-hosting का मतलब है अपनी services को किसी और के cloud को पैसे देने के बजाय अपने hardware पर खुद चलाना। यह private है, सीखने का बेहतरीन तरीका है, और कई चीज़ों के लिए लगभग मुफ़्त है। यहाँ बताया गया है कि घर पर क्या host करना worth है – और क्या नहीं।
+      </p>
 
-      <h2>प्रारंभ करने के लिए आवश्यक चीजें हैं:
-
-- एक शक्तिशाली कंप्यूटर – जिसमें एक तेजी से CPU, उच्च गुणवत्ता वाला GPU और पर्याप्त VRAM हो।
-- एक स्थिर संचार नेटवर्क – जिसमें अच्छी गति के साथ एक SSD और एक HDD हो।
-- एक उपयुक्त ऑपरेटिंग सिस्टम – जैसे कि Windows, Linux या Ubuntu।
-- एक अच्छी गुणवत्ता वाली स्क्रीन और कीबोर्ड।
-- एक अच्छी गुणवत्ता वाला स्पीकर और माइक।
-- एक अच्छी गुणवत्ता वाला पावर सप्लाई और केबल।
-- एक अच्छी गुणवत्ता वाला वायरलेस रूटर और मॉडेम।
-
-इसके अलावा, यदि आप एक लैंग्वेज मॉडल को ट्रेन करना चाहते हैं तो आपको निम्नलिखित चीजों</h2>
-      <p>प्रवेश बिंदु बहुत छोटा है:</p>
+      <h2>शुरू करने के लिए क्या चाहिए</h2>
+      <p>
+        Entry point बहुत छोटा है:
+      </p>
       <ul>
-        <li><strong>रेस्पबेरी पाई 4/5</strong>– पारंपरिक. ~50–80 रुपये, कुछ वाट ऊर्जा का उपयोग करता है।</li>
-        <li><strong>पुराना लैपटॉप या डेस्कटॉप</strong>– पूरी तरह से ठीक, और आप पहले से ही एक मालिक होंगे।</li>
-        <li><strong>एक छोटा पीसी</strong>(N100-class) – सस्ता, शांत, कम ऊर्जा वाला, आश्चर्यजनक रूप से सक्षम।</li>
-        <li><strong>स्टोरेज 
-
-मेमोरी के लिए विभिन्न प्रकार के डिवाइस होते हैं, जिनमें से कुछ प्रमुख हैं:
-
-- एसएसडी (SSD): एक फ्लैश ड्राइव है जो डेटा को तेजी से पढ़ने और लिखने की अनुमति देता है।
-- एचडीडी (HDD): एक मेकेनिकल ड्राइव है जो डेटा को पढ़ने और लिखने के लिए डिस्क का उपयोग करता है।
-- एनवीआरडी (NVMe): एक फ्लैश ड्राइव है जो डेटा को तेजी से पढ़ने और लिखने की अनुमति देता है और आमतौर पर एसएसडी से तेज होता है।
-
-इन डिवाइसों के बीच के अंतर को समझने से आपको अपने संगणक के लिए सही स्टोरेज का चयन करने में</strong>– एक अच्छी बाहरी या अंदरूनी ड्राइव, संभवतः आपके बूट ड्राइव न हो।</li>
+        <li><strong>Raspberry Pi 4/5</strong> – classic। ~$50–80, कुछ watts power लेता है।</li>
+        <li><strong>पुराना laptop या desktop</strong> – बिल्कुल ठीक, और आपके पास शायद पहले से है।</li>
+        <li><strong>Mini PC</strong> (N100-class) – सस्ता, शांत, low-power, आश्चर्यजनक रूप से capable।</li>
+        <li><strong>Storage</strong> – अच्छी external या internal drive, ideally आपका boot drive नहीं।</li>
       </ul>
-      <p>लिनक्स (ऑपरेटिंग सिस्टम के अनुभाग को देखें) इंस्टॉल करें, मशीन को स्थिर IP दें, और तैयार हो जाएं।<strong>डॉक्टर (Docker)</strong>अगला हिस्सा बहुत आसान बनाता है – अधिकांश स्व-होस्टेड ऐप्स एक कमांड से इन्स्टॉल हो जाते हैं।</p>
+      <p>
+        Linux install करें (OS section देखें), मशीन को static IP दें, और आप तैयार हैं। <strong>Docker</strong> अगला हिस्सा नाटकीय रूप से आसान बना देता है – ज़्यादातर self-hosted apps one-command installs हैं।
+      </p>
 
-      <h2>सहज, उच्च-मूल्य विजयें</h2>
-      <p>इन प्रोजेक्ट्स को अक्सर लोग शुरू करते हैं: 
-
-- वेल्सटेक (VelsTech) के साथ एक चैटबॉट विकसित करना
-- वेल्सचैट (VelsChat) के साथ एक वॉयस असिस्टेंट बनाना
-- चैटजीपीटी (ChatGPT) जैसा एक LLM विकसित करना
-- क्लाउड (Claude) के साथ एक वेब एप्लिकेशन बनाना
-- जेमिनी (Gemini) के साथ एक चैटबॉट विकसित करना
-- क्वेन (Qwen) के साथ एक वॉयस असिस्टेंट बनाना
-- अलीबाबा (Alibaba) के साथ एक चैटबॉट विकसित करना
-- एनवीआईडीआईए (NVIDIA) के साथ एक GPU-आधारित चैटबॉट विकसित करना
-- एएमडी (AMD) के साथ एक CPU-आधारित चैटबॉट विकसित करना
--</p>
+      <h2>आसान, high-value जीत</h2>
+      <p>
+        ये वे projects हैं जिनसे लोग आमतौर पर शुरू करते हैं:
+      </p>
       <ul>
         <li>
-          <strong>मीडिया सर्वर – Jellyfin या Plex ।</strong>अपने खुद के फिल्में और संगीत को किसी भी उपकरण पर स्ट्रीम करें। जेलिफिन मुफ्त और पूरी तरह से आत्म-नियंत्रित है। यह इसी कारण से लोग आत्म-नियंत्रित करना शुरू करते हैं कि यह नंबर 1 कारण है।</li>
+          <strong>Media server – Jellyfin या Plex।</strong> अपनी movies और music को किसी भी device पर stream करें। Jellyfin मुफ़्त और पूरी तरह self-contained है। यही #1 वजह है जिससे लोग self-hosting शुरू करते हैं।
+        </li>
         <li>
-          <strong>व्यक्तिगत क्लाउड – नेक्सट क्लाउड।</strong>अपना ड्रॉपबॉक्स/गूगल ड्राइव। फ़ाइलें, 
-          फ़ोटो, नोट्स, संपर्क – फ़ोन से सुलभ। 'अनजान के सर्वर पर सिंक' को 'मेरे क्लॉसेट में सिंक' में बदलें।</li>
+          <strong>Personal cloud – Nextcloud।</strong> आपका खुद का Dropbox/Google Drive। Files, photos, notes, contacts – फ़ोन से accessible। "किसी अजनबी के server पर sync" को "मेरी closet में sync" से बदलें।
+        </li>
         <li>
-          <strong>नेटवर्क के स्तर पर ऐड-ब्लॉकिंग – AdGuard Home या Pi-hole।</strong>दूरस्थ संचार नेटवर्क पर प्रत्येक उपकरण के लिए विज्ञापन और ट्रैकर्स को ब्लॉक करें, रूटर की स्तर पर, इससे पहले कि वे लोड हों।</li>
+          <strong>Network level पर ad-blocking – AdGuard Home या Pi-hole।</strong> हर device के लिए ads और trackers को network से ही block करें, router level पर, load होने से पहले।
+        </li>
         <li>
-          <strong>गृह डैशबोर्ड – होम असिस्टेंट</strong>स्मार्ट डिवाइस, सेंसर, और ऑटोमेशन को एक प्राइवेट डैशबोर्ड में जोड़ें। पूर्ण स्मार्ट-होम मालिकी की ओर जाने वाला गेटवे ड्रग।</li>
+          <strong>Home dashboard – Home Assistant।</strong> Smart devices, sensors और automations को एक private dashboard में जोड़ें। Full smart-home ownership का gateway drug।
+        </li>
       </ul>
 
-      <h2>कार्य को बढ़ाइए</h2>
-      <p>वेल्स टेक के शोधकर्ताओं ने वेल्स चैट में एक नवीनतम अपग्रेड किया है, जिसमें GPU (GPU) की गति में सुधार किया गया है और वर्चुअल रेम (VRAM) को बढ़ाया गया है। यह अपग्रेड वेल्स चैट को अधिक तेजी से और अधिक कुशलता से कार्य करने में मदद करेगा।
-
-वेल्स चैट का केंद्रीय प्रोसेसर (CPU) 3.5 गीगाहर्ट्ज़ (GHz) की गति से कार्य करता है, जो इसे अधिक तेजी से कार्य करने में सक्षम बनाता है। इसके अलावा, वेल्स चैट में 16 जीबी (GB) रैम (RAM) है, जो इसे अधिक कुशलता से कार्य करने में मदद करता है।
-
-व</p>
+      <h2>एक कदम आगे</h2>
+      <p>
+        एक बार comfortable हो जाएँ, तो और जोड़ें:
+      </p>
       <ul>
-        <li><strong>पासवर्ड मैनेजर – वॉल्टवर्डन</strong>Aapke passwords, self-hosted – Bitwarden ki server ke liye ek drop-in replacement.</li>
-        <li><strong>बैकअप लक्ष्य।</strong>रात में अपने कंप्यूटर को होम सर्वर पर बैकअप करें। सर्वर खुद से ऑफ-साइट पर बैकअप होता है।</li>
-        <li><strong>नोट्स और दस्तावेज़ – Obsidian सिंक, Bookstack, या Trilium।</strong>अपना खुद का ज्ञान आधार।</li>
-        <li><strong>व्यक्तिगत ब्लॉग या वेबसाइट</strong>अपने खुद के सर्वर पर होस्ट करें –  लेकिन GitHub Pages पर एक स्थिर साइट होस्ट करना अक्सर बुद्धिमानी होता है।</li>
-        <li><strong>गिट सर्वर – गाइटिया</strong>मेरा खुद का GitHub – मेरे व्यक्तिगत परियोजनाओं के लिए।</li>
+        <li><strong>Password manager – Vaultwarden।</strong> आपके passwords, self-hosted (Bitwarden के server का drop-in replacement)।</li>
+        <li><strong>Backup target।</strong> अपने computers का backup रात में home server पर करें। Server का खुद off-site backup होता है।</li>
+        <li><strong>Notes और docs – Obsidian sync, Bookstack या Trilium।</strong> आपका खुद का knowledge base।</li>
+        <li><strong>Personal blog या site।</strong> खुद host करें – हालाँकि GitHub Pages पर static site अक्सर ज़्यादा समझदारी है।</li>
+        <li><strong>Git server – Gitea।</strong> Personal projects के लिए आपका खुद का GitHub।</li>
       </ul>
 
-      <h2>इसे इंटरनेट पर प्रकट करना</h2>
-      <p>अपने घर में सेवाएं स्थानीय नेटवर्क पर काम करती हैं। जब आप बाहर से पहुंच चाहते हैं, तो आपके पास विकल्प हैं – प्रयास की बढ़ती मात्रा में:</p>
+      <h2>इसे internet पर expose करना</h2>
+      <p>
+        घर के अंदर services local network पर बस काम करती हैं। जैसे ही आप बाहर से access चाहते हैं, आपके पास विकल्प हैं – बढ़ती मेहनत के क्रम में:
+      </p>
       <ol>
         <li>
-          <strong>वीपीएन – टेल्स्केल या वायरगार्ड।</strong>सुरक्षित और आधुनिक विकल्प। आप अपने घर के सर्वर से कहीं से भी निजी नेटवर्क के माध्यम से जुड़ते हैं। कोई पोर्ट खोला जाता है, कोई खुलासा नहीं। सभी के लिए सुझावित।</li>
+          <strong>VPN – Tailscale या WireGuard।</strong> सुरक्षित, modern choice। आप एक private network join करते हैं जो कहीं से भी आपके home server तक पहुँचता है। कोई ports open नहीं, कोई exposure नहीं। हर चीज़ के लिए recommended।
+        </li>
         <li>
-          <strong>क्लाउडफ्लेयर ट्यूनल</strong>एक मुफ़्त टनल जो आपके सर्वर को Cloudflare से जोड़ती है बिना किसी पोर्ट को खोले हुए । यह विशिष्ट ऐप्स को pubicly साझा करने के लिए बहुत उपयुक्त है।</li>
+          <strong>Cloudflare Tunnel।</strong> एक free tunnel जो बिना कोई port खोले आपके server को Cloudflare से जोड़ता है। Specific apps को publicly share करने के लिए शानदार।
+        </li>
         <li>
-          <strong>पोर्ट फॉरवर्डिंग + DDNS</strong>पुराने तरीके से: एक पोर्ट खोलें, DDNS का उपयोग करें – आपके बदलते IP के लिए काम करता है, लेकिन सर्वर को सीधे खुला छोड़ता है – केवल मजबूत सुरक्षा के साथ ही करें।</li>
+          <strong>Port forwarding + DDNS।</strong> पुराना तरीका: port खोलें, बदलते IP के लिए DDNS इस्तेमाल करें। काम करता है, लेकिन server को सीधे expose करता है – सिर्फ मज़बूत security के साथ ही करें।
+        </li>
       </ol>
-      <blockquote>सामान्य नियम: प्राइवेट एक्सेस के लिए VPN (Tailscale) का इस्तेमाल करें और 
-        Cloudflare Tunnel का इस्तेमाल करें अगर आप कुछ खासतौर पर पब्लिक चाहते हैं। 
-        खुले इंटरनेट पर raw port forwarding से बचें अगर आप अपने सेटअप की सुरक्षा के बारे में आश्वस्त नहीं हैं।</blockquote>
+      <blockquote>
+        Rule of thumb: private access के लिए VPN (Tailscale) इस्तेमाल करें, और Cloudflare Tunnel तब जब आप कुछ public करना चाहते हैं। Open internet पर raw port forwarding से बचें जब तक आप अपने setup को लेकर confident न हों।
+      </blockquote>
 
-      <h2>आपको क्या स्व-होस्ट नहीं करना चाहिए:
-
-1.  सेंट्रल प्रोसेसर (CPU) और ग्राफिक्स प्रोसेसर (GPU) के लिए सॉफ्टवेयर अपडेट और ड्राइवर।
-2.  वर्चुअल रेम (VRAM) और रैम (RAM) के लिए ऑपरेटिंग सिस्टम अपडेट।
-3.  लार्ज लैंग्वेज मॉडल (LLM) और गेमिंग के लिए सॉफ्टवेयर।
-4.  सिस्टम के लिए सुरक्षा अपडेट और फायरवॉल कॉन्फ़िगरेशन।
-5.  डेटाबेस और स्टोरेज डिवाइस जैसे एसएसडी (SSD) और एचडीडी (HDD) के लिए सॉफ्टवेयर।
-6.  नेटवर्किंग सेटिंग्स और डोमेन नेम सर्विस (DNS) कॉन्फ़िगरेशन।
-7.  एप्लिकेशन प्रोग्र</h2>
-      <p>सच्चाई का कोना । कुछ चीजें इसके लायक नहीं हैं:</p>
+      <h2>क्या self-host नहीं करना चाहिए</h2>
+      <p>
+        Honesty corner। कुछ चीज़ें worth नहीं हैं:
+      </p>
       <ul>
-        <li><strong>कारोबारी रूप से महत्वपूर्ण ईमेल</strong>– घर से ईमेल विश्वसनीय रूप से भेजना एक बड़ा सपना है (स्पैम फिल्टर्स घरेलू IP से नफरत करते हैं)। एक मेल प्रदाता का उपयोग करें।</li>
-        <li><strong>किसी भी ऐसी चीज़ की आवश्यकता होती है जो 24/7 पर काम कर सके और एंटरप्राइज़ के उच्चतम समय की आवश्यकता हो।</strong>घर का इंटरनेट और पावर डेटा सेंटर नहीं है।</li>
-        <li><strong>अगर आप कोई भी डेटा सुरक्षित करना चाहते हैं जिसकी हानि आपके लिए नुकसानदायक हो सकती है, तो वे बैकअप्स होते हैं जिन्हें आप नहीं खोना चाहेंगे।</strong>– हमेशा ऑफ-साइट कॉपी बनाए रखना चाहिए (3-2-1 नियम के अनुसार)।</li>
-        <li><strong>VelsTech ki VelsChat software mein GGUF model ka upyog nahi kiya jayega. Q4 aur Q5 model ke liye LLM ka upyog kiya jayega, lekin Q8 model ke liye MoE ka upyog kiya jayega. ROCm aur Vulkan API ka upyog GPU par kiya jayega. CUDA API ka upyog NVIDIA GPU par kiya jayega. NPU ka upyog AI model ke inference ke liye kiya jayega. SSD aur HDD ki upyogitaa ke anusar data ko store kiya jayega. DNS ka upyog network connection ko secure karne ke liya kiya jayega. API ka upyog software ko develop karne ke liye kiya jayega.</strong>– हर एक स्व-होस्टेड सेवा को अपडेट की जरूरत होती है। अनुचित रखरखाव = अपडेट किए बिना = खतरा।</li>
+        <li><strong>Business-critical email</strong> – घर के IP से email reliably deliver करना nightmare है (spam filters residential IPs से नफ़रत करते हैं)। Mail provider इस्तेमाल करें।</li>
+        <li><strong>कुछ भी जो 24/7 enterprise uptime माँगे</strong> – घर का internet और power data centers नहीं हैं।</li>
+        <li><strong>Backups जिन्हें आप खोना afford नहीं कर सकते</strong> – हमेशा off-site copy रखें (3-2-1 rule)।</li>
+        <li><strong>जो आप maintain नहीं करेंगे</strong> – हर self-hosted service को updates चाहिए। Unmaintained = unpatched = risk।</li>
       </ul>
 
-      <h2>एक शुरुआती जाँच की सूची 
-
-1. सिस्टम की जाँच करें – यह सुनिश्चित करने के लिए कि सभी आवश्यक सॉफ़्टवेयर और ड्राइवर स्थापित हैं 
-2. GPU की जाँच करें – यह सुनिश्चित करने के लिए कि GPU सही तरीके से काम कर रहा है और आवश्यक ड्राइवर स्थापित हैं 
-3. RAM और VRAM की जाँच करें – यह सुनिश्चित करने के लिए कि पर्याप्त रैम और वीडियो रेम उपलब्ध है 
-4. सिस्टम को अपडेट करें – यह सुनिश्चित करने के लिए कि सभी सॉफ़्टवेयर और ड्राइवर अद्यतन हैं 
-5. सिस्टम को रीस्टार्ट करें – यह सुनिश्चित करने के लिए कि सिस्टम ठीक से काम कर रहा है 
-
-यहाँ L</h2>
+      <h2>Starter checklist</h2>
       <pre>1. Get hardware (Pi / old laptop / mini PC)
 2. Install Linux + Docker
 3. Give it a static local IP
@@ -183,52 +154,20 @@
 6. Set up nightly backups to an external drive
 7. Repeat updates regularly (and actually do them)</pre>
 
-      <p>अपने ही सर्वर पर सेवाएं चलाना एक शौक है जो खुद को सिखने और गोपनीयता के मामले में भुगतान करता है। एक चीज़ से शुरू करें, और शुक्रवार की शाम को दस सेवाओं को इंस्टॉल करने से बचें, और सभी को अपडेट रखें। छह महीने बाद, आप एक पूरी तरह से अपना निजी क्लाउड होगा।</p>
+      <p>
+        Self-hosting एक hobby है जो learning और privacy में खुद का पैसा वसूल कर देता है। एक चीज़ से शुरू करें, एक weekend में दस services install करने से बचें, और सब कुछ updated रखें। छह महीने बाद आपके पास एक छोटा private cloud होगा जो पूरी तरह आपका है।
+      </p>
 
       <div class="tool-callout">
-        <div class="tool-callout-title">वेल्सटेक डॉक्टर कॉम्पोज़ जेनरेटर को आजमाएं</div>
-        <p>निम्नलिखित docker-compose.yml फ़ाइल एक कॉपी-पेस्ट करने योग्य संस्करण है:
-
-```yml
-version: '3'
-
-services:
-  my_service:
-    image: my_image
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./my_data:/app/my_data
-      - ./my_config:/app/my_config
-    environment:
-      - VELS_TECH_API_KEY=123456
-      - VELS_CHAT_MODEL=gemini
-    restart: always
-```
-
-यदि आप विशिष्ट इमेज, पोर्ट्स, वॉल्यूम्स, एंव वारिएबल्स की आवश्यकता है, तो निम्नलिखित उदाहरण का उपयोग करें:
-
-```yml
-version: '3'
-
-services:
-  velschat:
-    image: velschat:latest
-    ports:
-      - "5000:5000"
-      - "6000:6000"
-    volumes:
-      - /home/user/chatbot:/app/chatbot
-      - /home/user/models:/app/models
-    environment:
-      - VELS_CHAT_MODEL=gem</p>
-        <a class="btn btn-primary" href="docker-compose-generator.html">ओपन जनरेटर →</a>
+        <div class="tool-callout-title">🐳 VelsTech Docker Compose Generator try करें</div>
+        <p>Copy-paste ready docker-compose.yml पाएँ – image, ports, volumes, env vars और restart policy सेकंडों में।</p>
+        <a class="btn btn-primary" href="docker-compose-generator.html">Open generator →</a>
       </div>
     </div>
 
     <div class="article-nav">
-      <a href="networking.html">← Back to Networking</a>
-      <a href="index.html">Home</a>
+      <a href="networking.html">← नेटवर्किंग पर वापस जाएँ</a>
+      <a href="index.html">गृह</a>
     </div>
   </main>
 

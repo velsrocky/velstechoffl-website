@@ -4,27 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="अमडी रेडॉन (आरडीएनए 2) जीपीयू के साथ यूबंटू पर पाइथन के लिए टॉर्च को स्थापित करने के लिए चरण-दर-चरण निर्देश – वेंवी सेटअप, pip install, और जीपीयू सत्यापन।
-
-पहला चरण: वेंवी सेटअप
-
-1. Ubuntu पर टर्मिनल खोलें और निम्नलिखित कमांड चलाएं: 
-   `python3 –m venv torch-venv`
-
-2. वेंवी को सक्रिय करें: 
-   `source torch-venv/bin/activate`
-
-3. वेंवी को अपडेट करें: 
-   `pip install --upgrade pip`
-
-पहला चरण: पाइप इंस्टॉल
-
-1. टॉर्च और ROCm के लिए आवश्यक पैकेजें इंस्टॉल करें: 
-   `pip install torch torchvision torchaudio torch-rocm`
-
-2. ROCm के लिए आवश्यक पैकेजें इंस्ट" /> />
-  <title>रायडियन जीपीयू पर ROCm के साथ पायटॉर्च की स्थापना | वेल्सटेक | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
+  <meta name="description" content="Ubuntu पर AMD Radeon (RDNA2) GPUs के लिए ROCm के साथ PyTorch install करने की step-by-step गाइड – venv setup, pip install और GPU verification।" />
+  <title>Radeon GPUs पर ROCm के साथ PyTorch install करना | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/install-pytorch-rocm-ubuntu.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/install-pytorch-rocm-ubuntu.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
@@ -32,13 +14,13 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/install-pytorch-rocm-ubuntu.html#article",
-  "headline": "Installing PyTorch with ROCm on Radeon GPUs",
-  "description": "Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs – venv setup, pip install, and GPU verification.",
-  "url": "https://velstech.net/install-pytorch-rocm-ubuntu.html",
+  "@id": "https://velstech.net/install-pytorch-rocm-ubuntu.hi.html#article",
+  "headline": "Radeon GPUs पर ROCm के साथ PyTorch install करना",
+  "description": "Ubuntu पर AMD Radeon (RDNA2) GPUs के लिए ROCm के साथ PyTorch install करने की step-by-step गाइड – venv setup, pip install और GPU verification।",
+  "url": "https://velstech.net/install-pytorch-rocm-ubuntu.hi.html",
   "datePublished": "2026-08-25T00:00:00Z",
   "dateModified": "2026-08-25T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/install-pytorch-rocm-ubuntu.png",
   "author": {
     "@type": "Person",
@@ -54,20 +36,20 @@
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/install-pytorch-rocm-ubuntu.html"
+  "mainEntityOfPage": "https://velstech.net/install-pytorch-rocm-ubuntu.hi.html"
 }
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/install-pytorch-rocm-ubuntu.html" />
-  <meta property="og:title" content="Installing PyTorch with ROCm on Radeon GPUs | VelsTech" />
-  <meta property="og:description" content="Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs – venv setup, pip install, and GPU verification." />
+  <meta property="og:url" content="https://velstech.net/install-pytorch-rocm-ubuntu.hi.html" />
+  <meta property="og:title" content="Radeon GPUs पर ROCm के साथ PyTorch install करना | VelsTech" />
+  <meta property="og:description" content="Ubuntu पर AMD Radeon (RDNA2) GPUs के लिए ROCm के साथ PyTorch install करने की step-by-step गाइड – venv setup, pip install और GPU verification।" />
   <meta property="og:image" content="https://velstech.net/og/install-pytorch-rocm-ubuntu.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Installing PyTorch with ROCm on Radeon GPUs | VelsTech" />
-  <meta name="twitter:description" content="Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs – venv setup, pip install, and GPU verification." />
+  <meta name="twitter:title" content="Radeon GPUs पर ROCm के साथ PyTorch install करना | VelsTech" />
+  <meta name="twitter:description" content="Ubuntu पर AMD Radeon (RDNA2) GPUs के लिए ROCm के साथ PyTorch install करने की step-by-step गाइड – venv setup, pip install और GPU verification।" />
   <meta name="twitter:image" content="https://velstech.net/og/install-pytorch-rocm-ubuntu.png" />
   <link rel="icon" href="favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -78,71 +60,59 @@
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="tutorials.html">Tutorials</a> / This article</p>
-    <h1 class="title">Installing PyTorch with ROCm on Radeon GPUs</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="tutorials.html">ट्यूटोरियल</a> / यह लेख</p>
+    <h1 class="title">Radeon GPUs पर ROCm के साथ PyTorch install करना</h1>
     <div class="meta">
       <span class="tag">PyTorch</span>
       <span class="tag">ROCm</span>
       <span class="tag">Radeon</span>
       <span>Aug 25, 2026</span>
-      <span>· 5 min read</span>
+      <span>· 5 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>पायटॉर्च गहरे शिक्षण के लिए सबसे ज्यादा इस्तेमाल किया जाने वाला फ्रेमवर्क है, और AMD हार्डवेयर पर यह<strong>आरओसीएम (Rocm)</strong>ROCm को स्थापित करने के बाद, Radeon GPU पर PyTorch को काम करना बहुत आसान है।<code>pip install</code>दूर हो जाए।</p>
+      <p>
+        PyTorch deep learning के लिए go-to framework है, और AMD hardware पर यह <strong>ROCm</strong> के ज़रिए चलता है। एक बार ROCm install हो जाए, तो Radeon GPU पर PyTorch चलाना सिर्फ <code>pip install</code> की बात है।
+      </p>
 
-      <p>मैंने इसे एक  –  विशिष्ट सिस्टम पर परीक्षण किया<strong>रेडिओन एक्स ६८००एम</strong>(gfx1031, RDNA2) के साथ ROCm
-        7.14 पर Ubuntu 26.04 – नीचे दिए गए निश्चित आदेश ही काम करते हैं। यही प्रक्रिया RDNA2/RDNA3 कार्डों के लिए भी लागू होती है; बस install आदेश में gfx टार्गेट को बदलें।</p>
+      <p>
+        मैंने इसे <strong>Radeon RX 6800M</strong> (gfx1031, RDNA2) पर ROCm 7.14 के साथ Ubuntu 26.04 पर test किया है – नीचे दिए गए exact commands वही हैं जो काम किए। यही flow दूसरे RDNA2/RDNA3 cards पर भी लागू होता है; बस install command में gfx target बदल दें।
+      </p>
 
-      <h2>पूर्वापेक्षाएं
-
-- हिंदी में चैटबॉट डेवलपमेंट की जानकारी होना
-- प्रोग्रामिंग भाषा जैसे कि पायथन, जावा, सी++ में कुछ अनुभव होना
-- गणितीय और सांख्यिकीय अवधारणाओं का ज्ञान होना
-- कंप्यूटर विज्ञान और मशीन लर्निंग के क्षेत्र में रुचि होना
-- एक सॉफ्टवेयर डेवलपमेंट टूलचैट जैसे कि VelsChat का उपयोग करने की जानकारी होनी</h2>
+      <h2>Prerequisites</h2>
       <ul>
         <li>
-          <strong>ROCm का स्थापना और सत्यापित किया गया है</strong>– अगर आप अभी तक नहीं किया है तो हमारी<a href="install-rocm-ubuntu.html">रोकम को यूनिटी पर रेडियॉन जीपीयू के लिए स्थापित करना 
-
-पहले, अपने सिस्टम को अद्यतन करें और आवश्यक पैकेजों को डाउनलोड करें:
-
-sudo apt update
-sudo apt install –y build-essential libnuma-dev libpciaccess-dev libdrm-dev libgbm-dev libegl1-mesa-dev libgles2-mesa-dev libwayland-dev libwayland-egl1-mesa-dev
-
-अब, ROCm को डाउनलोड और इंस्टॉल करें:
-
-wget https://api.github.com/repos/RadeonOpenCompute/ROCm/releases/latest –q –O – | grep 'browser_download_url' | cut –d '"' –f 4 | wget –O – –no-check-certificate
-tar –xvf rocm_*.tar.gz
-cd rocm_*
-sudo ./amdgpu-install –latest –no-dkms
-
-स्थापना प्रक्रिया के बाद, अपने सिस्टम को रीस्टार्ट करें:
-
-sudo reboot
-
-अब, अपने सिस्टम में लॉग इन करें</a>पहले मार्गदर्शन करें, और फिर पुष्टि करें<code>rocminfo</code>अपना जीपीयू दिखाएँ।</li>
-        <li>पाइथन<strong>3.11, 3.12, 3.13, ya 3.14</strong>स्थापित किया गया।</li>
-        <li>आपके जीपीयू<code>gfx</code>architecture (e.g. gfx1031 RX 6800M के लिए)</li>
+          <strong>ROCm installed और verified</strong> – अगर आपने अभी तक नहीं किया है, तो पहले हमारे <a href="install-rocm-ubuntu.html">Installing ROCm on Ubuntu for Radeon GPUs</a> guide को follow करें, और confirm करें कि <code>rocminfo</code> आपका GPU दिखा रहा है।
+        </li>
+        <li>Python <strong>3.11, 3.12, 3.13 या 3.14</strong> installed।</li>
+        <li>आपके GPU का <code>gfx</code> architecture (जैसे RX 6800M के लिए gfx1031)।</li>
       </ul>
 
-      <h2>पहला कदम – वर्चुअल एंट्रोप्रिनेमेंट बनाएँ</h2>
-      <p>पायथन के लिए एक नया वर्चुअल वातावरण बनाएं ताकि यह कभी भी सिस्टम पैकेज या अन्य पायथन परियोजनाओं से टकराए।</p>
+      <h2>Step 1 – virtual environment बनाएँ</h2>
+      <p>
+        हमेशा PyTorch को fresh virtual environment में install करें ताकि यह कभी system packages या दूसरे Python projects से conflict न करे:
+      </p>
 
       <pre>python3.12 -m venv .venv</pre>
 
-      <p>प्रयोग के लिए जिस पायथन संस्करण का उपयोग किया जा रहा है वह मेरे पास उपलब्ध है।<code>python3.11</code>,
-        <code>python3.13</code>या<code>python3.14</code>कार्य का पूरा होने पर एक फोल्डर<code>.venv</code>वर्तमान में मेरे निर्देशिका में।</p>
+      <p>
+        आपके पास जो भी Python version हो उसका इस्तेमाल करें – <code>python3.11</code>, <code>python3.13</code> या <code>python3.14</code> सभी काम करते हैं। यह आपकी current directory में <code>.venv</code> नाम का folder बनाता है।
+      </p>
 
-      <h2>दूसरा चरण – पर्यावरण को सक्रिय करें</h2>
-      <p>एक्टिवेट करें<code>python</code>aur<code>pip</code>वेंव की ओर इशारा करें:</p>
+      <h2>Step 2 – environment को activate करें</h2>
+      <p>
+        इसे activate करें ताकि <code>python</code> और <code>pip</code> venv की ओर point करें:
+      </p>
 
       <pre>source .venv/bin/activate</pre>
 
-      <p>प्रोम्प्ट को दिखने पर ही यह काम करेगा<code>(.venv)</code>शुरुआत में</p>
+      <p>
+        आपको पता चलेगा कि यह काम कर गया जब prompt की शुरुआत में <code>(.venv)</code> दिखे।
+      </p>
 
-      <h2>कदम 3 – PyTorch को ROCm साथ स्थापित करें</h2>
-      <p>अमडी के व्हील रिपॉजिटरी से ROCm सक्षम PyTorch, torchvision, और torchaudio को स्थापित करें। अपने GPU का उपयोग करें।<code>device-gfx</code>राज्य – आरएक्स ६८००एम के लिए<code>device-gfx1031</code>:
+      <h2>Step 3 – ROCm support के साथ PyTorch install करें</h2>
+      <p>
+        AMD के wheel repository से ROCm-enabled PyTorch, torchvision और torchaudio install करें। अपने GPU का <code>device-gfx</code> target इस्तेमाल करें – RX 6800M के लिए वह <code>device-gfx1031</code> है:
       </p>
 
       <pre>python -m pip install --index-url https://repo.amd.com/rocm/whl-multi-arch/ \
@@ -150,71 +120,64 @@ sudo reboot
     "torchvision[device-gfx1031]==0.27.0+rocm7.14.0" \
     "torchaudio==2.11.0+rocm7.14.0"</pre>
 
-      <p>Kuchh notes:</p>
+      <p>
+        कुछ notes:
+      </p>
       <ul>
-        <li>Kya<code>[device-gfx1031]</code>ज्यादातर विशेषताएँ ROCm लाइब्रेरी को आपके विशिष्ट GPU आर्किटेक्चर के लिए अनुकूलित करती हैं –<strong>मैं एक पेशेवर हिंदी अनुवादक हूँ। मैं अंग्रेजी से हिंदी में अनुवाद करता हूँ। मैं तकनीकी शब्दों को अंग्रेजी में छोड़ देता हूँ: GPU, CPU, VRAM, RAM, LLM, GGUF, Q4, Q5, Q8, KV कैश, RAG, MoE, ROCm, Vulkan, CUDA, NPU, एसएसडी, एचडीडी, डीएनएस, एपीआई, ओल्लामा, लमा, लमा.cpp, टोकनाइज़र, टोकन, एम्बेडिंग, इन्फरेंस, क्वांटाइजेशन, मॉडल, डेटासेट, प्रम्प्ट। मैं ब्रांड नामों को छोड़ देता हूँ: वेल्सटेक, वेल्सचैट, चैटजीपीटी, क्लाउड, जेमिनी, क्वीन, अलीबाबा, नेवीडिया, एएमडी, इंटेल, एप</strong>.
+        <li>
+          <code>[device-gfx1031]</code> extra आपके exact GPU architecture के लिए tuned ROCm libraries ले आता है – इसे <strong>skip न करें</strong>।
         </li>
-        <li>अन्य कार्डों के लिए, लक्ष्य को बदलें: gfx1030 (RX 6800/6700 XT), gfx1100 (RX 7900 XTX), और इसी तरह<code>[device-all]</code>यदि आप सभी वास्तुकलाओं का समर्थन करना चाहते हैं एक ही बार में (बड़ा डाउनलोड)।</li>
-        <li>Kya<code>+rocm7.14.0</code>प्रकरण टैग को आपके इंस्टॉल किए गए ROCm संस्करण के साथ संगत होना चाहिए।</li>
+        <li>
+          दूसरे cards के लिए, target बदल दें: gfx1030 (RX 6800/6700 XT), gfx1100 (RX 7900 XTX), वगैरह। या अगर आप एक साथ हर architecture का support चाहते हैं तो <code>[device-all]</code> इस्तेमाल करें (बड़ा download)।
+        </li>
+        <li>
+          <code>+rocm7.14.0</code> वाला version tag आपके installed ROCm release से match होना चाहिए।
+        </li>
       </ul>
 
-      <blockquote>वेंव को सक्रिय रखें और यह सुनिश्चित करें कि आप आवश्यक प्राधिकरण पास कर रहे हैं जब pip को निर्भरता को हल करने के लिए समस्या हो।<code>--index-url https://repo.amd.com/rocm/whl-multi-arch/</code>उस रिपॉजिटरी में AMD ROCm के बिल्ड्स को प्रकाशित करता है।</blockquote>
+      <blockquote>
+        अगर pip dependencies resolve करने में शिकायत करे, तो सुनिश्चित करें कि venv active है और आप <code>--index-url https://repo.amd.com/rocm/whl-multi-arch/</code> pass कर रहे हैं – वही repository है जहाँ AMD ROCm builds publish करता है।
+      </blockquote>
 
-      <h2>चरण 4 – GPU की जांच करें</h2>
-      <p>अमडी जीपीयू की पुष्टि करने के लिए इस एकल लाइनर को चलाएं: 
-
-```python
-import torch
-print(torch.cuda.is_available())
-```
-
-या
-
-अमडी जीपीयू की पुष्टि करने के लिए इस एकल लाइनर को चलाएं: 
-
-```python
-import torch
-print(torch.cuda.get_device_name(0))
-```</p>
+      <h2>Step 4 – verify करें कि GPU detect हो रहा है</h2>
+      <p>
+        यह one-liner चलाकर confirm करें कि PyTorch आपका AMD GPU देख रहा है:
+      </p>
 
       <pre>python -c "import torch; print(torch.cuda.is_available())"</pre>
 
-      <p>प्रिंट करता है<code>True</code>यदि PyTorch और ROCm सही ढंग से स्थापित हैं और आपका AMD GPU पहचाना जाता है (हाँ, यह सच है)<code>cuda</code>API – पाइथोन के – PyTorch में ROCm के लिए वही इंटरफेस रखा जाता है ताकि कोड पोर्टेबल हो।</p>
+      <p>
+        अगर PyTorch और ROCm सही install हैं और आपका AMD GPU detect हो रहा है तो यह <code>True</code> print करता है। (हाँ, API में <code>cuda</code> ही है – PyTorch ROCm के लिए भी वही interface रखता है ताकि code portable रहे।)
+      </p>
 
-      <p>आपको डिवाइस का नाम आगे जाँच करना चाहिए।</p>
+      <p>
+        आप आगे device का नाम भी check कर सकते हैं:
+      </p>
 
       <pre>python -c "import torch; print(torch.cuda.get_device_name(0))"</pre>
 
-      <p>RX 6800M पर यह कुछ इस तरह का रिपोर्ट करता है –<code>AMD Radeon RX 6800M</code>.
+      <p>
+        RX 6800M पर यह कुछ ऐसा report करता है <code>AMD Radeon RX 6800M</code>।
       </p>
 
-      <h2>अगला क्या है?</h2>
-      <p>पायथन के साथ ROCm पर चलने पर आप: 
-
-- पायथन के साथ विभिन्न प्रकार के कार्यों को प्रदर्शित कर सकते हैं
-- पायथन के साथ विभिन्न प्रकार के GPU-आधारित कार्यों को प्रदर्शित कर सकते हैं
-- पायथन के साथ विभिन्न प्रकार के कंप्यूटर विज़ुअलाइज़ेशन कार्यों को प्रदर्शित कर सकते हैं
-- पायथन के साथ विभिन्न प्रकार के मशीन लर्निंग कार्यों को प्रदर्शित कर सकते हैं</p>
+      <h2>आगे क्या?</h2>
+      <p>
+        ROCm पर PyTorch चलने के साथ आप कर सकते हैं:
+      </p>
       <ul>
-        <li>गणना के लिए पूर्ण GPU गति प्रदान करने के लिए मॉडल को प्रशिक्षित करें और निर्णय लेने के लिए इन्फरेंस करें</li>
-        <li>लोकल पर LLMs चलाएं – हगिंग फेस ट्रांसफॉर्मर्स, टेक्स्ट जनरेशन वेबयूआई, और समान उपकरण बॉक्स आउट ऑफ द बॉक्स काम करते हैं</li>
-        <li>टॉर्चविजन का उपयोग करके चित्र मॉडल और टॉर्चऑडियो का उपयोग करके ऑडियो पाइपलाइनें</li>
+        <li>पूरे GPU acceleration के साथ models train करना और inference चलाना</li>
+        <li>LLMs को locally चलाना – Hugging Face Transformers, text-generation-webui और ऐसे ही tools out of the box काम करते हैं</li>
+        <li>image models के लिए torchvision और audio pipelines के लिए torchaudio इस्तेमाल करना</li>
       </ul>
 
-      <p>अगर आपको और जानकारी की आवश्यकता है तो आधिकारिक गाइड में अधिक विवरण है।<a href="https://rocm.docs.amd.com/projects/ai-ecosystem/en/latest/frameworks/pytorch/install.html" target="_blank" rel="noopener">अमडी आरओसीएम – एआई इकोसिस्टम दस्तावेज़ में पायथन लोड करें:
-
-पायथन 3.7 या उच्चतर का उपयोग करें। 
-सुनिश्चित करें कि आपके पास AMD ROCm सॉफ्टवेयर स्थापित है, जिसमें AMD GPU ड्राइवर भी शामिल है। 
-AMD ROCm सॉफ्टवेयर डाउनलोड करें और इसे स्थापित करें। 
-AMD ROCm सॉफ्टवेयर स्थापित करने के बाद, आपको AMD GPU ड्राइवर को भी स्थापित करना होगा। 
-AMD GPU ड्राइवर डाउनलोड करें और इसे स्थापित करें। 
-AMD GPU ड्राइवर स्थापित करने के बाद, आपको ROCm-clang और ROCm-cmake को स्थापित करना होगा। 
-ROCm-clang और ROCm-cmake स्थापित करने के लिए निम्नलिखित कमांड का उपयोग करें</a>.
+      <p>
+        ज़्यादा detail चाहिए तो official guide देखें:
+        <a href="https://rocm.docs.amd.com/projects/ai-ecosystem/en/latest/frameworks/pytorch/install.html" target="_blank" rel="noopener">Install PyTorch for ROCm – AMD AI ecosystem docs</a>।
       </p>
     </div>
 
     <div class="article-nav">
-      <a href="tutorials.html">← Back to Tutorials</a>
+      <a href="tutorials.html">← ट्यूटोरियल पर वापस जाएँ</a>
       <a href="install-rocm-ubuntu.html">Previous: Install ROCm</a>
     </div>
   </main>

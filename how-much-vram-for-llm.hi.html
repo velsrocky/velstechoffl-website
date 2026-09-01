@@ -4,20 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="7B, 14B, aur 32B LLMs ke liye VRAM ki aavashyakta kya hai?
-
-LLMs ke liye VRAM ki aavashyakta model ki gyaat, weights, quantization, KV cache, aur context length par nirbhar karti hai.
-
-7B LLM ke liye, VRAM ki aavashyakta lagbhag 8 GB hai, jabki 14B LLM ke liye lagbhag 16 GB aur 32B LLM ke liye lagbhag 32 GB VRAM ki aavashyakta hoti hai.
-
-VRAM ki aavashyakta ke liye ek taulaniya yeh hai:
-
-| LLM Gyaat | Weights | Quantization | KV Cache | Context Length | VRAM Aavashyakta |
-| --- | --- | --- | --- | --- | --- |
-| 7B | 1.5 GB | 2.5 GB | 1.5 GB | 256 MB | 8 GB |
-| 14B | 3 GB | 5 GB | 3 GB | 512 MB | 16 GB |" /> />
-  <title>7 बिलियन, 14 बिलियन और 32 बिलियन मॉडलों के लिए आवश्यक VRAM की मात्रा क्या है? | वेल्स टेक | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/how-much-vram-for-llm.html" />
+  <meta name="description" content="7B, 14B और 32B LLMs के लिए वास्तव में कितनी VRAM चाहिए? weights, quantization, KV cache और context length – quick-reference table के साथ।" />
+  <title>7B, 14B और 32B models के लिए कितनी VRAM चाहिए? | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/how-much-vram-for-llm.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/how-much-vram-for-llm.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/how-much-vram-for-llm.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/how-much-vram-for-llm.html" />
@@ -25,13 +14,13 @@ VRAM ki aavashyakta ke liye ek taulaniya yeh hai:
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/how-much-vram-for-llm.html#article",
-  "headline": "How much VRAM do you need for 7B, 14B, and 32B models?",
-  "description": "VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table.",
-  "url": "https://velstech.net/how-much-vram-for-llm.html",
+  "@id": "https://velstech.net/how-much-vram-for-llm.hi.html#article",
+  "headline": "7B, 14B और 32B models के लिए कितनी VRAM चाहिए?",
+  "description": "7B, 14B और 32B LLMs के लिए वास्तव में कितनी VRAM चाहिए? weights, quantization, KV cache और context length – quick-reference table के साथ।",
+  "url": "https://velstech.net/how-much-vram-for-llm.hi.html",
   "datePublished": "2026-08-27T00:00:00Z",
   "dateModified": "2026-08-27T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/how-much-vram-for-llm.png",
   "author": {
     "@type": "Person",
@@ -47,29 +36,29 @@ VRAM ki aavashyakta ke liye ek taulaniya yeh hai:
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/how-much-vram-for-llm.html"
+  "mainEntityOfPage": "https://velstech.net/how-much-vram-for-llm.hi.html"
 }
   </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://velstech.net/how-much-vram-for-llm.html#faq",
+  "@id": "https://velstech.net/how-much-vram-for-llm.hi.html#faq",
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What does quantization mean for VRAM?",
+      "name": "VRAM के लिए quantization का क्या मतलब है?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Quantization lowers the precision of the model's weights (e.g. from 16-bit to 4-bit), which shrinks the memory footprint. A 7B model at 4-bit takes roughly half the VRAM it does at 16-bit."
+        "text": "Quantization model के weights की precision को कम करती है (जैसे 16-bit से 4-bit), जिससे memory footprint छोटा हो जाता है। 4-bit पर 7B model लगभग आधी VRAM लेता है जितनी 16-bit पर।"
       }
     },
     {
       "@type": "Question",
-      "name": "Does a longer context window need more VRAM?",
+      "name": "क्या लंबे context window के लिए ज़्यादा VRAM चाहिए?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. The KV cache grows with context length, so a 32K context can add several GB of VRAM on top of the weights. Use a tool like the LLM VRAM calculator to check your exact setup."
+        "text": "हाँ। KV cache context length के साथ बढ़ता है, इसलिए 32K context weights के ऊपर कई GB VRAM जोड़ सकता है। अपने exact setup को check करने के लिए LLM VRAM calculator जैसे tool का इस्तेमाल करें।"
       }
     }
   ]
@@ -77,118 +66,119 @@ VRAM ki aavashyakta ke liye ek taulaniya yeh hai:
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/how-much-vram-for-llm.html" />
-  <meta property="og:title" content="How much VRAM do you need for 7B, 14B, and 32B models? | VelsTech" />
-  <meta property="og:description" content="VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table." />
+  <meta property="og:url" content="https://velstech.net/how-much-vram-for-llm.hi.html" />
+  <meta property="og:title" content="7B, 14B और 32B models के लिए कितनी VRAM चाहिए? | VelsTech" />
+  <meta property="og:description" content="7B, 14B और 32B LLMs के लिए वास्तव में कितनी VRAM चाहिए? weights, quantization, KV cache और context length – quick-reference table के साथ।" />
   <meta property="og:image" content="https://velstech.net/og/how-much-vram-for-llm.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="How much VRAM do you need for 7B, 14B, and 32B models? | VelsTech" />
-  <meta name="twitter:description" content="VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table." />
+  <meta name="twitter:title" content="7B, 14B और 32B models के लिए कितनी VRAM चाहिए? | VelsTech" />
+  <meta name="twitter:description" content="7B, 14B और 32B LLMs के लिए वास्तव में कितनी VRAM चाहिए? weights, quantization, KV cache और context length – quick-reference table के साथ।" />
   <meta name="twitter:image" content="https://velstech.net/og/how-much-vram-for-llm.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI &amp; ML</a> / This article</p>
-    <h1 class="title">How much VRAM do you need for 7B, 14B, and 32B models?</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="ai.html">AI &amp; ML</a> / यह लेख</p>
+    <h1 class="title">7B, 14B और 32B models के लिए कितनी VRAM चाहिए?</h1>
     <div class="meta">
       <span class="tag">VRAM</span>
       <span class="tag">LLM</span>
       <span class="tag">GPU</span>
       <span class="tag">Quantization</span>
       <span>Aug 27, 2026</span>
-      <span>· 7 min read</span>
+      <span>· 7 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>लोकल AI में सबसे आम प्रश्न यह है – "मेरा GPU इस मॉडल को चला सकता है कि नहीं?" इसका उत्तर एक संख्या पर निर्भर करता है।<strong>VRAM</strong>अर्थात, यह लगभग तीस सेकंड – और लोकप्रिय मॉडल आकारों के लिए एक चीट शीट बनाने के लिए कैसे अनुमान लगाएं।</p>
+      <p>
+        local AI में सबसे आम सवाल है "क्या मेरा GPU यह model चला सकता है?" जवाब एक number पर आता है: <strong>VRAM</strong>। यहाँ बताया गया है कि आप खुद लगभग तीस सेकंड में इसका अंदाज़ा कैसे लगाएँ – और popular model sizes के लिए एक cheat sheet।
+      </p>
 
       <div class="tool-callout">
-        <div class="tool-callout-title">कैलकुलेटर का उपयोग करें – गणित को छोड़ें</div>
-        <p>मॉडल, क्वांटाइजेशन, और कॉन्टेक्स्ट चुनें जिससे आप अपने जीपीयू के लिए एक सटीक वीआरएएम अनुमान प्राप्त कर सकें और फिट चेक कर सकें।</p>
-        <a class="btn btn-primary" href="llm-vram-calculator.html">वीआरएएम कैलकुलेटर खोलें</a>
+        <div class="tool-callout-title">🔧 गणित छोड़ें – calculator इस्तेमाल करें</div>
+        <p>अपना model, quantization और context चुनें और अपने GPU के लिए exact VRAM estimate के साथ fit check पाएँ।</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">Open the LLM VRAM Calculator →</a>
       </div>
 
-      <h2>Teejha jawab</h2>
-      <p>वजनों के लिए मॉडल के लिए आवश्यक वीआरएएम के साथ-साथ 8K कॉन्टेक्स्ट के लिए KV कैश + ओवरहेड के लिए लगभग 1–3 जीबी आवश्यक है</p>
+      <h2>Quick answer</h2>
+      <p>model के लिए ज़रूरी VRAM (weights), साथ में 8K context पर KV cache + overhead के लिए ~1–3 GB:</p>
       <pre>Model size   Q4_K_M        Q8_0          FP16
 ──────────────────────────────────────────────
 7–8B         ~4–5 GB      ~8–9 GB      ~15–16 GB
 13–14B       ~9–10 GB     ~16–17 GB    ~30 GB
 27–32B       ~18–21 GB    ~32–35 GB    ~60+ GB
 70B          ~40–45 GB    ~75 GB       cloud only</pre>
-      <p>GPU – सीपीयू: एक 
+      <p>
+        इसे GPUs में बदलें: <strong>8 GB</strong> कार्ड 7B Q4 चलाता है। <strong>16 GB</strong> कार्ड sweet spot है – 14B Q4 पूरी तरह, 32B हल्के offload के साथ। <strong>24 GB</strong> कार्ड 32B Q4 पूरी तरह चलाता है। इसीलिए "16 GB" हमारे <a href="best-gpu-for-local-llm.html">best GPU for local LLMs</a> picks में बार-बार आता है।
+      </p>
 
-कंप्यूटर की गति को बढ़ाने के लिए कई GPU का उपयोग किया जाता है।<strong>आठ जीबी</strong>कार्ड 7 अरब Q4 में चल रहा है।<strong>16 जीबी</strong>कार्ड में स्वीट स्पॉट – 14B Q4 पूरी तरह से, 32B लाइट ऑफलोड के साथ।<strong>24 जीबी</strong>कार्ड 32B Q4 पूरी तरह से काम करता है। इसलिए "16 जीबी" हमारे<a href="best-gpu-for-local-llm.html">लोकल एलएलएम के लिए सबसे अच्छा जीपीयू। 
-
-नवीं जनरेशन के NVIDIA GeForce और AMD Radeon RX जीपीयू अच्छी प्रदर्शन के साथ आते हैं। NVIDIA GeForce RTX 4090 और AMD Radeon RX 7900 XTX जैसे उच्च-गुणवत्ता वाले जीपीयू विकल्प भी उपलब्ध हैं। इन जीपीयू को अपने कंप्यूटर में इंस्टॉल करने से आपके एलएलएम की प्रदर्शन में सुधार होगा।</a>चुनाव</p>
-
-      <h2>VRAM – VRAM की खपत के मुख्य कारण हैं:
-
-1. ग्राफिक्स कार्ड की सेटिंग्स: ग्राफिक्स कार्ड की सेटिंग्स जैसे कि रिज़ॉल्यूशन, फ्रेम रेट, एंटी-एलियिंग, आदि VRAM की खपत को प्रभावित करते हैं।
-2. गेम्स और ग्राफिक्स के सॉफ्टवेयर: गेम्स और ग्राफिक्स के सॉफ्टवेयर जैसे कि ग्राफिक्स एडिटर्स, 3D मॉडलिंग सॉफ्टवेयर, आदि VRAM की खपत को बढ़ाते हैं।
-3. मल्टीमीडिया ऐप्स: मल्टीमीडिया ऐप्स जैसे कि वीडियो प्लेयर, ऑडियो प्लेयर, आदि VRAM की खपत को बढ़ाते हैं।
-4. पृष्ठभूमि ऐप्स: पृष्ठ</h2>
-      <p>तीन चीजें और आपको उन्हें जोड़ना होगा</p>
+      <h2>VRAM असल में क्या खाता है</h2>
+      <p>तीन चीज़ें, और आपको सभी को जोड़ना होगा:</p>
       <ol>
-        <li><strong>मॉडल वज़न</strong>– बड़ा एक. लगभग<code>parameters × bytes per weight</code>Q4_K_M में लगभग 0.6 बाइट्स/वज़न हैं; Q8_0 में लगभग 1.06; एफपी16 में बिल्कुल 2 हैं।</li>
-        <li><strong>KV (Key–Value) कैश</strong>– बढ़ता है कॉन्टेक्स्ट लेंथ और बैच साइज के साथ। छोटा 8K में, महत्वपूर्ण 128K में। 7B के लिए यह ~0.5 GB 8K में और ~3–4 GB 64K से अधिक में है।</li>
-        <li><strong>भार</strong>– CUDA कॉन्टेक्स्ट, इंजन बफर्स, टोकनाइज़र: आमतौर पर ~0.5–1.5 GB ऊपर।</li>
+        <li><strong>Model weights</strong> – सबसे बड़ा हिस्सा। लगभग <code>parameters × bytes per weight</code>। Q4_K_M पर यह ~0.6 bytes/weight है; Q8_0 पर ~1.06; FP16 पर बिल्कुल 2।</li>
+        <li><strong>KV cache</strong> – context length और batch size के साथ बढ़ता है। 8K पर छोटा, 128K पर बड़ा। 7B के लिए यह 8K पर ~0.5 GB और 64K+ पर ~3–4 GB है।</li>
+        <li><strong>Overhead</strong> – CUDA context, engine buffers, tokenizer: आमतौर पर ऊपर से ~0.5–1.5 GB।</li>
       </ol>
-      <p>Q4_K_M में 7B का मॉडल 8K कॉन्टेक्स्ट के साथ लगभग 4.5 GB वजन + 0.5 GB KV + ~0.5 GB ओवरहेड के साथ होगा।<strong>5.5 जीबी</strong>– 8 जीबी कार्ड पर आरामदायक, 6 जीबी कार्ड पर सीमित।</p>
+      <p>
+        तो 8K context के साथ Q4_K_M पर 7B ≈ 4.5 GB weights + 0.5 GB KV + ~0.5 GB overhead ≈ <strong>5.5 GB</strong>। 8 GB कार्ड पर आरामदायक, 6 GB वाले पर tight।
+      </p>
 
-      <h2>7B मॉडल: प्रवेश स्तर</h2>
+      <h2>7B models: entry level</h2>
       <ul>
-        <li><strong>Q4_K_M (~4.5 GB)</strong>– 8 जीबी जीपीयू (RTX 4060, RX 7600) पर चलता है जिसमें संदर्भ के लिए जगह है।</li>
-        <li><strong>Q8_0 (~8 जीबी)</strong>– 8 GB कार्ड सही सीमा पर है; 12 GB सुविधाजनक है।</li>
-        <li><strong>फ्लोटिंग पॉइंट 16 (~ 16 जीबी)</strong>आपको 16 जीबी कार्ड की आवश्यकता है; उस समय आमतौर पर आप 14B Q4 को चलाना पसंद करते हैं।</li>
+        <li><strong>Q4_K_M (~4.5 GB)</strong> – context के लिए जगह के साथ 8 GB GPU (RTX 4060, RX 7600) पर चलता है।</li>
+        <li><strong>Q8_0 (~8 GB)</strong> – 8 GB कार्ड बिल्कुल edge पर है; 12 GB आरामदायक है।</li>
+        <li><strong>FP16 (~16 GB)</strong> – 16 GB कार्ड चाहिए; उस point पर आप आमतौर पर 14B Q4 चलाना पसंद करेंगे।</li>
       </ul>
 
-      <h2>13–14 बिलियन पैरामीटर्स वाले मॉडल्स: वास्तविक दुनिया में उपयुक्त संतुलन</h2>
+      <h2>13–14B models: practical sweet spot</h2>
       <ul>
-        <li><strong>Q4_K_M (~9–10 जीबी)</strong>– 12 GB में चलाता है; 16 GB (RTX 4060 Ti 16 GB, RX 7600 XT) में लंबे संदर्भ के साथ चलाता है।</li>
-        <li><strong>Q8–0 (~16 GB)</strong>– 16 GB वाला कार्ड इसे छोटे कॉन्टेक्स्ट में चलाता है; 24 GB आरामदायक है।</li>
-        <li><strong>FP16 (~३० जीबी)</strong>– 24 जीबी कार्ड की आवश्यकता है जिसमें ऑफलोड, या क्लाउड हो।</li>
+        <li><strong>Q4_K_M (~9–10 GB)</strong> – 12 GB चलाता है; 16 GB (RTX 4060 Ti 16 GB, RX 7600 XT) लंबे context के साथ चलाता है।</li>
+        <li><strong>Q8_0 (~16 GB)</strong> – 16 GB कार्ड इसे छोटे context के साथ चलाता है; 24 GB आरामदायक है।</li>
+        <li><strong>FP16 (~30 GB)</strong> – 24 GB कार्ड offload के साथ चाहिए, या cloud।</li>
       </ul>
-      <p>14 अरब Q4 का ~40–50 टोकन प्रति सेकंड है जहां एक लोकल मॉडल एक डेमो की तरह महसूस करना बंद कर देता है और एक उपयोगी सहायक की तरह महसूस करना शुरू कर देता है।</p>
+      <p>
+        14B Q4 ~40–50 tok/s पर वह point है जहाँ local model demo जैसा लगना बंद करके एक useful assistant जैसा लगने लगता है।
+      </p>
 
-      <h2>27–32 अरब पैरामीटर के मॉडल: जहां 24 जीबी अपना मूल्य प्राप्त करता है</h2>
+      <h2>27–32B models: जहाँ 24 GB अपना मूल्य साबित करता है</h2>
       <ul>
-        <li><strong>Q4_K_M (~20 जीबी + KV कैश)</strong>– एक 24 जीबी GPU (RTX 4090, RX 7900 XTX) 32बी Q4 को 8–16K संदर्भ में चलाता है। 32K संदर्भ पर आप सही किनारे पर हैं।</li>
-        <li><strong>Q8 – 0 (लगभग 32 जीबी )</strong>– उपभोक्ता कार्डों से आगे; 32 जीबी कार्ड या क्लाउड की आवश्यकता होती है।</li>
+        <li><strong>Q4_K_M (~20 GB + KV)</strong> – 24 GB GPU (RTX 4090, RX 7900 XTX) 32B Q4 को 8–16K context के साथ चलाता है। 32K context पर आप बिल्कुल edge पर हैं।</li>
+        <li><strong>Q8_0 (~32 GB)</strong> – consumer cards से बाहर; 32 GB कार्ड या cloud चाहिए।</li>
       </ul>
-      <p>एक 16 GB कार्ड 30 बिलियन Q4 को चला सकता है<strong>अंशीय हस्तांतरण</strong>यदि आपके पास 16–32 जीबी सिस्टम रैम है – तो यह काम करता है, लेकिन उत्पादन गिरकर धीमा हो जाता है (आम तौर पर 5–15 टोकन/सेकंड)।</p>
+      <p>
+        16 GB कार्ड 30B Q4 को <strong>partial offload</strong> के साथ चला सकता है अगर आपके पास 16–32 GB system RAM हो – काम करता है, पर generation crawl करने लगता है (अक्सर 5–15 tok/s)।
+      </p>
 
-      <h2>संदर्भ की लंबाई गुप्त मान है</h2>
-      <p>दोहरे संदर्भ के साथ लगभग 3–6 GB तक का KV कैश डबल हो जाता है। 128K संदर्भ के साथ, KV कैश की अकेली कीमत एक पूरा क्वांटाइजेशन टियर के लिए हो सकती है। यदि आप लंबे दस्तावेजों की योजना बना रहे हैं, तो बड़े कार्ड को खरीदें या अपना संदर्भ छोटा करें।</p>
+      <h2>Context length छिपा हुआ variable है</h2>
+      <p>
+        context double करने से KV cache लगभग double हो जाता है। 128K context पर, अकेला KV cache 3–6 GB हो सकता है – यह एक पूरी quantization tier जितनी memory है। अगर आप लंबे documents की योजना बना रहे हैं, तो बड़ा कार्ड लें या context छोटा करें।
+      </p>
 
-      <h2>प्रश्नोत्तर</h2>
-      <h3>मॉडल को कम VRAM के साथ चलाने की कोशिश करना संभव है, लेकिन यह मॉडल के प्रदर्शन और विश्वसनीयता पर प्रभाव डाल सकता है।</h3>
-      <p>विशेषतः कुछ परतों को प्रणाली की RAM में ऑफलोड करने से यह काम करता है, लेकिन हर ऑफलोड हुई परत की गति कम हो जाती है। अधिक RAM मदद करता है; यह VRAM की जगह नहीं लेता।</p>
-      <h3>कंप्यूटर या ग्राफिक्स प्रोसेसर (CPU या GPU) की गति संख्याओं के लिए महत्वपूर्ण नहीं है।</h3>
-      <p>VRAM के बारे में क्षमता ही नहीं है, बल्कि इसके लिए स्पीड भी अलग है जो टोकन/सेकंड के लिए महत्वपूर्ण है।</p>
-      <h3>कम से कम उपयोगी सेटअप क्या है – 
+      <h2>FAQ</h2>
+      <h3>क्या मैं weights से कम VRAM के साथ model चला सकता हूँ?</h3>
+      <p>सिर्फ कुछ layers को system RAM पर offload करके। काम करता है, पर हर offloaded layer generation को धीमा करता है। ज़्यादा RAM मदद करती है; यह VRAM की जगह नहीं लेती।</p>
+      <h3>क्या CPU या GPU speed ऊपर के numbers के लिए मायने रखती है?</h3>
+      <p>fit के लिए नहीं – VRAM capacity की बात है। speed अलग से tokens/sec के लिए मायने रखती है।</p>
+      <h3>Minimum usable setup क्या है?</h3>
+      <p>8 GB VRAM + 16 GB system RAM से आपको decent 7B Q4 local assistant मिल जाता है। वहाँ से, VRAM ही वह upgrade है जो मायने रखता है।</p>
 
-किसी भी कम्प्यूटर सिस्टम में कम से कम निम्नलिखित होने चाहिए: 
-
-CPU, GPU, RAM, और SSD।</h3>
-      <p>आठ जीबी वीआरएएम + सोलर 16 जीबी सिस्टम रैम आपको एक सम्मानजनक 7 बिलियन Q4 स्थानीय सहायक प्राप्त करता है | फिर से, वीआरएएम ही महत्वपूर्ण अपग्रेड है |</p>
-
-      <h2>मुख्य बिंदु</h2>
-      <p>7 GB – 8 GB में परिवर्तित होता है। 16 GB – 14 GB में परिवर्तित होता है। 24 GB – 32 GB में परिवर्तित होता है। लंबे संदर्भ के लिए ~1–3 GB जोड़ें, और VRAM का दावा कभी भी विश्वास नहीं करना चाहिए बिना जानते हैं कि क्वांटाइजेशन क्या है। अपने सटीक मॉडल को निम्नलिखित गणना के साथ जांचें कि पैसे बर्बाद करने से पहले।</p>
+      <h2>Bottom line</h2>
+      <p>
+        8 GB → 7B। 16 GB → 14B। 24 GB → 32B। लंबे context के लिए ~1–3 GB जोड़ें, और quantization जाने बिना कभी VRAM के दावे पर भरोसा न करें। card पर पैसा खर्च करने से पहले अपने exact model को नीचे दिए calculator से check करें।
+      </p>
 
       <div class="tool-callout">
-        <div class="tool-callout-title">मॉडल के लिए सटीक संख्या प्राप्त करें</div>
-        <p>LLM वीआरएएम कैलकुलेटर – वज़न + KV कैश + फिट वेर्डिक्ट। फिर जीपीयू एआई प्रदर्शन कैलकुलेटर की मदद से देखें कि कितनी तेजी से चलेगा।</p>
-        <a class="btn btn-primary" href="llm-vram-calculator.html">कैलकुलेटर खोलें</a>
+        <div class="tool-callout-title">🔧 अपने model के लिए exact number पाएँ</div>
+        <p>LLM VRAM Calculator – weights + KV cache + fit verdict। फिर देखें कि GPU AI Performance Calculator से यह कितना तेज़ चलेगा।</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">Open calculator →</a>
       </div>
     </div>
 
     <div class="article-nav">
-      <a href="ai.html">← Back to AI &amp; ML</a>
+      <a href="ai.html">← AI &amp; ML पर वापस जाएँ</a>
       <a href="best-gpu-for-local-llm.html">Best GPU for local LLMs</a>
     </div>
   </main>

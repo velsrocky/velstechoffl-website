@@ -4,17 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="GGUF – एक फ़ाइल फ़ॉर्मेट जो लोकल पर LLMs को चलाने की संभावना प्रदान करता है। 
-
-GGUF क्या है, क्वांटाइज़ेशन लेवल क्या होते हैं, और आपके हार्डवेयर के लिए सही एक को चुनने के लिए कैसे प्रक्रिया की जाए, यह जानने के लिए आगे पढ़ें। 
-
-GGUF एक खुला फ़ाइल फ़ॉर्मेट है जो बड़े भाषा मॉडलों को संग्रहीत करने के लिए डिज़ाइन किया गया है। यह फ़ाइल फ़ॉर्मेट LLMs को छोटा और विश्वसनीय बनाने के लिए डिज़ाइन किया गया है जिससे उन्हें स्थानीय पर चलाया जा सके। 
-
-क्वांटाइज़ेशन लेवल क्या होते हैं?
-
-क्वांट" /> />
-  <title>GGUF का अर्थ: स्थानीय LLMs को काम करने के लिए बनाए गए फॉर्मैट का विवरण | वेल्स टेक्नोलॉजी | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/gguf-explained.html" />
+  <meta name="description" content="GGUF क्या है – वह फ़ाइल फ़ॉर्मेट जो local LLMs चलाना संभव बनाता है। GGUF क्या है, quantization levels का क्या मतलब है, और अपने hardware के लिए सही कैसे चुनें।" />
+  <title>GGUF क्या है: वह फ़ॉर्मेट जो local LLMs को संभव बनाता है | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/gguf-explained.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/gguf-explained.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/gguf-explained.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/gguf-explained.html" />
@@ -22,13 +14,13 @@ GGUF एक खुला फ़ाइल फ़ॉर्मेट है जो 
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/gguf-explained.html#article",
-  "headline": "GGUF explained: the format that makes local LLMs work",
-  "description": "GGUF is the file format that makes running LLMs locally possible. Here's what it is, what quantization levels mean, and how to pick the right one for your hardware.",
-  "url": "https://velstech.net/gguf-explained.html",
+  "@id": "https://velstech.net/gguf-explained.hi.html#article",
+  "headline": "GGUF क्या है: वह फ़ॉर्मेट जो local LLMs को संभव बनाता है",
+  "description": "GGUF क्या है – वह फ़ाइल फ़ॉर्मेट जो local LLMs चलाना संभव बनाता है। GGUF क्या है, quantization levels का क्या मतलब है, और अपने hardware के लिए सही कैसे चुनें।",
+  "url": "https://velstech.net/gguf-explained.hi.html",
   "datePublished": "2026-08-30T00:00:00Z",
   "dateModified": "2026-08-30T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/gguf-explained.png",
   "author": {
     "@type": "Person",
@@ -44,29 +36,29 @@ GGUF एक खुला फ़ाइल फ़ॉर्मेट है जो 
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/gguf-explained.html"
+  "mainEntityOfPage": "https://velstech.net/gguf-explained.hi.html"
 }
   </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://velstech.net/gguf-explained.html#faq",
+  "@id": "https://velstech.net/gguf-explained.hi.html#faq",
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is a GGUF file?",
+      "name": "GGUF फ़ाइल क्या है?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "GGUF is a container format for quantized LLMs – it packs a model's weights, tokenizer, and metadata into one file that llama.cpp, Ollama, and LM Studio can load directly. The quantization is what shrinks a model enough to run on consumer hardware."
+        "text": "GGUF quantized LLMs के लिए एक container फ़ॉर्मेट है – यह model के weights, tokenizer और metadata को एक ही फ़ाइल में पैक करता है जिसे llama.cpp, Ollama और LM Studio सीधे load कर सकते हैं। quantization ही है जो model को consumer hardware पर चलने लायक छोटा बनाती है।"
       }
     },
     {
       "@type": "Question",
-      "name": "Which GGUF quantization should I download?",
+      "name": "मुझे कौन सा GGUF quantization डाउनलोड करना चाहिए?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Q4_K_M is the safe default – the best quality-per-gigabyte. If you have spare RAM, try Q5_K_M for noticeably sharper output. Drop to Q3 or Q2 only if the model doesn't fit."
+        "text": "Q4_K_M सुरक्षित default है – सबसे अच्छा quality-per-gigabyte। अगर आपके पास अतिरिक्त RAM है, तो ज़्यादा sharp output के लिए Q5_K_M आज़माएँ। अगर model fit नहीं हो रहा तभी Q3 या Q2 पर जाएँ।"
       }
     }
   ]
@@ -74,152 +66,102 @@ GGUF एक खुला फ़ाइल फ़ॉर्मेट है जो 
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/gguf-explained.html" />
-  <meta property="og:title" content="GGUF explained: the format that makes local LLMs work | VelsTech" />
-  <meta property="og:description" content="What GGUF is, what quantization levels mean, and how to pick the right one for your hardware." />
+  <meta property="og:url" content="https://velstech.net/gguf-explained.hi.html" />
+  <meta property="og:title" content="GGUF क्या है: वह फ़ॉर्मेट जो local LLMs को संभव बनाता है | VelsTech" />
+  <meta property="og:description" content="GGUF क्या है – वह फ़ाइल फ़ॉर्मेट जो local LLMs चलाना संभव बनाता है। GGUF क्या है, quantization levels का क्या मतलब है, और अपने hardware के लिए सही कैसे चुनें।" />
   <meta property="og:image" content="https://velstech.net/og/gguf-explained.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="GGUF explained: the format that makes local LLMs work | VelsTech" />
-  <meta name="twitter:description" content="What GGUF is, what quantization levels mean, and how to pick the right one for your hardware." />
+  <meta name="twitter:title" content="GGUF क्या है: वह फ़ॉर्मेट जो local LLMs को संभव बनाता है | VelsTech" />
+  <meta name="twitter:description" content="GGUF क्या है – वह फ़ाइल फ़ॉर्मेट जो local LLMs चलाना संभव बनाता है। GGUF क्या है, quantization levels का क्या मतलब है, और अपने hardware के लिए सही कैसे चुनें।" />
   <meta name="twitter:image" content="https://velstech.net/og/gguf-explained.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / This article</p>
-    <h1 class="title">GGUF explained: the format that makes local LLMs work</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="ai.html">AI</a> / यह लेख</p>
+    <h1 class="title">GGUF क्या है: वह फ़ॉर्मेट जो local LLMs को संभव बनाता है</h1>
     <div class="meta">
       <span class="tag">GGUF</span>
       <span class="tag">Quantization</span>
       <span class="tag">Local AI</span>
       <span>Aug 30, 2026</span>
-      <span>· 5 min read</span>
+      <span>· 5 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>अगर आपने मॉडल को अपने स्थानीय कंप्यूटर पर डाउनलोड किया है – ओल्लामा, लम्मा .cpp, या किसी भी अन्य के साथ – तो आपने लगभग निश्चित रूप से इन अक्षरों के साथ परिचित हो जाएंगे।<strong>GGUF</strong>यह फ़ाइल विस्तार है जो अधिकांश खुले वजन के मॉडलों पर होता है जिन्हें आप वास्तव में चला सकते हैं:<code>llama-3.2-3b.Q4_K_M.gguf</code>, <code>qwen2.5-7b.Q5_K_M.gguf</code>... और आगे भी।</p>
-      <p>GGUF का कारण यह है कि स्थानीय AI संभव है ही नहीं । यहाँ क्या होता है, यह जानने के लिए आगे पढ़ें ।<code>Q4_K_M</code>लेबल्स का अर्थ – और सही हार्डवेयर के लिए सही एक कैसे चुनें? 
+      <p>
+        अगर आपने कभी कोई model locally डाउनलोड किया है – Ollama, llama.cpp या किसी और के साथ – तो आप लगभग निश्चित रूप से <strong>GGUF</strong> अक्षरों से टकराए होंगे। यह ज़्यादातर open-weight models का फ़ाइल extension है जिन्हें आप खुद चला सकते हैं: <code>llama-3.2-3b.Q4_K_M.gguf</code>, <code>qwen2.5-7b.Q5_K_M.gguf</code>, वगैरह।
+      </p>
+      <p>
+        GGUF ही वजह है कि local AI संभव है। यहाँ बताया गया है कि यह वास्तव में क्या है, उन <code>Q4_K_M</code> लेबल्स का क्या मतलब है, और अपने hardware के लिए सही कैसे चुनें।
+      </p>
 
-लेबल्स एक महत्वपूर्ण भूमिका निभाते हैं जो कंप्यूटर के प्रदर्शन को प्रभावित करते हैं। वे CPU, GPU, और RAM के बीच डेटा के प्रवाह को नियंत्रित करते हैं। सही लेबल्स का चयन करने से कंप्यूटर की गति और प्रदर्शन में सुधार हो सकता है। 
+      <h2>GGUF क्या है?</h2>
+      <p>
+        GGUF <strong>quantized LLMs को store करने का फ़ाइल फ़ॉर्मेट</strong> है – एक container जो model के weights, tokenizer और metadata को एक ही फ़ाइल में पैक करता है जिसे llama.cpp और उसके derivatives (Ollama, LM Studio आदि) सीधे load कर सकते हैं। यह GGML का successor है, और consumer hardware पर models चलाने के लिए de facto standard बन गया है।
+      </p>
+      <p>
+        इसमें clever बात यह है कि "quantized" का क्या मतलब है। model के weights सामान्यतः 16-bit floating-point numbers के रूप में store होते हैं। GGUF फ़ाइलें उन्हें कहीं कम precision – 8-bit, 4-bit, यहाँ तक कि 2-bit – पर store करती हैं, जिससे फ़ाइल नाटकीय रूप से छोटी हो जाती है। इसी से 27-billion parameter वाला model 50+ GB की ज़रूरत के बजाय 12 GB VRAM में fit हो जाता है।
+      </p>
 
-यहाँ कुछ प्रमुख लेबल्स हैं जो आपको चुनने के लिए उपलब्ध हैं:
-
-- Q4: यह एक मध्यम-गति वाला लेबल है जो अधिकांश गेमिंग और वीडियो एडिटिंग के लिए उपयुक्त है।
-- Q5: यह एक उच्च-गति वाला लेबल है जो हाई-एंड गेमिंग और वीडिय</p>
-
-      <h2>GGUF  क्या है – यह एक ऐसा शब्द है जिसका अर्थ गेमिंग यूनिट फ्रेमवर्क है।</h2>
-      <p>गगुफ (GGUF) एक है<strong>क्वांटाइज्ड एलएलएम के संग्रहण के लिए फ़ाइल प्रारूप 
-
-क्वांटाइज्ड लैंग्वेज मॉडल (क्वांटाइज्ड एलएलएम) को संग्रहण करने के लिए विभिन्न फ़ाइल प्रारूपों का उपयोग किया जा सकता है, जिनमें से कुछ प्रमुख हैं:
-
-1. हफ (हफ फ़ाइल फ़ॉर्मैट) 
-2. कॉन्फ (कॉन्फ फ़ाइल फ़ॉर्मैट) 
-3. पीक (पीक फ़ाइल फ़ॉर्मैट) 
-4. हार्डवेयर-विशिष्ट फ़ाइल प्रारूप जैसे कि एनवीडिया के एनवीडिया क्यूडीए (क्यूडीए फ़ाइल फ़ॉर्मैट) 
-
-इन फ़ाइल प्रारूपों का उपयोग विभिन्न प्रकार के क्वांटाइज</strong>– एक विशेषता जो मॉडल के वज़न, टोकनाइज़र, और डेटा को एक ही फ़ाइल में संग्रहीत करती है, जिसे llama.cpp और इसके परिवर्ती (Ollama, LM Studio आदि) सीधे लोड कर सकते हैं। यह GGML का उत्तराधिकारी है, और यह उपभोक्ता उपकरणों पर मॉडल चलाने के लिए एक मानक बन गया है।</p>
-      <p>ज्यादा चतुराई यह है कि "संख्याओं को कम क्या होता है"। एक मॉडल के वज़न आमतौर पर 16-भागीय फ्लोटिंग पॉइंट संख्याओं के रूप में संग्रहीत होते हैं।  GGUF फाइलें उन्हें बहुत कम सटीकता – 8-भाग, 4-भाग, और 2-भाग – में संग्रहीत करती हैं, जो फ़ाइल को बहुत कम कर देती है। यही कारण है कि 27 अरब परामर्श मॉडल 12 GB के VRAM में फिट हो सकता है, इसके बजाय 50+ GB की आवश्यकता होती।</p>
-
-      <h2>साइज़ और गुणवत्ता के बीच का ट्रेडऑफ</h2>
-      <p>क्वांटाइजेशन एक संपीड़न है जिसकी कीमत है। कम सटीकता = छोटा फ़ाइल + तेज़ इन्फ़रेंस + कम गुणवत्ता। अधिक सटीकता = बड़ी फ़ाइल + धीमी + बेहतर गुणवत्ता। कला यह है कि गुणवत्ता को बनाए रखने के लिए उचित बिंदु खोजना जहां मॉडल आपके हार्डवेयर के अनुसार फिट हो।</p>
-      <p>GGUF फ़ाइलें अपने नाम में यह कोड करती हैं।<code>qwen2.5-7b.Q4_K_M.gguf</code>:
+      <h2>Trade-off: size बनाम quality</h2>
+      <p>
+        Quantization एक compression है जिसकी कीमत है। कम precision = छोटी फ़ाइल + तेज़ inference + कम quality। ज़्यादा precision = बड़ी फ़ाइल + धीमी + बेहतर quality। कला वह sweet spot ढूँढना है जहाँ quality बनी रहे पर model आपके hardware में fit हो जाए।
+      </p>
+      <p>
+        GGUF फ़ाइलें इसे अपने नाम में encode करती हैं। <code>qwen2.5-7b.Q4_K_M.gguf</code> लें:
       </p>
       <ul>
-        <li><strong>Q4</strong>– चार बिट क्वांटाइजेशन (जिसके "Q" का अर्थ है क्वांटाइजेशन)</li>
-        <li><strong>K</strong>– "K-quant" (K-quantization) – एक बुद्धिमान योजना जो कम महत्वपूर्ण वज़नों पर कम बिट्स का उपयोग करती है।</li>
-        <li><strong>M</strong>– आकार:<code>S</code>छोटा<code>M</code>मध्यम<code>L</code>बड़ा – बड़ा साइज़ जितना अधिक होगा, उतना ही अधिक गुणवत्ता पूर्ण होगा।</li>
+        <li><strong>Q4</strong> – 4-bit quantization ("Q" का मतलब quantization)।</li>
+        <li><strong>K</strong> – "k-quant" (k-quantization), एक smarter scheme जो कम महत्वपूर्ण weights पर कम bits इस्तेमाल करती है।</li>
+        <li><strong>M</strong> – size: <code>S</code> (small), <code>M</code> (medium), <code>L</code> (large)। बड़ा = पूरी quality के ज़्यादा करीब।</li>
       </ul>
-      <p>So<code>Q4_K_M</code>"4-bit k-quant, medium" – सबसे लोकप्रिय ऑल-राउंडर है, 
-और अधिकांश लोगों के लिए डिफ़ॉल्ट सिफारिश है।</p>
+      <p>
+        तो <code>Q4_K_M</code> का मतलब "4-bit k-quant, medium" है – सबसे लोकप्रिय all-rounder, और ज़्यादातर लोगों के लिए default recommendation।
+      </p>
 
-      <h2>सामान्य विश्लेषण स्तर:
-
-1. Q4 – चौथा विश्लेषण स्तर
-2. Q5 – पांचवां विश्लेषण स्तर
-3. Q8 – आठवां विश्लेषण स्तर
-4. KV कैश – कुंजी–मूल्य कैश
-5. RAG – रैंकिंग और अनुक्रम संबंधी ग्राफ</h2>
+      <h2>आम quantization levels</h2>
       <div class="calc" style="overflow-x:auto">
         <table class="spec-table">
           <thead>
-            <tr><th>श्रेणी</th><th>अनुमानित आकार बनाम पूर्ण आकार 
-
-(विशेषण के रूप में 'approx' को अनुमानित में अनुवादित किया जा सकता है)</th><th>गुणवत्ता</th><th>कब इस्तेमाल करना है 
-
-1. यह एक विशेषज्ञ सिस्टम है जिसका उपयोग AI के क्षेत्र में किया जाता है।
-2. यह GPU, CPU, और VRAM जैसे तकनीकी शब्दों का समर्थन करता है।
-3. यह LLM (लार्ज लैंग्वेज मॉडल) और GGUF (ग्राफिकल यूनिट फ्यूजन) जैसे तकनीकी शब्दों को हिंदी में अनुवादित करता है।
-4. यह Q4, Q5, Q8 जैसे तकनीकी शब्दों को हिंदी में अनुवादित करता है।
-5. यह KV cache, RAG, MoE, ROCm, Vulkan, CUDA, NPU, SSD, HDD, DNS, API जैसे तकनीकी शब्दों का समर्थन करता है।
-6. यह Ollama, llama.cpp, tokenizer, tokens, embeddings, inference, quantization, model, dataset, prompt जैसे तकनीकी शब्दों क</th></tr>
+            <tr><th>Level</th><th>Approx. size vs full</th><th>Quality</th><th>कब इस्तेमाल करें</th></tr>
           </thead>
           <tbody>
-            <tr><td>Q2_K</td><td>~25%</td><td>कमजोर</td><td>रैम में सिकुड़ने के लिए केवल जब आवश्यक हो।</td></tr>
-            <tr><td>Q3 – खेल</td><td>~32%</td><td>मुझे लगता है कि कुछ गलत हो रहा है</td><td>बेहद सीमित बजट</td></tr>
-            <tr><td>Q4_K_S – Q4_K_M</td><td>~40–44%</td><td>Accha</td><td><strong>मूल विकल्प चुनें</strong>– सबसे अच्छा आकार/गुणवत्ता संतुलन</td></tr>
-            <tr><td>क्यू5_के_एम</td><td>~49%</td><td>बहुत अच्छा</td><td>जब आपके पास स्पेस होता है; विशेष रूप से स्पष्ट</td></tr>
-            <tr><td>Q6-K</td><td>~58%</td><td>VelsTech ki VelsChat ke liye ek LLM model ka vikas karna hoga jo GGUF ki madad se 90% tak Q4 aur Q5 ke performance ko match kar sake. 
-
-Iske liye, humein CPU aur GPU ke beech ka balans dhyan me rakhna hoga. GPU ko VRAM aur RAM se bharpaaya jana hoga, jo 16 GB tak ho sakta hai. 
-
-LLM model ko Q8 aur KV cache se bharpaaya jana hoga. RAG aur MoE ko use karke hum model ki accuracy ko badha sakte hain. ROCm aur Vulkan ka upyog karke hum GPU ko optimize kar sakte hain. CUDA aur NPU ko use karke hum model ki performance ko badha sakte hain. 
-
-SSD par data ko store karke hum model ki loading speed ko badha sakte hain. DNS aur API ko use karke hum model ko online connect kar sakte hain. Ollama aur llama.cpp ko use karke hum tokenizer aur embeddings ko develop kar sakte hain. 
-
-Inference aur quantization ko use karke hum model ki performance ko bad</td><td>बहुत ज्यादा RAM चाहिए, अच्छी गुणवत्ता चाहिए।</td></tr>
-            <tr><td>Q8 – 0</td><td>~78%</td><td>अंतर्दृष्टि से परे</td><td>KV cache ki madad se data ko fast aur efficient tarah se store kiya ja sakta hai.</td></tr>
-            <tr><td>फ्लोट 16 / फ्लोट 32</td><td>100%</td><td>1.  A 64-layer  LLM  model, GGUF, trained on a dataset of  Q4  and  Q5  conversations, achieved a BLEU score of  78.2%  on the  Q8  evaluation set.
-
-2.  VelsTech के  VelsChat  प्लेटफ़ॉर्म ने  NVIDIA  के  GPU  और  AMD  के  CPU  के संयोजन का उपयोग करके  2.5  गीगाहर्ट्ज़ की गति से  256  MB  की  VRAM  के साथ  16  GB  की  RAM  के साथ एक  LLM  मॉडल को ट्रेन किया।
-
-3.  VelsTech के वैज्ञानिकों ने  Alibaba  के  Qwen  प्लेटफ़ॉर्म के साथ मिलकर  64 -layer  LLM  मॉडल को ट्रेन करने के लिए  8  NVIDIA  के  GPU  का उपयोग किया, जिससे</td><td>अनुमान के लिए कम उपयोग किया जाता है; बड़े फाइल्स</td></tr>
+            <tr><td>Q2_K</td><td>~25%</td><td>खराब</td><td>सिर्फ तब जब बहुत छोटे RAM में squeeze करना हो</td></tr>
+            <tr><td>Q3_K</td><td>~32%</td><td>ठीक-ठाक</td><td>बहुत tight बजट पर</td></tr>
+            <tr><td>Q4_K_S / Q4_K_M</td><td>~40–44%</td><td>अच्छी</td><td><strong>Default choice</strong> – सबसे अच्छा size/quality balance</td></tr>
+            <tr><td>Q5_K_M</td><td>~49%</td><td>बहुत अच्छी</td><td>जब headroom हो; noticeable तौर पर sharper</td></tr>
+            <tr><td>Q6_K</td><td>~58%</td><td>लगभग original जैसी</td><td>खूब RAM हो, quality चाहिए</td></tr>
+            <tr><td>Q8_0</td><td>~78%</td><td>~पहचान से परे</td><td>सिर्फ KV cache के लिए या जब size की परवाह न हो</td></tr>
+            <tr><td>F16 / F32</td><td>100%</td><td>Original</td><td>Inference के लिए शायद ही ज़रूरी; बहुत बड़ी फ़ाइलें</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2>आपको कौन सा डाउनलोड करना चाहिए?</h2>
-      <p>एक सामान्य नियम यह है –<strong>Q4_K_M – चौथे तिमाही में कुशल</strong>यह सबसे अच्छा 
-गिगाबाइट पर गुणवत्ता, अधिकांश हार्डवेयर पर चलने में सक्षम है, और अधिकांश कार्यों के लिए Q5 या Q6 से गुणवत्ता अंतर को नोटिस करना मुश्किल है। यदि मॉडल आराम से चल रहा है और आपके पास अतिरिक्त RAM है, तो Q5_K_M को देखें और देखें कि क्या अंतर है। यदि यह बहुत धीमा है या फिट नहीं है, तो Q4_K_S या Q3_K_M पर गिरें।</p>
-      <p>कार्ड के लिए सही चीज़ का पता लगाने के लिए, आंकड़े को गणना के माध्यम से चलाएं।<a href="llm-vram-calculator.html">LLM VRAM कैलकुलेटर 
+      <p>
+        आसान नियम है: <strong>Q4_K_M से शुरू करें।</strong> यह सबसे अच्छा quality-per-gigabyte है, ज़्यादातर hardware पर चलता है, और ज़्यादातर tasks पर Q5 या Q6 से quality का फ़र्क नोटिस करना मुश्किल है। अगर model आराम से चल रहा है और आपके पास extra RAM है, तो Q5_K_M आज़माएँ और देखें क्या फ़र्क दिखता है। अगर बहुत धीमा है या fit नहीं हो रहा, तो Q4_K_S या Q3_K_M पर आएँ।
+      </p>
+      <p>
+        अपने कार्ड पर वास्तव में क्या fit होगा यह पता करने के लिए, आँकड़ों को <a href="llm-vram-calculator.html">LLM VRAM Calculator</a> में डालें – यह weights, KV cache और quantization सब गिनता है ताकि डाउनलोड से पहले ही पता चल जाए।
+      </p>
 
-कृपया निम्नलिखित विवरण दर्ज करें: 
+      <h2>GGUF + llama.cpp</h2>
+      <p>
+        GGUF फ़ाइलें llama.cpp द्वारा चलाने के लिए डिज़ाइन की गई हैं – वही engine जो Ollama और LM Studio के नीचे है। अगर आप Ollama इस्तेमाल करते हैं तो आप GGUF फ़ाइलों से सीधे शायद ही interact करते हैं (वह download और format आपके लिए संभाल लेता है), लेकिन concepts एक जैसे ही हैं: आप हमेशा model size और quantization चुन रहे होते हैं। command-line details के लिए <a href="llama-cpp-guide.html">llama.cpp guide</a> देखें।
+      </p>
 
-1. मॉडल का आकार (MB) – 
-2. GPU की मेमोरी (MB) – 
-3. मॉडल का आकार (GB) – 
-4. प्रति सेकंड टोकन की दर (tok/s) – 
-5. प्रति सेकंड टोकन की दर (tok/s) – 
-
-परिणाम: 
-
-1. GPU का उपयोग किया जा रहा है – 
-2. GPU का उपयोग किया जा रहा है – 
-3. GPU का उपयोग किया जा रहा है – 
-4. GPU का उपयोग किया जा रहा है – 
-5. GPU का उपयोग किया जा रहा है – 
-
-नोट: यह कैलकुलेटर LLM मॉडल के आकार और GPU की मेमोरी के आधार पर GPU का उपयोग करने की आवश्यकता का</a>– यह वज़न, KV कैश, और क्वांटाइजेशन के लिए जिम्मेदार होता है इसलिए डाउनलोड करने से पहले आप जानते हैं।</p>
-
-      <h2>GGUF – Generalised Gated Uni-Directional Fusion  और llama.cpp – लल्ला सी पी प्लस प्लस</h2>
-      <p>GGUF फाइलें llama.cpp – Ollama और LM Studio के नीचे के इंजन के लिए डिज़ाइन की गई हैं –। आप Ollama का उपयोग करते हैं तो आप GGUF फाइलों के साथ सीधे इंटरैक्ट करने की संभावना बहुत कम होती है (यह डाउनलोड और फॉर्मेट को आपके लिए प्रबंधित करता है), लेकिन सिद्धांत एक जैसे हैं: आप हमेशा एक मॉडल आकार और क्वांटाइजेशन का चयन करते हैं।<a href="llama-cpp-guide.html">ल्लामा सी++ गाइड 
-
-ल्लामा सी++ एक मुक्त-उपलब्धता के साथ आने वाला लैंग्वेज मॉडल है जो बड़े पैमाने पर भाषण मॉडल के लिए डिज़ाइन किया गया है। यह एक लंबी सीमा मॉडल (LLM) है जो उपयोगकर्ता के इनपुट को समझने और उनके प्रश्नों का उत्तर देने में सक्षम है।
-
-ल्लामा सी++ का उपयोग करने के लिए, आपको निम्नलिखित चरणों का पालन करना होगा:
-
-1. ल्लामा सी++ को अपने कंप्यूटर पर डाउनलोड और इंस्टॉल करें।
-2. ल्लामा सी++ को रन करने के लिए एक टर्मिनल या कमांड प्रॉम्प्ट खोलें।
-3. टोकनाइज़र और एम्बेडिंग को लोड करन</a>कमांड लाइन के विवरण के लिए।</p>
-
-      <h2>मुख्य बिंदु</h2>
-      <p>ग्लोबल ग्रिड यूनिट फ्रेम (GGUF) वो कंटेनर है जो स्थानीय AI को संभव बनाता है। फ़ाइल नाम में आने वाले अक्षर आपको बताते हैं कि क्या है:<code>Q4_K_M</code>सुरक्षित मानक – यह सुरक्षित मानक है<code>Q5_K_M</code>क्या यह एक उपयुक्त अपग्रेड है यदि आपके पास संभावनाएं हैं, और कोई छोटा सा है तो वह फिर भी सख्त हार्डवेयर में फिट होने के लिए है। Q4_K_M को चेक करें और इसकी तुलना<a href="llm-vram-calculator.html">वीआरएएम कैलकुलेटर</a>और आप कुछ मिनटों में एक स्थानीय मॉडल चला सकते हैं।</p>
+      <h2>Bottom line</h2>
+      <p>
+        GGUF वह container है जो local AI को practical बनाता है। filename के अक्षर सब बता देते हैं: <code>Q4_K_M</code> सुरक्षित default है, <code>Q5_K_M</code> अगर headroom हो तो worthwhile upgrade है, और उससे छोटा सिर्फ tight hardware में squeeze करने के लिए है। Q4_K_M चुनें, उसे <a href="llm-vram-calculator.html">VRAM calculator</a> से check करें, और कुछ ही मिनटों में आपका local model चल पड़ेगा।
+      </p>
     </div>
 
     <div class="article-nav">
-      <a href="ai.html">← Back to AI</a>
+      <a href="ai.html">← AI पर वापस जाएँ</a>
       <a href="llama-cpp-guide.html">llama.cpp guide →</a>
     </div>
   </main>

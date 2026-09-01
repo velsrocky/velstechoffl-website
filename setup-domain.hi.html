@@ -4,21 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="डोमेन खरीदना, DNS रिकॉर्ड्स को सेट करना, और इसे GitHub Pages, एक VPS, या घर के सर्वर से जोड़ने के लिए चरणों का पालन करें:
-
-डोमेन खरीदने के लिए:
-
-1. एक रजिस्ट्रार चुनें जैसे कि GoDaddy, Namecheap, या Google Domains।
-2. अपना डोमेन नाम चुनें और यह जांचें कि यह उपलब्ध है या नहीं।
-3. अपना डोमेन नाम खरीदें और इसके लिए भुगतान करें।
-4. अपने डोमेन नाम के DNS रिकॉर्ड्स को सेट करने के लिए रजिस्ट्रार के पैनल में जाएं।
-
-DNS रिकॉर्ड्स को सेट करने के लिए:
-
-1. अपने डोमेन नाम के DNS रिकॉर्ड्स को सेट करने के लिए रजिस्ट्रार के पैनल में जाएं।
-2." /> />
-  <title>डोमेन सेटअप करना और इसे कहीं भी पॉइंट करना | वेल्सटेक | VelsTech</title>
-  <link rel="canonical" href="https://velstech.net/setup-domain.html" />
+  <meta name="description" content="Domain कैसे खरीदें, DNS records कैसे configure करें और इसे GitHub Pages, VPS या home server से कैसे जोड़ें।" />
+  <title>Domain सेटअप करना और कहीं भी point करना | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/setup-domain.hi.html" />
   <link rel="alternate" hreflang="en" href="https://velstech.net/setup-domain.html" />
   <link rel="alternate" hreflang="hi" href="https://velstech.net/setup-domain.hi.html" />
   <link rel="alternate" hreflang="x-default" href="https://velstech.net/setup-domain.html" />
@@ -26,13 +14,13 @@ DNS रिकॉर्ड्स को सेट करने के लिए:
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "https://velstech.net/setup-domain.html#article",
-  "headline": "Setting up a domain and pointing it anywhere",
-  "description": "How to buy a domain, configure DNS records, and connect it to GitHub Pages, a VPS, or a home server.",
-  "url": "https://velstech.net/setup-domain.html",
+  "@id": "https://velstech.net/setup-domain.hi.html#article",
+  "headline": "Domain सेटअप करना और कहीं भी point करना",
+  "description": "Domain कैसे खरीदें, DNS records कैसे configure करें और इसे GitHub Pages, VPS या home server से कैसे जोड़ें।",
+  "url": "https://velstech.net/setup-domain.hi.html",
   "datePublished": "2026-08-24T00:00:00Z",
   "dateModified": "2026-08-24T00:00:00Z",
-  "inLanguage": "en",
+  "inLanguage": "hi",
   "image": "https://velstech.net/og/setup-domain.png",
   "author": {
     "@type": "Person",
@@ -48,65 +36,71 @@ DNS रिकॉर्ड्स को सेट करने के लिए:
       "url": "https://velstech.net/logo.svg"
     }
   },
-  "mainEntityOfPage": "https://velstech.net/setup-domain.html"
+  "mainEntityOfPage": "https://velstech.net/setup-domain.hi.html"
 }
   </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
-  <meta property="og:url" content="https://velstech.net/setup-domain.html" />
-  <meta property="og:title" content="Setting up a domain and pointing it anywhere | VelsTech" />
-  <meta property="og:description" content="How to buy a domain, configure DNS records, and connect it to GitHub Pages, a VPS, or a home server." />
+  <meta property="og:url" content="https://velstech.net/setup-domain.hi.html" />
+  <meta property="og:title" content="Domain सेटअप करना और कहीं भी point करना | VelsTech" />
+  <meta property="og:description" content="Domain कैसे खरीदें, DNS records कैसे configure करें और इसे GitHub Pages, VPS या home server से कैसे जोड़ें।" />
   <meta property="og:image" content="https://velstech.net/og/setup-domain.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Setting up a domain and pointing it anywhere | VelsTech" />
-  <meta name="twitter:description" content="How to buy a domain, configure DNS records, and connect it to GitHub Pages, a VPS, or a home server." />
+  <meta name="twitter:title" content="Domain सेटअप करना और कहीं भी point करना | VelsTech" />
+  <meta name="twitter:description" content="Domain कैसे खरीदें, DNS records कैसे configure करें और इसे GitHub Pages, VPS या home server से कैसे जोड़ें।" />
   <meta name="twitter:image" content="https://velstech.net/og/setup-domain.png" />
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <main class="article-page">
-    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="networking.html">Networking</a> / This article</p>
-    <h1 class="title">Setting up a domain and pointing it anywhere</h1>
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="networking.html">नेटवर्किंग</a> / यह लेख</p>
+    <h1 class="title">Domain सेटअप करना और कहीं भी point करना</h1>
     <div class="meta">
       <span class="tag">DNS</span>
       <span class="tag">Self-hosting</span>
       <span>Aug 24, 2026</span>
-      <span>· 7 min read</span>
+      <span>· 7 मिनट का पठन</span>
     </div>
 
     <div class="article-body">
-      <p>किसी भी डोमेन एक सबसे शक्तिशाली इंटरनेट संपत्ति है जिसे आप अपने नाम पर रख सकते हैं । यह एक स्थायी पता है जिसे आप अपने नियंत्रण में रखते हैं – और इसे किसी वेबसाइट, सर्वर, या घरेलू मशीन की ओर इशारा करने के लिए केवल कुछ DNS रिकॉर्डों की आवश्यकता होती है । इस साइट का कार्य इसी तरह से होता है ।</p>
+      <p>
+        Domain internet real estate का सबसे powerful टुकड़ा है जिसे आप own कर सकते हैं। यह एक permanent address है जिसे आप control करते हैं – और इसे किसी website, server या home machine पर point करने के लिए सिर्फ कुछ DNS records चाहिए। यह site ठीक इसी तरह चलती है।
+      </p>
 
-      <h2>डोमेन खरीदना</h2>
-      <p>Domain name registrar.<strong>पंजीकरण कार्यालय</strong>– एक ऐसी कंपनी जिसे एक शीर्ष-स्तरीय डोमेन (TLD) में नाम बेचने की अनुमति है।</p>
+      <h2>Domain खरीदना</h2>
+      <p>
+        आप domain <strong>registrar</strong> से खरीदते हैं – top-level domain (TLD) में नाम बेचने के लिए authorized कंपनी। समझदारी से चुनें:
+      </p>
       <ul>
         <li>
-          <strong>क्लाउडफ्लेयर रजिस्ट्रार</strong>– बिक्री की कीमत केवल लागत कीमत पर है, कोई मार्कअप नहीं, मुफ्त
-          प्रबंधन।  शानदार मूल्य।</li>
+          <strong>Cloudflare Registrar</strong> – cost price पर बेचता है, कोई markup नहीं, मुफ़्त management। बेहतरीन value।
+        </li>
         <li>
-          <strong>नेमचीप, पॉर्कबन</strong>– सस्ता और शुरुआती लोगों के लिए उपयुक्त।</li>
+          <strong>Namecheap, Porkbun</strong> – सस्ते और beginner-friendly।
+        </li>
         <li>
-          <strong>गोडैडी</strong>– काम करता है, लेकिन कस्टमर चेकआउट में अपग्रेड के लिए अपेक्षा कर सकते हैं।</li>
+          <strong>GoDaddy</strong> – काम करता है, पर checkout पर upsells की उम्मीद रखें।
+        </li>
       </ul>
-      <p>टीएलडी का चयन अधिक महत्वपूर्ण है जितना लोग सोचते हैं।</p>
+      <p>
+        TLD का चुनाव लोग जितना सोचते हैं उससे ज़्यादा मायने रखता है:
+      </p>
       <ul>
-        <li><code>.com</code>– पुराना, सबसे विश्वसनीय, लेकिन अक्सर लिया जाने वाला</li>
-        <li><code>.net</code>, <code>.org</code>, <code>.dev</code>, <code>.io</code>सही विकल्प।</li>
-        <li>विशिष्ट टॉप लेवल डोमेन<code>.xyz</code>, <code>.club</code>) सस्ता, लेकिन कम गंभीर दिखता है।</li>
+        <li><code>.com</code> – classic, सबसे भरोसेमंद, पर अक्सर taken।</li>
+        <li><code>.net</code>, <code>.org</code>, <code>.dev</code>, <code>.io</code> – solid विकल्प।</li>
+        <li>Fancy TLDs (<code>.xyz</code>, <code>.club</code>) – सस्ते, पर कम serious लगते हैं।</li>
       </ul>
-      <p>खतरों से सावधान रहें<strong>पुनर्स्थापना मूल्य</strong>कई डोमेन की कीमतें पहले वर्ष में सस्ती होती हैं और फिर बाद में बढ़ जाती हैं ।  क्लाउडफ्लेयर इसे टालने के लिए नवीनीकरण की कीमतों को समान रखता है ।</p>
+      <p>
+        <strong>Renewal price</strong> पर ध्यान दें: कई domains पहले साल सस्ते होते हैं और बाद में महँगे हो जाते हैं। Cloudflare renewal को same price रखकर इससे बचाता है।
+      </p>
 
-      <h2>डीएनएस रिकॉर्ड्स को समझने के लिए – यह जानना आवश्यक है कि डीएनएस क्या है और इसके कैसे काम करते हैं। डीएनएस (DNS) एक प्रकार का डेटाबेस है जो इंटरनेट पर डोमेन नामों को उनके IP पतों के साथ जोड़ता है।
-
-डीएनएस रिकॉर्ड्स के प्रकार – डीएनएस रिकॉर्ड्स के कई प्रकार होते हैं, जिनमें से कुछ प्रमुख हैं:
-
-- ए (ए) रिकॉर्ड – यह रिकॉर्ड एक डोमेन नाम के लिए उसके IP पते को दर्शाता है।
-- पीसीए (पीसीए) रिकॉर्ड – यह रिकॉर्ड एक डोमेन नाम के लिए उसके क्लास सी (क्लास सी रूटर) को दर्शाता है।
-- एमएक्स (एमएक्स)</h2>
-      <p>एक डोमेन अलोन करता है कुछ नहीं । आप दुनिया को यह बताते हैं कि वह कहां इशारा करता है जो DNS<strong>डीएनएस रिकॉर्ड्स</strong>जिन्हें आप वास्तव में उपयोग करेंगे</p>
+      <h2>DNS records को समझना</h2>
+      <p>
+        अकेला domain कुछ नहीं करता। आप दुनिया को बताते हैं कि वह कहाँ point करता है <strong>DNS records</strong> से। वे records जिन्हें आप वास्तव में इस्तेमाल करेंगे:
+      </p>
       <pre>Type     Example                         Purpose
 ──────────────────────────────────────────────────────────
 A        185.199.108.153                 IPv4 address
@@ -114,138 +108,82 @@ AAAA     2606:4700:4700::1111            IPv6 address
 CNAME    velsrocky.github.io             alias to another name
 MX       mail.yourdomain.com             email delivery
 TXT      "v=spf1 ..."                    verification / security</pre>
-      <p>एक रिकॉर्ड का नाम डोमेन को IP से जोड़ता है। CNAME एक डोमेन को दूसरे डोमेन से जोड़ता है – यह सेवाओं के लिए उपयोगी है जो आपको एक नाम देते हैं (जैसे<code>username.github.io</code>).
+      <p>
+        A records domain को IP पर map करते हैं। CNAME domain को दूसरे domain पर map करता है – उन services के लिए handy जो आपको नाम देती हैं (जैसे <code>username.github.io</code>)।
       </p>
 
-      <h2>GitHub Pages – वेबसाइट का एक हिस्सा जो GitHub पर उपलब्ध है।</h2>
-      <p>गिटहब पेजेस के एक मुफ्त साइट को एक डोमेन से जोड़ने के लिए: 
-
-1. गिटहब प्रोफाइल में गो टू – > सेटिंग्स – > GitHub पेजेस में जाएं।
-2. GitHub Pages सेटिंग्स को सक्षम करें।
-3. गिटहब पेजेस के लिए डोमेन नाम को सेट करें।
-4. अपने डोमेन प्रदाता से DNS रिकॉर्ड्स को अपडेट करें।</p>
+      <h2>Scenario A: GitHub Pages (यह site)</h2>
+      <p>
+        किसी domain को free GitHub Pages site से connect करने के लिए:
+      </p>
       <pre>A        @      ->  185.199.108.153
 A        @      ->  185.199.109.153
 A        @      ->  185.199.110.153
 A        @      ->  185.199.111.153
 CNAME    www    ->  username.github.io</pre>
       <ol>
-        <li>मेरे DNS प्रदाता में उस रिकॉर्ड को जोड़ें।</li>
-        <li>गिटहब रिपॉजिटरी में: सेटिंग्स –> पेजेज –> कस्टम डोमेन –> अपना डोमेन दर्ज करें।</li>
-        <li>गिटहब वेरिफाई करता है और मुफ्त HTTPS सertificate जारी करता है।</li>
+        <li>अपने DNS provider पर वे records जोड़ें।</li>
+        <li>GitHub repo में: Settings → Pages → Custom domain → अपना domain डालें।</li>
+        <li>GitHub records verify करता है और automatic free HTTPS certificate जारी करता है।</li>
       </ol>
 
-      <h2>स्कीनेरियो बी: एक VPS या समर्पित सर्वर</h2>
-      <p>यदि आप एक सर्वर किराए पर लेते हैं (लिनोड, डिजिटल ओशन, हेट्जनर, एक VPS), अपने डोमेन को उसके IP पर निर्देशित करें।</p>
+      <h2>Scenario B: VPS या dedicated server</h2>
+      <p>
+        अगर आप server rent करते हैं (Linode, DigitalOcean, Hetzner, VPS), तो अपने domain को उसके IP पर point करें:
+      </p>
       <pre>A        @   ->  203.0.113.10      (your server's IP)
 CNAME    www ->  @                    (www follows the root)</pre>
-      <p>तो अपने वेब सर्वर (एनजिनएक्स, एपाचे, कैडी) को अपनी साइट से सेवा करने के लिए सेट करें और मुफ्त में HTTPS सेटअप करें।<strong>स्वतः प्रमाणीकरण प्रणाली</strong>प्रमाण पत्र</p>
+      <p>
+        फिर अपने web server (Nginx, Apache, Caddy) को अपनी site serve करने के लिए configure करें और free <strong>Let's Encrypt</strong> certificate के साथ HTTPS setup करें।
+      </p>
 
-      <h2>घरेलू सर्वर स्कीनरी सी: घरेलू सर्वर</h2>
-      <p>गृह नेटवर्क में एक स्तर जोड़ता है – आपके घर में एक सार्वजनिक आईपी होता है, जो सभी उपकरणों द्वारा साझा किया जाता है वाया NAT। आपको आवश्यक है</p>
+      <h2>Scenario C: Home server</h2>
+      <p>
+        Home networking एक layer जोड़ देता है – आपके घर का एक public IP है, जो NAT के ज़रिए हर device share करता है। आपको चाहिए:
+      </p>
       <ol>
         <li>
-          <strong>पोर्ट फॉरवर्डिंग</strong>– अपने राउटर को कहें कि वे वेब ट्रैफिक (पोर्ट 443) अपने सर्वर के प्राइवेट आईपी पर भेजें।</li>
+          <strong>Port forwarding</strong> – अपने router को कहें कि web traffic (port 443) आपके server के private IP पर भेजे।
+        </li>
         <li>
-          <strong>एक स्थिर सार्वजनिक IP</strong>– घरेलू कनेक्शन अक्सर IP बदल देते हैं। उपयोग करें<strong>DNS अपडेट (Domain Name System Update)</strong>IP परिवर्तन के समय डीएनएस रिकॉर्ड को अपडेट करने वाला सेवा।</li>
+          <strong>Fixed public IP</strong> – घर के connections अक्सर IPs बदल देते हैं। <strong>DDNS</strong> service इस्तेमाल करें जो आपके IP बदलने पर DNS record update कर देती है।
+        </li>
         <li>
-          <strong>सुरक्षित हाइपरटेक्स्ट ट्रांसफर प्रोटोकॉल</strong>– Let's Encrypt को डीएनएस रिकॉर्ड्स के माध्यम से मालिकी की पुष्टि करने की क्षमता है, इसलिए यह घरेलू IP पर भी काम करता है।</li>
+          <strong>HTTPS</strong> – Let's Encrypt ownership को DNS records के ज़रिए verify कर सकता है, इसलिए यह home IPs पर भी काम करता है।
+        </li>
       </ol>
-      <blockquote>सुरक्षा सूचना: घर के सर्वर को इंटरनेट पर खुला रखना वास्तविकता है। हर समय अपडेट रखें, SSH की चाबियों का उपयोग करें, और Cloudflare के मुफ्त प्रॉक्सी को एक अतिरिक्त कवच के रूप में विचार करें जो आपका वास्तविक IP छिपाता है।</blockquote>
+      <blockquote>
+        Security note: home server को internet पर expose करना गंभीर बात है। सब कुछ updated रखें, SSH keys इस्तेमाल करें, और Cloudflare के free proxy को extra shield के रूप में consider करें जो आपका real IP छिपाता है।
+      </blockquote>
 
-      <h2>ईमेल और सत्यापन रिकॉर्ड</h2>
-      <p>हिंदी में वेल्सटेक वेल्सचैट के बारे में जानकारी चाहिए।<code>you@yourdomain.com</code>कुछ शब्दों का अनुवाद करने की आवश्यकता है।<strong>MX रिकॉर्ड्स</strong>आपने अपने ईमेल प्रदाता पर (जीमेल/वर्कस्पेस, Zoho, या कस्टम मेल सर्वर) इशारा किया है । प्रदाता भी पूछते हैं<strong>TXT रिकॉर्ड्स</strong>डोमेन का मेल स्वामित्व साबित करने के लिए SPF और DKIM का उपयोग किया जाता है।</p>
+      <h2>Email और verification records</h2>
+      <p>
+        <code>you@yourdomain.com</code> चाहिए? इसके लिए आपके mail provider (Gmail/Workspace, Zoho, या custom mail server) पर point करने वाले <strong>MX records</strong> चाहिए। Providers <strong>TXT records</strong> (SPF, DKIM) भी माँगते हैं ताकि साबित हो सके कि आपके domain का mail आपका ही है।
+      </p>
 
-      <h2>सामान्य गलतियाँ 
-
-1. CPU – सीपीयू 
-2. GPU – जीपीयू 
-3. VRAM – वीआरएएम 
-4. RAM – आरएएम 
-5. LLM – एलएलएम 
-6. GGUF – जीजूएफ 
-7. Q4, Q5, Q8 – चौथा, पांचवें, आठवें 
-8. KV cache – केवी कैश 
-9. RAG – आरएजी 
-10. MoE – एमओई 
-11. ROCm – आरओसीएम 
-12. Vulkan – वुल्केन 
-13. CUDA – क्यूडीए 
-14. NPU – एनपीयू 
-15. SSD – एसएसडी 
-16. HDD – एचडीडी 
-17. DNS – डीएनएस 
-18. API – एपीआई 
-19. Ollama – ओल्लामा 
-20. llama.cpp – लम्ला 
-21. tokenizer – टोकनाइज़र 
-22. tokens – टोकन 
-23. embeddings – एम्बेडिंग्स 
-24. inference – इन्फरेंस</h2>
+      <h2>Common gotchas</h2>
       <ul>
-        <li><strong>प्रसार का समय लगता है</strong>– डीएनएस (DNS) परिवर्तन कई मिनटों से 48 घंटों (आमतौर पर एक अच्छे प्रदाता के साथ कुछ मिनटों) तक ले सकते हैं। धैर्य रखें।</li>
-        <li><strong>API – Application Programming Interface 
-API Gateway – API Gateway 
-API Key – API Key 
-API Management – API Management 
-API Portal – API Portal 
-API Security – API Suraksha 
-API Gateway – API Gateway 
-API – API 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API Gateway 
-API Gateway – API</strong>– या रूट को A रिकॉर्ड्स के माध्यम से इंगित करें, या सबडोमेन के लिए CNAME का उपयोग करें।</li>
-        <li><strong>HTTPS प्रोटोकॉल के पूर्व DNS कार्यान्वयन 
-
-HTTPS प्रोटोकॉल के पूर्व DNS कार्यान्वयन में DNS को HTTPS प्रोटोकॉल से अलग किया जाता है और DNS को एक अलग प्रोटोकॉल के रूप में कार्यान्वित किया जाता है। यह प्रक्रिया DNS को HTTPS प्रोटोकॉल से सुरक्षित करने के लिए की जाती है और यह सुनिश्चित करती है कि DNS के माध्यम से प्राप्त डेटा सुरक्षित और गोपनीय हो।</strong>– कुछ होस्ट DNS का समाधान होने तक सर्टिफिकेट नहीं जारी करते हैं। क्रम: DNS पहले, फिर HTTPS।</li>
-        <li><strong>कार्डों का रिकॉर्ड बनाएं<code>proxied: off</code></strong>(ग्रे क्लाउड) GitHub पेजेज़ और होम सर्वर्स के साथ – Cloudflare का प्रॉक्सी सीधे कनेक्शन तोड़ सकता है।</li>
+        <li><strong>Propagation में समय लगता है</strong> – DNS changes में मिनटों से 48 घंटों तक लग सकते हैं (अच्छे provider पर आमतौर पर कुछ मिनट)। धैर्य रखें।</li>
+        <li><strong>एक ही नाम पर A और CNAME mix न करें</strong> – या तो root को A records से point करें, या subdomains के लिए CNAME इस्तेमाल करें।</li>
+        <li><strong>HTTPS से पहले DNS</strong> – कुछ hosts तब तक certificate जारी नहीं करेंगे जब तक DNS resolve न हो। क्रम: पहले DNS, फिर HTTPS।</li>
+        <li><strong>Records को <code>proxied: off</code></strong> (gray cloud) रखें GitHub Pages और home servers के साथ – Cloudflare का proxy direct connections तोड़ सकता है।</li>
       </ul>
 
       <div class="tool-callout">
-        <div class="tool-callout-title">CIDR – साइरस की प्रोटोकॉल रिप्रजेंटेशन / सबनेट कैलकुलेटर को ट्राई करें VelsTech से।</div>
-        <p>नेटवर्क के पते के अंतराल को निर्धारित करने के लिए VPS या घर के नेटवर्क के लिए काम कर रहे हैं? किसी भी IP/सब्सक्राइब के लिए नेटवर्क, उपयोगी होस्ट और ब्रॉडकास्ट को सेकंड में प्राप्त करें।</p>
-        <a class="btn btn-primary" href="cidr-calculator.html">गणक खोलें</a>
+        <div class="tool-callout-title">🌐 VelsTech CIDR / Subnet Calculator try करें</div>
+        <p>VPS या home network के लिए address ranges निकाल रहे हैं? किसी भी IP/prefix के लिए network, usable hosts और broadcast सेकंडों में पाएँ।</p>
+        <a class="btn btn-primary" href="cidr-calculator.html">Open calculator →</a>
       </div>
 
-      <h2>वही है</h2>
-      <p>अपना नाम चुनें, कुछ रिकॉर्ड जोड़ें और आपका डोमेन किसी भी स्थान पर इशारा करता है चाहे वह मुफ्त स्टैटिक होस्टिंग हो, किराए पर ली गई सर्वर हो या आपके क्लॉसेट में एक बॉक्स हो – डीएनएस रिकॉर्ड्स हैं जो चिपकाते हैं, और अब आप जानते हैं कि वे कैसे काम करते हैं।</p>
+      <h2>बस इतना ही</h2>
+      <p>
+        नाम own करें, कुछ records जोड़ें, और आपका domain कहीं भी point करता है जहाँ आपका हक़ है। चाहे वह free static hosting हो, rented server हो या आपकी closet में रखा box – DNS records ही glue हैं, और अब आप जानते हैं कि वे कैसे काम करते हैं।
+      </p>
     </div>
 
     <div class="article-nav">
-      <a href="networking.html">← Back to Networking</a>
-      <a href="index.html">Home</a>
+      <a href="networking.html">← नेटवर्किंग पर वापस जाएँ</a>
+      <a href="index.html">गृह</a>
     </div>
   </main>
 

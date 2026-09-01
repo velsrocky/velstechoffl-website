@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Tiel-Coder-35B-A3B Q4_K_XL ஐ RX 6800M இல் சோதித்தோம் – MTP ஊக டிகோடிங் 29.09 tok/s vs MTP இல்லாமல் 25.39 tok/s, 262K q8 KV, 28-32 CPU experts." />
+  <title>Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html#article",
+  "headline": "Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab",
+  "description": "Tiel-Coder-35B-A3B Q4_K_XL ஐ RX 6800M இல் சோதித்தோம் – MTP ஊக டிகோடிங் 29.09 tok/s vs MTP இல்லாமல் 25.39 tok/s, 262K q8 KV, 28-32 CPU experts, ROCm 10.0.",
+  "url": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html",
+  "datePublished": "2026-09-01T00:00:00Z",
+  "dateModified": "2026-09-01T00:00:00Z",
+  "inLanguage": "ta",
+  "image": "https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html" />
+  <meta property="og:title" content="Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K | VelsTech" />
+  <meta property="og:description" content="Tiel-Coder-35B-A3B Q4_K_XL ஐ RX 6800M இல் சோதித்தோம் – MTP ஊக டிகோடிங் 29.09 tok/s vs MTP இல்லாமல் 25.39 tok/s, 262K q8 KV, 28-32 CPU experts, ROCm 10.0." />
+  <meta property="og:image" content="https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="Tiel-Coder-35B-A3B Q4_K_XL ஐ RX 6800M இல் சோதித்தோம் – MTP ஊக டிகோடிங் 29.09 tok/s vs MTP இல்லாமல் 25.39 tok/s, 262K q8 KV, 28-32 CPU experts, ROCm 10.0." />
+  <meta name="twitter:image" content="https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="ai.html">AI</a> / <a href="lab.html">VelsTech Lab</a> / இந்த பரிசோதனை</p>
+    <h1 class="title">Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">MoE</span>
+      <span class="tag">MTP</span>
+      <span class="tag">RX 6800M</span>
+      <span class="tag">llama.cpp</span>
+      <span>செப் 1, 2026</span>
+      <span>· 4 நிமிட வாசிப்பு</span>
+      <span>· செப் 1, 2026 அன்று புதுப்பிக்கப்பட்டது</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab</span> Multi-Token Prediction (MTP) மூலம் ஊக டிகோடிங் – 35B-A3B MoE மாடலில், 12 GB மொபைல் GPU வில் 28+ CPU expert fallback உடன் draft head உண்மையில் வேகத்தை அதிகரிக்கிறதா?</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 முதலில் உங்கள் பொருத்தத்தை சரிபார்க்கவும்</div>
+        <p><a href="llm-vram-calculator.html">LLM VRAM கால்குலேட்டர்</a> – 35B Q4 + 262K உங்கள் VRAM இல் பொருந்துமா? · <a href="gpu-ai-calculator.html">GPU AI செயல்திறன் கால்குலேட்டர்</a> – இயக்குவதற்கு முன் எதிர்பார்க்கும் tok/s.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">கால்குலேட்டர்களை திறக்கவும் →</a>
+      </div>
+
+      <h2>சோதிக்கப்பட்ட இரண்டு பில்டுகள்</h2>
+      <ul>
+        <li><strong>இயந்திரம்:</strong> R9 5900HX (8C/16T) · AMD RX 6800M 12GB (RDNA2, மொபைல்) · 32 GB RAM · Ubuntu 26.04 · ROCm 10.0 · <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> (தற்போதைய பில்டு)</li>
+        <li><strong>மாடல் (MTP இல்லை):</strong> <code>Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf</code> – 35B மொத்தம், 3B செயலில் உள்ள MoE, Q4_K_XL குவாண்ட்</li>
+        <li><strong>மாடல் (MTP):</strong> <code>Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf</code> – அதே மாடலுடன் multi-token prediction draft head</li>
+        <li><strong>சூழல்:</strong> <code>-c 262144</code> உடன் <code>--cache-type-k q8_0 --cache-type-v q8_0 -fa on</code></li>
+        <li><strong>ஆஃப்லோடு:</strong> <code>-ngl 999</code> (கட்டாயம் – கீழே எச்சரிக்கையைப் பார்க்கவும்)</li>
+        <li><strong>CPU experts:</strong> <code>--n-cpu-moe 28</code> (MTP இல்லை) vs <code>--n-cpu-moe 32</code> (MTP) – சிறிய வேறுபாட்டைக் கவனிக்கவும்</li>
+        <li><strong>ப்ராம்ப்ட்:</strong> ~608-617 டோக்கன்கள் (இரண்டு ரன்களிலும் ஒரே ப்ராம்ப்ட்), <code>n_threads=8</code>, <code>kv_unified=false</code>, <code>n_slots=1, n_ctx_slot=262144</code></li>
+      </ul>
+
+      <h2>எப்படி இயக்கினோம்</h2>
+      <h3>ரன் 1 – MTP இல்லை</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf \
+ -ngl 999 \
+ --n-cpu-moe 28 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -c 262144 -fa on \
+ --jinja --parallel 1</pre>
+
+      <h3>ரன் 2 – MTP ஊக டிகோடிங்</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf \
+ --spec-type draft-mtp \
+ -ngl 999 \
+ --n-cpu-moe 32 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -c 262144 -fa on \
+ --jinja --reasoning-preserve --parallel 1</pre>
+
+      <h2>நாம் அளந்தது என்ன</h2>
+      <h3>ரன் 1 – MTP இல்லை (--n-cpu-moe 28)</h3>
+      <pre>prompt eval:   5220.06 ms / 621 tokens (  8.41 ms/tok,  118.96 tok/s)
+eval (decode): 5155.86 ms / 132 tokens ( 39.36 ms/tok,   25.41 tok/s)
+generate:      100 tokens @ 25.39 tok/s (tg), 25.65 tok/s (tg_3s)
+total:         10375.93 ms / 753 tokens
+graphs reused: 131</pre>
+
+      <h3>ரன் 2 – MTP (--spec-type draft-mtp, --n-cpu-moe 32)</h3>
+      <pre>prompt eval:   5574.58 ms / 621 tokens (  8.98 ms/tok,  111.40 tok/s)
+eval (decode): 5105.25 ms / 131 tokens ( 39.27 ms/tok,   25.46 tok/s)
+generate:      100 tokens @ 29.09 tok/s (tg), 29.38 tok/s (tg_3s)
+draft:         acceptance = 0.54667 (82 accepted / 150 generated), mean len = 2.64
+total:         10679.83 ms / 752 tokens
+graphs reused: 50</pre>
+
+      <h3>நேரடி ஒப்பீடு</h3>
+      <pre>Metric               No MTP              MTP           Delta
+─────────────────────────────────────────────────────────────
+Prompt eval          118.96 tok/s       111.40 tok/s    -6.4%
+Decode (slot)        25.41 tok/s         25.46 tok/s    +0.2%
+Generate (tg)        25.39 tok/s         29.09 tok/s   +14.6%
+Generate (tg_3s)     25.65 tok/s         29.38 tok/s   +14.5%
+Total time           10.38 s             10.68 s        +3.0%
+Graphs reused         131                  50            -62%
+Draft acceptance      –                    54.7%          –
+Mean len              –                     2.64          –</pre>
+      <p><strong>முடிவு:</strong> MTP ஊக டிகோடிங் 35B-A3B MoE மாடலில் <strong>+14.6% டிகோட் வேக அதிகரிப்பை</strong> வழங்குகிறது (25.39 → 29.09 tok/s). Draft head அதன் கணிப்புகளில் 55% ஐ ஏற்றுக்கொள்கிறது, சராசரி 2.64 டோக்கன்கள். Graphs reused 62% குறைகிறது (131 → 50) ஏனெனில் draft context குறைவான cached graph executions ஐ மீண்டும் பயன்படுத்துகிறது. Prompt eval சிறிய பாதிப்பைக் கொண்டுள்ளது (-6.4%) கூடுதல் MTP context காரணமாக. <code>--n-cpu-moe</code> உம் வேறுபடுகிறது (28 vs 32) – MTP ரனில் கூடுதல் 4 CPU expert threads சிறிய பங்களிப்பை அளிக்கலாம்.</p>
+
+      <h2>லாக்கள் என்ன சொன்னது – மற்றும் என்ன உடைந்தது</h2>
+      <ol>
+        <li><strong>இரண்டு ரன்களும்:</strong> <code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – 12 GB கார்டில் <code>-ngl 999</code> ஐ கட்டாயப்படுத்தினீர்கள், எனவே பகுதி CPU ஆஃப்லோடு தவிர்க்க முடியாதது. மாடல் 35B Q4 இல் (~17.5 GB எடைகள்) + q8 KV 262K இல் (~12 GB+) – 12 GB இல் பொருந்தாது. பெரும்பாலான MoE expert computations <code>--n-cpu-moe</code> மூலம் CPU க்கு திரும்புகின்றன.</li>
+        <li><strong>இரண்டு ரன்களும்:</strong> <code>W tensor overrides to CPU are used with mmap enabled – consider using --load-mode none for better performance</code> – சில tensor overrides CPU fallback ஐ கட்டாயப்படுத்துகின்றன. <code>--load-mode none</code> mmap ஐ பிரித்து செயல்திறனை மேம்படுத்தலாம்.</li>
+        <li><strong>MTP ரன் மட்டும்:</strong> <code>W device 'ROCm0' does not have support for op TOP_K needed for sampler 'top-k'</code> – MTP draft sampler க்கு பொருத்தமானது; draft தரத்தை பாதிக்கலாம். 54.7% ஏற்பு விகிதம் top-k ஐ இயற்கையாக ஆதரிக்கும் பேக்எண்டுடன் மேம்படலாம்.</li>
+        <li><strong>MTP ரன் மட்டும்:</strong> <code>I common_speculative_init_result: creating MTP draft context against the target model '...MTP-UD-Q4_K_XL.gguf'</code> – MTP அதன் சொந்த draft context ஐ உருவாக்குகிறது, இது init நேரத்தில் ~200ms ஐ சேர்க்கிறது (சற்று அதிகமான prompt eval நேரத்தில் தெரியும்).</li>
+        <li><strong>முக்கிய வேறுபாடு:</strong> <code>--n-cpu-moe 28</code> (MTP இல்லை) vs <code>--n-cpu-moe 32</code> (MTP) – இந்த 4-த்ரெட் வேறுபாடு ஒரு குழப்பமான காரணியாகும். இரண்டையும் ஒரே மதிப்புடன் மீண்டும் இயக்குவது MTP-மட்டும் ஆதாயத்தை தனிமைப்படுத்தும்.</li>
+      </ol>
+
+      <h2>இறுதி முடிவு</h2>
+      <p>RX 6800M 12GB இல் 262K q8 KV உடன், இந்த 35B-A3B MoE மாடலில் <strong>MTP draft head +14.6% டிகோட் வேக அதிகரிப்பை</strong> வழங்குகிறது, டிகோடை 25.4 இலிருந்து 29.1 tok/s ஆக உயர்த்துகிறது. மேல்நிலை செலவு குறைவு (மொத்த நேரத்தில் 3% அதிகம், prompt eval இல் 6% மெதுவானது). <code>--n-cpu-moe</code> உம் வேறுபட்டதால், உண்மையான MTP-மட்டும் ஆதாயம் சற்று குறைவாக இருக்கலாம் – அதை <strong>~10-12% நிகர</strong> என மதிப்பிடலாம். உங்கள் பேக்எண்ட் MTP sampler க்கு top-k ஐ ஆதரித்தால், ஏற்பு விகிதங்கள் மேலும் மேம்படலாம். சாட் பணிச்சுமைகளுக்கு (decode-bound), MTP ஐ draft head உடன் வரும் எந்த MoE மாடலிலும் இயக்குவது மதிப்புள்ளது.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 மேலும் Lab</div>
+        <p>அடுத்தது: ஒரே மாதிரியான <code>--n-cpu-moe</code> மற்றும் <code>--load-mode none</code> உடன் இரண்டு ரன்களையும் மீண்டும் இயக்கி தூய MTP ஆதாயத்தை தனிமைப்படுத்தவும், பின்னர் top-k ஆதரவு வேறுபடும் Vulkan பேக்எண்டில் சோதிக்கவும்.</p>
+        <a class="btn btn-primary" href="lab.html">VelsTech Lab க்கு திரும்பு →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI க்கு திரும்பு</a>
+      <a href="moe-vs-dense-rx6800m-16k-vs-262k.html">RX 6800M இல் MoE vs Dense</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

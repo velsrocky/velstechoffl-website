@@ -2127,8 +2127,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/tiel-coder-35b-mtp-rx6800m.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/tiel-coder-35b-mtp-rx6800m.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

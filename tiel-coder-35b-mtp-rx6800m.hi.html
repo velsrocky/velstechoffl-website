@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="RX 6800M पर Tiel-Coder-35B-A3B Q4_K_XL का परीक्षण – MTP ड्राफ्ट स्पेक्युलेटिव डिकोडिंग 29.09 tok/s बनाम 25.39 tok/s बिना MTP, 262K q8 KV, 28-32 CPU एक्सपर्ट पर।" />
+  <title>Tiel-Coder 35B-A3B RX 6800M पर: MTP बनाम non-MTP 262K पर – VelsTech Lab | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.hi.html#article",
+  "headline": "Tiel-Coder 35B-A3B RX 6800M पर: MTP बनाम non-MTP 262K पर – VelsTech Lab",
+  "description": "RX 6800M पर Tiel-Coder-35B-A3B Q4_K_XL का परीक्षण – MTP स्पेक्युलेटिव डिकोडिंग 29.09 tok/s बनाम 25.39 tok/s बिना MTP, 262K q8 KV, 28-32 CPU एक्सपर्ट, ROCm 10.0 पर।",
+  "url": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.hi.html",
+  "datePublished": "2026-09-01T00:00:00Z",
+  "dateModified": "2026-09-01T00:00:00Z",
+  "inLanguage": "hi",
+  "image": "https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.html"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <meta property="og:title" content="Tiel-Coder 35B-A3B RX 6800M पर: MTP बनाम non-MTP 262K पर | VelsTech" />
+  <meta property="og:description" content="RX 6800M पर Tiel-Coder-35B-A3B Q4_K_XL का परीक्षण – MTP स्पेक्युलेटिव डिकोडिंग 29.09 tok/s बनाम 25.39 tok/s बिना MTP, 262K q8 KV, 28-32 CPU एक्सपर्ट, ROCm 10.0 पर।" />
+  <meta property="og:image" content="https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tiel-Coder 35B-A3B RX 6800M पर: MTP बनाम non-MTP 262K पर – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="RX 6800M पर Tiel-Coder-35B-A3B Q4_K_XL का परीक्षण – MTP स्पेक्युलेटिव डिकोडिंग 29.09 tok/s बनाम 25.39 tok/s बिना MTP, 262K q8 KV, 28-32 CPU एक्सपर्ट, ROCm 10.0 पर।" />
+  <meta name="twitter:image" content="https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">गृह</a> / <a href="ai.html">AI</a> / <a href="lab.html">VelsTech Lab</a> / यह प्रयोग</p>
+    <h1 class="title">Tiel-Coder 35B-A3B RX 6800M पर: MTP बनाम non-MTP 262K पर – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">MoE</span>
+      <span class="tag">MTP</span>
+      <span class="tag">RX 6800M</span>
+      <span class="tag">llama.cpp</span>
+      <span>1 सितंबर 2026</span>
+      <span>· 4 मिनट पढ़ें</span>
+      <span>· अपडेटेड 1 सितंबर 2026</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab</span> 35B-A3B MoE मॉडल पर मल्टी-टोकन प्रेडिक्शन (MTP) के माध्यम से स्पेक्युलेटिव डिकोडिंग – क्या ड्राफ्ट हेड 12 GB मोबाइल GPU पर 28+ CPU एक्सपर्ट फ़ॉलबैक के साथ वास्तव में गति बढ़ाता है?</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 पहले अपनी फ़िट जाँचें</div>
+        <p><a href="llm-vram-calculator.html">LLM VRAM कैलकुलेटर</a> – क्या 35B Q4 + 262K आपके VRAM में फ़िट बैठता है? · <a href="gpu-ai-calculator.html">GPU AI परफ़ॉर्मेंस कैलकुलेटर</a> – चलाने से पहले किस tok/s की उम्मीद करें।</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">कैलकुलेटर खोलें →</a>
+      </div>
+
+      <h2>दो बिल्ड का परीक्षण</h2>
+      <ul>
+        <li><strong>मशीन:</strong> R9 5900HX (8C/16T) · AMD RX 6800M 12GB (RDNA2, मोबाइल) · 32 GB RAM · Ubuntu 26.04 · ROCm 10.0 · <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> (वर्तमान बिल्ड)</li>
+        <li><strong>मॉडल (बिना MTP):</strong> <code>Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf</code> – कुल 35B, 3B सक्रिय MoE, Q4_K_XL क्वांट</li>
+        <li><strong>मॉडल (MTP):</strong> <code>Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf</code> – वही मॉडल मल्टी-टोकन प्रेडिक्शन ड्राफ्ट हेड के साथ</li>
+        <li><strong>कॉन्टेक्स्ट:</strong> <code>-c 262144</code> और <code>--cache-type-k q8_0 --cache-type-v q8_0 -fa on</code></li>
+        <li><strong>ऑफ़लोड:</strong> <code>-ngl 999</code> (फ़ोर्स्ड – नीचे चेतावनी देखें)</li>
+        <li><strong>CPU एक्सपर्ट:</strong> <code>--n-cpu-moe 28</code> (बिना MTP) बनाम <code>--n-cpu-moe 32</code> (MTP) – मामूली अंतर पर ध्यान दें</li>
+        <li><strong>प्रॉम्प्ट:</strong> ~608-617 टोकन (दोनों रन में एक ही प्रॉम्प्ट), <code>n_threads=8</code>, <code>kv_unified=false</code>, <code>n_slots=1, n_ctx_slot=262144</code></li>
+      </ul>
+
+      <h2>हमने इसे कैसे चलाया</h2>
+      <h3>Run 1 – बिना MTP</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf \
+ -ngl 999 \
+ --n-cpu-moe 28 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -c 262144 -fa on \
+ --jinja --parallel 1</pre>
+
+      <h3>Run 2 – MTP स्पेक्युलेटिव डिकोडिंग</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf \
+ --spec-type draft-mtp \
+ -ngl 999 \
+ --n-cpu-moe 32 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -c 262144 -fa on \
+ --jinja --reasoning-preserve --parallel 1</pre>
+
+      <h2>हमने क्या मापा</h2>
+      <h3>Run 1 – बिना MTP (--n-cpu-moe 28)</h3>
+      <pre>prompt eval:   5220.06 ms / 621 tokens (  8.41 ms/tok,  118.96 tok/s)
+eval (decode): 5155.86 ms / 132 tokens ( 39.36 ms/tok,   25.41 tok/s)
+generate:      100 tokens @ 25.39 tok/s (tg), 25.65 tok/s (tg_3s)
+total:         10375.93 ms / 753 tokens
+graphs reused: 131</pre>
+
+      <h3>Run 2 – MTP (--spec-type draft-mtp, --n-cpu-moe 32)</h3>
+      <pre>prompt eval:   5574.58 ms / 621 tokens (  8.98 ms/tok,  111.40 tok/s)
+eval (decode): 5105.25 ms / 131 tokens ( 39.27 ms/tok,   25.46 tok/s)
+generate:      100 tokens @ 29.09 tok/s (tg), 29.38 tok/s (tg_3s)
+draft:         acceptance = 0.54667 (82 accepted / 150 generated), mean len = 2.64
+total:         10679.83 ms / 752 tokens
+graphs reused: 50</pre>
+
+      <h3>आमने-सामने तुलना</h3>
+      <pre>Metric               No MTP              MTP           Delta
+─────────────────────────────────────────────────────────────
+Prompt eval          118.96 tok/s       111.40 tok/s    -6.4%
+Decode (slot)        25.41 tok/s         25.46 tok/s    +0.2%
+Generate (tg)        25.39 tok/s         29.09 tok/s   +14.6%
+Generate (tg_3s)     25.65 tok/s         29.38 tok/s   +14.5%
+Total time           10.38 s             10.68 s        +3.0%
+Graphs reused         131                  50            -62%
+Draft acceptance      –                    54.7%          –
+Mean len              –                     2.64          –</pre>
+      <p><strong>निष्कर्ष:</strong> MTP स्पेक्युलेटिव डिकोडिंग 35B-A3B MoE मॉडल पर <strong>+14.6% डिकोड स्पीडअप</strong> (25.39 → 29.09 tok/s) देता है। ड्राफ्ट हेड अपनी 55% भविष्यवाणियों को 2.64 टोकन की औसत लंबाई के साथ स्वीकार करता है। Graphs reused 62% घट जाते हैं (131 → 50) क्योंकि ड्राफ्ट कॉन्टेक्स्ट कम कैश्ड ग्राफ़ एक्सीक्यूशन का पुनः उपयोग करता है। प्रॉम्प्ट eval में मामूली कमी (-6.4%) आती है, जो अतिरिक्त MTP कॉन्टेक्स्ट के कारण है। ध्यान दें कि <code>--n-cpu-moe</code> भी भिन्न है (28 बनाम 32) – MTP रन में 4 अतिरिक्त CPU एक्सपर्ट थ्रेड्स का लाभ के एक छोटे हिस्से में योगदान हो सकता है।</p>
+
+      <h2>लॉग्स ने क्या कहा – और क्या टूटा</h2>
+      <ol>
+        <li><strong>दोनों रन:</strong> <code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – आपने 12 GB कार्ड पर <code>-ngl 999</code> फ़ोर्स किया, इसलिए आंशिक CPU ऑफ़लोड अपरिहार्य है। मॉडल Q4 में 35B (~17.5 GB वज़न) + q8 KV 262K (~12 GB+) है – 12 GB में फ़िट होना असंभव है। अधिकांश MoE एक्सपर्ट गणनाएँ <code>--n-cpu-moe</code> के माध्यम से CPU पर फ़ॉलबैक करती हैं।</li>
+        <li><strong>दोनों रन:</strong> <code>W tensor overrides to CPU are used with mmap enabled – consider using --load-mode none for better performance</code> – कुछ टेंसर ओवरराइड्स CPU फ़ॉलबैक फ़ोर्स करते हैं। <code>--load-mode none</code> mmap को अलग करके प्रदर्शन में सुधार कर सकता है।</li>
+        <li><strong>केवल MTP रन:</strong> <code>W device 'ROCm0' does not have support for op TOP_K needed for sampler 'top-k'</code> – MTP ड्राफ्ट सैम्पलर के लिए प्रासंगिक; ड्राफ्ट गुणवत्ता को प्रभावित कर सकता है। 54.7% स्वीकृति दर ऐसे बैकएंड से बेहतर हो सकती है जो top-k मूलतः सपोर्ट करता है।</li>
+        <li><strong>केवल MTP रन:</strong> <code>I common_speculative_init_result: creating MTP draft context against the target model '...MTP-UD-Q4_K_XL.gguf'</code> – MTP अपना स्वयं का ड्राफ्ट कॉन्टेक्स्ट बनाता है, जो इनिशियलाइज़ेशन समय में ~200ms जोड़ता है (प्रॉम्प्ट eval समय में थोड़ी वृद्धि में दिखाई देता है)।</li>
+        <li><strong>मुख्य अंतर:</strong> <code>--n-cpu-moe 28</code> (बिना MTP) बनाम <code>--n-cpu-moe 32</code> (MTP) – यह 4-थ्रेड का अंतर एक कन्फ़ाउंड है। दोनों को समान मान के साथ पुनः चलाने से केवल MTP लाभ को अलग किया जा सकेगा।</li>
+      </ol>
+
+      <h2>निचली पंक्ति</h2>
+      <p>RX 6800M 12GB पर 262K q8 KV पर, इस 35B-A3B MoE मॉडल के लिए <strong>MTP ड्राफ्ट हेड +14.6% का सार्थक डिकोड स्पीडअप</strong> प्रदान करता है, जो डिकोड को 25.4 से 29.1 tok/s तक बढ़ा देता है। ओवरहेड न्यूनतम है (कुल समय में 3% अधिक, प्रॉम्प्ट eval में 6% धीमा)। चूँकि <code>--n-cpu-moe</code> भी भिन्न था, वास्तविक MTP-मात्र लाभ संभवतः थोड़ा कम है – इसे <strong>~10-12% शुद्ध</strong> कह सकते हैं। यदि आपका बैकएंड MTP सैम्पलर के लिए top-k समर्थन करता है, तो स्वीकृति दरें और बेहतर हो सकती हैं। चैट वर्कलोड (डिकोड-बाउंड) के लिए, MTP उन सभी MoE मॉडलों पर सक्षम करने लायक है जो ड्राफ्ट हेड के साथ आते हैं।</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 और अधिक Lab</div>
+        <p>अगला: दोनों को समान <code>--n-cpu-moe</code> और <code>--load-mode none</code> के साथ पुनः चलाकर शुद्ध MTP लाभ को अलग करें, फिर Vulkan बैकएंड पर परीक्षण करें जहाँ top-k समर्थन भिन्न है।</p>
+        <a class="btn btn-primary" href="lab.html">VelsTech Lab पर वापस जाएँ →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← AI पर वापस जाएँ</a>
+      <a href="moe-vs-dense-rx6800m-16k-vs-262k.html">RX 6800M पर MoE बनाम Dense</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

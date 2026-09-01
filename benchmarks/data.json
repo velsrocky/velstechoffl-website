@@ -39,6 +39,25 @@
       "notes": "28 CPU experts, MoE-sparse + q8 KV + CPU offload. ROCm wins decode (+30%). Decodes ~3B active per token, so speed holds even at 262K. Needs --load-mode none, no -ngl 999."
     },
     {
+      "id": "rx-6800m-tiel-coder-35b-mtp",
+      "gpu": "RX 6800M",
+      "gpu_vram": "12 GB",
+      "gpu_bw": "~384 GB/s",
+      "model": "Tiel-Coder 35B-A3B",
+      "params": "35B (3B active)",
+      "quant": "Q4_K_XL",
+      "context": "262K",
+      "kv_quant": "q8_0",
+      "offload": true,
+      "tested": true,
+      "source_article": "tiel-coder-35b-mtp-rx6800m.html",
+      "backends": [
+        { "name": "ROCm (no MTP)", "decode": 25.39, "prompt": 118.96 },
+        { "name": "ROCm + MTP", "decode": 29.09, "prompt": 111.4 }
+      ],
+      "notes": "MTP speculative decoding on MoE (28 vs 32 CPU experts). MTP +14.6% decode (25.39 → 29.09 tok/s), prompt -6.4%, 54.7% acceptance (2.64 mean). 35B Q4 ~17.5GB + q8 KV 262K needs --n-cpu-moe offload on 12GB."
+    },
+    {
       "id": "rtx-4090-qwen-7b-q4",
       "gpu": "RTX 4090",
       "gpu_vram": "24 GB",

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0f14">
+<meta name="description" content="RSS एग्रीगेटर – अपने पसंदीदा फ़ीड एक ही जगह पढ़ें. कोई भी RSS/Atom फ़ीड URL जोड़ें और नवीनतम पोस्ट अपने ब्राउज़र में पढ़ें.">
+<title>RSS एग्रीगेटर | VelsTech</title>
+<link rel="canonical" href="https://velstech.net/rss-aggregator.html">
+<link rel="alternate" hreflang="en" href="https://velstech.net/rss-aggregator.html">
+<link rel="alternate" hreflang="hi" href="https://velstech.net/rss-aggregator.hi.html">
+<link rel="alternate" hreflang="x-default" href="https://velstech.net/rss-aggregator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VelsTech">
+<meta property="og:url" content="https://velstech.net/rss-aggregator.html">
+<meta property="og:title" content="RSS एग्रीगेटर | VelsTech">
+<meta property="og:description" content="RSS एग्रीगेटर – अपने पसंदीदा फ़ीड एक ही जगह पढ़ें. कोई भी RSS/Atom फ़ीड URL जोड़ें और नवीनतम पोस्ट अपने ब्राउज़र में पढ़ें.">
+<meta property="og:image" content="https://velstech.net/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RSS एग्रीगेटर | VelsTech">
+<meta name="twitter:description" content="RSS एग्रीगेटर – अपने पसंदीदा फ़ीड एक ही जगह पढ़ें. कोई भी RSS/Atom फ़ीड URL जोड़ें और नवीनतम पोस्ट अपने ब्राउज़र में पढ़ें.">
+<meta name="twitter:image" content="https://velstech.net/og-image.png">
+<link rel="icon" href="logo.svg">
+<link rel="stylesheet" href="styles.css?v=40">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0b0f14; color: #e6edf3; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 24px; max-width: 900px; margin: 0 auto; }
+  a { color: #4cc2ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .sub { color: #9aa8b8; font-size: 13px; margin-bottom: 20px; }
+  .add-form { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .add-form input { flex: 1; min-width: 220px; background: #11161d; border: 1px solid #1f2733; border-radius: 8px; color: #e6edf3; padding: 10px 12px; font-size: 14px; }
+  .add-form input:focus { outline: none; border-color: #4cc2ff; }
+  .add-form button { padding: 10px 16px; border: none; border-radius: 8px; background: #4cc2ff; color: #06121f; font-weight: 700; cursor: pointer; font-size: 14px; }
+  .add-form button:hover { opacity: .9; }
+  .feeds { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .feed-chip { display: flex; align-items: center; gap: 6px; background: #11161d; border: 1px solid #1f2733; border-radius: 999px; padding: 5px 12px; font-size: 12px; cursor: pointer; }
+  .feed-chip.active { border-color: #4cc2ff; color: #4cc2ff; }
+  .feed-chip .x { color: #f87171; cursor: pointer; font-size: 14px; line-height: 1; }
+  .status { font-size: 13px; color: #9aa8b8; margin-bottom: 12px; }
+  .status.error { color: #f87171; }
+  .item { background: #11161d; border: 1px solid #1f2733; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .item h3 { font-size: 16px; margin-bottom: 4px; }
+  .item h3 a { color: #e6edf3; }
+  .item h3 a:hover { color: #4cc2ff; }
+  .item .meta { font-size: 12px; color: #9aa8b8; margin-bottom: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .item .desc { font-size: 14px; line-height: 1.5; color: #c0cad6; }
+  .item .desc p { margin-bottom: 6px; }
+  .item .desc img { display: none; }
+  .loading { display: flex; gap: 6px; align-items: center; color: #9aa8b8; font-size: 14px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #4cc2ff; animation: pulse 1.2s infinite; }
+  .dot:nth-child(2) { animation-delay: .2s; }
+  .dot:nth-child(3) { animation-delay: .4s; }
+  @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+  .empty { color: #6b7280; text-align: center; padding: 60px 20px; font-size: 14px; }
+  .note { font-size: 12px; color: #6b7280; margin-top: 20px; line-height: 1.5; }
+  code { background: rgba(127,127,127,.2); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>📡 RSS एग्रीगेटर</h1>
+<p class="sub">अपने पसंदीदा फ़ीड एक ही जगह पढ़ें — फ़ीड VelsTech के प्रॉक्सी के ज़रिए लाए जाते हैं और आपके ब्राउज़र में पार्स किए जाते हैं.</p>
+
+<div class="add-form">
+  <input id="feed-url" type="url" placeholder="RSS/Atom फ़ीड URL पेस्ट करें… जैसे https://velstech.net/feed.xml">
+  <button onclick="addFeed()">फ़ीड जोड़ें</button>
+</div>
+
+<div class="feeds" id="feeds"></div>
+<div class="status" id="status">शुरू करने के लिए एक फ़ीड जोड़ें.</div>
+<div id="results"></div>
+<div class="note">
+  फ़ीड आपके ब्राउज़र (localStorage) में संग्रहीत होते हैं. प्रत्येक फ़ीड CORS को बायपास करने के लिए <code>chat.velstech.net/api/rss</code> के ज़रिए लाया जाता है.
+  कुछ आज़माएँ: <code>https://velstech.net/feed.xml</code> · <code>https://hnrss.org/frontpage</code> · <code>https://www.theverge.com/rss/index.xml</code>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var PROXY = 'https://chat.velstech.net/api/rss?url=';
+  var feedsEl = document.getElementById('feeds');
+  var statusEl = document.getElementById('status');
+  var resultsEl = document.getElementById('results');
+  var feeds = [];
+  var active = null;
+
+  function load() {
+    try { feeds = JSON.parse(localStorage.getItem('vt-rss-feeds') || '[]'); } catch(e) { feeds = []; }
+  }
+  function save() {
+    try { localStorage.setItem('vt-rss-feeds', JSON.stringify(feeds)); } catch(e) {}
+  }
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function timeAgo(dateStr) {
+    try {
+      var t = new Date(dateStr).getTime();
+      if (!t) return dateStr || '';
+      var s = Math.floor((Date.now() - t) / 1000);
+      if (s < 60) return 'just now';
+      if (s < 3600) return Math.floor(s/60) + 'm ago';
+      if (s < 86400) return Math.floor(s/3600) + 'h ago';
+      if (s < 86400*30) return Math.floor(s/86400) + 'd ago';
+      return new Date(t).toLocaleDateString();
+    } catch(e) { return dateStr || ''; }
+  }
+
+  function renderFeeds() {
+    feedsEl.innerHTML = feeds.map(function(f, i) {
+      return '<span class="feed-chip' + (i === active ? ' active' : '') + '" onclick="selectFeed(' + i + ')">' +
+        esc(f.title || new URL(f.url).hostname) + ' <span class="x" onclick="event.stopPropagation(); removeFeed(' + i + ')">×</span></span>';
+    }).join('');
+  }
+
+  function renderItems(feed, items) {
+    var html = '<h2 style="font-size:17px;margin-bottom:12px">' + esc(feed.title || 'Feed') + '</h2>';
+    if (!items.length) {
+      resultsEl.innerHTML = html + '<div class="empty">No items found in this feed.</div>';
+      return;
+    }
+    html += items.map(function(it) {
+      var desc = (it.description || it.content || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (desc.length > 300) desc = desc.slice(0, 300) + '…';
+      return '<div class="item"><h3><a href="' + esc(it.link || '#') + '" target="_blank" rel="noopener">' + esc(it.title || '(untitled)') + '</a></h3>' +
+        '<div class="meta"><span>' + timeAgo(it.pubDate || it.updated || '') + '</span>' +
+        (it.author ? '<span>' + esc(it.author) + '</span>' : '') + '</div>' +
+        (desc ? '<div class="desc">' + esc(desc) + '</div>' : '') + '</div>';
+    }).join('');
+    resultsEl.innerHTML = html;
+  }
+
+  function parseFeed(xmlText) {
+    var doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+    if (doc.querySelector('parsererror')) return null;
+    // RSS 2.0
+    var channel = doc.querySelector('channel');
+    if (channel) {
+      var feed = { title: q(channel, 'title'), description: q(channel, 'description') };
+      var items = Array.prototype.slice.call(channel.querySelectorAll('item')).map(function(it) {
+        return {
+          title: q(it, 'title'),
+          link: q(it, 'link'),
+          description: q(it, 'description'),
+          pubDate: q(it, 'pubDate'),
+          author: q(it, 'dc\\:creator') || q(it, 'author'),
+        };
+      });
+      return { feed: feed, items: items };
+    }
+    // Atom
+    var f = doc.querySelector('feed');
+    if (f) {
+      var feed2 = { title: q(f, 'title'), description: q(f, 'subtitle') };
+      var items2 = Array.prototype.slice.call(f.querySelectorAll('entry')).map(function(en) {
+        var link = en.querySelector('link');
+        return {
+          title: q(en, 'title'),
+          link: link ? (link.getAttribute('href') || '') : '',
+          description: q(en, 'summary') || q(en, 'content'),
+          pubDate: q(en, 'published') || q(en, 'updated'),
+          author: (function(){ var a = en.querySelector('author name'); return a ? a.textContent : ''; })(),
+        };
+      });
+      return { feed: feed2, items: items2 };
+    }
+    return null;
+  }
+
+  function q(el, sel) {
+    var n = el.querySelector(sel);
+    return n ? (n.textContent || '').trim() : '';
+  }
+
+  window.selectFeed = function(i) {
+    active = i;
+    renderFeeds();
+    fetchFeed(feeds[i]);
+  };
+
+  window.removeFeed = function(i) {
+    feeds.splice(i, 1);
+    if (active === i) active = null;
+    if (active !== null && active >= feeds.length) active = feeds.length - 1;
+    save(); renderFeeds();
+    if (active !== null) fetchFeed(feeds[active]); else { resultsEl.innerHTML = ''; statusEl.textContent = 'Feed removed.'; }
+  };
+
+  window.addFeed = function() {
+    var url = document.getElementById('feed-url').value.trim();
+    if (!url) return;
+    if (!/^https?:\/\//.test(url)) url = 'https://' + url;
+    if (feeds.some(function(f){ return f.url === url; })) { statusEl.textContent = 'That feed is already added.'; return; }
+    feeds.push({ url: url, title: '' });
+    document.getElementById('feed-url').value = '';
+    save(); renderFeeds();
+    active = feeds.length - 1;
+    fetchFeed(feeds[active]);
+  };
+
+  function fetchFeed(f) {
+    if (!f) return;
+    active = feeds.indexOf(f);
+    renderFeeds();
+    statusEl.className = 'status';
+    statusEl.innerHTML = '<span class="loading"><span class="dot"></span><span class="dot"></span><span class="dot"></span> Loading ' + esc(f.url) + '…</span>';
+    fetch(PROXY + encodeURIComponent(f.url))
+      .then(function(r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(function(xml) {
+        var parsed = parseFeed(xml);
+        if (!parsed) { statusEl.textContent = 'Could not parse that feed (is it a valid RSS/Atom URL?).'; return; }
+        f.title = parsed.feed.title || f.title;
+        save(); renderFeeds();
+        statusEl.textContent = parsed.items.length + ' items · ' + (parsed.feed.description || '');
+        renderItems(parsed.feed, parsed.items);
+      })
+      .catch(function(e) {
+        statusEl.className = 'status error';
+        statusEl.textContent = 'Error fetching feed: ' + e.message;
+      });
+  }
+
+  load();
+  if (feeds.length) {
+    active = 0;
+    renderFeeds();
+    fetchFeed(feeds[0]);
+  }
+})();
+</script>
+</body>
+</html>

@@ -48,14 +48,17 @@ Registered in `articles.js` with title, URL, date, category, tags, description, 
 5. Bump `articles.js?v=N` across all pages via `perl -pi -e 's/articles\.js\?v=N/articles.js?v=N+1/' -- *.html`
 6. Commit and push → auto-posts to Mastodon
 
-### Tools (26 total)
+### Tools (36 total)
 Standalone HTML pages with inline JS, registered in `tools/gen-seo.js` `TOOLS_META` for schema + sitemap. Organized by category on `tools.html`.
+
+Includes interactive web apps: **LLM Playground** (streaming multi-model chat via the AI proxy), **Benchmark Explorer** (filters your `benchmarks/data.json`), **Model Comparison Wizard**, **VRAM Budget Planner**, **Prompt Library & Editor**, **RAG: Ask Your File** (client-side chunking + scoring), **Markdown Notes** and **Bookmarks** (both localStorage), a **Config Generator Studio**, and an **RSS Aggregator** (feed fetching via the AI proxy).
 
 **To add a tool:**
 1. Create `your-tool.html` with WebApplication JSON-LD
 2. Add entry to `TOOLS_META` in `tools/gen-seo.js`
 3. Add card to the appropriate section in `tools.html`
-4. Run `node tools/gen-seo.js`
+4. Add HI/TA translations (`your-tool.hi.html` / `your-tool.ta.html`) if the page should be translated
+5. Run `node tools/gen-seo.js`
 
 ### Benchmark database (12 results → 14 pages)
 Structured GPU × model × quantization results in `benchmarks/data.json`. Each entry
@@ -84,13 +87,11 @@ persists `vt-lang` in `localStorage`, sets `<html lang>` on every page, and driv
 - **Tamil** translations are also separate static files `*.ta.html` (all pages) with
   the same `hreflang` pattern for `ta`.
 
-**To add a Hindi translation of an article** (`your-article.html` → `your-article.hi.html`):
-1. Copy the EN file, change `<html lang="hi">`.
-2. Translate visible text only – keep `code`/`pre`/`script`, URLs, `href`/`src`/`class`, and
-   **tech acronyms** (GPU, LLM, GGUF, VRAM, ROCm…) in English so the glossary popover still works.
-3. Keep the `canonical` pointing at the EN URL, and add `hreflang` alternates (en + hi + x-default).
-4. Run `node tools/gen-seo.js` to include it in `sitemap.xml`.
-5. Bump `script.js?v=N` if the toggle logic changed.
+**To add a new page with translations** (e.g. `your-page.html`):
+1. Create the EN file first, then generate HI/TA variants by copying the EN file and translating visible text.
+2. Conventions: `<html lang="hi">`/`<html lang="ta">`, canonical → EN `.html`, add 3 `<link rel="alternate">` tags (en + hi/ta + x-default), JSON-LD `inLanguage: "hi"`/`"ta"`, translate meta/title/OG/Twitter, keep tech acronyms in English, preserve `<script>`/`<code>`/`<pre>` blocks verbatim.
+3. Add the page to `tools/gen-seo.js` (`TOOLS_META` or `STATIC_META`) and run `node tools/gen-seo.js` to update the sitemap.
+4. If the page is an article, add it to `articles.js` and run `node tools/gen-feed.js`.
 
 ## Glossary → VelsChat (inline definitions)
 

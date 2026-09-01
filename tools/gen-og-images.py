@@ -38,6 +38,32 @@ def load_articles():
     return json.loads(out.stdout)
 
 
+def load_tools():
+    """Load tool entries from gen-seo.js TOOLS_META for OG image generation."""
+    import subprocess
+    code = """
+    const { execSync } = require('child_process');
+    const path = require('path');
+    // Read gen-seo.js and eval its TOOLS_META
+    const fs = require('fs');
+    const src = fs.readFileSync('./tools/gen-seo.js', 'utf8');
+    // Extract the TOOLS_META object
+    const start = src.indexOf('const TOOLS_META =');
+    const end = src.indexOf('};', start) + 1;
+    const objStr = src.slice(start + 'const TOOLS_META ='.length, end);
+    const meta = eval('(' + objStr + ')');
+    console.log(JSON.stringify(meta));
+    """
+    out = subprocess.run(
+        ["node", "-e", code],
+        cwd=ROOT, capture_output=True, text=True,
+    )
+    if out.returncode != 0:
+        print("Warning: couldn't load tools:", out.stderr, file=sys.stderr)
+        return {}
+    return json.loads(out.stdout)
+
+
 def draw_background(draw):
     for y in range(0, H, 3):
         row_bright = 11 + int((y / H) * 6)
@@ -134,6 +160,26 @@ def main():
     print(f"Generating {len(articles)} article OG images into og/")
     for a in articles:
         gen_article_image(a)
+
+    tools = load_tools()
+    tool_slugs = [
+        "benchmark-explorer", "model-comparison", "vram-budget-planner",
+        "prompt-library", "notes", "bookmarks", "config-generator", "rag-ask",
+        "tiel-coder-35b-mtp-rx6800m",
+    ]
+    print(f"Generating {len(tool_slugs)} tool/experiment OG images")
+    for slug in tool_slugs:
+        meta = tools.get(slug + ".html")
+        if not meta:
+            print(f"  (skip {slug} - no TOOLS_META entry)")
+            continue
+        article = {
+            "url": slug + ".html",
+            "title": meta["title"].replace(" | VelsTech", ""),
+            "category": "VelsTech",
+        }
+        gen_article_image(article)
+
     print("Generating generic OG image")
     gen_generic()
     print("Done.")

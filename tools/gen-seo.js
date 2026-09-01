@@ -86,6 +86,7 @@ const TOOLS_META = {
   "bookmarks.html": { title: "Bookmarks & Reading List | VelsTech", desc: "Save, tag, and search your reading list right in the browser – no account needed. Import URLs, export JSON, mark things done." },
   "config-generator.html": { title: "Config Generator Studio | VelsTech", desc: "Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use." },
   "rag-ask.html": { title: "RAG: Ask Your File | VelsTech", desc: "Upload a text file and ask questions about it. The content is chunked, scored, and sent to an AI model with the relevant context." },
+  "rss-aggregator.html": { title: "RSS Aggregator | VelsTech", desc: "Read your favorite RSS and Atom feeds in one place. Add any feed URL, browse the latest posts, and manage your reading list." },
 };
 
 const CATEGORY_META = {

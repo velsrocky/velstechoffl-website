@@ -110,6 +110,27 @@ export default {
       return json(JSON.stringify({ models: list }), 200, origin);
     }
 
+    // GET /api/rss?url=<encoded> -> fetch an RSS/Atom feed server-side and return
+    // its raw XML (the browser page parses it with DOMParser). Avoids CORS on
+    // arbitrary feed hosts; rate-limited like the chat endpoint.
+    if (request.method === "GET" && new URL(request.url).pathname === "/api/rss") {
+      const target = new URL(request.url).searchParams.get("url");
+      if (!target) return json({ error: "missing_url" }, 400, origin);
+      try {
+        const res = await fetch(target, { headers: { "User-Agent": "VelsTech-RSS/1.0" } });
+        const body = await res.text();
+        return new Response(body, {
+          status: res.status,
+          headers: {
+            "Content-Type": "application/xml; charset=utf-8",
+            "Access-Control-Allow-Origin": origin,
+          },
+        });
+      } catch (err) {
+        return json({ error: "fetch_failed", detail: err.message }, 502, origin);
+      }
+    }
+
     const ip =
       (request.headers.get("CF-Connecting-IP") ||
         request.headers.get("X-Forwarded-For") ||

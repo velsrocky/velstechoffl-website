@@ -1,19 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0f14">
-<meta name="description" content="Full LLM Playground – chat with multiple models, adjust temperature, top-p, max tokens, system prompt, and share conversations.">
-<title>LLM Playground – VelsTech</title>
-<link rel="canonical" href="https://velstech.net/playground.html">
-<link rel="alternate" hreflang="en" href="https://velstech.net/playground.html" />
-<link rel="alternate" hreflang="hi" href="https://velstech.net/playground.hi.html" />
-<link rel="alternate" hreflang="ta" href="https://velstech.net/playground.ta.html" />
-<link rel="alternate" hreflang="x-default" href="https://velstech.net/playground.html" />
-<link rel="icon" href="logo.svg">
-<link rel="stylesheet" href="styles.css?v=40">
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="पूरा LLM प्लेग्राउंड – कई मॉडलों से चैट करें, temperature, top-p, max tokens व system prompt समायोजित करें, और बातचीत साझा करें।" />
+  <title>LLM प्लेग्राउंड | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/playground.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/playground.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/playground.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/playground.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://velstech.net/playground.hi.html#webpage",
+  "url": "https://velstech.net/playground.hi.html",
+  "name": "LLM प्लेग्राउंड | VelsTech",
+  "description": "पूरा LLM प्लेग्राउंड – कई मॉडलों से चैट करें, temperature, top-p, max tokens व system prompt समायोजित करें, और बातचीत साझा करें।",
+  "inLanguage": "hi"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/playground.html" />
+  <meta property="og:title" content="LLM प्लेग्राउंड | VelsTech" />
+  <meta property="og:description" content="पूरा LLM प्लेग्राउंड – कई मॉडलों से चैट करें, temperature, top-p, max tokens व system prompt समायोजित करें, और बातचीत साझा करें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LLM प्लेग्राउंड | VelsTech" />
+  <meta name="twitter:description" content="पूरा LLM प्लेग्राउंड – कई मॉडलों से चैट करें, temperature, top-p, max tokens व system prompt समायोजित करें, और बातचीत साझा करें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
   :root { --vt-accent: #4cc2ff; --vt-accent-deep: #2f8fd8; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0b0f14; color: #e6edf3; font-family: system-ui, -apple-system, sans-serif; display: flex; height: 100vh; overflow: hidden; }
@@ -86,14 +108,14 @@
     .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 99; }
     .overlay.show { display: block; }
   }
-</style>
+  </style>
 </head>
 <body>
 
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
 <aside class="sidebar" id="sidebar">
-  <h2>LLM Playground</h2>
+  <h2>LLM प्लेग्राउंड</h2>
   <p class="brand"><a href="index.html">VelsTech</a> · <a href="ai.html">AI</a></p>
 
   <div class="field">
@@ -106,7 +128,7 @@
 
   <div class="field">
     <label for="sysprompt">System prompt</label>
-    <textarea id="sysprompt" rows="4">You are a helpful, friendly AI assistant. Be concise and accurate.</textarea>
+    <textarea id="sysprompt" rows="4">आप एक सहायक, मिलनसार AI सहायक हैं। संक्षिप्त और सटीक रहें।</textarea>
   </div>
 
   <div class="field">
@@ -125,31 +147,31 @@
   </div>
 
   <div class="sidebar-actions">
-    <button onclick="newChat()">New chat</button>
-    <button onclick="copyChat()">Copy</button>
-    <button class="btn-primary" onclick="shareChat()">Share</button>
+    <button onclick="newChat()">नई चैट</button>
+    <button onclick="copyChat()">कॉपी करें</button>
+    <button class="btn-primary" onclick="shareChat()">साझा करें</button>
   </div>
 
-  <div class="token-count">Tokens: <span class="count" id="tokens">0</span></div>
+  <div class="token-count">टोकन: <span class="count" id="tokens">0</span></div>
 </aside>
 
 <main class="chat-area">
   <header class="chat-header">
     <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
-    <h1>Playground</h1>
+    <h1>प्लेग्राउंड</h1>
     <span style="font-size:12px;opacity:.6" id="live-model">—</span>
   </header>
 
   <div class="messages" id="messages">
     <div class="empty-state" id="empty-state">
-      <h2>🧪 LLM Playground</h2>
-      <p>Pick a model, adjust the settings, and start chatting. Messages stream in real time — no refresh needed.</p>
+      <h2>🧪 LLM प्लेग्राउंड</h2>
+      <p>कोई मॉडल चुनें, सेटिंग्स समायोजित करें और चैट शुरू करें। संदेश रीयल-टाइम में स्ट्रीम होते हैं — किसी रिफ्रेश की ज़रूरत नहीं।</p>
     </div>
   </div>
 
   <div class="input-area">
-    <textarea id="input" rows="1" placeholder="Type a message…" aria-label="Message"></textarea>
-    <button id="send" aria-label="Send" onclick="sendMessage()">
+    <textarea id="input" rows="1" placeholder="संदेश लिखें…" aria-label="संदेश"></textarea>
+    <button id="send" aria-label="भेजें" onclick="sendMessage()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
   </div>

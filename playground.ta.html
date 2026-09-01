@@ -1,18 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b0f14">
-<meta name="description" content="Full LLM Playground – chat with multiple models, adjust temperature, top-p, max tokens, system prompt, and share conversations.">
-<title>LLM Playground – VelsTech</title>
-<link rel="canonical" href="https://velstech.net/playground.html">
-<link rel="alternate" hreflang="en" href="https://velstech.net/playground.html" />
-<link rel="alternate" hreflang="hi" href="https://velstech.net/playground.hi.html" />
-<link rel="alternate" hreflang="ta" href="https://velstech.net/playground.ta.html" />
-<link rel="alternate" hreflang="x-default" href="https://velstech.net/playground.html" />
+<meta name="description" content="முழுமையான LLM சோதனைக்களம் – பல மாதிரிகளுடன் உரையாடுங்கள், வெப்பநிலை, top-p, அதிகபட்ச டோக்கன்கள், கணினி அறிவுறுத்தல் ஆகியவற்றை சரிசெய்யுங்கள், மற்றும் உரையாடல்களைப் பகிருங்கள்.">
+<title>LLM சோதனைக்களம் – VelsTech</title>
+<link rel="canonical" href="https://velstech.net/playground.html"><link rel="alternate" href="https://velstech.net/playground.html" hreflang="en"><link rel="alternate" href="https://velstech.net/playground.ta.html" hreflang="ta"><link rel="alternate" href="https://velstech.net/playground.html" hreflang="x-default">
 <link rel="icon" href="logo.svg">
 <link rel="stylesheet" href="styles.css?v=40">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/playground.ta.html#app",
+  "name": "LLM சோதனைக்களம் – VelsTech",
+  "description": "முழுமையான LLM சோதனைக்களம் – பல மாதிரிகளுடன் உரையாடுங்கள், வெப்பநிலை, top-p, அதிகபட்ச டோக்கன்கள், கணினி அறிவுறுத்தல் ஆகியவற்றை சரிசெய்யுங்கள், மற்றும் உரையாடல்களைப் பகிருங்கள்.",
+  "url": "https://velstech.net/playground.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "AIApplication",
+  "operatingSystem": "Any",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  }
+}</script>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VelsTech">
+<meta property="og:url" content="https://velstech.net/playground.ta.html">
+<meta property="og:title" content="LLM சோதனைக்களம் – VelsTech">
+<meta property="og:description" content="முழுமையான LLM சோதனைக்களம் – பல மாதிரிகளுடன் உரையாடுங்கள், வெப்பநிலை, top-p, அதிகபட்ச டோக்கன்கள், கணினி அறிவுறுத்தல் ஆகியவற்றை சரிசெய்யுங்கள், மற்றும் உரையாடல்களைப் பகிருங்கள்.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LLM சோதனைக்களம் – VelsTech">
+<meta name="twitter:description" content="முழுமையான LLM சோதனைக்களம் – பல மாதிரிகளுடன் உரையாடுங்கள், வெப்பநிலை, top-p, அதிகபட்ச டோக்கன்கள், கணினி அறிவுறுத்தல் ஆகியவற்றை சரிசெய்யுங்கள், மற்றும் உரையாடல்களைப் பகிருங்கள்.">
 <style>
   :root { --vt-accent: #4cc2ff; --vt-accent-deep: #2f8fd8; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -93,11 +122,11 @@
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
 <aside class="sidebar" id="sidebar">
-  <h2>LLM Playground</h2>
+  <h2>LLM சோதனைக்களம்</h2>
   <p class="brand"><a href="index.html">VelsTech</a> · <a href="ai.html">AI</a></p>
 
   <div class="field">
-    <label for="model">Model</label>
+    <label for="model">மாதிரி</label>
     <div class="model-select">
       <select id="model"></select>
       <span class="status" id="model-status"></span>
@@ -105,12 +134,12 @@
   </div>
 
   <div class="field">
-    <label for="sysprompt">System prompt</label>
-    <textarea id="sysprompt" rows="4">You are a helpful, friendly AI assistant. Be concise and accurate.</textarea>
+    <label for="sysprompt">கணினி அறிவுறுத்தல்</label>
+    <textarea id="sysprompt" rows="4">நீங்கள் ஒரு உதவிகரமான, நட்பான AI உதவியாளர். சுருக்கமாகவும் துல்லியமாகவும் இருங்கள்.</textarea>
   </div>
 
   <div class="field">
-    <label>Temperature <span class="val" id="temp-val">1.0</span></label>
+    <label>வெப்பநிலை <span class="val" id="temp-val">1.0</span></label>
     <input type="range" id="temperature" min="0" max="2" step="0.05" value="1.0">
   </div>
 
@@ -120,36 +149,36 @@
   </div>
 
   <div class="field">
-    <label>Max tokens <span class="val" id="maxt-val">2048</span></label>
+    <label>அதிகபட்ச டோக்கன்கள் <span class="val" id="maxt-val">2048</span></label>
     <input type="range" id="max-tokens" min="64" max="8192" step="64" value="2048">
   </div>
 
   <div class="sidebar-actions">
-    <button onclick="newChat()">New chat</button>
-    <button onclick="copyChat()">Copy</button>
-    <button class="btn-primary" onclick="shareChat()">Share</button>
+    <button onclick="newChat()">புதிய உரையாடல்</button>
+    <button onclick="copyChat()">நகலெடு</button>
+    <button class="btn-primary" onclick="shareChat()">பகிர்</button>
   </div>
 
-  <div class="token-count">Tokens: <span class="count" id="tokens">0</span></div>
+  <div class="token-count">டோக்கன்கள்: <span class="count" id="tokens">0</span></div>
 </aside>
 
 <main class="chat-area">
   <header class="chat-header">
     <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
-    <h1>Playground</h1>
+    <h1>சோதனைக்களம்</h1>
     <span style="font-size:12px;opacity:.6" id="live-model">—</span>
   </header>
 
   <div class="messages" id="messages">
     <div class="empty-state" id="empty-state">
-      <h2>🧪 LLM Playground</h2>
-      <p>Pick a model, adjust the settings, and start chatting. Messages stream in real time — no refresh needed.</p>
+      <h2>🧪 LLM சோதனைக்களம்</h2>
+      <p>ஒரு மாதிரியைத் தேர்ந்தெடுத்து, அமைப்புகளைச் சரிசெய்து, உரையாடலைத் தொடங்குங்கள். செய்திகள் நிகழ் நேரத்தில் ஸ்ட்ரீம் செய்யப்படுகின்றன — புதுப்பிப்பு தேவையில்லை.</p>
     </div>
   </div>
 
   <div class="input-area">
-    <textarea id="input" rows="1" placeholder="Type a message…" aria-label="Message"></textarea>
-    <button id="send" aria-label="Send" onclick="sendMessage()">
+    <textarea id="input" rows="1" placeholder="செய்தியை தட்டச்சு செய்யுங்கள்…" aria-label="செய்தி"></textarea>
+    <button id="send" aria-label="அனுப்பு" onclick="sendMessage()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
   </div>

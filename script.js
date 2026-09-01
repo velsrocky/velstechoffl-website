@@ -15,6 +15,20 @@ function t(key) {
   } catch {}
   return key;
 }
+function getCurrentArticle() {
+  const path = location.pathname.split("/").pop() || "index.html";
+  const base = path.replace(/\.(hi|ta)\.html$/, ".html");
+  return ARTICLES.find((a) => a.url === base) || ARTICLES.find((a) => location.pathname.endsWith(a.url)) || null;
+}
+function localizeUrl(url) {
+  const lang = getLang();
+  // Also infer from current pathname if localStorage not yet set
+  const path = location.pathname.split("/").pop() || "";
+  const inferred = path.endsWith(".hi.html") ? "hi" : path.endsWith(".ta.html") ? "ta" : lang;
+  if (inferred === "hi") return url.replace(/\.html$/, ".hi.html");
+  if (inferred === "ta") return url.replace(/\.html$/, ".ta.html");
+  return url;
+}
 function setLang(lang) {
   if (window.VelsI18n && window.VelsI18n.setLang) {
     window.VelsI18n.setLang(lang); // dispatches vt-lang-change internally
@@ -463,7 +477,7 @@ function initWhatsNew() {
 }
 
 function initArticleMeta() {
-  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  const cur = getCurrentArticle();
   if (!cur) return;
   const meta = document.querySelector(".meta");
   if (!meta) return;
@@ -515,7 +529,7 @@ function renderRelated(cur) {
     scored
       .map(
         (a) =>
-          '<a class="related-item" href="' + a.url + '">' +
+          '<a class="related-item" href="' + localizeUrl(a.url) + '">' +
           '<span class="related-title">' + esc(a.title) + "</span>" +
           '<span class="related-meta">' + esc(a.category) + " · " + fmtDate(a.date) + "</span>" +
           "</a>"
@@ -557,7 +571,7 @@ const SHARE_NETWORKS = {
 };
 
 function initShareBar() {
-  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  const cur = getCurrentArticle();
   if (!cur) return;
   const main = document.querySelector(".article-page");
   if (!main) return;
@@ -609,7 +623,7 @@ function initShareBar() {
 
 /* Author box – small E-E-A-T signal. Shown on article pages only. */
 function initAuthorBox() {
-  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  const cur = getCurrentArticle();
   if (!cur) return;
   const main = document.querySelector(".article-page");
   if (!main) return;
@@ -629,7 +643,7 @@ function initAuthorBox() {
 /* FAQ section – renders the article's FAQ visibly on the page (matches the
    FAQPage JSON-LD injected by gen-seo.js). */
 function initFaq() {
-  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  const cur = getCurrentArticle();
   if (!cur || !cur.faq || !cur.faq.length) return;
   const main = document.querySelector(".article-page");
   if (!main) return;
@@ -1057,7 +1071,7 @@ function initCategoryColors() {
 }
 
 function addCategoryPill() {
-  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  const cur = getCurrentArticle();
   if (!cur || !cur.category) return;
   const meta = document.querySelector(".meta");
   if (!meta) return;
@@ -1065,7 +1079,7 @@ function addCategoryPill() {
   if (!color) return;
   const pill = document.createElement("a");
   pill.className = "tag cat-pill";
-  pill.href = CAT_URL[cur.category] || "#";
+  pill.href = localizeUrl(CAT_URL[cur.category] || "#");
   pill.style.color = color;
   pill.style.background = color + "26";
   pill.style.borderColor = "transparent";
@@ -1075,7 +1089,7 @@ function addCategoryPill() {
 
 /* "Continue reading" flow – next/previous article in the same series. */
 function initArticleFlow() {
-  const cur = ARTICLES.find((a) => location.pathname.endsWith(a.url));
+  const cur = getCurrentArticle();
   if (!cur) return;
   const nav = document.querySelector(".article-nav");
   if (!nav) return;
@@ -1097,13 +1111,13 @@ function initArticleFlow() {
   const flow = document.createElement("div");
   flow.className = "article-flow";
   flow.innerHTML =
-    '<p class="flow-heading">Continue reading</p>' +
+    '<p class="flow-heading">' + t("continue_reading") + '</p>' +
     '<div class="flow-row">' +
     (prev
-      ? '<a class="flow-link flow-prev" href="' + prev.url + '"><span class="flow-label">← Previous</span><span class="flow-title">' + esc(prev.title) + '</span></a>'
+      ? '<a class="flow-link flow-prev" href="' + localizeUrl(prev.url) + '"><span class="flow-label">' + t("prev") + '</span><span class="flow-title">' + esc(prev.title) + '</span></a>'
       : "") +
     (next
-      ? '<a class="flow-link flow-next" href="' + next.url + '"><span class="flow-label">Next →</span><span class="flow-title">' + esc(next.title) + '</span></a>'
+      ? '<a class="flow-link flow-next" href="' + localizeUrl(next.url) + '"><span class="flow-label">' + t("next") + '</span><span class="flow-title">' + esc(next.title) + '</span></a>'
       : "") +
     "</div>";
   nav.parentNode.insertBefore(flow, nav);

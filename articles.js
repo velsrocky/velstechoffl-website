@@ -1,5 +1,15 @@
 const ARTICLES = [
   {
+    title: "Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab",
+    url: "tiel-coder-35b-mtp-rx6800m.html",
+    date: "2026-09-01",
+    updated: "2026-09-01",
+    category: "AI",
+    featured: true,
+    tags: ["VelsTech Lab", "MoE", "MTP", "RX 6800M", "Speculative Decoding", "Benchmark"],
+    description: "Tested Tiel-Coder-35B-A3B Q4_K_XL on RX 6800M – MTP speculative decoding at 29.09 tok/s vs 25.39 tok/s without MTP, at 262K q8 KV, 28-32 CPU experts, ROCm 10.0.",
+  },
+  {
     title: "ROCm & Vulkan on AMD: running local AI on Radeon",
     url: "rocm-vulkan-amd-guide.html",
     date: "2026-08-30",

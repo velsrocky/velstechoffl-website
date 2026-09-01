@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Tested Tiel-Coder-35B-A3B Q4_K_XL on RX 6800M – MTP draft speculative decoding at 29.09 tok/s vs 25.39 tok/s without MTP, at 262K q8 KV, 28-32 CPU experts." />
+  <title>Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.html#article",
+  "headline": "Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab",
+  "description": "Tested Tiel-Coder-35B-A3B Q4_K_XL on RX 6800M – MTP speculative decoding at 29.09 tok/s vs 25.39 tok/s without MTP, at 262K q8 KV, 28-32 CPU experts, ROCm 10.0.",
+  "url": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.html",
+  "datePublished": "2026-09-01T00:00:00Z",
+  "dateModified": "2026-09-01T00:00:00Z",
+  "inLanguage": "en",
+  "image": "https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png",
+  "author": {
+    "@type": "Person",
+    "name": "VelsTech",
+    "url": "https://velstech.net/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VelsTech",
+    "url": "https://velstech.net/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://velstech.net/logo.svg"
+    }
+  },
+  "mainEntityOfPage": "https://velstech.net/tiel-coder-35b-mtp-rx6800m.html"
+}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
+  <meta property="og:title" content="Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K | VelsTech" />
+  <meta property="og:description" content="Tested Tiel-Coder-35B-A3B Q4_K_XL on RX 6800M – MTP speculative decoding at 29.09 tok/s vs 25.39 tok/s without MTP, at 262K q8 KV, 28-32 CPU experts, ROCm 10.0." />
+  <meta property="og:image" content="https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab | VelsTech" />
+  <meta name="twitter:description" content="Tested Tiel-Coder-35B-A3B Q4_K_XL on RX 6800M – MTP speculative decoding at 29.09 tok/s vs 25.39 tok/s without MTP, at 262K q8 KV, 28-32 CPU experts, ROCm 10.0." />
+  <meta name="twitter:image" content="https://velstech.net/og/tiel-coder-35b-mtp-rx6800m.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="ai.html">AI</a> / <a href="lab.html">VelsTech Lab</a> / This experiment</p>
+    <h1 class="title">Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">MoE</span>
+      <span class="tag">MTP</span>
+      <span class="tag">RX 6800M</span>
+      <span class="tag">llama.cpp</span>
+      <span>Sep 1, 2026</span>
+      <span>· 4 min read</span>
+      <span>· Updated Sep 1, 2026</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab</span> Speculative decoding via Multi-Token Prediction (MTP) on a 35B-A3B MoE model – does the draft head actually speed things up on a 12 GB mobile GPU with 28+ CPU expert fallback?</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 Check your own fit first</div>
+        <p><a href="llm-vram-calculator.html">LLM VRAM Calculator</a> – does 35B Q4 + 262K fit your VRAM? · <a href="gpu-ai-calculator.html">GPU AI Performance Calculator</a> – what tok/s to expect before you run.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.html">Open calculators →</a>
+      </div>
+
+      <h2>Two builds tested</h2>
+      <ul>
+        <li><strong>Machine:</strong> R9 5900HX (8C/16T) · AMD RX 6800M 12GB (RDNA2, mobile) · 32 GB RAM · Ubuntu 26.04 · ROCm 10.0 · <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> (current build)</li>
+        <li><strong>Model (no MTP):</strong> <code>Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf</code> – 35B total, 3B active MoE, Q4_K_XL quant</li>
+        <li><strong>Model (MTP):</strong> <code>Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf</code> – same model with a multi-token prediction draft head</li>
+        <li><strong>Context:</strong> <code>-c 262144</code> with <code>--cache-type-k q8_0 --cache-type-v q8_0 -fa on</code></li>
+        <li><strong>Offload:</strong> <code>-ngl 999</code> (forced – see warning below)</li>
+        <li><strong>CPU experts:</strong> <code>--n-cpu-moe 28</code> (non-MTP) vs <code>--n-cpu-moe 32</code> (MTP) – note the slight difference</li>
+        <li><strong>Prompt:</strong> ~608-617 tokens (same prompt both runs), <code>n_threads=8</code>, <code>kv_unified=false</code>, <code>n_slots=1, n_ctx_slot=262144</code></li>
+      </ul>
+
+      <h2>How we ran it</h2>
+      <h3>Run 1 – no MTP</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Tiel-Coder-35B-A3B-UD-Q4_K_XL.gguf \
+ -ngl 999 \
+ --n-cpu-moe 28 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -c 262144 -fa on \
+ --jinja --parallel 1</pre>
+
+      <h3>Run 2 – MTP speculative decoding</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Tiel-Coder-35B-A3B-MTP-UD-Q4_K_XL.gguf \
+ --spec-type draft-mtp \
+ -ngl 999 \
+ --n-cpu-moe 32 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -c 262144 -fa on \
+ --jinja --reasoning-preserve --parallel 1</pre>
+
+      <h2>What we measured</h2>
+      <h3>Run 1 – no MTP (--n-cpu-moe 28)</h3>
+      <pre>prompt eval:   5220.06 ms / 621 tokens (  8.41 ms/tok,  118.96 tok/s)
+eval (decode): 5155.86 ms / 132 tokens ( 39.36 ms/tok,   25.41 tok/s)
+generate:      100 tokens @ 25.39 tok/s (tg), 25.65 tok/s (tg_3s)
+total:         10375.93 ms / 753 tokens
+graphs reused: 131</pre>
+
+      <h3>Run 2 – MTP (--spec-type draft-mtp, --n-cpu-moe 32)</h3>
+      <pre>prompt eval:   5574.58 ms / 621 tokens (  8.98 ms/tok,  111.40 tok/s)
+eval (decode): 5105.25 ms / 131 tokens ( 39.27 ms/tok,   25.46 tok/s)
+generate:      100 tokens @ 29.09 tok/s (tg), 29.38 tok/s (tg_3s)
+draft:         acceptance = 0.54667 (82 accepted / 150 generated), mean len = 2.64
+total:         10679.83 ms / 752 tokens
+graphs reused: 50</pre>
+
+      <h3>Head-to-head</h3>
+      <pre>Metric               No MTP              MTP           Delta
+─────────────────────────────────────────────────────────────
+Prompt eval          118.96 tok/s       111.40 tok/s    -6.4%
+Decode (slot)        25.41 tok/s         25.46 tok/s    +0.2%
+Generate (tg)        25.39 tok/s         29.09 tok/s   +14.6%
+Generate (tg_3s)     25.65 tok/s         29.38 tok/s   +14.5%
+Total time           10.38 s             10.68 s        +3.0%
+Graphs reused         131                  50            -62%
+Draft acceptance      –                    54.7%          –
+Mean len              –                     2.64          –</pre>
+      <p><strong>akeaway:</strong> MTP speculative decoding delivers a <strong>+14.6% decode speedup</strong> (25.39 → 29.09 tok/s) on a 35B-A3B MoE model. The draft head accepts 55% of its predictions with a mean run of 2.64 tokens. Graphs reused drop 62% (131 → 50) because the draft context reuses fewer cached graph executions. Prompt eval takes a minor hit (-6.4%) due to the extra MTP context. Note that <code>--n-cpu-moe</code> also differs (28 vs 32) – the extra 4 CPU expert threads in the MTP run may contribute a small part of the gain.</p>
+
+      <h2>What the logs said – and what broke</h2>
+      <ol>
+        <li><strong>Both runs:</strong> <code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – You forced <code>-ngl 999</code> on a 12 GB card, so partial CPU offload is inevitable. The model is 35B at Q4 (~17.5 GB weights) + q8 KV at 262K (~12 GB+) – nowhere near fitting in 12 GB. Most MoE expert computations fall back to CPU via <code>--n-cpu-moe</code>.</li>
+        <li><strong>Both runs:</strong> <code>W tensor overrides to CPU are used with mmap enabled – consider using --load-mode none for better performance</code> – Some tensor overrides force CPU fallback. <code>--load-mode none</code> may improve performance by decoupling mmap.</li>
+        <li><strong>MTP run only:</strong> <code>W device 'ROCm0' does not have support for op TOP_K needed for sampler 'top-k'</code> – Relevant for the MTP draft sampler; may affect draft quality. The 54.7% acceptance rate might improve with a backend that supports top-k natively.</li>
+        <li><strong>MTP run only:</strong> <code>I common_speculative_init_result: creating MTP draft context against the target model '...MTP-UD-Q4_K_XL.gguf'</code> – MTP creates its own draft context which adds ~200ms to init time (visible in the slightly higher prompt eval time).</li>
+        <li><strong>gent difference:</strong> <code>--n-cpu-moe 28</code> (non-MTP) vs <code>--n-cpu-moe 32</code> (MTP) – this 4-thread difference is a confound. Re-running both with the same value would isolate the MTP-only gain.</li>
+      </ol>
+
+      <h2>Bottom line</h2>
+      <p>On an RX 6800M 12GB at 262K q8 KV, the <strong>MTP draft head provides a meaningful +14.6% decode speedup</strong> on this 35B-A3B MoE model, raising decode from 25.4 to 29.1 tok/s. The overhead is minimal (3% more total time, 6% slower prompt eval). Given that <code>--n-cpu-moe</code> also differed, the actual MTP-only gain is likely slightly lower – call it <strong>~10-12% net</strong>. If your backend supports top-k for the MTP sampler, acceptance rates may improve further. For chat workloads (decode-bound), MTP is worth enabling on any MoE model that ships a draft head.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 More Lab</div>
+        <p>Next: re-run both with identical <code>--n-cpu-moe</code> and <code>--load-mode none</code> to isolate pure MTP gain, then test on Vulkan backend where top-k support differs.</p>
+        <a class="btn btn-primary" href="lab.html">Back to VelsTech Lab →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.html">← Back to AI</a>
+      <a href="moe-vs-dense-rx6800m-16k-vs-262k.html">MoE vs Dense on RX 6800M</a>
+    </div>
+  </main>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

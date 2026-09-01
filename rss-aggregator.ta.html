@@ -26,7 +26,8 @@
 <link rel="stylesheet" href="styles.css?v=40">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0b0f14; color: #e6edf3; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 24px; max-width: 900px; margin: 0 auto; }
+  body { background: #0b0f14; color: #e6edf3; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  .rss-wrap { max-width: 900px; margin: 0 auto; padding: 24px; }
   a { color: #4cc2ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
   h1 { font-size: 22px; margin-bottom: 4px; }
@@ -61,6 +62,7 @@
 </style>
 </head>
 <body>
+<div class="rss-wrap">
 
 <h1>📡 RSS ஒருங்கிணைப்பி</h1>
 <p class="sub">உங்களுக்குப் பிடித்த ஃபீட்களை ஒரே இடத்தில் படிக்கவும் — ஃபீட்கள் VelsTech இன் proxy மூலம் பெறப்பட்டு உங்கள் உலாவியில் பகுப்பாய்வு செய்யப்படுகின்றன.</p>
@@ -77,7 +79,11 @@
   ஃபீட்கள் உங்கள் உலாவியில் (localStorage) சேமிக்கப்படுகின்றன. CORS ஐத் தவிர்க்க ஒவ்வொரு ஃபீடும் <code>chat.velstech.net/api/rss</code> மூலம் பெறப்படுகிறது.
   சிலவற்றை முயற்சிக்கவும்: <code>https://velstech.net/feed.xml</code> · <code>https://hnrss.org/frontpage</code> · <code>https://www.theverge.com/rss/index.xml</code>
 </div>
+</div>
 
+<script src="articles.js?v=14"></script>
+<script src="i18n.js?v=1"></script>
+<script src="script.js?v=46"></script>
 <script>
 (function() {
   'use strict';

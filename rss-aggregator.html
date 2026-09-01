@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="styles.css?v=40">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0b0f14; color: #e6edf3; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 24px; max-width: 900px; margin: 0 auto; }
+  body { background: #0b0f14; color: #e6edf3; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  .rss-wrap { max-width: 900px; margin: 0 auto; padding: 24px; }
   a { color: #4cc2ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
   h1 { font-size: 22px; margin-bottom: 4px; }
@@ -46,6 +47,7 @@
 </style>
 </head>
 <body>
+<div class="rss-wrap">
 
 <h1>📡 RSS Aggregator</h1>
 <p class="sub">Read your favorite feeds in one place — feeds are fetched via VelsTech's proxy and parsed right in your browser.</p>
@@ -62,7 +64,11 @@
   Feeds are stored in your browser (localStorage). Each feed is fetched through <code>chat.velstech.net/api/rss</code> to bypass CORS.
   Try a few: <code>https://velstech.net/feed.xml</code> · <code>https://hnrss.org/frontpage</code> · <code>https://www.theverge.com/rss/index.xml</code>
 </div>
+</div>
 
+<script src="articles.js?v=14"></script>
+<script src="i18n.js?v=1"></script>
+<script src="script.js?v=46"></script>
 <script>
 (function() {
   'use strict';

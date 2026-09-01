@@ -530,7 +530,7 @@ function renderRelated(cur) {
       .map(
         (a) =>
           '<a class="related-item" href="' + localizeUrl(a.url) + '">' +
-          '<span class="related-title">' + esc(a.title) + "</span>" +
+          '<span class="related-title">' + esc(getLocalizedTitle(a.url)) + "</span>" +
           '<span class="related-meta">' + esc(a.category) + " · " + fmtDate(a.date) + "</span>" +
           "</a>"
       )
@@ -634,8 +634,8 @@ function initAuthorBox() {
     '<div class="author-avatar">VT</div>' +
     '<div class="author-info">' +
     '<span class="author-name">VelsTech</span>' +
-    '<p>Technology explained for everyone – practical guides, free tools and real experiments. Written by a developer who tests it on real hardware first.</p>' +
-    '<a class="author-link" href="lab.html">' + t("author_visit") + '</a>' +
+    '<p>' + t("author_desc") + '</p>' +
+    '<a class="author-link" href="' + localizeUrl("lab.html") + '">' + t("author_visit") + '</a>' +
     "</div>";
   main.appendChild(box);
 }
@@ -1005,6 +1005,49 @@ const SERIES = {
   ],
 };
 
+// Localized titles for Continue reading / Related (HI/TA) – keep tech terms English
+const ARTICLE_TITLES = {
+  "better-prompts.html": { hi: "बेहतर prompt कैसे लिखें", ta: "சிறந்த பரிந்துரைகளை எழுதுவதற்கான முறைகள்" },
+  "what-is-an-llm.html": { hi: "एक बड़ा भाषा मॉडल वास्तव में क्या है?", ta: "பெரிய மொழி மாதிரி" },
+  "what-is-machine-learning.html": { hi: "मशीन लर्निंग क्या है, वास्तव में?", ta: "மாஷின் கற்றல் என்பது என்ன?" },
+  "local-vs-cloud-ai.html": { hi: "Local vs cloud AI: कौन सा चुनें?", ta: "உள்ளூர் vs கிளவுட் AI: எதை தேர்வு செய்ய வேண்டும்?" },
+  "qwen3-8-flash-next.html": { hi: "Qwen3.8 Flash Next: Alibaba का नया तेज़ reasoning model", ta: "Qwen3.8 Flash Next: அலிபாபாவின் புதிய வேகமான சிந்தனை மாடல்" },
+  "glm-5-3.html": { hi: "GLM 5.3: Zhipu AI के नए model में क्या नया है", ta: "GLM 5.3: Zhipu AI-யின் சமீபத்திய மாடலில் புதியது என்ன" },
+  "first-pc-build.html": { hi: "अपने पहले PC build के लिए पार्ट्स कैसे चुनें", ta: "உங்கள் முதல் PC கட்டுமானத்திற்கான பாகங்களை எப்படி தேர்ந்தெடுப்பது" },
+  "cpu-vs-gpu.html": { hi: "CPU vs GPU – प्रत्येक क्या करता है?", ta: "CPU மற்றும் GPU விவகாரம்: அவை என்ன செய்கின்றன?" },
+  "ssd-vs-hdd.html": { hi: "SSD vs HDD: वह अपग्रेड जो सब कुछ बदल देता है", ta: "SSD vs HDD: எல்லாவற்றையும் மாற்றும் மேம்படுத்தல்" },
+  "new-mac-desktops.html": { hi: "Apple के नए Mac desktops: M5 Max/Ultra वाला Mac Studio और M6/M5 Pro वाला Mac mini", ta: "Apple-இன் புதிய Mac டெஸ்க்டாப்கள்: Mac Studio M5 Max/Ultra மற்றும் M6/M5 Pro" },
+  "omarchy.html": { hi: "Omarchy: सुंदर, opinionated Linux distro जिसकी हर कोई बात कर रहा है", ta: "Omarchy: அனைவரும் பேசும் அழகான, துணிச்சலான Linux distro" },
+  "linux-beginners.html": { hi: "शुरुआती लोगों के लिए Linux: शुरुआत कैसे करें", ta: "ஆரம்பநிலையாளர்களுக்கான Linux: தொடங்குவது எப்படி" },
+  "terminal-commands.html": { hi: "हर किसी को पता होने चाहिए ऐसे ज़रूरी टर्मिनल कमांड्स", ta: "அனைவரும் தெரிந்திருக்க வேண்டிய அத்தியாவசிய டெர்மினல் கட்டளைகள்" },
+  "windows-vs-linux.html": { hi: "Windows vs Linux: कब किसे इस्तेमाल करें", ta: "Windows vs Linux: எப்போது எதை பயன்படுத்துவது" },
+  "how-internet-works.html": { hi: "इंटरनेट वास्तव में कैसे काम करता है?", ta: "இணையம் உண்மையில் எவ்வாறு வேலை செய்கிறது?" },
+  "setup-domain.html": { hi: "Domain सेटअप करना और कहीं भी point करना", ta: "ஒரு டொமைனை அமைத்து அதை எங்கும் சுட்டிக்காட்டுதல்" },
+  "self-hosting-101.html": { hi: "Self-hosting 101: घर पर क्या चला सकते हैं?", ta: "சுய-ஹோஸ்டிங் 101: வீட்டில் என்ன இயக்க முடியும்?" },
+  "security-habits.html": { hi: "सिर्फ़ 5 सुरक्षा आदतें जो आपको चाहिए", ta: "உங்களுக்கு உண்மையில் தேவையான 5 பாதுகாப்பு பழக்கங்கள் மட்டுமே" },
+  "password-managers.html": { hi: "पासवर्ड मैनेजर: आपको इसकी ज़रूरत क्यों है", ta: "கடவுச்சொல் மேலாளர்கள்: உங்களுக்கு ஏன் ஒன்று தேவை" },
+  "spotting-phishing.html": { hi: "Phishing की पहचान करना", ta: "ஃபிஷிங் முயற்சிகளைக் கண்டறிதல்" },
+  "learn-to-code.html": { hi: "2026 में कोडिंग सीखना कैसे शुरू करें", ta: "2026-ல் குறியீடு எழுதக் கற்றுக்கொள்வது எப்படி" },
+  "html-css-js.html": { hi: "HTML, CSS और JavaScript: हर एक क्या करता है?", ta: "HTML, CSS, JavaScript: ஒவ்வொன்றும் என்ன செய்கிறது?" },
+  "git-beginners.html": { hi: "शुरुआती लोगों के लिए Git के साथ version control", ta: "Git உடன் பதிப்பு கட்டுப்பாடு – முழு ஆரம்பநிலையாளர்களுக்கு" },
+  "moe-vs-dense-rx6800m-16k-vs-262k.html": { hi: "RX 6800M पर MoE vs Dense: 3B Active vs 27B 16K/262K – VelsTech Lab", ta: "RX 6800M-ல் MoE vs Dense: 3B Active vs 27B at 16K/262K – VelsTech Lab" },
+  "ornith-35b-moe-262k-rocm-vs-vulkan.html": { hi: "RX 6800M पर Ornith 35B MoE 262K: ROCm vs Vulkan – VelsTech Lab", ta: "RX 6800M-ல் 262K-இல் Ornith 35B MoE: ROCm vs Vulkan – VelsTech Lab" },
+  "qwen-27b-ridge-rocm-vs-vulkan.html": { hi: "Qwen 27B Ridge 3.7bpw RX 6800M पर: 16K पर ROCm vs Vulkan – VelsTech Lab", ta: "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab" },
+  "how-much-vram-for-llm.html": { hi: "7B, 14B और 32B models के लिए कितनी VRAM चाहिए?", ta: "7B, 14B, 32B மாடல்களுக்கு எவ்வளவு VRAM தேவை?" },
+  "best-gpu-for-local-llm.html": { hi: "स्थानीय रूप से LLM चलाने के लिए सर्वश्रेष्ठ GPU (2026)", ta: "உள்ளூரில் LLMகளை இயக்க சிறந்த GPU (2026)" },
+  "best-gpu-ai-under-50000.html": { hi: "₹50,000 के अंदर AI के लिए सर्वश्रेष्ठ GPU (भारत, 2026)", ta: "₹50,000-க்கு கீழ் AI-க்கு சிறந்த GPU (இந்தியா, 2026)" },
+  "xiaomi-ai-cube.html": { hi: "Xiaomi AI Cube: लोकल AI के लिए बना मिनी डेस्कटॉप", ta: "Xiaomi AI Cube: உள்ளூர் AI-க்காக உருவாக்கப்பட்ட மினி டெஸ்க்டாப்" },
+};
+function getLocalizedTitle(url) {
+  const lang = getLang();
+  const path = location.pathname.split("/").pop() || "";
+  const inferred = path.endsWith(".hi.html") ? "hi" : path.endsWith(".ta.html") ? "ta" : lang;
+  const entry = ARTICLE_TITLES[url];
+  if (entry && entry[inferred]) return entry[inferred];
+  const art = ARTICLES.find((a) => a.url === url);
+  return art ? art.title : url;
+}
+
 function initProgressBar() {
   const bar = document.createElement("div");
   bar.className = "progress-bar";
@@ -1114,10 +1157,10 @@ function initArticleFlow() {
     '<p class="flow-heading">' + t("continue_reading") + '</p>' +
     '<div class="flow-row">' +
     (prev
-      ? '<a class="flow-link flow-prev" href="' + localizeUrl(prev.url) + '"><span class="flow-label">' + t("prev") + '</span><span class="flow-title">' + esc(prev.title) + '</span></a>'
+      ? '<a class="flow-link flow-prev" href="' + localizeUrl(prev.url) + '"><span class="flow-label">' + t("prev") + '</span><span class="flow-title">' + esc(getLocalizedTitle(prev.url)) + '</span></a>'
       : "") +
     (next
-      ? '<a class="flow-link flow-next" href="' + localizeUrl(next.url) + '"><span class="flow-label">' + t("next") + '</span><span class="flow-title">' + esc(next.title) + '</span></a>'
+      ? '<a class="flow-link flow-next" href="' + localizeUrl(next.url) + '"><span class="flow-label">' + t("next") + '</span><span class="flow-title">' + esc(getLocalizedTitle(next.url)) + '</span></a>'
       : "") +
     "</div>";
   nav.parentNode.insertBefore(flow, nav);

@@ -43,6 +43,7 @@
       prev: "← Previous",
       next: "Next →",
       author_visit: "Visit the Lab →",
+      author_desc: "Technology explained for everyone – practical guides, free tools and real experiments. Written by a developer who tests it on real hardware first.",
       tag_updated: "· Updated ",
       hot_topic_cta: "Read article",
       // chat
@@ -103,6 +104,7 @@
       prev: "← முந்தைய",
       next: "அடுத்து →",
       author_visit: "ஆய்வகத்தைப் பார்க்க →",
+      author_desc: "அனைவருக்கும் புரியும் தொழில்நுட்பம் – நடைமுறை வழிகாட்டிகள், இலவச கருவிகள் மற்றும் உண்மையான ஹார்டுவேரில் சோதிக்கப்பட்டவை. முதலில் தானே சோதிக்கும் ஒரு டெவலப்பரால் எழுதப்பட்டது.",
       tag_updated: "· புதுப்பிக்கப்பட்டது ",
       hot_topic_cta: "கட்டுரையைப் படிக்க",
       chat_title: "VelsChat",
@@ -160,6 +162,7 @@
       prev: "← पिछला",
       next: "अगला →",
       author_visit: "लैब देखें →",
+      author_desc: "हर किसी के लिए आसान भाषा में टेक्नोलॉजी – प्रैक्टिकल गाइड, मुफ्त टूल्स और असली हार्डवेयर पर किए गए प्रयोग। एक डेवलपर द्वारा लिखा गया जो पहले खुद टेस्ट करता है।",
       tag_updated: "· अपडेट ",
       hot_topic_cta: "लेख पढ़ें",
       chat_title: "VelsChat",

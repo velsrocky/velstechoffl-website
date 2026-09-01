@@ -924,6 +924,47 @@ function initCopyButtons() {
   });
 }
 
+function initCaution() {
+  const body = document.querySelector(".article-body");
+  if (!body) return;
+  const cur = getCurrentArticle();
+  // Global callout for tutorials / OS / networking where commands are common
+  const cautionCategories = ["Tutorials", "Operating Systems", "Networking", "Networking & Self-hosting", "Programming & Web"];
+  const shouldShowGlobal = cur && cautionCategories.includes(cur.category) && body.querySelector("pre");
+  if (shouldShowGlobal) {
+    const callout = document.createElement("div");
+    callout.className = "caution-callout";
+    // Use t() if available for HI/TA, fallback to English
+    const isHi = getLang() === "hi" || location.pathname.endsWith(".hi.html");
+    const isTa = getLang() === "ta" || location.pathname.endsWith(".ta.html");
+    let text = "<strong>⚠️ Use with caution:</strong> Commands are for the versions tested (Ubuntu 22.04+/RDNA2 etc.) — check your version, path and backup before running <code>sudo</code>/<code>rm</code>. Adapt as needed.";
+    if (isHi) text = "<strong>⚠️ सावधानी से उपयोग करें:</strong> ये commands Ubuntu 22.04+/RDNA2 पर टेस्ट किए गए हैं — अपना version/path जाँचें और <code>sudo</code>/<code>rm</code> से पहले backup लें।";
+    else if (isTa) text = "<strong>⚠️ கவனமாக பயன்படுத்தவும்:</strong> இந்த commands Ubuntu 22.04+/RDNA2 இல் சோதிக்கப்பட்டவை — உங்கள் version/path சரிபார்த்து <code>sudo</code>/<code>rm</code> முன் backup எடுக்கவும்.";
+    callout.innerHTML = text;
+    body.insertBefore(callout, body.firstChild);
+  }
+
+  // Per-command badge for destructive patterns
+  const destructiveRe = /(rm\s+(-rf?|-\s*rf)|\bsudo\s+rm\b|\bdd\s+if=|\bchmod\s+777\b|\bmkfs\b|curl\s+.*\|\s*(bash|sh)|wget\s+.*\|\s*(bash|sh)|>\s*\/dev\/sd|:\(\)\s*\{\s*:\|\s*:&\s*;\s*\})/i;
+  body.querySelectorAll("pre").forEach((pre) => {
+    const txt = pre.innerText || pre.textContent || "";
+    if (!destructiveRe.test(txt)) return;
+    // Avoid double badge if already wrapped
+    if (pre.parentElement && pre.parentElement.classList.contains("pre-caution-wrap")) return;
+    const wrap = document.createElement("div");
+    wrap.className = "pre-caution-wrap";
+    const badge = document.createElement("div");
+    badge.className = "caution-badge";
+    const isHi = getLang() === "hi" || location.pathname.endsWith(".hi.html");
+    const isTa = getLang() === "ta" || location.pathname.endsWith(".ta.html");
+    badge.textContent = isHi ? "⚠️ सावधानी — destructive command" : isTa ? "⚠️ கவனம் — ஆபத்தான command" : "⚠️ Caution — destructive command";
+    badge.title = isHi ? "इस command को समझकर ही चलाएँ" : isTa ? "இந்த command-ஐ புரிந்து கொண்டு இயக்கவும்" : "Review before running";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(badge);
+    wrap.appendChild(pre);
+  });
+}
+
 const CAT_COLORS = {
   "AI & ML": "#a78bfa",
   "AI": "#a78bfa",
@@ -1213,6 +1254,7 @@ initContactForm();
 initNewsletter();
 initTagsPage();
 initCopyButtons();
+initCaution();
 addCategoryPill();
 initArticleFlow();
 initBackToTop();

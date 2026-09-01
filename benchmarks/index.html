@@ -168,7 +168,7 @@
 
       const body = document.getElementById("bench-body");
       body.innerHTML = rows.map(({ b, bk }) => {
-        const slug = b.id + "-" + bk.name.toLowerCase();
+        const slug = b.id + "-" + bk.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
         const testedBadge = b.tested ? ' <span class="latest-badge">🧪 Tested</span>' : "";
         return '<tr>' +
           '<td><a href="' + slug + '.html">' + esc(b.gpu) + '</a></td>' +

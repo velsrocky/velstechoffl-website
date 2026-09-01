@@ -53,7 +53,7 @@
       "source_article": "tiel-coder-35b-mtp-rx6800m.html",
       "backends": [
         { "name": "ROCm (no MTP)", "decode": 25.39, "prompt": 118.96 },
-        { "name": "ROCm + MTP", "decode": 29.09, "prompt": 111.4 }
+        { "name": "ROCm (MTP)", "decode": 29.09, "prompt": 111.4 }
       ],
       "notes": "MTP speculative decoding on MoE (28 vs 32 CPU experts). MTP +14.6% decode (25.39 → 29.09 tok/s), prompt -6.4%, 54.7% acceptance (2.64 mean). 35B Q4 ~17.5GB + q8 KV 262K needs --n-cpu-moe offload on 12GB."
     },

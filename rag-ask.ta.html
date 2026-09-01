@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="உரைக் கோப்பைப் பதிவேற்றி அதைப் பற்றி கேள்விகள் கேளுங்கள். உள்ளடக்கம் chunk செய்யப்பட்டு, மதிப்பெண் பெற்று, பொருத்தமான context உடன் AI மாதிரிக்கு அனுப்பப்படுகிறது — சர்வர்-பக்க சேமிப்பு எதுவும் தேவையில்லை." />
+  <title>RAG: உங்கள் கோப்பைக் கேளுங்கள் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/rag-ask.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/rag-ask.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/rag-ask.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/rag-ask.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/rag-ask.html#webapp",
+  "name": "RAG: உங்கள் கோப்பைக் கேளுங்கள் | VelsTech",
+  "description": "உரைக் கோப்பைப் பதிவேற்றி அதைப் பற்றி கேள்விகள் கேளுங்கள். உள்ளடக்கம் chunk செய்யப்பட்டு, மதிப்பெண் பெற்று, பொருத்தமான context உடன் AI மாதிரிக்கு அனுப்பப்படுகிறது — சர்வர்-பக்க சேமிப்பு எதுவும் தேவையில்லை.",
+  "url": "https://velstech.net/rag-ask.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/rag-ask.html" />
+  <meta property="og:title" content="RAG: உங்கள் கோப்பைக் கேளுங்கள் | VelsTech" />
+  <meta property="og:description" content="உரைக் கோப்பைப் பதிவேற்றி அதைப் பற்றி கேள்விகள் கேளுங்கள். உள்ளடக்கம் chunk செய்யப்பட்டு, மதிப்பெண் பெற்று, பொருத்தமான context உடன் AI மாதிரிக்கு அனுப்பப்படுகிறது — சர்வர்-பக்க சேமிப்பு எதுவும் தேவையில்லை." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RAG: உங்கள் கோப்பைக் கேளுங்கள் | VelsTech" />
+  <meta name="twitter:description" content="உரைக் கோப்பைப் பதிவேற்றி அதைப் பற்றி கேள்விகள் கேளுங்கள். உள்ளடக்கம் chunk செய்யப்பட்டு, மதிப்பெண் பெற்று, பொருத்தமான context உடன் AI மாதிரிக்கு அனுப்பப்படுகிறது — சர்வர்-பக்க சேமிப்பு எதுவும் தேவையில்லை." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
+    .rag-upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 40px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 16px;
+    }
+    .rag-upload-zone:hover,
+    .rag-upload-zone.drag-over {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .rag-upload-zone.has-file {
+      border-style: solid;
+      border-color: var(--accent);
+      padding: 16px 24px;
+    }
+    .rag-upload-zone .rag-upload-icon {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+    .rag-upload-zone.has-file .rag-upload-icon {
+      font-size: 1.2rem;
+      margin-bottom: 0;
+    }
+    .rag-upload-zone p {
+      margin: 4px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .rag-upload-zone .rag-file-name {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .rag-upload-zone .rag-file-size {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .rag-file-content {
+      margin: 12px 0 20px;
+    }
+    .rag-file-content textarea {
+      width: 100%;
+      min-height: 200px;
+      max-height: 400px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+    .rag-file-content textarea:focus {
+      border-color: var(--accent);
+    }
+    .rag-ask-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .rag-ask-bar input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .rag-ask-bar input:focus {
+      border-color: var(--accent);
+    }
+    .rag-ask-bar input::placeholder {
+      color: var(--muted);
+    }
+    .rag-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .rag-msg {
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .rag-msg.rag-user {
+      background: var(--accent-soft);
+      border: 1px solid rgba(76, 194, 255, 0.3);
+      align-self: flex-end;
+      max-width: 85%;
+    }
+    .rag-msg.rag-assistant {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+      max-width: 100%;
+    }
+    .rag-msg.rag-assistant .rag-answer {
+      margin-bottom: 8px;
+    }
+    .rag-msg.rag-assistant .rag-answer p {
+      margin: 6px 0;
+    }
+    .rag-msg.rag-assistant .rag-answer p:first-child {
+      margin-top: 0;
+    }
+    .rag-msg.rag-assistant .rag-answer p:last-child {
+      margin-bottom: 0;
+    }
+    .rag-msg.rag-assistant code {
+      background: var(--bg);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .rag-chunks-toggle {
+      font-size: 0.8rem;
+      color: var(--accent);
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .rag-chunks-toggle:hover {
+      text-decoration: underline;
+    }
+    .rag-chunks-toggle::before {
+      content: "▸";
+      display: inline-block;
+      transition: transform 0.15s;
+    }
+    .rag-chunks-toggle.open::before {
+      transform: rotate(90deg);
+    }
+    .rag-chunks-body {
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .rag-chunks-body.hidden {
+      display: none;
+    }
+    .rag-chunks-body .rag-chunk-item {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .rag-chunks-body .rag-chunk-item:last-child {
+      border-bottom: none;
+    }
+    .rag-chunks-body .rag-chunk-label {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .rag-chunks-body .rag-chunk-text {
+      color: var(--muted);
+    }
+    .rag-error {
+      color: #f472b6;
+      font-size: 0.85rem;
+    }
+    .rag-loading {
+      color: var(--muted);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rag-loading::after {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-top: 2px solid var(--accent);
+      border-radius: 50%;
+      animation: rag-spin 0.7s linear infinite;
+    }
+    @keyframes rag-spin {
+      to { transform: rotate(360deg); }
+    }
+    .rag-empty {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .rag-empty p {
+      margin: 6px 0;
+    }
+    .rag-clear-btn {
+      font-size: 0.8rem;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .rag-clear-btn:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .rag-msg-time {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+    .rag-chunk-highlight {
+      background: rgba(76, 194, 255, 0.15);
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+    .rag-file-highlight {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .rag-file-highlight-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / RAG: உங்கள் கோப்பைக் கேளுங்கள்</p>
+    <h1 class="title">RAG: உங்கள் கோப்பைக் கேளுங்கள்</h1>
+    <div class="meta">
+      <span>.txt கோப்பைப் பதிவேற்றவும் · chunk செய்யவும் · கேளுங்கள் · உங்கள் உரையின் அடிப்படையில் பதில்களைப் பெறவும்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        ஒரு எளிய உரைக் கோப்பை (1 MB வரை) பதிவேற்றி, அதைப் பற்றி கேள்விகள் கேளுங்கள்.
+        இந்த கருவி உங்கள் உரையை chunks ஆகப் பிரித்து, முக்கியச் சொல் பொருத்தம் மூலம் மிகவும் பொருத்தமானவற்றைக்
+        கண்டறிந்து, அவற்றை உங்கள் கேள்வியுடன் AI மாதிரிக்கு அனுப்புகிறது. நீங்கள் பதிலையும், கோப்பின் எந்தப்
+        பகுதிகள் பயன்படுத்தப்பட்டன என்பதையும் பார்க்கலாம் — சர்வர்-பக்க சேமிப்பு இல்லை, வெக்டர் டேட்டாபேஸ் இல்லை, API கீ தேவையில்லை.
+      </p>
+
+      <div class="calc">
+        <div id="rag-upload-zone" class="rag-upload-zone">
+          <div class="rag-upload-icon">📄</div>
+          <p><strong>இங்கே .txt கோப்பை இழுத்துவிடவும்</strong></p>
+          <p>அல்லது உலாவ கிளிக் செய்யவும் — 1 MB வரை</p>
+        </div>
+        <input id="rag-file-input" type="file" accept=".txt" hidden />
+
+        <div id="rag-file-section" class="rag-file-content" hidden>
+          <textarea id="rag-file-textarea" readonly placeholder="கோப்பின் உள்ளடக்கம் இங்கே தோன்றும்…"></textarea>
+          <div id="rag-file-highlight" class="rag-file-highlight" hidden></div>
+        </div>
+
+        <div id="rag-chat-section" hidden>
+          <div class="rag-ask-bar">
+            <input id="rag-question-input" type="text" placeholder="இந்த கோப்பைப் பற்றி ஒரு கேள்வியைக் கேளுங்கள்…" autocomplete="off" />
+            <button id="rag-ask-btn" class="btn btn-primary" disabled>கேள்</button>
+          </div>
+
+          <div id="rag-messages" class="rag-messages">
+            <div class="rag-empty">
+              <p>தொடங்க ஒரு கேள்வியைக் கேளுங்கள்.</p>
+              <p>கருவி உங்கள் கோப்பிலிருந்து 3 மிகவும் பொருத்தமான chunks ஐக் கண்டறிந்து AI மாதிரிக்கு அனுப்பும்.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="tool-note">
+        அனைத்து செயலாக்கமும் உங்கள் உலாவியில் நடைபெறுகிறது. கோப்பின் உள்ளடக்கம்
+        <a href="https://chat.velstech.net" target="_blank" rel="noopener">chat.velstech.net</a>
+        க்கு நீங்கள் ஒரு கேள்வியைக் கேட்கும்போது மட்டுமே அனுப்பப்படுகிறது (பொருத்தமான chunks + உங்கள் கேள்வி). எந்த தரவும் எந்த சர்வரிலும் சேமிக்கப்படுவதில்லை.
+        அரட்டை வரலாறு session storage இல் வைக்கப்பட்டு, நீங்கள் தாவலை மூடும்போது அழிக்கப்படுகிறது.
+      </p>
+
+      <details class="calc-method">
+        <summary>RAG எவ்வாறு செயல்படுகிறது</summary>
+        <div class="calc-method-body">
+          <p>இது ஒரு எளிய முக்கியச் சொல் பொருத்த retrieval-augmented generation (RAG) பைப்லைன் — embeddings இல்லை, வெக்டர் ஸ்டோர் இல்லை.</p>
+          <h4>1. Chunking</h4>
+          <p>கோப்பு ~500 வார்த்தைகள் கொண்ட ஒன்றுடன் ஒன்று பின்னிப் பிணைந்த chunks ஆகப் பிரிக்கப்படுகிறது (~50 வார்த்தை ஒன்றுடன் ஒன்று). ஒவ்வொரு chunk உம் ஆவணத்தில் அதன் தோராயமான நிலையைத் தக்க வைத்துக் கொள்கிறது.</p>
+          <h4>2. Scoring</h4>
+          <p>உங்கள் கேள்வி tokenized செய்யப்படுகிறது (சிறிய எழுத்துக்கள், எண்ணெழுத்து அல்லாதவை நீக்கப்படும்). ஒவ்வொரு chunk உம் கேள்வியின் எத்தனை tokens அதில் தோன்றுகின்றன என்பதை எண்ணி மதிப்பெண் பெறுகிறது, மீண்டும் மீண்டும் வரும் சொற்களுக்கு அதிர்வெண் போனஸுடன்.</p>
+          <h4>3. Retrieval</h4>
+          <p>முதல் 3 மதிப்பெண் பெற்ற chunks context ஆகத் தேர்ந்தெடுக்கப்படுகின்றன. எந்த chunk இன் மதிப்பெண்ணும் 0 க்கு மேல் இல்லையென்றால், கேள்வி context இல்லாமல் அனுப்பப்படுகிறது.</p>
+          <h4>4. Generation</h4>
+          <p>context chunks + உங்கள் கேள்வி <code>chat.velstech.net</code> (Llama 3.1 8B via Cloudflare Workers AI) இல் உள்ள AI மாதிரிக்கு அனுப்பப்படுகிறது. மாதிரியானது வழங்கப்பட்ட context ஐ மட்டுமே அடிப்படையாகக் கொண்டு பதிலளிக்குமாறு அறிவுறுத்தப்படுகிறது.</p>
+        </div>
+      </details>
+
+      <h2>தொடர்புடைய கருவிகள்</h2>
+      <ul>
+        <li><a href="llm-vram-calculator.html">LLM VRAM Calculator – மாதிரிக்கு எவ்வளவு GPU நினைவகம் தேவை?</a></li>
+        <li><a href="gpu-ai-calculator.html">GPU AI Performance Calculator – இது எவ்வளவு வேகமாக இயங்கும்?</a></li>
+        <li><a href="context-length-calculator.html">Context Length Calculator – உங்கள் context window இல் எத்தனை tokens பொருந்தும்?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகள்</a>
+      <a href="ai.html">AI &amp; ML குறிப்புகள்</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const CHAT_PROXY_URL = "https://chat.velstech.net";
+      const CHAT_MODEL = "@cf/meta/llama-3.1-8b-instruct";
+      const CHUNK_SIZE = 500;
+      const CHUNK_OVERLAP = 50;
+      const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
+
+      // ---- state ----
+      let fileContent = "";
+      let chunks = [];
+      let fileName = "";
+      let fileSize = 0;
+      let messages = [];
+      let sessionId = "";
+
+      // ---- DOM refs ----
+      const uploadZone = document.getElementById("rag-upload-zone");
+      const fileInput = document.getElementById("rag-file-input");
+      const fileSection = document.getElementById("rag-file-section");
+      const fileTextarea = document.getElementById("rag-file-textarea");
+      const chatSection = document.getElementById("rag-chat-section");
+      const questionInput = document.getElementById("rag-question-input");
+      const askBtn = document.getElementById("rag-ask-btn");
+      const messagesEl = document.getElementById("rag-messages");
+
+      function genId() {
+        return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      }
+
+      function esc(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function renderContent(raw) {
+        return esc(raw)
+          .replace(/`([^`]+)`/g, "<code>$1</code>")
+          .replace(/\n/g, "<br>");
+      }
+
+      function formatSize(bytes) {
+        if (bytes < 1024) return bytes + " B";
+        if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
+        return (bytes / 1048576).toFixed(1) + " MB";
+      }
+
+      // ---- chunking ----
+      function tokenize(text) {
+        return (text || "").toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
+      }
+
+      function splitIntoChunks(text, size, overlap) {
+        const words = text.split(/\s+/).filter(Boolean);
+        const result = [];
+        const step = Math.max(1, size - overlap);
+        for (let i = 0; i < words.length; i += step) {
+          const slice = words.slice(i, i + size);
+          if (slice.length < 10) continue;
+          result.push({
+            index: result.length,
+            text: slice.join(" "),
+            startWord: i,
+            endWord: i + slice.length,
+          });
+        }
+        return result;
+      }
+
+      const STOPWORDS = new Set([
+        "a","an","the","and","or","but","in","on","at","to","for","of","with","by",
+        "is","are","was","were","be","been","being","have","has","had","do","does",
+        "did","will","would","could","should","may","might","can","shall","not","no",
+        "nor","it","its","this","that","these","those","i","you","he","she","we","they",
+        "me","him","her","us","them","my","your","his","their","our","what","which",
+        "who","whom","when","where","why","how","all","each","every","both","few",
+        "more","most","some","any","such","only","own","same","so","than","too",
+        "very","just","because","as","if","then","else","about","up","out","off",
+        "over","after","into","through","during","before","between","under","again",
+        "further","once","here","there","am","wasn","isn","aren","weren","don","doesn",
+        "didn","won","wouldn","shouldn","couldn","can","hasn","haven","hadn",
+      ]);
+
+      function scoreChunks(chunks, query) {
+        const qTokens = tokenize(query).filter((t) => !STOPWORDS.has(t) && t.length > 1);
+        if (!qTokens.length) return chunks.map((c) => ({ chunk: c, score: 0 }));
+
+        return chunks.map((chunk) => {
+          const cTokens = tokenize(chunk.text);
+          let score = 0;
+          const freq = {};
+          cTokens.forEach((t) => { freq[t] = (freq[t] || 0) + 1; });
+          qTokens.forEach((qt) => {
+            if (freq[qt]) score += freq[qt] * 2;
+            cTokens.forEach((ct) => {
+              if (ct !== qt && (ct.startsWith(qt) || qt.startsWith(ct))) score += 0.5;
+            });
+          });
+          return { chunk, score };
+        });
+      }
+
+      function findTopChunks(chunks, query, n) {
+        const scored = scoreChunks(chunks, query);
+        return scored.sort((a, b) => b.score - a.score).slice(0, n);
+      }
+
+      // ---- highlight chunks in text ----
+      function highlightChunksInText(text, selectedChunks) {
+        if (!selectedChunks || !selectedChunks.length) return esc(text);
+        // Normalize whitespace to match chunk building
+        const normalized = String(text).replace(/\s+/g, " ").trim();
+        let result = esc(normalized);
+        selectedChunks.forEach((sc) => {
+          const chunkText = esc(sc.chunk.text);
+          const escaped = chunkText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          result = result.replace(
+            new RegExp(escaped, "gi"),
+            '<span class="rag-chunk-highlight">$&</span>'
+          );
+        });
+        return result;
+      }
+
+      // ---- API call ----
+      async function askAPI(context, question) {
+        const systemPrompt =
+          "You are a document Q&A assistant. Answer based only on the provided context. " +
+          "If the context does not contain enough information to answer the question, say so clearly. " +
+          "Be concise and direct. Use plain language.";
+        const userPrompt = "Context:\n" + context + "\n\nQuestion: " + question;
+
+        const res = await fetch(CHAT_PROXY_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt },
+            ],
+            model: CHAT_MODEL,
+            stream: false,
+          }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error((err && (err.detail || err.error)) || ("HTTP " + res.status));
+        }
+
+        const data = await res.json();
+        const text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+        return text || "";
+      }
+
+      // ---- sessionStorage ----
+      function saveSession() {
+        try {
+          sessionStorage.setItem("rag-session-" + sessionId, JSON.stringify({
+            fileName,
+            fileSize,
+            messages,
+            chunks: chunks.map((c) => c.text),
+          }));
+        } catch {}
+      }
+
+      function loadSession() {
+        try {
+          const keys = Object.keys(sessionStorage).filter((k) => k.startsWith("rag-session-"));
+          if (!keys.length) return false;
+          sessionId = keys[0].replace("rag-session-", "");
+          const data = JSON.parse(sessionStorage.getItem(keys[0]));
+          if (!data || !data.fileName) return false;
+          fileName = data.fileName;
+          fileSize = data.fileSize || 0;
+          messages = data.messages || [];
+          chunks = (data.chunks || []).map((text, i) => ({ index: i, text, startWord: 0, endWord: 0 }));
+          fileContent = chunks.map((c) => c.text).join(" ");
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function clearSession() {
+        try {
+          sessionStorage.removeItem("rag-session-" + sessionId);
+        } catch {}
+      }
+
+      // ---- render ----
+      function renderMessages() {
+        if (!messages.length) {
+          messagesEl.innerHTML =
+            '<div class="rag-empty">' +
+            '<p>Ask a question to get started.</p>' +
+            '<p>The tool will find the 3 most relevant chunks from your file and send them to the AI model.</p>' +
+            "</div>";
+          return;
+        }
+
+        let html = "";
+        messages.forEach((m) => {
+          if (m.role === "user") {
+            html += '<div class="rag-msg rag-user">' + renderContent(m.text) + '<div class="rag-msg-time">' + m.time + "</div></div>";
+          } else if (m.role === "assistant") {
+            let chunksHtml = "";
+            if (m.chunks && m.chunks.length) {
+              chunksHtml =
+                '<div class="rag-chunks-toggle" data-msg-idx="' + m.idx + '">' +
+                m.chunks.length + " relevant chunk" + (m.chunks.length > 1 ? "s" : "") +
+                '</div>' +
+                '<div id="rag-chunks-body-' + m.idx + '" class="rag-chunks-body hidden">';
+              m.chunks.forEach((sc, ci) => {
+                chunksHtml +=
+                  '<div class="rag-chunk-item">' +
+                  '<div class="rag-chunk-label">Chunk ' + (sc.chunk.index + 1) + ' (score: ' + sc.score.toFixed(1) + ')</div>' +
+                  '<div class="rag-chunk-text">' + esc(sc.chunk.text.slice(0, 300)) + (sc.chunk.text.length > 300 ? "…" : "") + "</div>" +
+                  "</div>";
+              });
+              chunksHtml += "</div>";
+            }
+
+            let answerHtml = m.answer ? renderContent(m.answer) : "";
+            // Convert newlines to paragraphs
+            if (answerHtml) {
+              const paras = answerHtml.split("<br>").filter(Boolean);
+              answerHtml = paras.map((p) => "<p>" + p + "</p>").join("");
+            }
+
+            html +=
+              '<div class="rag-msg rag-assistant">' +
+              '<div class="rag-answer">' + (answerHtml || '<em>No answer returned.</em>') + "</div>" +
+              chunksHtml +
+              '<div class="rag-msg-time">' + m.time + "</div>" +
+              "</div>";
+          }
+        });
+        messagesEl.innerHTML = html;
+
+        // Attach chunk toggle listeners
+        document.querySelectorAll(".rag-chunks-toggle").forEach((el) => {
+          el.addEventListener("click", () => {
+            const idx = el.dataset.msgIdx;
+            const body = document.getElementById("rag-chunks-body-" + idx);
+            if (body) {
+              body.classList.toggle("hidden");
+              el.classList.toggle("open");
+            }
+          });
+        });
+
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function renderFileContent() {
+        if (fileContent) {
+          fileTextarea.value = fileContent;
+          fileSection.hidden = false;
+          chatSection.hidden = false;
+          uploadZone.classList.add("has-file");
+          uploadZone.innerHTML =
+            '<div class="rag-upload-icon">📄</div>' +
+            '<p class="rag-file-name">' + esc(fileName) + '</p>' +
+            '<p class="rag-file-size">' + formatSize(fileSize) + ' · ' + chunks.length + ' chunks</p>';
+        } else {
+          fileSection.hidden = true;
+          chatSection.hidden = true;
+          uploadZone.classList.remove("has-file");
+          uploadZone.innerHTML =
+            '<div class="rag-upload-icon">📄</div>' +
+            '<p><strong>Drop a .txt file here</strong></p>' +
+            '<p>or click to browse — up to 1 MB</p>';
+        }
+      }
+
+      function setLoading(loading) {
+        askBtn.disabled = loading || !questionInput.value.trim();
+        askBtn.textContent = loading ? "Asking…" : "Ask";
+        if (loading) {
+          const div = document.createElement("div");
+          div.id = "rag-loading-msg";
+          div.className = "rag-msg rag-assistant";
+          div.innerHTML = '<div class="rag-loading">Thinking</div>';
+          messagesEl.appendChild(div);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        } else {
+          const el = document.getElementById("rag-loading-msg");
+          if (el) el.remove();
+        }
+      }
+
+      // ---- ask ----
+      async function askQuestion() {
+        const question = questionInput.value.trim();
+        if (!question || !chunks.length) return;
+
+        askBtn.disabled = true;
+
+        const topChunks = findTopChunks(chunks, question, 3);
+        const context = topChunks.length
+          ? topChunks.map((sc, i) => "[Chunk " + (sc.chunk.index + 1) + "] " + sc.chunk.text).join("\n\n")
+          : "";
+
+        const userMsg = {
+          role: "user",
+          text: question,
+          time: new Date().toLocaleTimeString(),
+        };
+        messages.push(userMsg);
+        questionInput.value = "";
+        askBtn.disabled = true;
+        renderMessages();
+
+        setLoading(true);
+
+        try {
+          const answer = await askAPI(context, question);
+          const assistantMsg = {
+            role: "assistant",
+            answer: answer || "I couldn't find an answer based on the provided context.",
+            chunks: topChunks,
+            idx: messages.length,
+            time: new Date().toLocaleTimeString(),
+          };
+          messages.push(assistantMsg);
+          saveSession();
+          renderMessages();
+          highlightFileChunks(topChunks);
+        } catch (err) {
+          const errorMsg = {
+            role: "assistant",
+            answer: '<span class="rag-error">Error: ' + esc(err.message) + '</span>',
+            chunks: [],
+            idx: messages.length,
+            time: new Date().toLocaleTimeString(),
+          };
+          messages.push(errorMsg);
+          renderMessages();
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      function highlightFileChunks(selectedChunks) {
+        const hl = document.getElementById("rag-file-highlight");
+        if (!selectedChunks || !selectedChunks.length) {
+          hl.hidden = true;
+          return;
+        }
+        hl.innerHTML =
+          '<div class="rag-file-highlight-label">Source chunks highlighted in the file below</div>' +
+          highlightChunksInText(fileContent, selectedChunks);
+        hl.hidden = false;
+      }
+
+      // ---- file handling ----
+      function handleFile(file) {
+        if (!file) return;
+        if (file.size > MAX_FILE_SIZE) {
+          alert("File is too large. Maximum size is 1 MB.");
+          return;
+        }
+        if (!file.name.endsWith(".txt") && file.type !== "text/plain") {
+          alert("Please upload a .txt file.");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          fileContent = e.target.result;
+          fileName = file.name;
+          fileSize = file.size;
+          chunks = splitIntoChunks(fileContent, CHUNK_SIZE, CHUNK_OVERLAP);
+          messages = [];
+          sessionId = genId();
+          clearSession();
+          saveSession();
+          renderFileContent();
+          renderMessages();
+          askBtn.disabled = false;
+          questionInput.focus();
+        };
+        reader.readAsText(file);
+      }
+
+      // ---- events ----
+      uploadZone.addEventListener("click", () => fileInput.click());
+
+      uploadZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadZone.classList.add("drag-over");
+      });
+      uploadZone.addEventListener("dragleave", () => {
+        uploadZone.classList.remove("drag-over");
+      });
+      uploadZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove("drag-over");
+        const file = e.dataTransfer.files[0];
+        if (file) handleFile(file);
+      });
+
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files[0]) handleFile(fileInput.files[0]);
+      });
+
+      questionInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !askBtn.disabled) {
+          e.preventDefault();
+          askQuestion();
+        }
+      });
+      questionInput.addEventListener("input", () => {
+        askBtn.disabled = !questionInput.value.trim() || !chunks.length;
+      });
+
+      askBtn.addEventListener("click", askQuestion);
+
+      // ---- init ----
+      if (loadSession()) {
+        renderFileContent();
+        renderMessages();
+        askBtn.disabled = !chunks.length;
+        if (chunks.length) questionInput.focus();
+      }
+    })();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

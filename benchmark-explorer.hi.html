@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="GPU, मॉडल और बैकएंड के आधार पर LLM बेंचमार्क ब्राउज़ करें और तुलना करें – हार्डवेयर के अनुसार फ़िल्टर करें, tok/s के अनुसार सॉर्ट करें, और वास्तविक परीक्षण परिणाम देखें।" />
+  <title>बेंचमार्क एक्सप्लोरर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/benchmark-explorer.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/benchmark-explorer.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/benchmark-explorer.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/benchmark-explorer.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/benchmark-explorer.hi.html#webapp",
+  "name": "बेंचमार्क एक्सप्लोरर | VelsTech",
+  "description": "GPU, मॉडल और बैकएंड के आधार पर LLM बेंचमार्क ब्राउज़ करें और तुलना करें – हार्डवेयर के अनुसार फ़िल्टर करें, tok/s के अनुसार सॉर्ट करें, और वास्तविक परीक्षण परिणाम देखें।",
+  "url": "https://velstech.net/benchmark-explorer.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/benchmark-explorer.html" />
+  <meta property="og:title" content="बेंचमार्क एक्सप्लोरर | VelsTech" />
+  <meta property="og:description" content="GPU, मॉडल और बैकएंड के आधार पर LLM बेंचमार्क ब्राउज़ करें और तुलना करें – हार्डवेयर के अनुसार फ़िल्टर करें, tok/s के अनुसार सॉर्ट करें, और वास्तविक परीक्षण परिणाम देखें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="बेंचमार्क एक्सप्लोरर | VelsTech" />
+  <meta name="twitter:description" content="GPU, मॉडल और बैकएंड के आधार पर LLM बेंचमार्क ब्राउज़ करें और तुलना करें – हार्डवेयर के अनुसार फ़िल्टर करें, tok/s के अनुसार सॉर्ट करें, और वास्तविक परीक्षण परिणाम देखें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
+    .bench-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .bench-summary .stat {
+      flex: 1 1 200px;
+      background: #0f141b;
+      border: 1px solid #1f2733;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+    .bench-summary .stat .stat-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #8b98a9;
+    }
+    .bench-summary .stat .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      color: #e6edf3;
+    }
+    .bench-summary .stat .stat-value .accent {
+      color: #4cc2ff;
+    }
+
+    .bench-filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    .bench-filters label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #8b98a9;
+    }
+    .bench-filters .input {
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 0.95rem;
+    }
+
+    .bench-table-wrap {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid #1f2733;
+      border-radius: 10px;
+      background: #0f141b;
+    }
+    table.bench-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      min-width: 900px;
+    }
+    table.bench-table thead th {
+      text-align: left;
+      padding: 0.7rem 0.8rem;
+      background: #111822;
+      color: #8b98a9;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #1f2733;
+      white-space: nowrap;
+      user-select: none;
+      cursor: pointer;
+      position: sticky;
+      top: 0;
+    }
+    table.bench-table thead th:hover {
+      color: #4cc2ff;
+    }
+    table.bench-table thead th .sort-arrow {
+      margin-left: 0.35rem;
+      font-size: 0.7rem;
+      color: #4cc2ff;
+    }
+    table.bench-table tbody td {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid #161d27;
+      vertical-align: top;
+    }
+    table.bench-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    table.bench-table tbody tr:hover {
+      background: #131a24;
+    }
+    table.bench-table tr.best-decode td.col-decode,
+    table.bench-table tr.best-prompt td.col-prompt {
+      color: #4cc2ff;
+    }
+    table.bench-table .num {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-tested {
+      background: rgba(74, 222, 128, 0.14);
+      color: #4ade80;
+      border: 1px solid rgba(74, 222, 128, 0.35);
+    }
+    .badge-estimated {
+      background: rgba(148, 163, 184, 0.14);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+    .badge-on {
+      background: rgba(76, 194, 255, 0.14);
+      color: #4cc2ff;
+      border: 1px solid rgba(76, 194, 255, 0.35);
+    }
+    .badge-off {
+      background: rgba(251, 191, 36, 0.14);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.35);
+    }
+    .best-flag {
+      margin-left: 0.35rem;
+      color: #4cc2ff;
+      font-size: 0.8rem;
+    }
+    .bench-empty {
+      padding: 2.5rem 1rem;
+      text-align: center;
+      color: #8b98a9;
+    }
+    .bench-note {
+      color: #8b98a9;
+      font-size: 0.85rem;
+    }
+    .bench-count {
+      font-size: 0.85rem;
+      color: #8b98a9;
+      margin: 0.25rem 0 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">होम</a> / <a href="tools.html">टूल्स</a> / बेंचमार्क एक्सप्लोरर</p>
+    <h1 class="title">बेंचमार्क एक्सप्लोरर</h1>
+    <div class="meta">
+      <span>LLM बेंचमार्क ब्राउज़ करें और तुलना करें · GPU, मॉडल और बैकएंड से फ़िल्टर करें · tok/s से सॉर्ट करें</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        इस पेज का हर आँकड़ा इस साइट के हार्डवेयर (RX 6800M, ROCm बनाम Vulkan) पर किए गए
+        वास्तविक परीक्षण से आता है, साथ ही बड़े डेस्कटॉप कार्डों के लिए <a href="gpu-ai-calculator.html">GPU AI Performance
+        Calculator</a> के अनुमान भी शामिल हैं। GPU, मॉडल, बैकएंड या tested/estimated
+        स्थिति के अनुसार फ़िल्टर करें, फिर सॉर्ट करने के लिए किसी भी कॉलम हेडर पर क्लिक करें। मौजूदा
+        व्यू में सबसे तेज़ decode और prompt गति को नीले रंग में हाइलाइट किया जाता है।
+      </p>
+
+      <div class="bench-summary" id="summary"></div>
+
+      <div class="calc">
+        <div class="bench-filters">
+          <label>
+            <span>GPU</span>
+            <select id="f-gpu" class="input"></select>
+          </label>
+          <label>
+            <span>मॉडल</span>
+            <select id="f-model" class="input"></select>
+          </label>
+          <label>
+            <span>बैकएंड</span>
+            <select id="f-backend" class="input"></select>
+          </label>
+          <label>
+            <span>स्थिति</span>
+            <select id="f-status" class="input"></select>
+          </label>
+        </div>
+        <p class="tool-note" id="result-count">लोड हो रहा है…</p>
+      </div>
+
+      <div class="bench-table-wrap">
+        <table class="bench-table" id="bench-table">
+          <thead>
+            <tr>
+              <th data-key="gpu">GPU</th>
+              <th data-key="model">मॉडल</th>
+              <th data-key="backend">बैकएंड</th>
+              <th data-key="tested">स्थिति</th>
+              <th data-key="decode" class="num">Decode tok/s</th>
+              <th data-key="prompt" class="num">Prompt tok/s</th>
+              <th data-key="context">कॉन्टेक्स्ट</th>
+              <th data-key="quant">Quant</th>
+              <th data-key="vram">VRAM</th>
+              <th data-key="offload">ऑफ़लोड</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <details class="calc-method">
+        <summary>नोट्स और पद्धति</summary>
+        <div class="calc-method-body">
+          <p>
+            <strong>Tested</strong> पंक्तियों को सीधे इस साइट के हार्डवेयर पर मापा गया था और
+            उनके स्रोत लेखों (नीचे लिंक किए गए) में विस्तार से वर्णित हैं। <strong>Estimated</strong>
+            पंक्तियाँ GPU AI Performance Calculator से आती हैं, जो पूरी तरह से रेसिडेंट मॉडल
+            मानकर अनुमान लगाती हैं – ये अनुमान हैं, प्रयोगशाला माप नहीं।
+          </p>
+          <p>
+            Decode (जनरेशन) गति इंटरैक्टिव चैट के लिए सबसे महत्वपूर्ण संख्या है – यह
+            bandwidth-बद्ध होती है, इसलिए RTX 4060 Ti जैसे कम bandwidth वाले कार्डों की गति तेज़ी
+            से गिरती है। Prompt (prefill) गति compute-बद्ध होती है। जहाँ कई बैकएंड का परीक्षण
+            किया गया था, वहाँ हर बैकएंड को अलग पंक्ति के रूप में सूचीबद्ध किया गया है ताकि आप ROCm
+            बनाम Vulkan की सीधे तुलना कर सकें।
+          </p>
+        </div>
+      </details>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="best-gpu-for-local-llm.html">स्थानीय LLM के लिए सबसे अच्छा GPU – बेंचमार्क और चयन</a></li>
+        <li><a href="qwen-27b-ridge-rocm-vs-vulkan.html">ROCm बनाम Vulkan पर Qwen 27B Ridge – वास्तविक आँकड़े</a></li>
+        <li><a href="ornith-35b-moe-262k-rocm-vs-vulkan.html">262K कॉन्टेक्स्ट पर Ornith 35B-A3B – ROCm बनाम Vulkan</a></li>
+        <li><a href="gpu-ai-calculator.html">GPU AI Performance Calculator – यह कितनी तेज़ चलेगा?</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी टूल्स</a>
+      <a href="ai.html">AI और ML नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const BENCH_DATA = {
+  "benchmarks": [
+    {
+      "id": "rx-6800m-qwen-27b-ridge",
+      "gpu": "RX 6800M",
+      "gpu_vram": "12 GB",
+      "gpu_bw": "~384 GB/s",
+      "model": "Qwen 27B Ridge",
+      "params": "27B (dense)",
+      "quant": "3.7bpw",
+      "context": "16K",
+      "kv_quant": "q8_0",
+      "offload": true,
+      "tested": true,
+      "source_article": "qwen-27b-ridge-rocm-vs-vulkan.html",
+      "backends": [
+        { "name": "ROCm", "decode": 18.12, "prompt": 217.6 },
+        { "name": "Vulkan", "decode": 21.84, "prompt": 149.6 }
+      ],
+      "notes": "Not fully resident on 12 GB (~15.6 GB needed). Partial offload to system RAM explains the ~18-21 tok/s decode. Vulkan wins decode (+20%), ROCm wins prompt eval (+45%)."
+    },
+    {
+      "id": "rx-6800m-ornith-35b-moe",
+      "gpu": "RX 6800M",
+      "gpu_vram": "12 GB",
+      "gpu_bw": "~384 GB/s",
+      "model": "Ornith 35B-A3B MoE",
+      "params": "35B (3B active)",
+      "quant": "Q5_K/Q4_K",
+      "context": "262K",
+      "kv_quant": "q8_0",
+      "offload": true,
+      "tested": true,
+      "source_article": "ornith-35b-moe-262k-rocm-vs-vulkan.html",
+      "backends": [
+        { "name": "ROCm", "decode": 25.62, "prompt": 83.8 },
+        { "name": "Vulkan", "decode": 19.66, "prompt": 83.1 }
+      ],
+      "notes": "28 CPU experts, MoE-sparse + q8 KV + CPU offload. ROCm wins decode (+30%). Decodes ~3B active per token, so speed holds even at 262K. Needs --load-mode none, no -ngl 999."
+    },
+    {
+      "id": "rtx-4090-qwen-7b-q4",
+      "gpu": "RTX 4090",
+      "gpu_vram": "24 GB",
+      "gpu_bw": "1008 GB/s",
+      "model": "Qwen 7B",
+      "params": "7B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "CUDA", "decode": 160, "prompt": null }
+      ],
+      "notes": "Estimated from the GPU AI Performance Calculator. Fully resident."
+    },
+    {
+      "id": "rtx-4090-qwen-14b-q4",
+      "gpu": "RTX 4090",
+      "gpu_vram": "24 GB",
+      "gpu_bw": "1008 GB/s",
+      "model": "Qwen 14B",
+      "params": "14B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "CUDA", "decode": 120, "prompt": null }
+      ],
+      "notes": "Estimated from the GPU AI Performance Calculator. Fully resident."
+    },
+    {
+      "id": "rtx-4090-qwen-27b-q4",
+      "gpu": "RTX 4090",
+      "gpu_vram": "24 GB",
+      "gpu_bw": "1008 GB/s",
+      "model": "Qwen 27B",
+      "params": "27B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "CUDA", "decode": 60, "prompt": null }
+      ],
+      "notes": "Estimated. Tight but resident on 24 GB."
+    },
+    {
+      "id": "rx-7900-xtx-qwen-27b-q4",
+      "gpu": "RX 7900 XTX",
+      "gpu_vram": "24 GB",
+      "gpu_bw": "960 GB/s",
+      "model": "Qwen 27B",
+      "params": "27B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "ROCm", "decode": 58, "prompt": null }
+      ],
+      "notes": "Estimated. Best VRAM-per-rupee on the AMD side."
+    },
+    {
+      "id": "rtx-5070-ti-qwen-7b-q4",
+      "gpu": "RTX 5070 Ti",
+      "gpu_vram": "16 GB",
+      "gpu_bw": "896 GB/s",
+      "model": "Qwen 7B",
+      "params": "7B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "CUDA", "decode": 95, "prompt": null }
+      ],
+      "notes": "Estimated from the GPU AI Performance Calculator."
+    },
+    {
+      "id": "rtx-5070-ti-qwen-14b-q4",
+      "gpu": "RTX 5070 Ti",
+      "gpu_vram": "16 GB",
+      "gpu_bw": "896 GB/s",
+      "model": "Qwen 14B",
+      "params": "14B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "CUDA", "decode": 90, "prompt": null }
+      ],
+      "notes": "Estimated. Fully resident on 16 GB."
+    },
+    {
+      "id": "rx-9070-xt-qwen-7b-q4",
+      "gpu": "RX 9070 XT",
+      "gpu_vram": "16 GB",
+      "gpu_bw": "644 GB/s",
+      "model": "Qwen 7B",
+      "params": "7B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "ROCm", "decode": 72, "prompt": null }
+      ],
+      "notes": "Estimated from the GPU AI Performance Calculator."
+    },
+    {
+      "id": "rx-9070-xt-qwen-14b-q4",
+      "gpu": "RX 9070 XT",
+      "gpu_vram": "16 GB",
+      "gpu_bw": "644 GB/s",
+      "model": "Qwen 14B",
+      "params": "14B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "ROCm", "decode": 68, "prompt": null }
+      ],
+      "notes": "Estimated. Fully resident on 16 GB."
+    },
+    {
+      "id": "rtx-4060-ti-qwen-7b-q4",
+      "gpu": "RTX 4060 Ti",
+      "gpu_vram": "16 GB",
+      "gpu_bw": "288 GB/s",
+      "model": "Qwen 7B",
+      "params": "7B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "CUDA", "decode": 42, "prompt": null }
+      ],
+      "notes": "Estimated. Low bandwidth limits decode."
+    },
+    {
+      "id": "rx-7600-xt-qwen-7b-q4",
+      "gpu": "RX 7600 XT",
+      "gpu_vram": "16 GB",
+      "gpu_bw": "288 GB/s",
+      "model": "Qwen 7B",
+      "params": "7B",
+      "quant": "Q4",
+      "context": "8K",
+      "kv_quant": "Q4",
+      "offload": false,
+      "tested": false,
+      "source_article": "best-gpu-for-local-llm.html",
+      "backends": [
+        { "name": "ROCm", "decode": 42, "prompt": null }
+      ],
+      "notes": "Estimated from the GPU AI Performance Calculator."
+    }
+  ]
+};
+
+    const state = {
+      gpu: "all",
+      model: "all",
+      backend: "all",
+      status: "all",
+      sortKey: "decode",
+      sortDir: -1,
+    };
+
+    function flattenBenchmarks(data) {
+      const rows = [];
+      data.benchmarks.forEach((b) => {
+        b.backends.forEach((be) => {
+          rows.push({
+            id: b.id,
+            gpu: b.gpu,
+            gpu_vram: b.gpu_vram,
+            gpu_bw: b.gpu_bw,
+            model: b.model,
+            params: b.params,
+            quant: b.quant,
+            context: b.context,
+            kv_quant: b.kv_quant,
+            offload: b.offload,
+            tested: b.tested,
+            source_article: b.source_article,
+            backend: be.name,
+            decode: be.decode,
+            prompt: be.prompt,
+            notes: b.notes,
+          });
+        });
+      });
+      return rows;
+    }
+
+    const rows = flattenBenchmarks(BENCH_DATA);
+
+    function unique(values) {
+      return [...new Set(values)].sort((a, b) => a.localeCompare(b));
+    }
+
+    function populateSelect(id, options, allLabel) {
+      const sel = document.getElementById(id);
+      const o = document.createElement("option");
+      o.value = "all";
+      o.textContent = allLabel;
+      sel.appendChild(o);
+      options.forEach((v) => {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v;
+        sel.appendChild(opt);
+      });
+    }
+
+    populateSelect("f-gpu", unique(rows.map((r) => r.gpu)), "All GPUs");
+    populateSelect("f-model", unique(rows.map((r) => r.model)), "All models");
+    populateSelect("f-backend", unique(rows.map((r) => r.backend)), "All backends");
+    populateSelect("f-status", ["Tested", "Estimated"], "All statuses");
+
+    document.getElementById("f-gpu").addEventListener("change", (e) => { state.gpu = e.target.value; render(); });
+    document.getElementById("f-model").addEventListener("change", (e) => { state.model = e.target.value; render(); });
+    document.getElementById("f-backend").addEventListener("change", (e) => { state.backend = e.target.value; render(); });
+    document.getElementById("f-status").addEventListener("change", (e) => { state.status = e.target.value; render(); });
+
+    function filteredRows() {
+      return rows.filter((r) => {
+        if (state.gpu !== "all" && r.gpu !== state.gpu) return false;
+        if (state.model !== "all" && r.model !== state.model) return false;
+        if (state.backend !== "all" && r.backend !== state.backend) return false;
+        if (state.status === "tested" && !r.tested) return false;
+        if (state.status === "estimated" && r.tested) return false;
+        return true;
+      });
+    }
+
+    const SORTERS = {
+      gpu: (r) => r.gpu,
+      model: (r) => r.model,
+      backend: (r) => r.backend,
+      tested: (r) => (r.tested ? 0 : 1),
+      decode: (r) => (typeof r.decode === "number" ? r.decode : -Infinity),
+      prompt: (r) => (typeof r.prompt === "number" ? r.prompt : -Infinity),
+      context: (r) => parseInt(r.context, 10) || 0,
+      quant: (r) => r.quant,
+      vram: (r) => r.gpu_vram,
+      offload: (r) => (r.offload ? 0 : 1),
+    };
+
+    function sortRows(list) {
+      const get = SORTERS[state.sortKey] || SORTERS.decode;
+      return list.slice().sort((a, b) => {
+        const av = get(a);
+        const bv = get(b);
+        if (av < bv) return state.sortDir;
+        if (av > bv) return -state.sortDir;
+        return 0;
+      });
+    }
+
+    function fmtNum(v) {
+      if (v === null || v === undefined) return "–";
+      return (Math.round(v * 100) / 100).toString();
+    }
+
+    function sourceLink(r) {
+      return r.source_article && r.source_article !== "" ? r.source_article : null;
+    }
+
+    function renderSummary(list) {
+      const gpuCount = new Set(list.map((r) => r.gpu)).size;
+      let bestDecode = -Infinity;
+      list.forEach((r) => {
+        if (typeof r.decode === "number" && r.decode > bestDecode) bestDecode = r.decode;
+      });
+      const el = document.getElementById("summary");
+      const bestLabel = bestDecode === -Infinity ? "–" : bestDecode + " tok/s";
+      el.innerHTML =
+        '<div class="stat"><div class="stat-label">Benchmarks</div><div class="stat-value">' + list.length + '</div></div>' +
+        '<div class="stat"><div class="stat-label">GPUs</div><div class="stat-value">' + gpuCount + '</div></div>' +
+        '<div class="stat"><div class="stat-label">Best decode</div><div class="stat-value"><span class="accent">' + bestLabel + '</span></div></div>';
+    }
+
+    function render() {
+      const list = filteredRows();
+      const sorted = sortRows(list);
+      renderSummary(sorted);
+
+      document.getElementById("result-count").textContent =
+        sorted.length + " result" + (sorted.length === 1 ? "" : "s") +
+        " · " + new Set(sorted.map((r) => r.gpu)).size + " GPU" +
+        (new Set(sorted.map((r) => r.gpu)).size === 1 ? "" : "s") +
+        " · sort: " + state.sortKey + (state.sortDir === -1 ? " ↓" : " ↑");
+
+      const headers = document.querySelectorAll("#bench-table thead th");
+      headers.forEach((th) => {
+        const arrow = th.querySelector(".sort-arrow");
+        if (arrow) arrow.remove();
+        if (th.dataset.key === state.sortKey) {
+          const s = document.createElement("span");
+          s.className = "sort-arrow";
+          s.textContent = state.sortDir === -1 ? "↓" : "↑";
+          th.appendChild(s);
+        }
+      });
+
+      let bestDecode = -Infinity;
+      let bestPrompt = -Infinity;
+      sorted.forEach((r) => {
+        if (typeof r.decode === "number" && r.decode > bestDecode) bestDecode = r.decode;
+        if (typeof r.prompt === "number" && r.prompt > bestPrompt) bestPrompt = r.prompt;
+      });
+
+      const tbody = document.querySelector("#bench-table tbody");
+      tbody.innerHTML = "";
+      if (sorted.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 10;
+        td.className = "bench-empty";
+        td.textContent = "No benchmarks match the current filters.";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+
+      sorted.forEach((r) => {
+        const tr = document.createElement("tr");
+        if (typeof r.decode === "number" && r.decode === bestDecode) tr.classList.add("best-decode");
+        if (typeof r.prompt === "number" && r.prompt === bestPrompt) tr.classList.add("best-prompt");
+
+        const gpuCell = r.gpu;
+        const modelLink = sourceLink(r);
+        const modelCell = modelLink
+          ? '<a href="' + modelLink + '">' + r.model + "</a>"
+          : r.model;
+
+        const statusBadge = r.tested
+          ? '<span class="badge badge-tested">Tested</span>'
+          : '<span class="badge badge-estimated">Estimated</span>';
+
+        const offBadge = r.offload
+          ? '<span class="badge badge-on">CPU offload</span>'
+          : '<span class="badge badge-off">Full GPU</span>';
+
+        const decodeCell =
+          typeof r.decode === "number"
+            ? '<span class="num">' + fmtNum(r.decode) + "</span>"
+            : '<span class="num">–</span>';
+
+        const promptCell =
+          typeof r.prompt === "number"
+            ? '<span class="num">' + fmtNum(r.prompt) + "</span>"
+            : '<span class="num">–</span>';
+
+        tr.innerHTML =
+          "<td>" + gpuCell + "</td>" +
+          "<td>" + modelCell + "</td>" +
+          "<td>" + r.backend + "</td>" +
+          "<td>" + statusBadge + "</td>" +
+          '<td class="col-decode">' + decodeCell + "</td>" +
+          '<td class="col-prompt">' + promptCell + "</td>" +
+          "<td>" + r.context + "</td>" +
+          "<td>" + r.quant + "</td>" +
+          "<td>" + r.gpu_vram + "</td>" +
+          "<td>" + offBadge + "</td>";
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.querySelectorAll("#bench-table thead th").forEach((th) => {
+      th.addEventListener("click", () => {
+        const key = th.dataset.key;
+        if (state.sortKey === key) {
+          state.sortDir = -state.sortDir;
+        } else {
+          state.sortKey = key;
+          state.sortDir = key === "decode" || key === "prompt" ? -1 : 1;
+        }
+        render();
+      });
+    });
+
+    render();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="LLM मॉडल, क्वांटाइज़ेशन और GPU की साइड-बाय-साइड तुलना करें – VRAM आवश्यकताएँ, अपेक्षित tok/s, और आपका हार्डवेयर इसे चला सकता है या नहीं देखें।" />
+  <title>मॉडल तुलना विज़ार्ड | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/model-comparison.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/model-comparison.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/model-comparison.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/model-comparison.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/model-comparison.hi.html#webapp",
+  "name": "मॉडल तुलना विज़ार्ड | VelsTech",
+  "description": "LLM मॉडल, क्वांटाइज़ेशन और GPU की साइड-बाय-साइड तुलना करें – VRAM आवश्यकताएँ, अपेक्षित tok/s, और आपका हार्डवेयर इसे चला सकता है या नहीं देखें।",
+  "url": "https://velstech.net/model-comparison.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/model-comparison.html" />
+  <meta property="og:title" content="मॉडल तुलना विज़ार्ड | VelsTech" />
+  <meta property="og:description" content="LLM मॉडल, क्वांटाइज़ेशन और GPU की साइड-बाय-साइड तुलना करें – VRAM आवश्यकताएँ, अपेक्षित tok/s, और आपका हार्डवेयर इसे चला सकता है या नहीं देखें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="मॉडल तुलना विज़ार्ड | VelsTech" />
+  <meta name="twitter:description" content="LLM मॉडल, क्वांटाइज़ेशन और GPU की साइड-बाय-साइड तुलना करें – VRAM आवश्यकताएँ, अपेक्षित tok/s, और आपका हार्डवेयर इसे चला सकता है या नहीं देखें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
+    .mc-pick {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .mc-opt {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      cursor: pointer;
+      font-size: 0.85rem;
+      user-select: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .mc-opt:hover {
+      border-color: var(--accent);
+    }
+    .mc-opt.checked {
+      border-color: var(--accent);
+      background: rgba(76, 194, 255, 0.08);
+    }
+    .mc-opt input {
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+    .mc-opt strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.85rem;
+      line-height: 1.3;
+    }
+    .mc-opt small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+    .mc-wrap {
+      overflow-x: auto;
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+    }
+    table.mc {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 920px;
+    }
+    .mc th, .mc td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .mc thead th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--bg-soft);
+    }
+    .mc thead th.kvgroup {
+      text-align: center;
+      color: var(--accent);
+      border-bottom: none;
+    }
+    .mc thead tr:last-child th {
+      border-bottom: 1px solid var(--border);
+    }
+    .mc th.rowhead, .mc td.rowhead {
+      text-align: left;
+      position: sticky;
+      left: 0;
+      background: var(--bg-soft);
+      z-index: 1;
+    }
+    .mc tbody tr:hover td {
+      background: rgba(76, 194, 255, 0.05);
+    }
+    .mc tbody tr:hover td.rowhead {
+      background: var(--bg-soft);
+    }
+    .mc td.rowhead strong {
+      color: var(--text);
+    }
+    .mc td.rowhead small {
+      display: block;
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 0.72rem;
+    }
+    .mc .num {
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+    }
+    .mc td.total .num {
+      font-weight: 700;
+    }
+    .mc td.total small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 400;
+    }
+    .mc .tag {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .tag-ok { color: #3ddc97; background: rgba(61, 220, 151, 0.12); border: 1px solid rgba(61, 220, 151, 0.4); }
+    .tag-tight { color: #fb9a3c; background: rgba(251, 146, 60, 0.12); border: 1px solid rgba(251, 146, 60, 0.4); }
+    .tag-no { color: #f472b6; background: rgba(244, 114, 182, 0.12); border: 1px solid rgba(244, 114, 182, 0.4); }
+    .mc-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 4px;
+    }
+    .mc-chip {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--bg);
+    }
+    .mc-chip strong { color: var(--text); }
+    .mc-chip.accent { border-color: var(--accent); color: var(--accent); }
+    .mc-empty {
+      margin: 20px 0 4px;
+      padding: 16px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: var(--bg);
+    }
+    .mc-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .mc-row input {
+      accent-color: var(--accent);
+    }
+    @media (max-width: 640px) {
+      .mc-opt { flex: 1 1 44%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">होम</a> / <a href="tools.html">टूल्स</a> / मॉडल तुलना विज़ार्ड</p>
+    <h1 class="title">मॉडल तुलना विज़ार्ड</h1>
+    <div class="meta">
+      <span>मॉडल × क्वांटाइज़ेशन × GPU — VRAM, tok/s, और फिट बैठता है या नहीं · अपडेटेड 2026-09-01</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        मॉडल और क्वांटाइज़ेशन का कोई भी संयोजन चुनें, एक GPU चुनें, और यह विज़ार्ड एक साइड-बाय-साइड तुलना तैयार करता है: वेट साइज़, विभिन्न कॉन्टेक्स्ट लंबाईयों पर KV कैश, आवश्यक कुल VRAM, अपेक्षित डिकोड स्पीड, और एक सीधा <strong>फिट / टाइट / फिट नहीं</strong> फैसला। पूरी तरह से आपके ब्राउज़र में चलता है – कुछ भी अपलोड नहीं होता।
+      </p>
+
+      <div class="calc">
+        <div class="calc-grid">
+          <label class="field" style="grid-column: 1 / -1;">
+            <span>तुलना करने के लिए मॉडल</span>
+            <div class="mc-pick" id="model-pick"></div>
+          </label>
+
+          <label class="field" style="grid-column: 1 / -1;">
+            <span>क्वांटाइज़ेशन</span>
+            <div class="mc-pick" id="quant-pick"></div>
+          </label>
+
+          <label class="field">
+            <span>GPU</span>
+            <select id="gpu" class="input"></select>
+          </label>
+
+          <label class="field">
+            <span>कुल VRAM के लिए कॉन्टेक्स्ट</span>
+            <select id="ctx" class="input"></select>
+          </label>
+
+          <label class="field" style="justify-content: flex-end;">
+            <span>&nbsp;</span>
+            <span class="mc-row">
+              <input type="checkbox" id="kv-toggle" checked />
+              <span>सभी कॉन्टेक्स्ट लंबाई पर KV कैश दिखाएं</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="tool-btn-row" style="margin-top: 18px;">
+          <button type="button" class="btn btn-primary" id="compare-btn">तुलना करें</button>
+          <button type="button" class="btn btn-ghost" id="reset-btn">रीसेट</button>
+        </div>
+
+        <div id="results">
+          <div class="mc-summary" id="mc-summary" hidden></div>
+
+          <div class="mc-wrap" id="mc-table-wrap" hidden></div>
+
+          <div class="mc-empty" id="mc-empty" hidden>
+            तुलना बनाने के लिए कम से कम एक मॉडल और एक क्वांटाइज़ेशन चुनें।
+          </div>
+
+          <p class="tool-note" id="mc-note" hidden>
+            मोटा अनुमान। वास्तविक उपयोग सटीक मॉडल बिल्ड, टोकनाइज़र, CUDA/कंप्यूट-ग्राफ़ ओवरहेड और आपके इन्फ़रेंस इंजन के अनुसार भिन्न होता है। KV कैश FP16 मानता है। डिकोड स्पीड मानती है कि आप पीक के ~85% पर मेमोरी-बैंडविड्थ-बाउंड हैं – एक सिंगल स्ट्रीम के साथ llama.cpp / vLLM के लिए सामान्य।
+          </p>
+        </div>
+      </div>
+
+      <details class="calc-method">
+        <summary>यह कैसे काम करता है – मान्यताएं और सूत्र</summary>
+        <div class="calc-method-body">
+          <p>यह एक अनुमान है, प्रयोगशाला माप नहीं। नीचे दिए गए नंबर लाइव कैलकुलेटर लॉजिक से मेल खाते हैं।</p>
+          <h4>1. मॉडल वेट साइज़</h4>
+          <pre>weights = parameters × bytes_per_weight / GiB</pre>
+          <p>प्रति वेट बाइट्स प्रति क्वांटाइज़ेशन: Q2_K 0.35, Q3_K_M 0.45, Q4_K_M 0.61, Q5_K_M 0.66, Q6_K 0.8125, Q8_0 1.0625, FP16 2.0. उदाहरण: Q4_K_M पर 8B पैराम्स ≈ 8e9 × 0.61 / 1.07e9 ≈ 4.5 GB.</p>
+          <h4>2. KV कैश</h4>
+          <pre>kv_per_token = 2 × layers × kv_heads × head_dim × 2 bytes
+kv_cache = kv_per_token × context / GiB</pre>
+          <p><code>×2</code> K और V को कवर करता है; अंतिम <code>×2 bytes</code> FP16 KV मानता है (अधिकांश इंजनों के लिए डिफ़ॉल्ट)। तालिका 8K, 16K, 32K, 64K, 128K और 262K कॉन्टेक्स्ट पर KV दिखाती है ताकि आप देख सकें कि लंबा कॉन्टेक्स्ट मेमोरी पर कैसे हावी होता है।</p>
+          <h4>3. कुल VRAM</h4>
+          <pre>total = weights + kv_cache + (weights + kv_cache) × 0.06 + 0.25 GB</pre>
+          <p>6% CUDA कॉन्टेक्स्ट / इंजन बफ़र्स को कवर करता है, साथ ही एक निश्चित 0.25 GB फ़्लोर।</p>
+          <h4>4. क्या यह फिट बैठता है?</h4>
+          <p><code>total ≤ vram × 0.95</code> → <strong>फिट</strong>; <code>vram × 1.05</code> तक → <strong>टाइट</strong> (कम KV के साथ चलाएं, या OOM देखें); अन्यथा <strong>फिट नहीं</strong>।</p>
+          <h4>5. डिकोड tok/s</h4>
+          <pre>tok/s ≈ memory_bandwidth × 0.85 / (active_params × bytes_per_weight)</pre>
+          <p>डिकोडिंग मेमोरी-बाउंड है: प्रत्येक टोकन एक्टिव वेट को एक बार पढ़ता है। MoE मॉडल <em>एक्टिव</em> पैराम्स का उपयोग करते हैं (केवल रूटेड एक्सपर्ट्स), यही कारण है कि 30B-टोटल / 3B-एक्टिव MoE एक बहुत छोटे मॉडल की तरह डिकोड होता है। डेंस मॉडल पूरे पैराम्स का उपयोग करते हैं। ~85% उपयोग ओवरहेड के लिए जिम्मेदार है।</p>
+        </div>
+      </details>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="how-much-vram-for-llm.html">7B/14B/32B के लिए कितनी VRAM चाहिए? – तालिका और कॉन्टेक्स्ट गणित</a></li>
+        <li><a href="gpu-ai-calculator.html">GPU AI प्रदर्शन कैलकुलेटर – यह कितनी तेज़ी से चलेगा?</a></li>
+        <li><a href="gguf-size-calculator.html">GGUF साइज़ कैलकुलेटर</a></li>
+        <li><a href="kv-cache-explained.html">KV कैश समझाया – कॉन्टेक्स्ट लंबाई मेमोरी क्यों खाती है</a></li>
+        <li><a href="best-gpu-for-local-llm.html">स्थानीय LLM के लिए सर्वश्रेष्ठ GPU – बेंचमार्क और चुनाव</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी टूल्स</a>
+      <a href="ai.html">AI और ML नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    const MODELS = [
+      { name: "Mistral 7B", params: 7.3, active: 7.3, layers: 32, kv: 8, hd: 128 },
+      { name: "Llama 3.1 8B", params: 8.0, active: 8.0, layers: 32, kv: 8, hd: 128 },
+      { name: "Qwen 2.5 14B", params: 14.8, active: 14.8, layers: 48, kv: 8, hd: 128 },
+      { name: "Gemma 3 27B", params: 27.0, active: 27.0, layers: 46, kv: 4, hd: 128 },
+      { name: "Qwen 2.5 32B", params: 32.8, active: 32.8, layers: 64, kv: 8, hd: 128 },
+      { name: "Qwen 3 30B-A3B (MoE)", params: 30.5, active: 3.0, layers: 48, kv: 4, hd: 128 },
+      { name: "Llama 3.3 70B", params: 70.6, active: 70.6, layers: 80, kv: 8, hd: 128 },
+      { name: "GLM-4 110B (120B-class)", params: 110.0, active: 110.0, layers: 96, kv: 8, hd: 128 },
+    ];
+
+    const QUANTS = [
+      { name: "Q2_K (≈2.9-bit)", bytes: 0.35 },
+      { name: "Q3_K_M (≈3.7-bit)", bytes: 0.45 },
+      { name: "Q4_K_M (≈4.8-bit)", bytes: 0.61 },
+      { name: "Q5_K_M (≈5.5-bit)", bytes: 0.66 },
+      { name: "Q6_K (≈6.5-bit)", bytes: 0.8125 },
+      { name: "Q8_0 (≈8.5-bit)", bytes: 1.0625 },
+      { name: "FP16 / BF16", bytes: 2.0 },
+    ];
+
+    const GPUS = [
+      { name: "RTX 4090", vram: 24, bw: 1008 },
+      { name: "RTX 5070 Ti", vram: 16, bw: 896 },
+      { name: "RTX 4060 Ti", vram: 16, bw: 288 },
+      { name: "RX 9070 XT", vram: 16, bw: 640 },
+      { name: "RX 7900 XTX", vram: 24, bw: 960 },
+      { name: "RX 6800M", vram: 12, bw: 384 },
+      { name: "RX 7600 XT", vram: 16, bw: 288 },
+    ];
+
+    const CTX = [
+      { tokens: 8192, label: "8K" },
+      { tokens: 16384, label: "16K" },
+      { tokens: 32768, label: "32K" },
+      { tokens: 65536, label: "64K" },
+      { tokens: 131072, label: "128K" },
+      { tokens: 262144, label: "262K" },
+    ];
+
+    const DEFAULTS = { models: [1, 2, 4], quants: [2, 5], gpu: 0, ctx: 0 };
+
+    const GiB = 1073741824;
+    const fmt = (gb) => gb >= 1 ? gb.toFixed(1) + " GB" : Math.max(1, Math.round(gb * 1024)) + " MB";
+
+    const modelPick = document.getElementById("model-pick");
+    const quantPick = document.getElementById("quant-pick");
+    const gpuSel = document.getElementById("gpu");
+    const ctxSel = document.getElementById("ctx");
+    const kvToggle = document.getElementById("kv-toggle");
+
+    let modelBoxes = [];
+    let quantBoxes = [];
+
+    function pill(box, html, checked) {
+      const lab = document.createElement("label");
+      lab.className = "mc-opt" + (checked ? " checked" : "");
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.checked = checked;
+      lab.appendChild(input);
+      const span = document.createElement("span");
+      span.innerHTML = html;
+      lab.appendChild(span);
+      box.appendChild(lab);
+      return input;
+    }
+
+    function buildSelections() {
+      modelPick.innerHTML = "";
+      quantPick.innerHTML = "";
+      modelBoxes = MODELS.map((m, i) =>
+        pill(modelPick,
+          "<strong>" + m.name + "</strong><small>" + m.params.toFixed(1) + "B params · " + m.layers + " layers</small>",
+          DEFAULTS.models.indexOf(i) !== -1));
+      quantBoxes = QUANTS.map((q, i) =>
+        pill(quantPick,
+          "<strong>" + q.name.split(" (")[0] + "</strong><small>" + q.bytes + " bytes/weight</small>",
+          DEFAULTS.quants.indexOf(i) !== -1));
+      gpuSel.innerHTML = "";
+      GPUS.forEach((g, i) => {
+        const o = document.createElement("option");
+        o.value = i;
+        o.textContent = g.name + " · " + g.vram + " GB · " + g.bw + " GB/s";
+        gpuSel.appendChild(o);
+      });
+      gpuSel.value = DEFAULTS.gpu;
+      ctxSel.innerHTML = "";
+      CTX.forEach((c, i) => {
+        const o = document.createElement("option");
+        o.value = i;
+        o.textContent = c.label + " (" + c.tokens.toLocaleString() + " tokens)";
+        ctxSel.appendChild(o);
+      });
+      ctxSel.value = DEFAULTS.ctx;
+    }
+
+    const weightsGB = (m, q) => (m.params * 1e9 * q.bytes) / GiB;
+    const kvPerTokBytes = (m) => 2 * m.layers * m.kv * m.hd * 2; // K+V, FP16
+    const kvGB = (m, tokens) => (kvPerTokBytes(m) * tokens) / GiB;
+    const totalGB = (w, kv) => w + kv + (w + kv) * 0.06 + 0.25;
+    const tokps = (m, q, g) => (g.bw * 0.85) / (m.active * q.bytes);
+
+    function fitClass(total, g) {
+      if (total <= g.vram * 0.95) return "ok";
+      if (total <= g.vram * 1.05) return "tight";
+      return "no";
+    }
+
+    function render() {
+      const g = GPUS[gpuSel.value];
+      const ctx = CTX[ctxSel.value];
+      const showKv = kvToggle.checked;
+      const models = MODELS.filter((_, i) => modelBoxes[i].checked);
+      const quants = QUANTS.filter((_, i) => quantBoxes[i].checked);
+
+      const summary = document.getElementById("mc-summary");
+      const wrap = document.getElementById("mc-table-wrap");
+      const empty = document.getElementById("mc-empty");
+      const note = document.getElementById("mc-note");
+
+      const rows = [];
+      models.forEach((m) => quants.forEach((q) => {
+        const w = weightsGB(m, q);
+        const kvs = CTX.map((c) => kvGB(m, c.tokens));
+        const total = totalGB(w, kvGB(m, ctx.tokens));
+        rows.push({ m, q, w, kvs, total, fit: fitClass(total, g), tps: tokps(m, q, g) });
+      }));
+
+      if (!rows.length) {
+        summary.hidden = true;
+        wrap.hidden = true;
+        note.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+      empty.hidden = true;
+      note.hidden = false;
+      summary.hidden = false;
+
+      const nOk = rows.filter((r) => r.fit === "ok").length;
+      const nTight = rows.filter((r) => r.fit === "tight").length;
+      const nNo = rows.filter((r) => r.fit === "no").length;
+      summary.innerHTML =
+        '<span class="mc-chip accent">' + rows.length + " combinations</span>" +
+        '<span class="mc-chip">GPU: <strong>' + g.name + "</strong> · " + g.vram + " GB · " + g.bw + " GB/s</span>" +
+        '<span class="mc-chip">Total VRAM at <strong>' + ctx.label + "</strong> (" + ctx.tokens.toLocaleString() + " tokens)</span>" +
+        '<span class="mc-chip">Fits: <strong style="color:#3ddc97">' + nOk + "</strong></span>" +
+        '<span class="mc-chip">Tight: <strong style="color:#fb9a3c">' + nTight + "</strong></span>" +
+        '<span class="mc-chip">Won\'t fit: <strong style="color:#f472b6">' + nNo + "</strong></span>";
+
+      wrap.hidden = false;
+      wrap.innerHTML = "";
+      const tbl = document.createElement("table");
+      tbl.className = "mc";
+      const thead = document.createElement("thead");
+      const tr1 = document.createElement("tr");
+      const tr2 = document.createElement("tr");
+
+      const th = (text) => {
+        const el = document.createElement("th");
+        el.textContent = text;
+        return el;
+      };
+
+      const th1 = th("Model"); th1.rowSpan = 2; th1.className = "rowhead";
+      const th2 = th("Quant"); th2.rowSpan = 2;
+      const th3 = th("Weights"); th3.rowSpan = 2;
+      tr1.appendChild(th1); tr1.appendChild(th2); tr1.appendChild(th3);
+      if (showKv) {
+        const kvg = th("KV cache size at context");
+        kvg.colSpan = CTX.length;
+        kvg.className = "kvgroup";
+        tr1.appendChild(kvg);
+      }
+      const th4 = th("Total VRAM"); th4.rowSpan = 2;
+      const th5 = th("Fits " + g.name + "?"); th5.rowSpan = 2;
+      const th6 = th("Decode tok/s"); th6.rowSpan = 2;
+      tr1.appendChild(th4); tr1.appendChild(th5); tr1.appendChild(th6);
+      thead.appendChild(tr1);
+      if (showKv) {
+        CTX.forEach((c) => tr2.appendChild(th(c.label)));
+        thead.appendChild(tr2);
+      }
+      tbl.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+      rows.forEach((r) => {
+        const tr = document.createElement("tr");
+        const cModel = document.createElement("td");
+        cModel.className = "rowhead";
+        cModel.innerHTML = "<strong>" + r.m.name + "</strong><small>" + r.m.params.toFixed(1) +
+          "B" + (r.m.active !== r.m.params ? " · " + r.m.active.toFixed(1) + "B active" : "") +
+          " · " + r.m.layers + "L</small>";
+        tr.appendChild(cModel);
+
+        const cQuant = document.createElement("td");
+        cQuant.className = "num";
+        cQuant.textContent = r.q.name.split(" (")[0];
+        tr.appendChild(cQuant);
+
+        const cW = document.createElement("td");
+        cW.className = "num";
+        cW.textContent = fmt(r.w);
+        tr.appendChild(cW);
+
+        if (showKv) {
+          r.kvs.forEach((kv) => {
+            const td = document.createElement("td");
+            td.className = "num";
+            td.textContent = fmt(kv);
+            tr.appendChild(td);
+          });
+        }
+
+        const cTotal = document.createElement("td");
+        cTotal.className = "total";
+        const pct = Math.round((r.total / g.vram) * 100);
+        cTotal.innerHTML = "<span class=\"num\" style=\"color:" +
+          (r.fit === "ok" ? "#3ddc97" : r.fit === "tight" ? "#fb9a3c" : "#f472b6") +
+          "\">" + fmt(r.total) + "</span><small>" + pct + "% of VRAM</small>";
+        tr.appendChild(cTotal);
+
+        const cFit = document.createElement("td");
+        cFit.innerHTML = "<span class=\"tag tag-" + r.fit + "\">" +
+          (r.fit === "ok" ? "Fits" : r.fit === "tight" ? "Tight" : "Won't fit") + "</span>";
+        tr.appendChild(cFit);
+
+        const cTps = document.createElement("td");
+        cTps.className = "num";
+        cTps.textContent = Math.round(r.tps) + " t/s";
+        tr.appendChild(cTps);
+
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      wrap.appendChild(tbl);
+    }
+
+    ["model-pick", "quant-pick"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", (e) => {
+        if (e.target.type === "checkbox") {
+          e.target.closest(".mc-opt").classList.toggle("checked", e.target.checked);
+          render();
+        }
+      });
+    });
+    gpuSel.addEventListener("change", render);
+    ctxSel.addEventListener("change", render);
+    kvToggle.addEventListener("change", render);
+    document.getElementById("compare-btn").addEventListener("click", () => {
+      render();
+      document.getElementById("results").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      buildSelections();
+      kvToggle.checked = true;
+      render();
+    });
+
+    buildSelections();
+    render();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

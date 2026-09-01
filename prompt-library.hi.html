@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="प्रॉम्प्ट टेम्प्लेट ब्राउज़ करें, वेरिएबल भरें, AI मॉडल पर टेस्ट करें, और अपने प्रॉम्प्ट सेव करें। कहीं भी कॉपी करें या सीधे चैट करें।" />
+  <title>प्रॉम्प्ट लाइब्रेरी और एडिटर | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/prompt-library.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/prompt-library.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/prompt-library.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/prompt-library.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/prompt-library.hi.html#webapp",
+  "name": "प्रॉम्प्ट लाइब्रेरी और एडिटर | VelsTech",
+  "description": "प्रॉम्प्ट टेम्प्लेट ब्राउज़ करें, वेरिएबल भरें, AI मॉडल पर टेस्ट करें, और अपने प्रॉम्प्ट सेव करें। कहीं भी कॉपी करें या सीधे चैट करें।",
+  "url": "https://velstech.net/prompt-library.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/prompt-library.html" />
+  <meta property="og:title" content="प्रॉम्प्ट लाइब्रेरी और एडिटर | VelsTech" />
+  <meta property="og:description" content="प्रॉम्प्ट टेम्प्लेट ब्राउज़ करें, वेरिएबल भरें, AI मॉडल पर टेस्ट करें, और अपने प्रॉम्प्ट सेव करें। कहीं भी कॉपी करें या सीधे चैट करें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="प्रॉम्प्ट लाइब्रेरी और एडिटर | VelsTech" />
+  <meta name="twitter:description" content="प्रॉम्प्ट टेम्प्लेट ब्राउज़ करें, वेरिएबल भरें, AI मॉडल पर टेस्ट करें, और अपने प्रॉम्प्ट सेव करें। कहीं भी कॉपी करें या सीधे चैट करें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
+    .pl-cats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .pl-cat {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .pl-cat:hover { border-color: var(--accent); color: var(--accent); }
+    .pl-cat.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+    .pl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .pl-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .pl-card:hover { border-color: var(--accent); }
+    .pl-card.active { border-color: var(--accent); background: var(--accent-soft); }
+    .pl-card .pl-title { font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 4px; }
+    .pl-card .pl-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .pl-card .pl-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; margin-top: 8px; }
+    .pl-card .pl-badge.writing { background: rgba(251,146,60,0.14); color: #fb923c; }
+    .pl-card .pl-badge.coding { background: rgba(76,194,255,0.14); color: #4cc2ff; }
+    .pl-card .pl-badge.learning { background: rgba(167,139,250,0.14); color: #a78bfa; }
+    .pl-card .pl-badge.aiml { background: rgba(61,220,151,0.14); color: #3ddc97; }
+    .pl-card .pl-badge.linux { background: rgba(244,114,182,0.14); color: #f472b6; }
+    .pl-card .pl-badge.productivity { background: rgba(148,163,184,0.14); color: #94a3b8; }
+    .pl-card .pl-badge.custom { background: rgba(251,191,36,0.14); color: #fbbf24; }
+    .pl-card .pl-var-count { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+    .pl-card .pl-del { float: right; cursor: pointer; color: var(--muted); font-size: 1rem; padding: 0 4px; }
+    .pl-card .pl-del:hover { color: #f472b6; }
+    .pl-editor { display: none; }
+    .pl-editor.open { display: block; }
+    .pl-editor-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .pl-editor-header h3 { margin: 0; font-size: 1.1rem; }
+    .pl-sys-toggle { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted); cursor: pointer; user-select: none; }
+    .pl-sys-toggle input { accent-color: var(--accent); }
+    .pl-sys-area { display: none; margin-bottom: 14px; }
+    .pl-sys-area.open { display: block; }
+    .pl-var-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .pl-var-field { display: flex; flex-direction: column; gap: 4px; }
+    .pl-var-field span { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: capitalize; }
+    .pl-var-field .input { font-family: "SF Mono","Cascadia Code",Consolas,monospace; font-size: 0.85rem; }
+    .pl-editor .field { margin-bottom: 14px; }
+    .pl-editor .field textarea { min-height: 120px; }
+    .pl-response { display: none; margin-top: 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); padding: 14px; }
+    .pl-response.open { display: block; }
+    .pl-response .pl-r-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.82rem; color: var(--muted); }
+    .pl-response .pl-r-body { font-size: 0.92rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word; color: var(--text); }
+    .pl-response .pl-r-body.loading { color: var(--muted); }
+    .pl-response .pl-r-body.error { color: #f472b6; }
+    .pl-tip { font-size: 0.82rem; color: var(--muted); margin-top: 8px; }
+    .pl-tip code { background: var(--bg-soft); padding: 1px 5px; border-radius: 4px; font-size: 0.78rem; }
+    .pl-empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 0.95rem; }
+    .pl-empty.hidden { display: none; }
+    .pl-clear-btn { font-size: 0.78rem; color: var(--muted); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; }
+    .pl-clear-btn:hover { color: #f472b6; border-color: #f472b6; }
+    @media (max-width: 600px) {
+      .pl-grid { grid-template-columns: 1fr; }
+      .pl-var-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">होम</a> / <a href="tools.html">टूल्स</a> / प्रॉम्प्ट लाइब्रेरी और एडिटर</p>
+    <h1 class="title">प्रॉम्प्ट लाइब्रेरी और एडिटर</h1>
+    <div class="meta">
+      <span>प्री-बिल्ट प्रॉम्प्ट टेम्प्लेट · वेरिएबल भरें · AI पर टेस्ट करें · अपने सेव करें</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        रेडी-टू-यूज़ प्रॉम्प्ट टेम्प्लेट की लाइब्रेरी ब्राउज़ करें, <code>{{variable}}</code> प्लेसहोल्डर भरें,
+        और VelsTech AI बैकएंड पर टेस्ट करें। अपने प्रॉम्प्ट सेव करें ताकि बाद में फिर से उपयोग कर सकें।
+        सभी प्रॉम्प्ट एडिटेबल हैं &mdash; कॉपी या टेस्ट करने से पहले उन्हें ट्वीक करें।
+      </p>
+
+      <div class="calc">
+        <div class="pl-cats" id="pl-cats"></div>
+        <div class="pl-grid" id="pl-grid"></div>
+
+        <div class="pl-editor" id="pl-editor">
+          <div class="pl-editor-header">
+            <h3 id="pl-editor-title">टेम्प्लेट</h3>
+            <span class="pl-badge" id="pl-editor-badge" style="display:none"></span>
+          </div>
+
+          <label class="pl-sys-toggle">
+            <input type="checkbox" id="pl-sys-check" />
+            <span>सिस्टम प्रॉम्प्ट शामिल करें</span>
+          </label>
+          <div class="pl-sys-area" id="pl-sys-area">
+            <label class="field">
+              <span>सिस्टम प्रॉम्प्ट</span>
+              <textarea id="pl-sys-input" class="input tool-textarea" style="min-height:70px" placeholder="वैकल्पिक सिस्टम प्रॉम्प्ट…"></textarea>
+            </label>
+          </div>
+
+          <div class="pl-var-grid" id="pl-var-grid"></div>
+
+          <label class="field">
+            <span>अंतिम प्रॉम्प्ट</span>
+            <textarea id="pl-prompt" class="input tool-textarea" style="min-height:100px"></textarea>
+          </label>
+
+          <div class="tool-btn-row">
+            <button class="btn btn-primary" id="pl-test" type="button">AI टेस्ट करें</button>
+            <button class="btn btn-ghost" id="pl-copy" type="button">कॉपी करें</button>
+            <button class="btn btn-ghost" id="pl-save" type="button">कस्टम सेव करें</button>
+          </div>
+
+          <div class="pl-response" id="pl-response">
+            <div class="pl-r-header">
+              <span>AI जवाब</span>
+              <button class="btn-ghost" id="pl-copy-r" type="button" style="font-size:0.78rem;padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--muted);cursor:pointer">जवाब कॉपी करें</button>
+            </div>
+            <div class="pl-r-body" id="pl-r-body"></div>
+          </div>
+        </div>
+
+        <p class="tool-note" id="pl-note" style="margin-top:0">
+          किसी भी टेम्प्लेट पर क्लिक करें ताकि एडिटर खुल जाए। <code>{{variable}}</code> फ़ील्ड भरें,
+          फिर <code>@cf/meta/llama-3.1-8b-instruct</code> पर कॉपी या टेस्ट करें VelsTech AI प्रॉक्सी के माध्यम से।
+          कस्टम प्रॉम्प्ट आपके ब्राउज़र (localStorage) में सेव होते हैं।
+        </p>
+      </div>
+
+      <h2>संबंधित गाइड</h2>
+      <ul>
+        <li><a href="better-prompts.html">बेहतर AI प्रॉम्प्ट कैसे लिखें</a></li>
+        <li><a href="playground.html">AI प्लेग्राउंड &mdash; कई मॉडल्स के साथ चैट करें</a></li>
+        <li><a href="best-gpu-for-local-llm.html">लोकल LLM के लिए सबसे अच्छा GPU</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी टूल्स</a>
+      <a href="ai.html">AI और ML नोट्स</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ---------- categories ---------- */
+      const CATEGORIES = [
+        { id: "all", label: "All" },
+        { id: "writing", label: "Writing" },
+        { id: "coding", label: "Coding" },
+        { id: "learning", label: "Learning" },
+        { id: "aiml", label: "AI/ML" },
+        { id: "linux", label: "Linux/Dev" },
+        { id: "productivity", label: "Productivity" },
+      ];
+
+      /* ---------- built-in templates ---------- */
+      const BUILTINS = [
+        {
+          id: "eli5",
+          title: "Explain like I'm 5",
+          desc: "Break down a complex topic into simple words and analogies.",
+          cat: "learning",
+          system: "",
+          prompt: "Explain {{topic}} like I'm 5 years old. Use simple words and a relatable analogy. Assume I know nothing about it.",
+        },
+        {
+          id: "code-reviewer",
+          title: "Code reviewer",
+          desc: "Get a thorough code review: bugs, performance, style.",
+          cat: "coding",
+          system: "You are a senior software engineer. Review the following code for bugs, performance issues, security concerns, and style problems. Be constructive and specific. Suggest fixes.",
+          prompt: "Review this {{language}} code:\n\n{{code}}",
+        },
+        {
+          id: "sql-gen",
+          title: "SQL generator",
+          desc: "Generate a SQL query from a plain-English description.",
+          cat: "coding",
+          system: "You are a SQL expert. Only output the SQL query, no explanation.",
+          prompt: "Write a SQL query that {{task}}. Use {{dialect}} syntax.",
+        },
+        {
+          id: "summarize",
+          title: "Summarize a doc",
+          desc: "Condense a long text into a short summary.",
+          cat: "writing",
+          system: "",
+          prompt: "Summarize the following text in {{max_words}} words or fewer. Capture only the main points:\n\n{{text}}",
+        },
+        {
+          id: "debug-error",
+          title: "Debug this error",
+          desc: "Explain an error message and suggest a fix.",
+          cat: "coding",
+          system: "You are a debugging expert. Explain the root cause and provide a specific fix.",
+          prompt: "I'm running {{command}} and getting this error:\n\n{{error}}\n\nHere is the relevant context: {{context}}",
+        },
+        {
+          id: "sys-prompt-builder",
+          title: "System prompt builder",
+          desc: "Craft a system prompt for an AI assistant.",
+          cat: "aiml",
+          system: "You are an expert prompt engineer. Output only the system prompt, no extra text.",
+          prompt: "Create a system prompt for an AI assistant that {{task}}. The tone should be {{tone}}. Define the role, output format, and any constraints.",
+        },
+        {
+          id: "blog-outline",
+          title: "Blog post outline",
+          desc: "Get a structured outline with headings and key points.",
+          cat: "writing",
+          system: "",
+          prompt: "Create a detailed blog post outline about {{topic}}. Target audience: {{audience}}. Include H2 and H3 headings with bullet points under each.",
+        },
+        {
+          id: "explain-concept",
+          title: "Explain a concept",
+          desc: "Deep dive into a concept: how it works and why it matters.",
+          cat: "learning",
+          system: "",
+          prompt: "Explain {{concept}} in detail. Start with a one-sentence summary, then cover: how it works, why it matters, key terminology, and a concrete real-world example.",
+        },
+        {
+          id: "linux-help",
+          title: "Linux command help",
+          desc: "Find the right Linux command and learn its flags.",
+          cat: "linux",
+          system: "You are a Linux systems expert. Be concise and practical.",
+          prompt: "I need to {{task}} on Linux. What command should I run? Explain what each flag does and give an example.",
+        },
+        {
+          id: "grammar-fixer",
+          title: "Grammar fixer",
+          desc: "Fix grammar and clarity without changing the meaning.",
+          cat: "writing",
+          system: "",
+          prompt: "Fix the grammar, spelling, and clarity of this text. Do not change the meaning or tone:\n\n{{text}}",
+        },
+        {
+          id: "meeting-notes",
+          title: "Meeting notes",
+          desc: "Turn raw notes into a structured summary.",
+          cat: "productivity",
+          system: "",
+          prompt: "Here are my raw meeting notes. Convert them into a clear summary with: key decisions, action items (with owners), and next steps:\n\n{{notes}}",
+        },
+        {
+          id: "study-plan",
+          title: "Study plan",
+          desc: "Get a week-by-week study plan with daily goals.",
+          cat: "learning",
+          system: "You are a learning expert. Create a realistic, actionable study plan.",
+          prompt: "Create a {{weeks}}-week study plan to learn {{topic}}. Break it into weekly themes with daily tasks, estimated time, and recommended resources.",
+        },
+        {
+          id: "api-design",
+          title: "API endpoint design",
+          desc: "Design a REST API with endpoints, payloads, and status codes.",
+          cat: "coding",
+          system: "You are a senior API designer. Follow REST best practices.",
+          prompt: "Design a REST API for {{resource}}. List the endpoints, HTTP methods, request/response JSON shapes, and status codes. Include authentication and pagination if relevant.",
+        },
+        {
+          id: "email-reply",
+          title: "Email reply",
+          desc: "Write a professional reply in a specific tone.",
+          cat: "productivity",
+          system: "",
+          prompt: "Write a professional reply to this email. My tone should be {{tone}} (e.g. friendly, formal, assertive):\n\n{{email}}",
+        },
+        {
+          id: "shell-script",
+          title: "Shell script generator",
+          desc: "Generate a robust bash script with error handling.",
+          cat: "linux",
+          system: "You are a Linux systems expert. Write safe, well-documented shell scripts. Include error handling with set -euo pipefail and meaningful comments.",
+          prompt: "Write a bash script that {{task}}. Make it robust with error handling and input validation.",
+        },
+      ];
+
+      const STORAGE_KEY = "vt_prompt_library_custom";
+      const CAT_COLORS = { writing:"writing", coding:"coding", learning:"learning", aiml:"aiml", linux:"linux", productivity:"productivity" };
+
+      let activeCat = "all";
+      let activeId = null;
+      let customPrompts = loadCustom();
+
+      /* ---------- DOM refs ---------- */
+      const catsEl = document.getElementById("pl-cats");
+      const gridEl = document.getElementById("pl-grid");
+      const editorEl = document.getElementById("pl-editor");
+      const editorTitle = document.getElementById("pl-editor-title");
+      const editorBadge = document.getElementById("pl-editor-badge");
+      const sysCheck = document.getElementById("pl-sys-check");
+      const sysArea = document.getElementById("pl-sys-area");
+      const sysInput = document.getElementById("pl-sys-input");
+      const varGrid = document.getElementById("pl-var-grid");
+      const promptTa = document.getElementById("pl-prompt");
+      const testBtn = document.getElementById("pl-test");
+      const copyBtn = document.getElementById("pl-copy");
+      const saveBtn = document.getElementById("pl-save");
+      const respEl = document.getElementById("pl-response");
+      const respBody = document.getElementById("pl-r-body");
+      const copyRespBtn = document.getElementById("pl-copy-r");
+      const noteEl = document.getElementById("pl-note");
+
+      /* ---------- helpers ---------- */
+      function loadCustom() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+      }
+      function saveCustom() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(customPrompts)); } catch {}
+      }
+      function extractVars(text) {
+        const re = /\{\{\s*([\w\s.-]+?)\s*\}\}/g;
+        const vars = [];
+        const seen = new Set();
+        let m;
+        while ((m = re.exec(text)) !== null) {
+          const k = m[1].trim().toLowerCase();
+          if (!seen.has(k)) { seen.add(k); vars.push(k); }
+        }
+        return vars;
+      }
+      function resolveVars(prompt, vals) {
+        let r = prompt;
+        for (const [k, v] of Object.entries(vals)) {
+          const re = new RegExp("\\{\\{\\s*" + escapeRegex(k) + "\\s*\\}\\}", "gi");
+          r = r.replace(re, v || "{{" + k + "}}");
+        }
+        return r;
+      }
+      function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+      function catBadgeHtml(cat) {
+        const cls = CAT_COLORS[cat] || "custom";
+        return '<span class="pl-badge ' + cls + '">' + cat.charAt(0).toUpperCase() + cat.slice(1) + '</span>';
+      }
+
+      function getAllTemplates() {
+        const c = customPrompts.map((p, i) => ({
+          id: "custom_" + i,
+          title: p.title || "Custom prompt",
+          desc: p.desc || "",
+          cat: p.cat || "custom",
+          system: p.system || "",
+          prompt: p.prompt || "",
+          _customIdx: i,
+        }));
+        return [...BUILTINS, ...c];
+      }
+
+      function getTemplate(id) {
+        if (id && id.startsWith("custom_")) {
+          const idx = parseInt(id.split("_")[1], 10);
+          const t = customPrompts[idx];
+          if (!t) return null;
+          return { id, title: t.title, desc: t.desc, cat: t.cat || "custom", system: t.system || "", prompt: t.prompt || "", _customIdx: idx };
+        }
+        return BUILTINS.find((t) => t.id === id) || null;
+      }
+
+      /* ---------- render categories ---------- */
+      function renderCats() {
+        catsEl.innerHTML = "";
+        CATEGORIES.forEach((c) => {
+          const btn = document.createElement("button");
+          btn.className = "pl-cat" + (c.id === activeCat ? " active" : "");
+          btn.textContent = c.label;
+          btn.type = "button";
+          btn.addEventListener("click", () => { activeCat = c.id; renderCats(); renderGrid(); });
+          catsEl.appendChild(btn);
+        });
+      }
+
+      /* ---------- render grid ---------- */
+      function renderGrid() {
+        const all = getAllTemplates();
+        const filtered = activeCat === "all" ? all : all.filter((t) => t.cat === activeCat);
+        gridEl.innerHTML = "";
+
+        if (filtered.length === 0) {
+          const empty = document.createElement("div");
+          empty.className = "pl-empty";
+          empty.textContent = activeCat === "custom" ? "No custom prompts saved yet." : "No templates in this category.";
+          gridEl.appendChild(empty);
+          return;
+        }
+
+        filtered.forEach((t) => {
+          const card = document.createElement("div");
+          card.className = "pl-card" + (t.id === activeId ? " active" : "");
+          const vars = extractVars(t.prompt).concat(extractVars(t.system));
+          const isCustom = t.id.startsWith("custom_");
+
+          let html = "";
+          if (isCustom) {
+            html += '<span class="pl-del" data-del="' + t.id + '" title="Delete this prompt">×</span>';
+          }
+          html += '<div class="pl-title">' + escHtml(t.title) + '</div>';
+          html += '<div class="pl-desc">' + escHtml(t.desc) + '</div>';
+          html += catBadgeHtml(t.cat);
+          if (vars.length) html += '<div class="pl-var-count">' + vars.length + ' variable' + (vars.length > 1 ? "s" : "") + '</div>';
+          card.innerHTML = html;
+
+          card.addEventListener("click", (e) => {
+            if (e.target.closest(".pl-del")) return;
+            openEditor(t.id);
+          });
+
+          // delete handler
+          const del = card.querySelector(".pl-del");
+          if (del) {
+            del.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const id = del.getAttribute("data-del");
+              const idx = parseInt(id.split("_")[1], 10);
+              customPrompts.splice(idx, 1);
+              saveCustom();
+              if (activeId === id) { editorEl.classList.remove("open"); activeId = null; }
+              renderGrid();
+              renderCats();
+            });
+          }
+
+          gridEl.appendChild(card);
+        });
+      }
+
+      function escHtml(s) {
+        const d = document.createElement("div");
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      /* ---------- editor ---------- */
+      function openEditor(id) {
+        const t = getTemplate(id);
+        if (!t) return;
+        activeId = id;
+        renderGrid();
+
+        editorEl.classList.add("open");
+        editorTitle.textContent = t.title;
+        editorBadge.style.display = "inline";
+        editorBadge.className = "pl-badge " + (CAT_COLORS[t.cat] || "custom");
+        editorBadge.textContent = t.cat.charAt(0).toUpperCase() + t.cat.slice(1);
+
+        // system prompt
+        const hasSys = !!t.system;
+        sysCheck.checked = hasSys;
+        sysArea.classList.toggle("open", hasSys);
+        sysInput.value = t.system;
+
+        // variables
+        const allVars = extractVars(t.prompt).concat(extractVars(t.system));
+        const varVals = {};
+        varGrid.innerHTML = "";
+        if (allVars.length) {
+          allVars.forEach((v) => {
+            varVals[v] = "";
+            const wrap = document.createElement("div");
+            wrap.className = "pl-var-field";
+            const label = document.createElement("span");
+            label.textContent = v;
+            const inp = document.createElement("input");
+            inp.className = "input";
+            inp.type = "text";
+            inp.placeholder = "Enter " + v + "…";
+            inp.setAttribute("data-var", v);
+            inp.addEventListener("input", updatePrompt);
+            wrap.appendChild(label);
+            wrap.appendChild(inp);
+            varGrid.appendChild(wrap);
+          });
+        } else {
+          varGrid.innerHTML = '<div class="pl-tip" style="grid-column:1/-1;margin:0">No variables — just edit the prompt below.</div>';
+        }
+
+        // prompt
+        promptTa.value = t.prompt;
+        respEl.classList.remove("open");
+        respBody.textContent = "";
+
+        // store var vals on editor for access
+        editorEl._varVals = varVals;
+        editorEl._template = t;
+        updatePrompt();
+      }
+
+      function updatePrompt() {
+        const t = editorEl._template;
+        if (!t) return;
+        const inputs = varGrid.querySelectorAll("input[data-var]");
+        const vals = {};
+        inputs.forEach((inp) => { vals[inp.getAttribute("data-var")] = inp.value; });
+        editorEl._varVals = vals;
+        promptTa.value = resolveVars(t.prompt, vals);
+      }
+
+      function getCurrentPrompt() {
+        return promptTa.value;
+      }
+      function getCurrentSystem() {
+        return sysCheck.checked ? sysInput.value : "";
+      }
+
+      /* ---------- actions ---------- */
+      copyBtn.addEventListener("click", async () => {
+        const text = getCurrentPrompt();
+        if (!text) return;
+        try { await navigator.clipboard.writeText(text); } catch { fallbackCopy(text); }
+        flashBtn(copyBtn, "Copied!");
+      });
+
+      copyRespBtn.addEventListener("click", async () => {
+        const text = respBody.textContent;
+        if (!text || respBody.classList.contains("loading")) return;
+        try { await navigator.clipboard.writeText(text); } catch { fallbackCopy(text); }
+        flashBtn(copyRespBtn, "Copied!");
+      });
+
+      function fallbackCopy(text) {
+        const ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); ta.remove();
+      }
+      function flashBtn(btn, msg) {
+        const orig = btn.textContent;
+        btn.textContent = msg;
+        btn.style.opacity = "0.8";
+        setTimeout(() => { btn.textContent = orig; btn.style.opacity = "1"; }, 1500);
+      }
+
+      saveBtn.addEventListener("click", () => {
+        const t = editorEl._template;
+        if (!t) return;
+        const title = prompt("Name this prompt:", t.title) || t.title;
+        customPrompts.push({
+          title: title,
+          desc: prompt("Short description:", t.desc) || t.desc,
+          cat: t.cat,
+          system: getCurrentSystem(),
+          prompt: getCurrentPrompt(),
+        });
+        saveCustom();
+        flashBtn(saveBtn, "Saved!");
+        renderGrid();
+        renderCats();
+      });
+
+      /* ---------- test AI ---------- */
+      testBtn.addEventListener("click", async () => {
+        const system = getCurrentSystem();
+        const user = getCurrentPrompt();
+        if (!user.trim()) return;
+
+        testBtn.disabled = true;
+        testBtn.textContent = "Testing…";
+        respEl.classList.add("open");
+        respBody.className = "pl-r-body loading";
+        respBody.textContent = "Waiting for response…";
+
+        const messages = [];
+        if (system.trim()) messages.push({ role: "system", content: system.trim() });
+        messages.push({ role: "user", content: user.trim() });
+
+        try {
+          const res = await fetch("https://chat.velstech.net", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              messages: messages,
+              model: "@cf/meta/llama-3.1-8b-instruct",
+              stream: false,
+            }),
+          });
+          if (!res.ok) {
+            let detail = "HTTP " + res.status;
+            try { const e = await res.json(); detail = e.detail || e.error || detail; } catch {}
+            throw new Error(detail);
+          }
+          const json = await res.json();
+          const text = (json.choices && json.choices[0] && json.choices[0].message && json.choices[0].message.content)
+            || (json.result && json.result.response)
+            || JSON.stringify(json, null, 2);
+          respBody.className = "pl-r-body";
+          respBody.textContent = text;
+        } catch (err) {
+          respBody.className = "pl-r-body error";
+          respBody.textContent = "Error: " + err.message;
+        } finally {
+          testBtn.disabled = false;
+          testBtn.textContent = "Test AI";
+        }
+      });
+
+      /* ---------- system toggle ---------- */
+      sysCheck.addEventListener("change", () => {
+        sysArea.classList.toggle("open", sysCheck.checked);
+      });
+
+      /* ---------- init ---------- */
+      renderCats();
+      renderGrid();
+    })();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

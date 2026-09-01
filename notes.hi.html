@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="प्राइवेट मार्कडाउन नोट्स जो आपके ब्राउज़र में रहते हैं – कोई खाता नहीं, कोई सर्वर नहीं। अपने नोट्स लिखें, प्रीव्यू करें, खोजें और कॉपी करें।" />
+  <title>मार्कडाउन नोट्स | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/notes.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/notes.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/notes.hi.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/notes.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/notes.hi.html#webapp",
+  "name": "मार्कडाउन नोट्स | VelsTech",
+  "description": "प्राइवेट मार्कडाउन नोट्स जो आपके ब्राउज़र में रहते हैं – कोई खाता नहीं, कोई सर्वर नहीं। अपने नोट्स लिखें, प्रीव्यू करें, खोजें और कॉपी करें।",
+  "url": "https://velstech.net/notes.hi.html",
+  "inLanguage": "hi",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/notes.html" />
+  <meta property="og:title" content="मार्कडाउन नोट्स | VelsTech" />
+  <meta property="og:description" content="प्राइवेट मार्कडाउन नोट्स जो आपके ब्राउज़र में रहते हैं – कोई खाता नहीं, कोई सर्वर नहीं। अपने नोट्स लिखें, प्रीव्यू करें, खोजें और कॉपी करें।" />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="मार्कडाउन नोट्स | VelsTech" />
+  <meta name="twitter:description" content="प्राइवेट मार्कडाउन नोट्स जो आपके ब्राउज़र में रहते हैं – कोई खाता नहीं, कोई सर्वर नहीं। अपने नोट्स लिखें, प्रीव्यू करें, खोजें और कॉपी करें।" />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
+    .notes-app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      min-height: 60vh;
+    }
+    .notes-sidebar {
+      background: #111820;
+      border: 1px solid #1f2733;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .notes-sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      border-bottom: 1px solid #1f2733;
+    }
+    .notes-sidebar-header input {
+      flex: 1;
+    }
+    .notes-list {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 55vh;
+    }
+    .notes-list-empty {
+      padding: 2rem 1rem;
+      text-align: center;
+      color: #6b7a8d;
+      font-size: 0.9rem;
+    }
+    .note-item {
+      padding: 0.75rem;
+      border-bottom: 1px solid #1a232e;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .note-item:hover {
+      background: #1a232e;
+    }
+    .note-item.active {
+      background: #1f2a38;
+      border-left: 3px solid #4cc2ff;
+    }
+    .note-item-title {
+      font-weight: 600;
+      color: #d1d9e6;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .note-item-preview {
+      color: #6b7a8d;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+    .note-item-date {
+      color: #4a5a6e;
+      font-size: 0.7rem;
+      margin-top: 4px;
+    }
+    .notes-main {
+      display: flex;
+      flex-direction: column;
+    }
+    .notes-editor {
+      background: #111820;
+      border: 1px solid #1f2733;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+    .notes-editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #1f2733;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .notes-editor-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+    }
+    .notes-editor-header-left input {
+      flex: 1;
+      min-width: 120px;
+    }
+    .notes-editor-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .notes-editor-body.single {
+      grid-template-columns: 1fr;
+    }
+    .notes-editor-textarea {
+      width: 100%;
+      min-height: 350px;
+      padding: 1rem;
+      background: #0b0f14;
+      border: none;
+      border-right: 1px solid #1f2733;
+      color: #d1d9e6;
+      font-family: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", "Consolas", monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+    .notes-editor-body.single .notes-editor-textarea {
+      border-right: none;
+    }
+    .notes-preview {
+      padding: 1rem;
+      min-height: 350px;
+      overflow-y: auto;
+      color: #d1d9e6;
+      line-height: 1.6;
+    }
+    .notes-preview h1 { font-size: 1.6rem; margin: 0 0 0.5rem; color: #e8edf5; border-bottom: 1px solid #1f2733; padding-bottom: 0.3rem; }
+    .notes-preview h2 { font-size: 1.35rem; margin: 1rem 0 0.4rem; color: #e8edf5; }
+    .notes-preview h3 { font-size: 1.15rem; margin: 0.8rem 0 0.3rem; color: #e8edf5; }
+    .notes-preview h4 { font-size: 1.05rem; margin: 0.6rem 0 0.2rem; color: #e8edf5; }
+    .notes-preview p { margin: 0 0 0.6rem; }
+    .notes-preview strong { color: #e8edf5; font-weight: 700; }
+    .notes-preview code {
+      background: #1a232e;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+      font-size: 0.85em;
+      color: #4cc2ff;
+    }
+    .notes-preview pre {
+      background: #0b0f14;
+      border: 1px solid #1f2733;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+      margin: 0.6rem 0;
+    }
+    .notes-preview pre code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      color: #d1d9e6;
+    }
+    .notes-preview ul, .notes-preview ol {
+      padding-left: 1.5rem;
+      margin: 0.4rem 0;
+    }
+    .notes-preview li { margin: 0.2rem 0; }
+    .notes-preview a { color: #4cc2ff; text-decoration: underline; }
+    .notes-preview a:hover { color: #7ad4ff; }
+    .notes-preview hr { border: none; border-top: 1px solid #1f2733; margin: 1rem 0; }
+    .notes-preview blockquote {
+      border-left: 3px solid #4cc2ff;
+      padding-left: 1rem;
+      margin: 0.6rem 0;
+      color: #8a9ab0;
+    }
+    .notes-editor-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      border-top: 1px solid #1f2733;
+      font-size: 0.8rem;
+      color: #6b7a8d;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .notes-editor-footer-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .saved-indicator {
+      color: #4caf50;
+      font-weight: 500;
+    }
+    .no-note-selected {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 350px;
+      color: #4a5a6e;
+      text-align: center;
+      gap: 0.5rem;
+    }
+    .no-note-selected svg { width: 48px; height: 48px; opacity: 0.4; }
+    .no-note-selected p { font-size: 1rem; }
+    .btn-sm {
+      padding: 0.3rem 0.7rem;
+      font-size: 0.8rem;
+    }
+    .tool-btn-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-danger {
+      background: #5c1a1a;
+      border-color: #8a2a2a;
+      color: #ff8a8a;
+    }
+    .btn-danger:hover {
+      background: #7a2222;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #1f2733;
+      color: #8a9ab0;
+    }
+    .btn-outline:hover {
+      background: #1a232e;
+      color: #d1d9e6;
+    }
+    @media (max-width: 768px) {
+      .notes-app {
+        grid-template-columns: 1fr;
+      }
+      .notes-sidebar {
+        max-height: 200px;
+      }
+      .notes-list {
+        max-height: 140px;
+      }
+      .notes-editor-body {
+        grid-template-columns: 1fr;
+      }
+      .notes-editor-textarea {
+        border-right: none;
+        border-bottom: 1px solid #1f2733;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">होम</a> / <a href="tools.html">टूल्स</a> / मार्कडाउन नोट्स</p>
+    <h1 class="title">मार्कडाउन नोट्स</h1>
+    <div class="meta">
+      <span>प्राइवेट नोट्स जो आपके ब्राउज़र में रहते हैं – कोई खाता नहीं, कोई सर्वर नहीं</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        मार्कडाउन नोट्स लिखें, प्रीव्यू करें, खोजें और कॉपी करें। सब कुछ आपके ब्राउज़र के
+        localStorage में सेव होता है – कुछ भी किसी सर्वर को नहीं भेजा जाता। टैब बंद करें और बाद में वापस आएं,
+        आपके नोट्स अभी भी यहाँ हैं।
+      </p>
+
+      <div class="notes-app" id="app">
+        <div class="notes-sidebar">
+          <div class="notes-sidebar-header">
+            <input id="search-input" class="input" type="text" placeholder="नोट्स खोजें..." />
+            <button class="btn btn-primary btn-sm" id="new-note-btn" title="नया नोट">+</button>
+          </div>
+          <div class="notes-list" id="notes-list"></div>
+        </div>
+        <div class="notes-main">
+          <div class="notes-editor">
+            <div class="notes-editor-header">
+              <div class="notes-editor-header-left">
+                <input id="note-title" class="input" type="text" placeholder="नोट का शीर्षक" />
+              </div>
+              <div class="tool-btn-row">
+                <button class="btn btn-outline btn-sm" id="toggle-preview-btn">प्रीव्यू</button>
+                <button class="btn btn-outline btn-sm" id="copy-md-btn" title="मार्कडाउन के रूप में कॉपी करें">MD</button>
+                <button class="btn btn-outline btn-sm" id="copy-text-btn" title="सादे टेक्स्ट के रूप में कॉपी करें">TXT</button>
+                <button class="btn btn-danger btn-sm" id="delete-note-btn">हटाएं</button>
+              </div>
+            </div>
+            <div class="notes-editor-body" id="editor-body">
+              <textarea id="note-content" class="notes-editor-textarea" placeholder="अपना नोट मार्कडाउन में लिखें..."></textarea>
+              <div class="notes-preview" id="note-preview"></div>
+            </div>
+            <div class="notes-editor-footer">
+              <div class="notes-editor-footer-left">
+                <span id="word-count">0 शब्द</span>
+                <span id="char-count">0 वर्ण</span>
+                <span id="saved-indicator" class="saved-indicator" hidden></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← सभी टूल्स</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "vt-notes";
+      let notes = [];
+      let activeId = null;
+      let saveTimer = null;
+      let lastSavedContent = "";
+      let searchQuery = "";
+
+      const el = (id) => document.getElementById(id);
+      const notesListEl = el("notes-list");
+      const noteTitleEl = el("note-title");
+      const noteContentEl = el("note-content");
+      const notePreviewEl = el("note-preview");
+      const searchInputEl = el("search-input");
+      const savedIndicatorEl = el("saved-indicator");
+      const editorBodyEl = el("editor-body");
+      const wordCountEl = el("word-count");
+      const charCountEl = el("char-count");
+
+      function loadNotes() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            notes = JSON.parse(raw);
+            if (!Array.isArray(notes)) notes = [];
+          }
+        } catch {
+          notes = [];
+        }
+      }
+
+      function saveNotes() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+        } catch (e) {
+          console.warn("localStorage save failed", e);
+        }
+      }
+
+      function generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      }
+
+      function nowISO() {
+        return new Date().toISOString();
+      }
+
+      function formatDate(iso) {
+        const d = new Date(iso);
+        const now = new Date();
+        const diff = now - d;
+        if (diff < 60000) return "just now";
+        if (diff < 3600000) return Math.floor(diff / 60000) + "m ago";
+        if (diff < 86400000) return Math.floor(diff / 3600000) + "h ago";
+        if (diff < 604800000) return Math.floor(diff / 86400000) + "d ago";
+        return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+      }
+
+      function stripMd(text) {
+        return text.replace(/[#*`~_\[\]()>|\\]/g, "").replace(/\n+/g, " ").trim();
+      }
+
+      function mdToHtml(text) {
+        if (!text) return "";
+        let html = text;
+
+        html = html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
+          return "<pre><code>" + code.trim() + "</code></pre>";
+        });
+
+        html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+
+        html = html.replace(/^### (.+)$/gm, "<h3>$1</h3>");
+        html = html.replace(/^## (.+)$/gm, "<h2>$1</h2>");
+        html = html.replace(/^# (.+)$/gm, "<h1>$1</h1>");
+
+        html = html.replace(/^#### (.+)$/gm, "<h4>$1</h4>");
+
+        html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+
+        html = html.replace(/^> (.*)$/gm, "<blockquote>$1</blockquote>");
+
+        html = html.replace(/^(\s*[-*+] )(.+)$/gm, (match, prefix, content) => {
+          return "<li>" + content + "</li>";
+        });
+
+        html = html.replace(/^(\s*\d+\. )(.+)$/gm, (match, prefix, content) => {
+          return "<li value='" + prefix.trim().slice(0, -1) + "'>" + content + "</li>";
+        });
+
+        html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;border-radius:4px;margin:0.5rem 0;" />');
+
+        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+        html = html.replace(/^---$/gm, "<hr />");
+
+        html = html.replace(/<li><\/li>/g, "");
+
+        const lines = html.split("\n");
+        const result = [];
+        let inUl = false;
+        let inOl = false;
+        let inBlockquote = false;
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i];
+          const trimmed = line.trim();
+
+          if (trimmed.startsWith("<li>")) {
+            if (!inUl) {
+              if (inOl) { result.push("</ol>"); inOl = false; }
+              result.push("<ul>");
+              inUl = true;
+            }
+            result.push(line);
+            continue;
+          }
+
+          if (trimmed.startsWith("<li value=")) {
+            if (!inOl) {
+              if (inUl) { result.push("</ul>"); inUl = false; }
+              result.push("<ol>");
+              inOl = true;
+            }
+            result.push(line);
+            continue;
+          }
+
+          if (inUl && !trimmed.startsWith("<li>")) {
+            result.push("</ul>");
+            inUl = false;
+          }
+          if (inOl && !trimmed.startsWith("<li value=")) {
+            result.push("</ol>");
+            inOl = false;
+          }
+
+          if (trimmed.startsWith("<blockquote>")) {
+            if (!inBlockquote) {
+              result.push(line);
+              inBlockquote = true;
+            } else {
+              result.push(line);
+            }
+            continue;
+          }
+
+          if (inBlockquote && !trimmed.startsWith("<blockquote>")) {
+            inBlockquote = false;
+          }
+
+          if (trimmed === "") {
+            result.push("");
+            continue;
+          }
+
+          if (
+            trimmed.startsWith("<h") ||
+            trimmed.startsWith("<pre") ||
+            trimmed.startsWith("<hr") ||
+            trimmed.startsWith("<img") ||
+            trimmed.startsWith("<ul") ||
+            trimmed.startsWith("</ul") ||
+            trimmed.startsWith("<ol") ||
+            trimmed.startsWith("</ol") ||
+            trimmed.startsWith("<li") ||
+            trimmed.startsWith("</li") ||
+            trimmed.startsWith("<blockquote") ||
+            trimmed.startsWith("</blockquote")
+          ) {
+            result.push(line);
+          } else {
+            result.push("<p>" + trimmed + "</p>");
+          }
+        }
+
+        if (inUl) result.push("</ul>");
+        if (inOl) result.push("</ol>");
+
+        return result.join("\n");
+      }
+
+      function updatePreview() {
+        const text = noteContentEl.value;
+        notePreviewEl.innerHTML = mdToHtml(text);
+      }
+
+      function updateWordCharCount() {
+        const text = noteContentEl.value;
+        const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+        wordCountEl.textContent = words + " words";
+        charCountEl.textContent = text.length + " chars";
+      }
+
+      function showSaved(show) {
+        if (show) {
+          savedIndicatorEl.textContent = "Saved";
+          savedIndicatorEl.hidden = false;
+          clearTimeout(savedIndicatorEl._hideTimer);
+          savedIndicatorEl._hideTimer = setTimeout(() => {
+            savedIndicatorEl.hidden = true;
+          }, 2000);
+        } else {
+          savedIndicatorEl.hidden = true;
+        }
+      }
+
+      function saveCurrentNote() {
+        if (!activeId) return;
+        const title = noteTitleEl.value.trim() || "Untitled";
+        const content = noteContentEl.value;
+        const note = notes.find((n) => n.id === activeId);
+        if (!note) return;
+        const snapshot = title + "||" + content;
+        if (snapshot === lastSavedContent) return;
+        note.title = title;
+        note.content = content;
+        note.updatedAt = nowISO();
+        saveNotes();
+        lastSavedContent = snapshot;
+        showSaved(true);
+        renderNoteList();
+      }
+
+      function scheduleSave() {
+        if (!activeId) return;
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(saveCurrentNote, 600);
+      }
+
+      function selectNote(id) {
+        if (id && activeId === id) {
+          saveCurrentNote();
+          return;
+        }
+        if (activeId) {
+          saveCurrentNote();
+        }
+        activeId = id;
+        if (!id) {
+          noteTitleEl.value = "";
+          noteContentEl.value = "";
+          notePreviewEl.innerHTML = "";
+          updateWordCharCount();
+          showSaved(false);
+          lastSavedContent = "";
+          renderNoteList();
+          noteTitleEl.disabled = true;
+          noteContentEl.disabled = true;
+          return;
+        }
+        const note = notes.find((n) => n.id === id);
+        if (!note) {
+          activeId = null;
+          noteTitleEl.disabled = true;
+          noteContentEl.disabled = true;
+          renderNoteList();
+          return;
+        }
+        noteTitleEl.value = note.title;
+        noteContentEl.value = note.content;
+        lastSavedContent = note.title + "||" + note.content;
+        updatePreview();
+        updateWordCharCount();
+        showSaved(false);
+        noteTitleEl.disabled = false;
+        noteContentEl.disabled = false;
+        renderNoteList();
+        noteTitleEl.focus();
+      }
+
+      function newNote() {
+        saveCurrentNote();
+        const note = {
+          id: generateId(),
+          title: "Untitled",
+          content: "",
+          createdAt: nowISO(),
+          updatedAt: nowISO(),
+        };
+        notes.unshift(note);
+        saveNotes();
+        selectNote(note.id);
+      }
+
+      function deleteNote() {
+        if (!activeId) return;
+        const note = notes.find((n) => n.id === activeId);
+        if (!note) return;
+        if (!confirm('Delete "' + note.title + '" permanently?')) return;
+        notes = notes.filter((n) => n.id !== activeId);
+        saveNotes();
+        activeId = null;
+        noteTitleEl.value = "";
+        noteContentEl.value = "";
+        notePreviewEl.innerHTML = "";
+        updateWordCharCount();
+        showSaved(false);
+        lastSavedContent = "";
+        noteTitleEl.disabled = true;
+        noteContentEl.disabled = true;
+        renderNoteList();
+      }
+
+      function getFilteredNotes() {
+        if (!searchQuery) return notes;
+        const q = searchQuery.toLowerCase();
+        return notes.filter((n) => {
+          return n.title.toLowerCase().includes(q) || n.content.toLowerCase().includes(q);
+        });
+      }
+
+      function renderNoteList() {
+        const filtered = getFilteredNotes();
+        if (filtered.length === 0) {
+          if (searchQuery) {
+            notesListEl.innerHTML = '<div class="notes-list-empty">No notes match "' + searchQuery + '"</div>';
+          } else {
+            notesListEl.innerHTML = '<div class="notes-list-empty">No notes yet. Click + to create one.</div>';
+          }
+          return;
+        }
+        let html = "";
+        for (const note of filtered) {
+          const preview = stripMd(note.content).slice(0, 80) || "Empty note";
+          const activeClass = note.id === activeId ? " active" : "";
+          html +=
+            '<div class="note-item' + activeClass + '" data-id="' + note.id + '">' +
+            '<div class="note-item-title">' + escHtml(note.title) + '</div>' +
+            '<div class="note-item-preview">' + escHtml(preview) + '</div>' +
+            '<div class="note-item-date">' + formatDate(note.updatedAt) + '</div>' +
+            "</div>";
+        }
+        notesListEl.innerHTML = html;
+      }
+
+      function escHtml(s) {
+        const d = document.createElement("div");
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function togglePreview() {
+        const btn = el("toggle-preview-btn");
+        const isVisible = notePreviewEl.style.display !== "none" && notePreviewEl.style.display !== "";
+        if (isVisible) {
+          notePreviewEl.style.display = "none";
+          editorBodyEl.classList.add("single");
+          btn.textContent = "Preview";
+        } else {
+          notePreviewEl.style.display = "block";
+          editorBodyEl.classList.remove("single");
+          btn.textContent = "Editor";
+          updatePreview();
+        }
+      }
+
+      function copyAsMarkdown() {
+        if (!activeId) return;
+        const note = notes.find((n) => n.id === activeId);
+        if (!note) return;
+        const text = "# " + note.title + "\n\n" + note.content;
+        navigator.clipboard.writeText(text).then(() => {
+          showSaved(true);
+          savedIndicatorEl.textContent = "Copied MD";
+        }).catch(() => {});
+      }
+
+      function copyAsText() {
+        if (!activeId) return;
+        const note = notes.find((n) => n.id === activeId);
+        if (!note) return;
+        const text = stripMd(note.content);
+        navigator.clipboard.writeText(text).then(() => {
+          showSaved(true);
+          savedIndicatorEl.textContent = "Copied TXT";
+        }).catch(() => {});
+      }
+
+      function handleNoteListClick(e) {
+        const item = e.target.closest(".note-item");
+        if (!item) return;
+        const id = item.dataset.id;
+        if (id) selectNote(id);
+      }
+
+      function init() {
+        loadNotes();
+        notes.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        if (notes.length > 0) {
+          selectNote(notes[0].id);
+        } else {
+          noteTitleEl.disabled = true;
+          noteContentEl.disabled = true;
+          renderNoteList();
+        }
+
+        el("new-note-btn").addEventListener("click", newNote);
+        el("delete-note-btn").addEventListener("click", deleteNote);
+        el("toggle-preview-btn").addEventListener("click", togglePreview);
+        el("copy-md-btn").addEventListener("click", copyAsMarkdown);
+        el("copy-text-btn").addEventListener("click", copyAsText);
+        notesListEl.addEventListener("click", handleNoteListClick);
+
+        noteTitleEl.addEventListener("input", scheduleSave);
+        noteContentEl.addEventListener("input", function () {
+          scheduleSave();
+          updatePreview();
+          updateWordCharCount();
+        });
+
+        searchInputEl.addEventListener("input", function () {
+          searchQuery = this.value;
+          renderNoteList();
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+            e.preventDefault();
+            saveCurrentNote();
+          }
+        });
+      }
+
+      init();
+    })();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

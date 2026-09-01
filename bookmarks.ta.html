@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="உங்கள் வாசிப்புப் பட்டியலை நேரடியாக உலாவியில் சேமியுங்கள், குறியிடுங்கள், தேடுங்கள் – கணக்கு தேவையில்லை. URLகளை இறக்குமதி செய்யுங்கள், JSON ஐ ஏற்றுமதி செய்யுங்கள், முடிந்தவற்றைக் குறிக்கவும்." />
+  <title>புக்மார்க்குகள் &amp; வாசிப்புப் பட்டியல் | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/bookmarks.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/bookmarks.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/bookmarks.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/bookmarks.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://velstech.net/bookmarks.ta.html#webapp",
+  "name": "புக்மார்க்குகள் & வாசிப்புப் பட்டியல் | VelsTech",
+  "description": "உங்கள் வாசிப்புப் பட்டியலை நேரடியாக உலாவியில் சேமியுங்கள், குறியிடுங்கள், தேடுங்கள் – கணக்கு தேவையில்லை. URLகளை இறக்குமதி செய்யுங்கள், JSON ஐ ஏற்றுமதி செய்யுங்கள், முடிந்தவற்றைக் குறிக்கவும்.",
+  "url": "https://velstech.net/bookmarks.ta.html",
+  "inLanguage": "ta",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/bookmarks.ta.html" />
+  <meta property="og:title" content="புக்மார்க்குகள் &amp; வாசிப்புப் பட்டியல் | VelsTech" />
+  <meta property="og:description" content="உங்கள் வாசிப்புப் பட்டியலை நேரடியாக உலாவியில் சேமியுங்கள், குறியிடுங்கள், தேடுங்கள் – கணக்கு தேவையில்லை. URLகளை இறக்குமதி செய்யுங்கள், JSON ஐ ஏற்றுமதி செய்யுங்கள், முடிந்தவற்றைக் குறிக்கவும்." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="புக்மார்க்குகள் &amp; வாசிப்புப் பட்டியல் | VelsTech" />
+  <meta name="twitter:description" content="உங்கள் வாசிப்புப் பட்டியலை நேரடியாக உலாவியில் சேமியுங்கள், குறியிடுங்கள், தேடுங்கள் – கணக்கு தேவையில்லை. URLகளை இறக்குமதி செய்யுங்கள், JSON ஐ ஏற்றுமதி செய்யுங்கள், முடிந்தவற்றைக் குறிக்கவும்." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="stylesheet" href="styles.css?v=40" />
+  <style>
+    .bm-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .bm-header h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: #c8d0d8;
+    }
+    .bm-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .bm-btn {
+      padding: 0.45rem 0.95rem;
+      border-radius: 6px;
+      border: 1px solid #1f2733;
+      background: #131a22;
+      color: #c8d0d8;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s, border-color 0.2s;
+      text-decoration: none;
+    }
+    .bm-btn:hover {
+      background: #1a2430;
+      border-color: #2a3648;
+    }
+    .bm-btn.primary {
+      background: #005d8c;
+      border-color: #0077b3;
+      color: #fff;
+    }
+    .bm-btn.primary:hover {
+      background: #0077b3;
+    }
+    .bm-btn.danger {
+      color: #ff6b6b;
+    }
+    .bm-btn.danger:hover {
+      background: #3a1515;
+      border-color: #6b2a2a;
+    }
+    .bm-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .bm-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      align-items: center;
+    }
+    .bm-toolbar .input {
+      flex: 1 1 220px;
+      min-width: 140px;
+      padding: 0.5rem 0.7rem;
+    }
+    .bm-toolbar select.input {
+      flex: 0 1 auto;
+      max-width: 200px;
+    }
+    .bm-form {
+      display: none;
+      background: #11181f;
+      border: 1px solid #1f2733;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .bm-form.open {
+      display: block;
+    }
+    .bm-form .calc-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .bm-form .field.full {
+      grid-column: 1 / -1;
+    }
+    .bm-form textarea.input {
+      resize: vertical;
+      min-height: 60px;
+      font-family: inherit;
+    }
+    .bm-form .tool-btn-row {
+      margin-top: 0.75rem;
+    }
+    .bm-count {
+      font-size: 0.85rem;
+      color: #6a7a8a;
+    }
+    .bm-empty {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: #6a7a8a;
+      border: 1px dashed #1f2733;
+      border-radius: 8px;
+    }
+    .bm-empty svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 0.75rem;
+      opacity: 0.5;
+    }
+    .bm-empty p {
+      margin: 0.3rem 0;
+    }
+    .bm-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .bm-card {
+      display: flex;
+      flex-direction: column;
+      background: #11181f;
+      border: 1px solid #1f2733;
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      transition: border-color 0.2s;
+    }
+    .bm-card:hover {
+      border-color: #2a3648;
+    }
+    .bm-card.done {
+      opacity: 0.6;
+    }
+    .bm-card.done .bm-title {
+      text-decoration: line-through;
+    }
+    .bm-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .bm-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .bm-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #c8d0d8;
+      margin: 0 0 0.15rem;
+      word-break: break-word;
+    }
+    .bm-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .bm-title a:hover {
+      color: #4cc2ff;
+    }
+    .bm-url {
+      font-size: 0.8rem;
+      color: #4cc2ff;
+      word-break: break-all;
+      margin: 0 0 0.35rem;
+    }
+    .bm-url a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .bm-url a:hover {
+      text-decoration: underline;
+    }
+    .bm-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.3rem;
+    }
+    .bm-tag {
+      display: inline-block;
+      padding: 0.1rem 0.5rem;
+      border-radius: 4px;
+      background: #1a2430;
+      color: #7ab8d4;
+      font-size: 0.75rem;
+    }
+    .bm-note {
+      font-size: 0.85rem;
+      color: #8a9aaa;
+      margin: 0.2rem 0 0;
+      word-break: break-word;
+    }
+    .bm-date {
+      font-size: 0.75rem;
+      color: #4a5a6a;
+      white-space: nowrap;
+    }
+    .bm-card-actions {
+      display: flex;
+      gap: 0.35rem;
+      flex-shrink: 0;
+      align-items: center;
+    }
+    .bm-card-actions button {
+      background: none;
+      border: 1px solid transparent;
+      color: #6a7a8a;
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.45rem;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .bm-card-actions button:hover {
+      color: #c8d0d8;
+      background: #1a2430;
+      border-color: #2a3648;
+    }
+    .bm-card-actions .copy-ok {
+      color: #4caf50;
+    }
+    .bm-card-actions .del-btn:hover {
+      color: #ff6b6b;
+      border-color: #6b2a2a;
+      background: #3a1515;
+    }
+    .bm-status-btn {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #1f2733;
+      background: #131a22;
+      color: #6a7a8a;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .bm-status-btn:hover {
+      background: #1a2430;
+    }
+    .bm-status-btn.done {
+      color: #4caf50;
+      border-color: #2a5a2a;
+    }
+    .bm-import-area {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #0d131a;
+      border: 1px dashed #1f2733;
+      border-radius: 8px;
+    }
+    .bm-import-area textarea {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 100px;
+      font-family: monospace;
+      font-size: 0.8rem;
+    }
+    .bm-import-area .bm-btn-row {
+      margin-top: 0.5rem;
+    }
+    .bm-toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #1a2430;
+      border: 1px solid #2a3648;
+      color: #c8d0d8;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+    .bm-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bm-confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .bm-confirm-box {
+      background: #11181f;
+      border: 1px solid #1f2733;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .bm-confirm-box p {
+      margin: 0 0 1rem;
+      color: #c8d0d8;
+    }
+    .bm-confirm-box .bm-btn-row {
+      justify-content: center;
+    }
+    .bm-hidden {
+      display: none !important;
+    }
+    @media (max-width: 600px) {
+      .bm-form .calc-grid {
+        grid-template-columns: 1fr;
+      }
+      .bm-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .bm-toolbar .input {
+        flex: 1 1 auto;
+      }
+      .bm-card-top {
+        flex-direction: column;
+      }
+      .bm-card-actions {
+        align-self: flex-end;
+      }
+      .bm-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">முகப்பு</a> / <a href="tools.html">கருவிகள்</a> / புக்மார்க்குகள் &amp; வாசிப்புப் பட்டியல்</p>
+    <h1 class="title">புக்மார்க்குகள் &amp; வாசிப்புப் பட்டியல்</h1>
+    <div class="meta">
+      <span>உங்கள் வாசிப்புப் பட்டியலை உலாவியில் சேமியுங்கள், குறியிடுங்கள், தேடுங்கள்</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        பின்னர் படிக்க விரும்பும் இணைப்புகளைச் சேமியுங்கள், அவற்றைக் குறியிடுங்கள், தேடுங்கள், மற்றும் நீங்கள் முடித்தவற்றைக் கண்காணியுங்கள்.
+        எல்லாம் உங்கள் உலாவியின் localStorage இல் சேமிக்கப்படுகிறது — கணக்கு இல்லை, சர்வர் இல்லை, கண்காணிப்பு இல்லை.
+      </p>
+
+      <div class="calc" id="bm-app">
+        <div class="bm-header">
+          <h2>சேமித்த புக்மார்க்குகள்</h2>
+          <div class="bm-btn-row">
+            <button class="bm-btn primary" id="bm-add-btn">+ புக்மார்க் சேர்</button>
+            <button class="bm-btn" id="bm-import-btn">URLகளை இறக்குமதி செய்</button>
+            <button class="bm-btn" id="bm-export-btn">JSON ஐ ஏற்றுமதி செய்</button>
+          </div>
+        </div>
+
+        <div class="bm-form" id="bm-form">
+          <div class="calc-grid">
+            <label class="field">
+              <span>தலைப்பு</span>
+              <input id="bm-title" class="input" type="text" placeholder="எனது புக்மார்க்" />
+            </label>
+            <label class="field">
+              <span>URL</span>
+              <input id="bm-url" class="input" type="url" placeholder="https://..." />
+            </label>
+            <label class="field">
+              <span>குறிச்சொற்கள் (கமாவால் பிரிக்கப்பட்டவை)</span>
+              <input id="bm-tags" class="input" type="text" placeholder="ai, guide, llm" />
+            </label>
+            <label class="field">
+              <span>குறிப்பு (விருப்பமானது)</span>
+              <input id="bm-note" class="input" type="text" placeholder="இதை ஏன் சேமித்தேன்" />
+            </label>
+          </div>
+          <div class="tool-btn-row">
+            <button class="btn btn-primary" id="bm-save-btn">சேமி</button>
+            <button class="bm-btn" id="bm-cancel-btn">ரத்து</button>
+          </div>
+        </div>
+
+        <div class="bm-import-area bm-hidden" id="bm-import-area">
+          <p style="margin:0 0 0.5rem;color:#8a9aaa;font-size:0.85rem;">ஒவ்வொரு வரியிலும் ஒரு URL ஐ ஒட்டவும். தலைப்புகள் பக்கத்திலிருந்து தானாக நிரப்பப்படும் (பின்னர் திருத்தலாம்).</p>
+          <textarea class="input" id="bm-import-text" placeholder="https://example.com/article1&#10;https://example.com/article2"></textarea>
+          <div class="bm-btn-row">
+            <button class="bm-btn primary" id="bm-import-do-btn">இறக்குமதி</button>
+            <button class="bm-btn" id="bm-import-cancel-btn">ரத்து</button>
+          </div>
+        </div>
+
+        <div class="bm-toolbar" id="bm-toolbar">
+          <input class="input" id="bm-search" type="search" placeholder="தலைப்பு, URL அல்லது குறிச்சொல்லைத் தேடுங்கள்…" />
+          <select class="input" id="bm-filter-tag">
+            <option value="">அனைத்து குறிச்சொற்கள்</option>
+          </select>
+          <span class="bm-count" id="bm-count"></span>
+        </div>
+
+        <div id="bm-list"></div>
+
+        <div id="bm-empty" class="bm-empty bm-hidden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+          <p>இதுவரை எதுவும் சேமிக்கப்படவில்லை.</p>
+          <p style="font-size:0.85rem;">உங்கள் முதல் இணைப்பைச் சேமிக்க <strong>+ புக்மார்க் சேர்</strong> என்பதைக் கிளிக் செய்யுங்கள், அல்லது மொத்தமாகச் சேர்க்க <strong>URLகளை இறக்குமதி செய்</strong> என்பதைப் பயன்படுத்துங்கள்.</p>
+        </div>
+      </div>
+
+      <details class="calc-method" style="margin-top:1.5rem;">
+        <summary>எனது தரவு எங்கே சேமிக்கப்படுகிறது?</summary>
+        <div class="calc-method-body">
+          <p>அனைத்து புக்மார்க்குகளும் உங்கள் உலாவியின் <code>localStorage</code> இல் <code>vt-bookmarks</code> விசையின் கீழ் வாழ்கின்றன. எந்த சர்வருக்கும் எதுவும் அனுப்பப்படுவதில்லை. உங்கள் உலாவி தரவை அழிப்பது அவற்றை நீக்கும் — காப்புப்பிரதிகள் எடுக்க <strong>JSON ஐ ஏற்றுமதி செய்</strong> என்பதைப் பயன்படுத்துங்கள்.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="article-nav">
+      <a href="tools.html">← அனைத்து கருவிகளும்</a>
+    </div>
+  </main>
+
+  <div class="bm-toast" id="bm-toast"></div>
+
+  <script>
+    (function() {
+      const STORAGE_KEY = "vt-bookmarks";
+      let bookmarks = [];
+      let editingId = null;
+
+      const $ = id => document.getElementById(id);
+      const listEl = $("bm-list");
+      const emptyEl = $("bm-empty");
+      const countEl = $("bm-count");
+      const form = $("bm-form");
+      const addBtn = $("bm-add-btn");
+      const saveBtn = $("bm-save-btn");
+      const cancelBtn = $("bm-cancel-btn");
+      const importBtn = $("bm-import-btn");
+      const importArea = $("bm-import-area");
+      const importText = $("bm-import-text");
+      const importDoBtn = $("bm-import-do-btn");
+      const importCancelBtn = $("bm-import-cancel-btn");
+      const exportBtn = $("bm-export-btn");
+      const searchInput = $("bm-search");
+      const filterTag = $("bm-filter-tag");
+      const toastEl = $("bm-toast");
+
+      function load() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          bookmarks = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(bookmarks)) bookmarks = [];
+        } catch { bookmarks = []; }
+        bookmarks.forEach(b => {
+          if (!b.id) b.id = crypto.randomUUID ? crypto.randomUUID() : Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+          if (b.status === undefined) b.status = "read-later";
+          if (!b.date) b.date = new Date().toISOString();
+        });
+      }
+
+      function save() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(bookmarks));
+      }
+
+      function genId() {
+        return crypto.randomUUID ? crypto.randomUUID() : Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+      }
+
+      function now() {
+        return new Date().toISOString();
+      }
+
+      function fmtDate(iso) {
+        try {
+          const d = new Date(iso);
+          return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+        } catch { return iso; }
+      }
+
+      function getAllTags() {
+        const set = new Set();
+        bookmarks.forEach(b => {
+          (b.tags || []).forEach(t => { if (t.trim()) set.add(t.trim().toLowerCase()); });
+        });
+        return [...set].sort();
+      }
+
+      function getFiltered() {
+        const q = searchInput.value.trim().toLowerCase();
+        const tag = filterTag.value;
+        return bookmarks.filter(b => {
+          if (tag && !(b.tags || []).some(t => t.trim().toLowerCase() === tag)) return false;
+          if (q) {
+            const inTitle = (b.title || "").toLowerCase().includes(q);
+            const inUrl = (b.url || "").toLowerCase().includes(q);
+            const inTags = (b.tags || []).some(t => t.trim().toLowerCase().includes(q));
+            if (!inTitle && !inUrl && !inTags) return false;
+          }
+          return true;
+        });
+      }
+
+      function render() {
+        const filtered = getFiltered();
+        const all = bookmarks;
+
+        const tags = getAllTags();
+        const currentVal = filterTag.value;
+        filterTag.innerHTML = '<option value="">All tags</option>';
+        tags.forEach(t => {
+          const opt = document.createElement("option");
+          opt.value = t;
+          opt.textContent = t;
+          if (t === currentVal) opt.selected = true;
+          filterTag.appendChild(opt);
+        });
+
+        countEl.textContent = filtered.length + " / " + all.length + " bookmark" + (all.length !== 1 ? "s" : "");
+
+        if (filtered.length === 0) {
+          listEl.innerHTML = "";
+          emptyEl.classList.remove("bm-hidden");
+          emptyEl.querySelector("p").textContent = all.length === 0 ? "Nothing saved yet." : "No bookmarks match your search.";
+          return;
+        }
+        emptyEl.classList.add("bm-hidden");
+
+        listEl.innerHTML = filtered.map(b => {
+          const tagsHtml = (b.tags || []).filter(t => t.trim()).map(t => `<span class="bm-tag">${escHtml(t.trim())}</span>`).join("");
+          const noteHtml = b.note ? `<p class="bm-note">${escHtml(b.note)}</p>` : "";
+          const doneClass = b.status === "done" ? " done" : "";
+          return `<div class="bm-card${doneClass}" data-id="${b.id}">
+            <div class="bm-card-top">
+              <div class="bm-card-info">
+                <p class="bm-title"><a href="${escAttr(b.url)}" target="_blank" rel="noopener">${escHtml(b.title || b.url)}</a></p>
+                <p class="bm-url"><a href="${escAttr(b.url)}" target="_blank" rel="noopener">${escHtml(b.url)}</a></p>
+                ${tagsHtml ? `<div class="bm-tags">${tagsHtml}</div>` : ""}
+                ${noteHtml}
+              </div>
+              <div class="bm-card-actions">
+                <button class="bm-status-btn${b.status === "done" ? " done" : ""}" data-action="toggle-status" title="Toggle read later / done">${b.status === "done" ? "✓ Done" : "○ Read later"}</button>
+                <button data-action="open" title="Open link">↗</button>
+                <button data-action="copy" title="Copy URL">📋</button>
+                <button data-action="edit" title="Edit">✎</button>
+                <button class="del-btn" data-action="delete" title="Delete">✕</button>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.25rem;">
+              <span class="bm-date">${fmtDate(b.date)}</span>
+            </div>
+          </div>`;
+        }).join("");
+
+        listEl.querySelectorAll("[data-action]").forEach(btn => {
+          btn.addEventListener("click", e => {
+            const card = btn.closest(".bm-card");
+            if (!card) return;
+            const id = card.dataset.id;
+            const action = btn.dataset.action;
+            if (action === "open") openLink(id);
+            else if (action === "copy") copyUrl(id);
+            else if (action === "edit") editBookmark(id);
+            else if (action === "delete") deleteBookmark(id);
+            else if (action === "toggle-status") toggleStatus(id);
+          });
+        });
+      }
+
+      function escHtml(s) {
+        const d = document.createElement("div");
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function escAttr(s) {
+        return s.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/'/g,"&#39;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+      }
+
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("show");
+        clearTimeout(toastEl._t);
+        toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 2500);
+      }
+
+      function resetForm() {
+        $("bm-title").value = "";
+        $("bm-url").value = "";
+        $("bm-tags").value = "";
+        $("bm-note").value = "";
+        editingId = null;
+        saveBtn.textContent = "Save";
+        form.classList.remove("open");
+      }
+
+      function openForm(data) {
+        if (data) {
+          $("bm-title").value = data.title || "";
+          $("bm-url").value = data.url || "";
+          $("bm-tags").value = (data.tags || []).join(", ");
+          $("bm-note").value = data.note || "";
+          editingId = data.id;
+          saveBtn.textContent = "Update";
+        }
+        form.classList.add("open");
+        $("bm-title").focus();
+      }
+
+      function addBookmark(data) {
+        const b = {
+          id: genId(),
+          title: (data.title || "").trim(),
+          url: (data.url || "").trim(),
+          tags: (data.tags || []).map(t => t.trim()).filter(t => t),
+          note: (data.note || "").trim(),
+          date: data.date || now(),
+          status: data.status || "read-later",
+        };
+        if (!b.url) { toast("URL is required."); return false; }
+        if (!b.url.startsWith("http://") && !b.url.startsWith("https://")) {
+          b.url = "https://" + b.url;
+        }
+        bookmarks.push(b);
+        save();
+        render();
+        toast("Bookmark saved.");
+        return true;
+      }
+
+      function updateBookmark(id, data) {
+        const idx = bookmarks.findIndex(b => b.id === id);
+        if (idx === -1) return false;
+        const b = bookmarks[idx];
+        b.title = (data.title || "").trim();
+        b.url = (data.url || "").trim();
+        if (!b.url.startsWith("http://") && !b.url.startsWith("https://")) {
+          b.url = "https://" + b.url;
+        }
+        b.tags = (data.tags || []).map(t => t.trim()).filter(t => t);
+        b.note = (data.note || "").trim();
+        if (!b.url) { toast("URL is required."); return false; }
+        save();
+        render();
+        toast("Bookmark updated.");
+        return true;
+      }
+
+      function openLink(id) {
+        const b = bookmarks.find(x => x.id === id);
+        if (b && b.url) window.open(b.url, "_blank", "noopener");
+      }
+
+      function copyUrl(id) {
+        const b = bookmarks.find(x => x.id === id);
+        if (!b || !b.url) return;
+        navigator.clipboard.writeText(b.url).then(() => {
+          toast("URL copied!");
+        }).catch(() => {
+          toast("Failed to copy.");
+        });
+      }
+
+      function editBookmark(id) {
+        const b = bookmarks.find(x => x.id === id);
+        if (!b) return;
+        importArea.classList.add("bm-hidden");
+        openForm(b);
+      }
+
+      function deleteBookmark(id) {
+        showConfirm("Delete this bookmark?", () => {
+          bookmarks = bookmarks.filter(x => x.id !== id);
+          save();
+          render();
+          toast("Bookmark deleted.");
+        });
+      }
+
+      function toggleStatus(id) {
+        const b = bookmarks.find(x => x.id === id);
+        if (!b) return;
+        b.status = b.status === "done" ? "read-later" : "done";
+        save();
+        render();
+        toast(b.status === "done" ? "Marked as done." : "Moved to read later.");
+      }
+
+      function showConfirm(msg, onConfirm) {
+        const overlay = document.createElement("div");
+        overlay.className = "bm-confirm-overlay";
+        overlay.innerHTML = `<div class="bm-confirm-box">
+          <p>${escHtml(msg)}</p>
+          <div class="bm-btn-row">
+            <button class="bm-btn primary" id="bm-confirm-yes">Yes</button>
+            <button class="bm-btn" id="bm-confirm-no">Cancel</button>
+          </div>
+        </div>`;
+        document.body.appendChild(overlay);
+        overlay.querySelector("#bm-confirm-yes").addEventListener("click", () => {
+          document.body.removeChild(overlay);
+          onConfirm();
+        });
+        overlay.querySelector("#bm-confirm-no").addEventListener("click", () => {
+          document.body.removeChild(overlay);
+        });
+        overlay.addEventListener("click", e => {
+          if (e.target === overlay) document.body.removeChild(overlay);
+        });
+      }
+
+      function handleAdd() {
+        importArea.classList.add("bm-hidden");
+        if (form.classList.contains("open") && !editingId) {
+          resetForm();
+          return;
+        }
+        resetForm();
+        openForm(null);
+      }
+
+      function handleSave() {
+        const title = $("bm-title").value.trim();
+        const url = $("bm-url").value.trim();
+        const tagsStr = $("bm-tags").value.trim();
+        const note = $("bm-note").value.trim();
+        const tags = tagsStr ? tagsStr.split(",").map(t => t.trim()).filter(t => t) : [];
+
+        if (!url) { toast("Please enter a URL."); return; }
+
+        if (editingId) {
+          const ok = updateBookmark(editingId, { title, url, tags, note });
+          if (ok) resetForm();
+        } else {
+          const ok = addBookmark({ title, url, tags, note });
+          if (ok) resetForm();
+        }
+      }
+
+      function handleCancel() {
+        resetForm();
+      }
+
+      function handleImportToggle() {
+        form.classList.remove("open");
+        resetForm();
+        importArea.classList.toggle("bm-hidden");
+        if (!importArea.classList.contains("bm-hidden")) {
+          importText.value = "";
+          importText.focus();
+        }
+      }
+
+      function handleImportDo() {
+        const text = importText.value.trim();
+        if (!text) { toast("Paste at least one URL."); return; }
+        const urls = text.split("\n").map(l => l.trim()).filter(l => l);
+        let added = 0;
+        urls.forEach(url => {
+          if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "https://" + url;
+          }
+          try { new URL(url); } catch { return; }
+          const title = url.replace(/^https?:\/\//, "").split("/")[0];
+          addBookmark({ title, url, tags: ["imported"], note: "" });
+          added++;
+        });
+        if (added > 0) {
+          toast("Imported " + added + " bookmark" + (added !== 1 ? "s" : "") + ".");
+          importArea.classList.add("bm-hidden");
+        } else {
+          toast("No valid URLs found.");
+        }
+      }
+
+      function handleExport() {
+        const json = JSON.stringify(bookmarks, null, 2);
+        const blob = new Blob([json], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "vt-bookmarks-export.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        toast("Export downloaded.");
+      }
+
+      addBtn.addEventListener("click", handleAdd);
+      saveBtn.addEventListener("click", handleSave);
+      cancelBtn.addEventListener("click", handleCancel);
+      importBtn.addEventListener("click", handleImportToggle);
+      importDoBtn.addEventListener("click", handleImportDo);
+      importCancelBtn.addEventListener("click", () => importArea.classList.add("bm-hidden"));
+      exportBtn.addEventListener("click", handleExport);
+
+      searchInput.addEventListener("input", render);
+      filterTag.addEventListener("change", render);
+
+      $("bm-title").addEventListener("keydown", e => { if (e.key === "Enter") $("bm-url").focus(); });
+      $("bm-url").addEventListener("keydown", e => { if (e.key === "Enter") $("bm-tags").focus(); });
+      $("bm-tags").addEventListener("keydown", e => { if (e.key === "Enter") $("bm-note").focus(); });
+      $("bm-note").addEventListener("keydown", e => { if (e.key === "Enter") handleSave(); });
+
+      load();
+      render();
+    })();
+  </script>
+
+  <script src="articles.js?v=14"></script>
+  <script src="i18n.js?v=1"></script>
+  <script src="script.js?v=46"></script>
+</body>
+</html>

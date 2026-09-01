@@ -152,10 +152,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/benchmark-explorer.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmark-explorer.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/benchmark-explorer.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/benchmark-explorer.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/benchmark-explorer.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmark-explorer.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/benchmark-explorer.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/benchmark-explorer.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/benchmark-explorer.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/benchmark-explorer.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmark-explorer.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/benchmark-explorer.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/benchmark-explorer.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/benchmarks/rtx-4060-ti-qwen-7b-q4-cuda.html</loc>
@@ -392,10 +411,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/bookmarks.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/bookmarks.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/bookmarks.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/bookmarks.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/bookmarks.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/bookmarks.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/bookmarks.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/bookmarks.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/bookmarks.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/bookmarks.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/bookmarks.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/bookmarks.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/bookmarks.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/buying-guides.hi.html</loc>
@@ -498,10 +536,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/config-generator.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/config-generator.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/config-generator.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/config-generator.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/config-generator.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/config-generator.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/config-generator.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/config-generator.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/config-generator.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/config-generator.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/config-generator.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/config-generator.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/config-generator.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/context-length-calculator.hi.html</loc>
@@ -1345,10 +1402,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/model-comparison.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/model-comparison.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/model-comparison.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/model-comparison.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/model-comparison.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/model-comparison.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/model-comparison.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/model-comparison.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/model-comparison.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/model-comparison.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/model-comparison.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/model-comparison.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/model-comparison.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/moe-vs-dense-rx6800m-16k-vs-262k.hi.html</loc>
@@ -1426,10 +1502,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/notes.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/notes.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/notes.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/notes.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/notes.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/notes.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/notes.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/notes.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/notes.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/notes.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/notes.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/notes.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/notes.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/omarchy.hi.html</loc>
@@ -1657,10 +1752,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/prompt-library.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/prompt-library.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/prompt-library.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/prompt-library.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/prompt-library.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/prompt-library.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/prompt-library.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/prompt-library.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/prompt-library.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/prompt-library.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/prompt-library.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/prompt-library.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/prompt-library.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/psu-calculator.hi.html</loc>
@@ -1763,10 +1877,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/rag-ask.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/rag-ask.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/rag-ask.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/rag-ask.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/rag-ask.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/rag-ask.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/rag-ask.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/rag-ask.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/rag-ask.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/rag-ask.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/rag-ask.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/rag-ask.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/rag-ask.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/rag-from-scratch.hi.html</loc>
@@ -2344,10 +2477,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/vram-budget-planner.hi.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/vram-budget-planner.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/vram-budget-planner.hi.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/vram-budget-planner.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/vram-budget-planner.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/vram-budget-planner.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/vram-budget-planner.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/vram-budget-planner.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/vram-budget-planner.html" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/vram-budget-planner.ta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/vram-budget-planner.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/vram-budget-planner.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/vram-budget-planner.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://velstech.net/what-is-an-llm.hi.html</loc>

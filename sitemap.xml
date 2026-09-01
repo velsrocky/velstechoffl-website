@@ -237,6 +237,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://velstech.net/benchmarks/rx-6800m-tiel-coder-35b-mtp-rocm-mtp.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-tiel-coder-35b-mtp-rocm-mtp.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/benchmarks/rx-6800m-tiel-coder-35b-mtp-rocm-no-mtp.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-tiel-coder-35b-mtp-rocm-no-mtp.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/benchmarks/rx-7600-xt-qwen-7b-q4-rocm.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-7600-xt-qwen-7b-q4-rocm.html" />
     <changefreq>monthly</changefreq>
@@ -1675,6 +1687,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/password-strength-checker.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/pdf-to-image/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/pdf-to-image/index.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://velstech.net/playground.hi.html</loc>

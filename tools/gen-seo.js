@@ -85,6 +85,7 @@ const TOOLS_META = {
   "notes.html": { title: "Markdown Notes | VelsTech", desc: "Private Markdown notes that stay in your browser – no account, no server. Write, preview, search, and copy your notes." },
   "bookmarks.html": { title: "Bookmarks & Reading List | VelsTech", desc: "Save, tag, and search your reading list right in the browser – no account needed. Import URLs, export JSON, mark things done." },
   "config-generator.html": { title: "Config Generator Studio | VelsTech", desc: "Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use." },
+  "pdf-to-image/index.html": { title: "PDF to Image Converter — Private, Fast, No Upload | VelsTech", desc: "Convert PDF pages to PNG, JPEG, or WebP right in your browser. 100% client-side, private, no upload, up to 100MB, custom DPI and page ranges." },
   "rag-ask.html": { title: "RAG: Ask Your File | VelsTech", desc: "Upload a text file and ask questions about it. The content is chunked, scored, and sent to an AI model with the relevant context." },
   "rss-aggregator.html": { title: "RSS Aggregator | VelsTech", desc: "Read your favorite RSS and Atom feeds in one place. Add any feed URL, browse the latest posts, and manage your reading list." },
 };
@@ -295,6 +296,10 @@ if (fs.existsSync(benchDir)) {
     const loc = `${SITE}/benchmarks/${f}`;
     urls.push({ file: "benchmarks/" + f, loc, priority: "0.7" });
   }
+}
+// Add pdf-to-image app (Next.js static export)
+if (fs.existsSync(path.join(__dirname, "..", "pdf-to-image", "index.html"))) {
+  urls.push({ file: "pdf-to-image/index.html", loc: `${SITE}/pdf-to-image/index.html`, priority: "0.9" });
 }
 // Add translated article pages (HI + TA) to sitemap
 for (const suffix of [".hi.html", ".ta.html"]) {

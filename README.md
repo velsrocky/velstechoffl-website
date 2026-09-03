@@ -156,6 +156,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 | `tools/check-links.js` | Verify no broken internal links | CI guard in `build-check.yml` |
 | `tools/gen-og-img.py` | Legacy single OG image generator | Replaced by gen-og-images.py |
 | `tools/check-stale.js` | Check for stale articles (GitHub Action) | Automated (weekly) |
+| `tools/stage-pages.js` | Copy public files to `.dist/` (drops repo internals) for the Pages deploy | Automated (`deploy-pages.yml`) |
 | `tools/post-new-articles.js` | Detect new articles and post to socials | Automated (GitHub Action) |
 
 ## Workflows
@@ -164,7 +165,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 |---|---|---|
 | `build-check.yml` | Push to `main`, PRs | Syntax check + `build.js check` + tests + OG image + link checks |
 | `lighthouse.yml` | PRs | Lighthouse CI on 10 representative URLs (perf ≥0.85, a11y ≥0.9, FCP <2s, LCP <2.5s, CLS <0.1) via `lighthouserc.json`. Assertions are `error`-gated so a regression fails PRs |
-| `deploy-pages.yml` | Push to `main` | Deploys the site to Cloudflare Pages (`velstech-website.pages.dev`), excluding repo internals via `.assetsignore`. Requires `CLOUDFLARE_API_TOKEN` secret with Pages Edit permission |
+| `deploy-pages.yml` | Push to `main` | Runs `tools/stage-pages.js` (copies public files to `.dist/`, dropping repo internals) then deploys `.dist` to Cloudflare Pages (`velstech-website.pages.dev`). Requires `CLOUDFLARE_API_TOKEN` secret with Pages Edit permission |
 | `auto-feed.yml` | Push to `main` | Regenerates `feed.xml` from `articles.js` and commits it |
 | `social-post.yml` | Push to `main` (articles.js changed) | Detects new articles via `posted-articles.json`, posts to Mastodon/X/webhook, commits state back |
 | `stale-check.yml` | Weekly (Monday) | Checks for articles that haven't been updated in 90 days |
@@ -238,7 +239,7 @@ Not managed (owned by `gen-seo.js`): canonical, OG/Twitter meta, JSON-LD, hrefla
 - Site-wide **Person** entity (`@id: #author`, `name`, `url`, `description`, `knowsAbout`, `sameAs`); every `BlogPosting.author` references it by `@id` for E-E-A-T
 - sitemap.xml (EN + HI + TA URLs, `<lastmod>` for articles) + robots.txt
 - Atom feed auto-discovery (`<link rel="alternate" type="application/atom+xml">`) on every page
-- `.assetsignore` keeps repo internals (`tools/`, `tests/`, `*.md`, Worker source) off the production domain
+- `tools/stage-pages.js` builds a clean `.dist/` for deploy – repo internals (`tools/`, `tests/`, `*.md`, Worker source) are never served from the production domain (`wrangler pages deploy` ignores `.assetsignore`, so staging is required)
 - `hreflang` `en` / `hi` / `ta` / `x-default` alternates on articles
 - Google Search Console verified (DNS TXT)
 - Cloudflare Web Analytics (Automatic Setup)

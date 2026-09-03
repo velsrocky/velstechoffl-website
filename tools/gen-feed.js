@@ -11,7 +11,11 @@ const esc = (s) =>
     .replace(/"/g, "&quot;");
 
 const sorted = [...ARTICLES].sort((a, b) => b.date.localeCompare(a.date));
-const now = new Date().toISOString();
+// Deterministic feed-level <updated>: newest article date, NOT build time.
+// Using new Date() made every regeneration differ, so auto-feed.yml committed
+// a no-op feed.xml on every unrelated push. Now the feed only changes when an
+// article actually changes.
+const now = (ARTICLES.reduce((m, a) => (a.updated > m ? a.updated : m), "") || new Date().toISOString().slice(0, 10)) + "T00:00:00Z";
 
 let xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">

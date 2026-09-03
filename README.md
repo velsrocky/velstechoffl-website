@@ -11,6 +11,9 @@ node tools/gen-seo.js             # SEO meta, sitemap, robots.txt
 node tools/gen-feed.js            # Atom feed
 node tools/gen-benchmarks.js      # Benchmark detail pages
 
+# Keep boilerplate/versions canonical (see Boilerplate & versioning below)
+node tools/build.js check
+
 # Check syntax
 node --check tools/*.js
 ```
@@ -131,6 +134,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 | `tools/gen-og-images.py` | Render 1200×630 OG images per article into `og/` | After adding articles |
 | `tools/gen-benchmarks.js` | Generate per-benchmark detail pages from `benchmarks/data.json` | After adding benchmark data |
 | `tools/gen-favicon.py` | Generate favicon variants | Rarely |
+| `tools/build.js` | Canonical boilerplate + asset-version management (`check`/`sync`/`bump`) | After asset changes; `check` runs in CI |
 | `tools/gen-og-img.py` | Legacy single OG image generator | Replaced by gen-og-images.py |
 | `tools/check-stale.js` | Check for stale articles (GitHub Action) | Automated (weekly) |
 | `tools/post-new-articles.js` | Detect new articles and post to socials | Automated (GitHub Action) |
@@ -139,6 +143,8 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 
 | Workflow | Trigger | What it does |
 |---|---|---|
+| `build-check.yml` | Push to `main`, PRs | `node tools/build.js check` – fails on boilerplate/version drift |
+| `deploy-pages.yml` | Push to `main` | Deploys the site to Cloudflare Pages (`velstech-website.pages.dev`). Requires `CLOUDFLARE_API_TOKEN` secret with Pages Edit permission |
 | `auto-feed.yml` | Push to `main` | Regenerates `feed.xml` from `articles.js` and commits it |
 | `social-post.yml` | Push to `main` (articles.js changed) | Detects new articles via `posted-articles.json`, posts to Mastodon/X/webhook, commits state back |
 | `stale-check.yml` | Weekly (Monday) | Checks for articles that haven't been updated in 90 days |
@@ -164,19 +170,23 @@ On every push to `main` that changes `articles.js`, the social-post workflow:
 
 ## Version bumping convention
 
-Cache-busting query strings on static assets use `?v=N` and must be bumped when the file changes:
-
-- `script.js?v=N` – bump when `script.js` changes
-- `styles.css?v=N` – bump when `styles.css` changes
-- `articles.js?v=N` – bump when `articles.js` changes (always)
-- `chat.js?v=N` / `chat.css?v=N` – bump when chat widget changes (`script.js` injection)
-- `i18n.js?v=N` – bump when UI strings change
-- `glossary.js?v=N` / `define.js?v=N` / `glossary.css?v=N` – bump when glossary changes (`script.js` injection)
+Cache-busting query strings (`?v=N`) and the per-page head/tail boilerplate are managed by
+`tools/build.js`, with canonical versions in `tools/versions.json`:
 
 ```sh
-# Bump across all HTML pages (including benchmarks/)
-perl -pi -e 's/script\.js\?v=N/script.js?v=N+1/' -- *.html benchmarks/*.html
+node tools/build.js check          # CI guard: fail if any page drifts (run in build-check.yml)
+node tools/build.js sync           # Fix drift across all pages (root + benchmarks/)
+node tools/build.js bump script.js # Bump ?v=N on an asset everywhere (incl. script.js injections)
+node tools/build.js status         # Show canonical versions + drift summary
 ```
+
+This replaces the old manual perl one-liner. Managed per page:
+- head favicon links + stylesheet link (full favicon set, correct `../` prefixes in benchmarks/)
+- trailing `articles.js` / `i18n.js` / `script.js` tags
+- runtime-injected versions in `script.js` (`chat.js`, `glossary.js`, `define.js`, `chat.css`, `glossary.css`)
+
+Not managed (owned by `gen-seo.js`): canonical, OG/Twitter meta, JSON-LD, hreflang, sitemap.
+`pdf-to-image/` and `newsletter/` are outside the template system and never touched.
 
 ## Key SEO features
 - Per-article OG images (1200×630, dark theme, category pill)
@@ -204,9 +214,9 @@ See `MONETIZATION-SETUP.md` for sign-up instructions.
   `i18n.js` (EN/TA/HI UI), `chat.js` (VelsChat widget), `glossary.js` + `define.js` (inline glossary)
 - **Python 3** – OG image generation (Pillow)
 - **Node.js** – SEO, feed, benchmark generators (built-in modules only)
-- **GitHub Actions** – feed regeneration, social auto-posting, stale checks
+- **GitHub Actions** – feed regeneration, social auto-posting, stale checks, Cloudflare Pages deploy
+- **Cloudflare Pages** – hosting (`velstech-website` project; GitHub Pages kept as fallback during migration)
 - **Cloudflare Workers** – AI chat proxy (`chat.velstech.net`)
 - **Cloudflare** – DNS, proxying, Web Analytics
-- **GitHub Pages** – hosting
 - **Mastodon** – social auto-posting
 - **aspell** – spelling audits (`--personal=./velstech.pws`)

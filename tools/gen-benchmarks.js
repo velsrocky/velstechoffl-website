@@ -14,8 +14,11 @@ const data = JSON.parse(fs.readFileSync(path.join(OUT, "data.json"), "utf8")).be
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+/* "ROCm (MTP)" -> "rocm-mtp" (matches sitemap + published URLs) */
+const slugify = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
 function page(b, bk) {
-  const slug = b.id + "-" + bk.name.toLowerCase();
+  const slug = b.id + "-" + slugify(bk.name);
   const url = `${SITE}/benchmarks/${slug}.html`;
   const title = `${b.gpu} · ${b.model} · ${b.quant} · ${bk.name} · ${b.context}`;
   const desc = `Benchmark: ${b.gpu} (${b.gpu_vram}) running ${b.model} (${b.params}) at ${b.quant} / ${b.context} / ${b.kv_quant} on ${bk.name} – ${bk.decode} tok/s decode. ${b.tested ? "Tested in the VelsTech Lab." : "Estimated from the GPU AI Performance Calculator."}`;
@@ -56,8 +59,12 @@ function page(b, bk) {
   <meta name="twitter:title" content="${esc(title)}" />
   <meta name="twitter:description" content="${esc(desc)}" />
   <meta name="twitter:image" content="${SITE}/og-image.png" />
-  <link rel="icon" href="../logo.svg" />
-  <link rel="stylesheet" href="../styles.css?v=32" />
+  <link rel="icon" href="../favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="../logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <link rel="stylesheet" href="../styles.css?v=42" />
 </head>
 <body>
   <main class="article-page">
@@ -111,15 +118,16 @@ function page(b, bk) {
     </div>
   </main>
 
-  <script src="../articles.js?v=13"></script>
-  <script src="../script.js?v=33"></script>
+  <script src="../articles.js?v=14"></script>
+  <script src="../i18n.js?v=2"></script>
+  <script src="../script.js?v=49"></script>
 </body>
 </html>`;
 }
 
 for (const b of data) {
   for (const bk of b.backends) {
-    const slug = b.id + "-" + bk.name.toLowerCase();
+    const slug = b.id + "-" + slugify(bk.name);
     fs.writeFileSync(path.join(OUT, slug + ".html"), page(b, bk));
     console.log("  " + slug + ".html");
   }

@@ -178,7 +178,7 @@
     const _t = (k) => { try { if (window.VelsI18n) return window.VelsI18n.t(k); } catch {} return k; };
     root.innerHTML = `
       <button id="vt-chat-bubble" class="vt-bubble" aria-label="${_t("chat_open")}" aria-expanded="false">
-        <img src="/chatbot.png?v=2" alt="" width="34" height="34" class="vt-bubble-img" aria-hidden="true" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"/>
+        <img src="/chatbot.png?v=3" alt="" width="34" height="34" class="vt-bubble-img" aria-hidden="true" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"/>
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
           <line x1="12" y1="8.6" x2="12" y2="6.4" />
           <g class="vt-bulb"><circle cx="12" cy="4.2" r="2" fill="white" stroke="currentColor" stroke-width="1.4"/><path d="M11 4.2 L11.4 5.0 L12 4.2 L12.6 5.0 L13 4.2" fill="none" stroke="#06121f" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/></g>

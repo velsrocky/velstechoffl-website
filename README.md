@@ -36,9 +36,9 @@ node --test tests/*.test.js
 | `define.js` | Auto-wraps glossary terms + popover + selection-to-chat |
 | `glossary.css` | Glossary term/popover/selection-chip styling |
 | `chat-proxy.js` | Cloudflare Worker entry point (`fetch` event, provider routing, rate limiting) for `chat.velstech.net` |
-| `chat-proxy-core.js` | Pure helpers used by `chat-proxy.js`: `getCorsOrigin`, `rateOK`, `toAnthropicMessages`, `convertCloudflareStream`, `convertAnthropicStream`. Required by `tests/chat-proxy.test.js` |
+| `chat-proxy-core.js` | Pure helpers used by `chat-proxy.js`: `getCorsOrigin`, `rateOK`, `pruneHits`, `toAnthropicMessages`, `convertCloudflareStream`, `convertAnthropicStream`, + guardrails `validateMessages`, `clampOptions`, `allowedModel`, `validateFeedUrl`, `readCapped`. Required by `tests/chat-proxy.test.js` |
 | `velstech.pws` | `aspell` personal dictionary (111 tech terms) |
-| `tests/` | Unit tests (`node --test`). Covers `whatsnew-core.js` (filter/sort/count) and `chat-proxy-core.js` (CORS, rate limit, SSE converters) |
+| `tests/` | Unit tests (`node --test`). Covers `whatsnew-core.js` (filter/sort/count) and `chat-proxy-core.js` (CORS, rate limit, SSE converters, cost/SSRF guardrails) |
 | `benchmarks/data.json` | Benchmark results (tested + estimated) |
 | `benchmarks/*.html` | Generated benchmark detail pages |
 | `og/*.png` | Per-article OG images (1200×630) |
@@ -100,7 +100,7 @@ persists `vt-lang` in `localStorage`, sets `<html lang>` on every page, and driv
 
 **To add a new page with translations** (e.g. `your-page.html`):
 1. Create the EN file first, then generate HI/TA variants by copying the EN file and translating visible text.
-2. Conventions: `<html lang="hi">`/`<html lang="ta">`, canonical → EN `.html`, add 3 `<link rel="alternate">` tags (en + hi/ta + x-default), JSON-LD `inLanguage: "hi"`/`"ta"`, translate meta/title/OG/Twitter, keep tech acronyms in English, preserve `<script>`/`<code>`/`<pre>` blocks verbatim.
+2. Conventions: `<html lang="hi">`/`<html lang="ta">`, **self-referential canonical** (required for valid hreflang clusters), JSON-LD `inLanguage: "hi"`/`"ta"`, translate meta/title/OG/Twitter, keep tech acronyms in English, preserve `<script>`/`<code>`/`<pre>` blocks verbatim. Head `<link rel="alternate" hreflang">` tags are **generated** – do not hand-edit them.
 3. Add the page to `tools/gen-seo.js` (`TOOLS_META` or `STATIC_META`) and run `node tools/gen-seo.js` to update the sitemap.
 4. If the page is an article, add it to `articles.js` and run `node tools/gen-feed.js`.
 
@@ -132,9 +132,11 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 - Answers start with `TERM – Full Form:` for define/full-form questions; `—` em dashes are
   normalized to `–` in `renderContent`.
 - **Server-side**: `chat.velstech.net` is a Cloudflare Worker. `chat-proxy.js` is the
-  Worker entry point (`fetch` event, provider routing, rate limit). Pure helpers
-  (CORS origin policy, sliding-window rate limiter, OpenAI↔Anthropic message conversion,
-  Anthropic/Cloudflare SSE → OpenAI SSE stream converters) live in `chat-proxy-core.js`
+  Worker entry point (`fetch` event, provider routing, per-endpoint rate limits). Pure helpers
+  (CORS origin policy, sliding-window rate limiter + pruning, OpenAI↔Anthropic message
+  conversion, Anthropic/Cloudflare SSE → OpenAI SSE stream converters, and the cost/SSRF
+  guardrails – message validation, option clamping, model allowlist, feed-URL validation,
+  capped reads) live in `chat-proxy-core.js`
   and are covered by `tests/chat-proxy.test.js`. The Worker bundles both files via
   `wrangler`; deployment is manual (`wrangler deploy`).
 - **Full setup & deploy:** see `CHAT-SETUP.md`.
@@ -143,7 +145,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 
 | Script | What it does | When to run |
 |---|---|---|
-| `tools/gen-seo.js` | Inject canonical/JSON-LD/OG tags, generate `sitemap.xml` + `robots.txt` | After any new page or article |
+| `tools/gen-seo.js` | Inject canonical/JSON-LD/OG tags + reciprocal head hreflang alternates (EN/HI/TA clusters) + Atom feed auto-discovery link, generate `sitemap.xml` (with `<lastmod>` from `articles.js`) + `robots.txt` | After any new page or article |
 | `tools/gen-feed.js` | Generate `feed.xml` Atom feed from `articles.js` | After article changes |
 | `tools/gen-og-images.py` | Render 1200×630 OG images per article into `og/` | After adding articles |
 | `tools/gen-benchmarks.js` | Generate per-benchmark detail pages from `benchmarks/data.json` | After adding benchmark data |
@@ -162,7 +164,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 |---|---|---|
 | `build-check.yml` | Push to `main`, PRs | Syntax check + `build.js check` + tests + OG image + link checks |
 | `lighthouse.yml` | PRs | Lighthouse CI on 10 representative URLs (perf ≥0.85, a11y ≥0.9, FCP <2s, LCP <2.5s, CLS <0.1) via `lighthouserc.json`. Assertions are `error`-gated so a regression fails PRs |
-| `deploy-pages.yml` | Push to `main` | Deploys the site to Cloudflare Pages (`velstech-website.pages.dev`). Requires `CLOUDFLARE_API_TOKEN` secret with Pages Edit permission |
+| `deploy-pages.yml` | Push to `main` | Deploys the site to Cloudflare Pages (`velstech-website.pages.dev`), excluding repo internals via `.assetsignore`. Requires `CLOUDFLARE_API_TOKEN` secret with Pages Edit permission |
 | `auto-feed.yml` | Push to `main` | Regenerates `feed.xml` from `articles.js` and commits it |
 | `social-post.yml` | Push to `main` (articles.js changed) | Detects new articles via `posted-articles.json`, posts to Mastodon/X/webhook, commits state back |
 | `stale-check.yml` | Weekly (Monday) | Checks for articles that haven't been updated in 90 days |
@@ -176,15 +178,18 @@ Unit tests run on every push via `node --test tests/*.test.js` in `build-check.y
   with featured tiebreak, count formatting in EN/TA/HI, plus smoke tests against
   the live `articles.js` dataset (every article matches `All`, all category
   values are recognized, every article has the fields the renderer needs).
-- **`tests/chat-proxy.test.js`** (36 tests) — exercises the chat proxy's pure
+- **`tests/chat-proxy.test.js`** (71 tests) — exercises the chat proxy's pure
   helpers: CORS origin policy (primary echoed, foreign denied, localhost +
   `*.velstech.net` allowed, malformed headers tolerated), per-IP sliding-window
   rate limiter, client-IP extraction (CF-Connecting-IP > X-Forwarded-For >
   anonymous), OpenAI↔Anthropic message conversion, and both SSE stream converters
   (Cloudflare Workers AI + Anthropic → OpenAI format) including multi-chunk
-  splits, line buffering, malformed JSON handling, and `[DONE]` sentinel dedup.
+  splits, line buffering, malformed JSON handling, and `[DONE]` sentinel dedup,
+  plus the cost/SSRF guardrails: message validation, option clamping, model
+  allowlist, feed-URL validation (private/localhost/metadata/IPv6 blocked),
+  rate-limiter pruning, and capped feed reads.
 
-Total: **54 tests**, all passing in <100ms.
+Total: **89 tests**, all passing in <100ms.
 
 Run locally: `node --test tests/*.test.js`. CI: see `build-check.yml`.
 
@@ -231,7 +236,9 @@ Not managed (owned by `gen-seo.js`): canonical, OG/Twitter meta, JSON-LD, hrefla
 - Per-article OG images (1200×630, dark theme, category pill)
 - BlogPosting + FAQPage + WebApplication + CollectionPage schema
 - Site-wide **Person** entity (`@id: #author`, `name`, `url`, `description`, `knowsAbout`, `sameAs`); every `BlogPosting.author` references it by `@id` for E-E-A-T
-- sitemap.xml (EN + HI + TA URLs) + robots.txt
+- sitemap.xml (EN + HI + TA URLs, `<lastmod>` for articles) + robots.txt
+- Atom feed auto-discovery (`<link rel="alternate" type="application/atom+xml">`) on every page
+- `.assetsignore` keeps repo internals (`tools/`, `tests/`, `*.md`, Worker source) off the production domain
 - `hreflang` `en` / `hi` / `ta` / `x-default` alternates on articles
 - Google Search Console verified (DNS TXT)
 - Cloudflare Web Analytics (Automatic Setup)
@@ -293,7 +300,7 @@ Test: DevTools → Application → Service Workers (active) / Cache Storage / Ma
   pure helpers), `glossary.js` + `define.js` (inline glossary)
 - **Pure-ESM cores** – `whatsnew-core.js` and `chat-proxy-core.js` are dual-export
   (browser global + CommonJS) so the same source runs in the page and in `node --test`
-- **Tests** – `node:test` (built-in, no npm deps). 54 tests across `whatsnew` + `chat-proxy`,
+- **Tests** – `node:test` (built-in, no npm deps). 89 tests across `whatsnew` + `chat-proxy`,
   CI on every push via `build-check.yml`
 - **Python 3** – OG image generation (Pillow)
 - **Node.js** – SEO, feed, benchmark generators (built-in modules only)

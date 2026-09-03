@@ -378,6 +378,7 @@ function navHTML() {
     "</div>";
 
   return (
+    '<a class="skip-link" href="#main" data-i18n="skip_to_content">' + t("skip_to_content") + "</a>" +
     '<header class="nav">' +
     '<a class="brand" href="index.html">' + brandSVG + '<span class="brand-name">VelsTech<span class="brand-sub">Solutions</span></span></a>' +
     '<div class="search-wrap">' +
@@ -913,6 +914,7 @@ function injectChat() {
   document.head.appendChild(s);
 }
 
+document.querySelector("main")?.setAttribute("id", "main");
 document.body.insertAdjacentHTML("afterbegin", navHTML());
 document.body.insertAdjacentHTML("beforeend", footerHTML());
 injectChat();

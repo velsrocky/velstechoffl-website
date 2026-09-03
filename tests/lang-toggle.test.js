@@ -125,6 +125,23 @@ test("toggle renders EN/TA/HI and defaults to en", { skip: SKIP }, async () => {
   await page.close();
 });
 
+test("skip link is first in tab order and jumps to main", { skip: SKIP }, async () => {
+  const page = await newPage();
+  await goto(page, "/what-is-an-llm.html");
+  await page.keyboard.press("Tab");
+  const focused = await page.evaluate(() => {
+    const a = document.activeElement;
+    return { cls: a.className, href: a.getAttribute("href"), text: a.textContent };
+  });
+  assert.equal(focused.cls, "skip-link", "first tab stop should be the skip link");
+  assert.equal(focused.href, "#main");
+  await page.keyboard.press("Enter");
+  await sleep(400);
+  const hash = await page.evaluate(() => location.hash);
+  assert.equal(hash, "#main");
+  await page.close();
+});
+
 test("click HI: persists, sets html lang, swaps to Hindi variant", { skip: SKIP }, async () => {
   const page = await newPage();
   await goto(page, "/");

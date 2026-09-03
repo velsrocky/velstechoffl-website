@@ -7,6 +7,7 @@
   const TRANSLATIONS = {
     en: {
       lang_name: "English",
+      skip_to_content: "Skip to content",
       nav_home: "Home",
       nav_getstarted: "Get Started",
       nav_topics: "Topics",
@@ -89,6 +90,7 @@ lang_en: "EN",
     },
     ta: {
       lang_name: "தமிழ்",
+      skip_to_content: "உள்ளடக்கத்திற்குச் செல்ல",
       nav_home: "முகப்பு",
       nav_getstarted: "தொடங்குக",
       nav_topics: "தலைப்புகள்",
@@ -168,6 +170,7 @@ lang_en: "EN",
     },
     hi: {
       lang_name: "हिन्दी",
+      skip_to_content: "सामग्री पर जाएँ",
       nav_home: "होम",
       nav_getstarted: "शुरू करें",
       nav_topics: "विषय",

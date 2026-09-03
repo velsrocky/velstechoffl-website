@@ -22,29 +22,26 @@
  *        # anthropic
  *        wrangler secret put ANTHROPIC_API_KEY
  *   3. wrangler deploy
+ *
+ * Pure / testable helpers (CORS, rate limit, message / SSE converters) live
+ * in ./chat-proxy-core.js and are covered by tests/chat-proxy.test.js.
  */
 
-const DEFAULTS = {
-  ORIGIN: "https://velstech.net",
-  RATE_LIMIT: 30,
-  RATE_WINDOW: 60000,
-  AI_PROVIDER: "openai",
-  AI_MODEL: "gpt-4o-mini",
-};
+import {
+  DEFAULTS,
+  rateOK,
+  getCorsOrigin,
+  corsPreflight,
+  getClientIp,
+  toAnthropicMessages,
+  convertCloudflareStream,
+  convertAnthropicStream,
+} from "./chat-proxy-core.js";
 
-// Per-IP sliding-window rate limiter
+// Per-IP hit counters for rateOK(). Module-scope so they persist across
+// requests inside a single Worker instance (Workers are long-lived; this map
+// is a sliding window per isolate).
 const hitCounts = new Map();
-function rateOK(ip, limit, windowMs) {
-  const now = Date.now();
-  const hits = (hitCounts.get(ip) || []).filter((t) => now - t < windowMs);
-  if (hits.length >= limit) {
-    hitCounts.set(ip, hits);
-    return false;
-  }
-  hits.push(now);
-  hitCounts.set(ip, hits);
-  return true;
-}
 
 function json(body, status, origin) {
   return new Response(body, {
@@ -58,30 +55,6 @@ function json(body, status, origin) {
   });
 }
 
-// Convert OpenAI-format messages to Anthropic format
-function toAnthropicMessages(messages) {
-  const system = messages.find(m => m.role === "system")?.content || "";
-  const chatMessages = messages.filter(m => m.role !== "system");
-  return { system, messages: chatMessages };
-}
-
-function getCorsOrigin(request, env) {
-  const reqOrigin = request.headers.get("Origin") || "";
-  const primary = env.ALLOWED_ORIGIN || DEFAULTS.ORIGIN;
-  // Allow primary + localhost for preview + any velstech.net subdomain
-  if (!reqOrigin) return primary;
-  if (reqOrigin === primary) return primary;
-  if (reqOrigin.startsWith("http://localhost:") || reqOrigin.startsWith("http://127.0.0.1:")) return reqOrigin;
-  if (reqOrigin.endsWith(".velstech.net") || reqOrigin === "https://velstech.net") return reqOrigin;
-  // Allow configured origin's http/https variants
-  try {
-    const u = new URL(reqOrigin);
-    const p = new URL(primary);
-    if (u.hostname === p.hostname) return reqOrigin;
-  } catch {}
-  return primary;
-}
-
 export default {
   async fetch(request, env) {
     const origin = getCorsOrigin(request, env);
@@ -92,15 +65,8 @@ export default {
 
     // CORS preflight
     if (request.method === "OPTIONS") {
-      return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": origin,
-          "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Max-Age": "86400",
-          "Vary": "Origin",
-        },
-      });
+      const pf = corsPreflight(origin);
+      return new Response(null, pf);
     }
 
     // GET /api/models -> list models the playground can offer.
@@ -136,13 +102,10 @@ export default {
       }
     }
 
-    const ip =
-      (request.headers.get("CF-Connecting-IP") ||
-        request.headers.get("X-Forwarded-For") ||
-        "anonymous").split(",")[0].trim();
+    const ip = getClientIp(request);
 
     // Rate limit
-    if (!rateOK(ip, limit, windowMs)) {
+    if (!rateOK(hitCounts, ip, limit, windowMs)) {
       return json(
         { error: "rate_limited", detail: "Too many requests. Slow down a little." },
         429,
@@ -246,8 +209,7 @@ async function handleAnthropic(payload, env, origin, model) {
 
   // Stream SSE - Anthropic format needs conversion to OpenAI format for the widget
   if (res.headers.get("content-type")?.includes("event-stream")) {
-    // Convert Anthropic SSE to OpenAI SSE format
-    const transformedStream = convertAnthropicStream(res.body, origin);
+    const transformedStream = convertAnthropicStream(res.body);
     return new Response(transformedStream, {
       status: 200,
       headers: {
@@ -312,9 +274,9 @@ async function handleCloudflare(payload, env, origin, model) {
   const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${activeModel}`;
 
   // Convert OpenAI messages to Cloudflare format
-  const messages = payload.messages.map(m => ({
+  const messages = payload.messages.map((m) => ({
     role: m.role,
-    content: m.content
+    content: m.content,
   }));
 
   const res = await fetch(url, {
@@ -352,103 +314,9 @@ async function handleCloudflare(payload, env, origin, model) {
   if (jsonOut && jsonOut.result?.response) {
     // Cloudflare format: { result: { response: "text" } }
     const openaiFormat = {
-      choices: [{ message: { content: jsonOut.result.response } }]
+      choices: [{ message: { content: jsonOut.result.response } }],
     };
     return json(JSON.stringify(openaiFormat), 200, origin);
   }
   return json(jsonOut !== null ? JSON.stringify(jsonOut) : await res.text(), 200, origin);
-}
-
-// Convert Cloudflare SSE stream to OpenAI format
-function convertCloudflareStream(body) {
-  const reader = body.getReader();
-  const decoder = new TextDecoder();
-  const encoder = new TextEncoder();
-
-  return new ReadableStream({
-    async start(controller) {
-      let buf = "";
-      try {
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) {
-            controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-            controller.close();
-            return;
-          }
-          buf += decoder.decode(value, { stream: true });
-          const lines = buf.split("\n");
-          buf = lines.pop() || "";
-
-          for (const line of lines) {
-            if (!line.startsWith("data: ")) continue;
-            const data = line.slice(6);
-            if (data === "[DONE]") continue;
-
-            try {
-              const json = JSON.parse(data);
-              // Cloudflare format: { response: "text" }
-              if (json.response) {
-                const openaiFormat = {
-                  choices: [{ delta: { content: json.response } }]
-                };
-                controller.enqueue(encoder.encode(`data: ${JSON.stringify(openaiFormat)}\n\n`));
-              }
-            } catch {
-              // Skip unparseable lines
-            }
-          }
-        }
-      } catch (err) {
-        controller.error(err);
-      }
-    },
-  });
-}
-
-// Convert Anthropic SSE stream to OpenAI format
-function convertAnthropicStream(body, origin) {
-  const reader = body.getReader();
-  const decoder = new TextDecoder();
-  const encoder = new TextEncoder();
-
-  return new ReadableStream({
-    async start(controller) {
-      let buf = "";
-      try {
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) {
-            controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-            controller.close();
-            return;
-          }
-          buf += decoder.decode(value, { stream: true });
-          const lines = buf.split("\n");
-          buf = lines.pop() || "";
-
-          for (const line of lines) {
-            if (!line.startsWith("data: ")) continue;
-            const data = line.slice(6);
-            if (data === "[DONE]") continue;
-
-            try {
-              const json = JSON.parse(data);
-              // Convert Anthropic event to OpenAI format
-              if (json.type === "content_block_delta" && json.delta?.text) {
-                const openaiFormat = {
-                  choices: [{ delta: { content: json.delta.text } }]
-                };
-                controller.enqueue(encoder.encode(`data: ${JSON.stringify(openaiFormat)}\n\n`));
-              }
-            } catch {
-              // Skip unparseable lines
-            }
-          }
-        }
-      } catch (err) {
-        controller.error(err);
-      }
-    },
-  });
 }

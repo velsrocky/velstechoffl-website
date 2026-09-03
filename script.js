@@ -590,34 +590,17 @@ function initWhatsNew() {
   const filterBtns = filters ? filters.querySelectorAll(".tag-btn") : [];
   const countEl = document.getElementById("latest-count");
   const total = (typeof ARTICLES !== "undefined") ? ARTICLES.length : 0;
-  const core = window.WhatsNewCore || {};
+  const core = window.WhatsNewCore;
+  if (!core) return; // whatsnew-core.js not loaded — silent no-op (shouldn't happen: build.js enforces)
 
   function renderCount() {
     if (!countEl || !window.VelsI18n) return;
-    countEl.textContent = core.formatLatestCount
-      ? core.formatLatestCount(window.VelsI18n.t("latest_count"), total)
-      : window.VelsI18n.t("latest_count").replace("{n}", String(total));
+    countEl.textContent = core.formatLatestCount(window.VelsI18n.t("latest_count"), total);
   }
-
-  const matchesFilter = core.matchesFilter || function (a, filter) {
-    if (filter === "All") return true;
-    if (filter === "AI") return a.category === "AI";
-    if (filter === "Hardware") return a.category === "Hardware";
-    if (filter === "Software") return ["Operating Systems", "Programming & Web", "Tutorials"].includes(a.category);
-    if (filter === "Lab") return Array.isArray(a.tags) && (a.tags.includes("VelsTech Lab") || a.tags.includes("Benchmark"));
-    return false;
-  };
 
   function render(filter) {
     const f = filter || "All";
-    const filtered = ARTICLES.filter((a) => matchesFilter(a, f));
-    const sorted = (core.sortByRecency || function (arr) {
-      return [...arr].sort((a, b) => {
-        const d = (b.updated || b.date || "").localeCompare(a.updated || a.date || "");
-        if (d !== 0) return d;
-        return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
-      });
-    })(filtered).slice(0, 5);
+    const sorted = core.pickLatest(ARTICLES, f, 5);
     if (!sorted.length) {
       list.innerHTML = '<p class="tool-note">No articles in this filter yet – try All.</p>';
       return;

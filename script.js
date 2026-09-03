@@ -37,7 +37,8 @@ function setLang(lang) {
     try { window.dispatchEvent(new CustomEvent("vt-lang-change", { detail: lang })); } catch {}
   }
 
-  const path = location.pathname.split("/").pop() || "index.html";
+  const rawPath = location.pathname.split("/").pop() || "index.html";
+  let path = rawPath.includes(".") ? rawPath : rawPath + ".html";
   const baseUrl = location.origin + location.pathname.replace(/[^/]+$/, "");
 
   // Resolve the English base filename of the current page.

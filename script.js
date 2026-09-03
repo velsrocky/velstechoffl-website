@@ -399,53 +399,150 @@ function initSearch() {
   const results = document.getElementById("search-results");
   if (!input || !results) return;
 
-  const render = () => {
-    const q = input.value.trim().toLowerCase();
-    if (!q) {
-      results.hidden = true;
-      return;
+  let SEARCH_INDEX = null;
+  let activeIdx = -1;
+
+  function loadIndex() {
+    if (SEARCH_INDEX || window._vtSearchLoading) return window._vtSearchLoading;
+    window._vtSearchLoading = fetch("/search-index.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (Array.isArray(j) && j.length) SEARCH_INDEX = j; })
+      .catch(() => {})
+      .finally(() => { window._vtSearchLoading = null; });
+    return window._vtSearchLoading;
+  }
+
+  function editDist1(a, b) {
+    if (a === b) return 0;
+    const la = a.length, lb = b.length;
+    if (Math.abs(la - lb) > 1) return 2;
+    if (la === lb) {
+      let first = -1;
+      for (let k = 0; k < la; k++) if (a[k] !== b[k]) { first = k; break; }
+      if (first === -1) return 0;
+      if (a.slice(first + 1) === b.slice(first + 1)) return 1;
+      if (first + 1 < la && a[first] === b[first + 1] && a[first + 1] === b[first] && a.slice(first + 2) === b.slice(first + 2)) return 1;
+      return 2;
     }
-    const hits = ARTICLES.filter(
-      (a) =>
-        a.title.toLowerCase().includes(q) ||
-        a.description.toLowerCase().includes(q) ||
-        a.tags.some((t) => t.toLowerCase().includes(q))
-    ).slice(0, 8);
+    let i = 0, j = 0, edits = 0;
+    while (i < la && j < lb) {
+      if (a[i] === b[j]) { i++; j++; }
+      else {
+        if (edits) return 2;
+        edits++;
+        if (la > lb) i++;
+        else j++;
+      }
+    }
+    edits += (la - i) + (lb - j);
+    return edits;
+  }
+
+  function scoreEntry(entry, qTokens) {
+    const titleLower = entry.title.toLowerCase();
+    const titleWords = titleLower.split(/\W+/).filter(Boolean);
+    const descLower = (entry.desc || "").toLowerCase();
+    const catLower = (entry.category || "").toLowerCase();
+    const tagsLower = (entry.tags || []).map((t) => t.toLowerCase());
+    let total = 0;
+    for (const q of qTokens) {
+      let best = 0;
+      if (titleLower.includes(q)) best = Math.max(best, 10);
+      else {
+        for (const w of titleWords) {
+          if (w.startsWith(q)) { best = Math.max(best, 9); break; }
+          if (q.length >= 3 && w.length >= 3 && editDist1(q, w) === 1) { best = Math.max(best, 6); break; }
+        }
+      }
+      for (const t of tagsLower) {
+        if (t === q) best = Math.max(best, 8);
+        else if (t.includes(q)) best = Math.max(best, 7);
+        else if (t.split(/\W+/).some((w) => w.startsWith(q))) best = Math.max(best, 6);
+        else if (q.length >= 3 && t.split(/\W+/).some((w) => w.length >= 3 && editDist1(q, w) === 1)) best = Math.max(best, 4);
+        if (best >= 8) break;
+      }
+      if (catLower.includes(q)) best = Math.max(best, 4);
+      if (!best && descLower.includes(q)) best = Math.max(best, 3);
+      if (!best && q.length >= 3) {
+        const dw = descLower.split(/\W+/);
+        for (const w of dw) { if (w.length >= 3 && editDist1(q, w) === 1) { best = Math.max(best, 1); break; } }
+      }
+      total += best;
+    }
+    return total;
+  }
+
+  function getSource() {
+    return SEARCH_INDEX || ARTICLES.map((a) => ({
+      title: a.title, url: a.url, desc: a.description || "",
+      category: a.category || "", tags: a.tags || [], kind: "article", date: a.date || ""
+    }));
+  }
+
+  function render() {
+    const raw = input.value.trim();
+    const q = raw.toLowerCase();
+    activeIdx = -1;
+    if (!q) { results.hidden = true; return; }
+    const qTokens = q.split(/\s+/).filter(Boolean);
+    const source = getSource();
+    const scored = [];
+    for (const e of source) {
+      const s = scoreEntry(e, qTokens);
+      if (s > 0) scored.push({ e, s });
+    }
+    scored.sort((a, b) => b.s - a.s || (b.e.date || "").localeCompare(a.e.date || ""));
+    const hits = scored.slice(0, 8).map((x) => x.e);
 
     if (!hits.length) {
       const lang = getLang();
-      if (lang === "ta") results.innerHTML = '<div class="search-empty">"' + esc(q) + '" – முடிவுகள் இல்லை</div>';
-      else if (lang === "hi") results.innerHTML = '<div class="search-empty">"' + esc(q) + '" – कोई परिणाम नहीं</div>';
-      else results.innerHTML = '<div class="search-empty">No results for "' + esc(q) + '"</div>';
+      if (lang === "ta") results.innerHTML = '<div class="search-empty">"' + esc(raw) + '" – முடிவுகள் இல்லை</div>';
+      else if (lang === "hi") results.innerHTML = '<div class="search-empty">"' + esc(raw) + '" – कोई परिणाम नहीं</div>';
+      else results.innerHTML = '<div class="search-empty">No results for "' + esc(raw) + '"</div>';
       results.hidden = false;
       return;
     }
     results.innerHTML = hits
       .map(
         (a) =>
-          '<a class="search-result" href="' + a.url + '">' +
+          '<a class="search-result' + (a.kind && a.kind !== "article" ? " search-kind-" + a.kind : "") + '" href="' + esc(a.url) + '">' +
           '<span class="search-title">' + esc(a.title) + "</span>" +
-          '<span class="search-meta">' + esc(a.category) + " · " + fmtDate(a.date) + "</span>" +
+          '<span class="search-meta">' + esc(a.category || a.kind || "") + (a.date ? " · " + fmtDate(a.date) : "") + "</span>" +
           "</a>"
       )
       .join("");
     results.hidden = false;
-  };
+  }
 
-  input.addEventListener("input", render);
+  function setActive(delta) {
+    const items = results.querySelectorAll(".search-result");
+    if (!items.length) return;
+    activeIdx = Math.max(-1, Math.min(items.length - 1, activeIdx + delta));
+    items.forEach((el, i) => el.classList.toggle("is-active", i === activeIdx));
+    if (activeIdx >= 0) items[activeIdx].scrollIntoView({ block: "nearest" });
+  }
+
+  input.addEventListener("focus", loadIndex);
+  input.addEventListener("input", () => { loadIndex(); render(); });
   input.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      input.value = "";
-      results.hidden = true;
+    if (e.key === "Escape") { input.value = ""; results.hidden = true; activeIdx = -1; }
+    else if (e.key === "ArrowDown") { e.preventDefault(); setActive(1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActive(-1); }
+    else if (e.key === "Enter" && activeIdx >= 0) {
+      const items = results.querySelectorAll(".search-result");
+      if (items[activeIdx]) { e.preventDefault(); location.href = items[activeIdx].getAttribute("href"); }
     }
   });
   document.addEventListener("click", (e) => {
     if (!results.contains(e.target) && e.target !== input) results.hidden = true;
   });
-  results.addEventListener("click", () => {
-    input.value = "";
-    results.hidden = true;
-  });
+  results.addEventListener("click", () => { input.value = ""; results.hidden = true; });
+  try {
+    const sp = new URLSearchParams(location.search);
+    const preset = sp.get("q");
+    if (preset) { input.value = preset; loadIndex().finally(render); }
+  } catch {}
+  loadIndex();
 }
 
 function initWhatsNew() {

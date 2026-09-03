@@ -2993,3 +2993,4 @@ summary:focus-visible,
   color: var(--muted);
   opacity: 0.85;
 }
+.search-result.is-active { background: var(--accent-soft); }

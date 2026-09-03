@@ -23,6 +23,7 @@ const PRECACHE = [
   "/",
   "/offline.html",
   "/manifest.json",
+  "/search-index.json",
   "/fonts/InterVariable.woff2",
   "/logo.svg",
   "/favicon.ico",
@@ -108,6 +109,11 @@ self.addEventListener("fetch", (event) => {
   if (url.pathname.startsWith("/pdf-to-image/")) return; // separate Next.js app
 
   if (request.mode === "navigate" || request.destination === "document") {
+    event.respondWith(networkFirst(request));
+    return;
+  }
+
+  if (url.pathname === "/search-index.json") {
     event.respondWith(networkFirst(request));
     return;
   }

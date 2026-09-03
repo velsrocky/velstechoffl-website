@@ -221,6 +221,7 @@ function jsonLd(file, meta) {
 }
 
 let injected = 0;
+if (require.main === module) {
 for (const file of files) {
   const meta = getMeta(file);
   if (!meta) continue;
@@ -354,3 +355,6 @@ fs.writeFileSync(path.join(__dirname, "..", "robots.txt"), robots);
 console.log(`Canonical + JSON-LD injected into ${injected} pages`);
 console.log(`sitemap.xml: ${urls.length} URLs`);
 console.log("robots.txt written");
+}
+
+module.exports = { SITE, STATIC_META, TOOLS_META, CATEGORY_META, getMeta, pageUrl };

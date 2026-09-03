@@ -10,6 +10,7 @@ python3 tools/gen-og-images.py   # OG images per article
 node tools/gen-seo.js             # SEO meta, sitemap, robots.txt
 node tools/gen-feed.js            # Atom feed
 node tools/gen-benchmarks.js      # Benchmark detail pages
+node tools/gen-search-index.js    # Prebuilt search index (103 entries)
 
 # Keep boilerplate/versions canonical (see Boilerplate & versioning below)
 node tools/build.js check
@@ -133,6 +134,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 | `tools/gen-feed.js` | Generate `feed.xml` Atom feed from `articles.js` | After article changes |
 | `tools/gen-og-images.py` | Render 1200×630 OG images per article into `og/` | After adding articles |
 | `tools/gen-benchmarks.js` | Generate per-benchmark detail pages from `benchmarks/data.json` | After adding benchmark data |
+| `tools/gen-search-index.js` | Generate `search-index.json` (articles + tools + hubs) for fuzzy search | After adding articles/tools |
 | `tools/gen-favicon.py` | Generate favicon variants | Rarely |
 | `tools/build.js` | Canonical boilerplate + asset-version management (`check`/`sync`/`bump`) | After asset changes; `check` runs in CI |
 | `tools/gen-og-img.py` | Legacy single OG image generator | Replaced by gen-og-images.py |

@@ -1,0 +1,1120 @@
+[
+  {
+    "title": "Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab",
+    "url": "tiel-coder-35b-mtp-rx6800m.html",
+    "desc": "Tested Tiel-Coder-35B-A3B Q4_K_XL on RX 6800M – MTP speculative decoding at 29.09 tok/s vs 25.39 tok/s without MTP, at 262K q8 KV, 28-32 CPU experts, ROCm 10.0.",
+    "category": "AI",
+    "tags": [
+      "VelsTech Lab",
+      "MoE",
+      "MTP",
+      "RX 6800M",
+      "Speculative Decoding",
+      "Benchmark"
+    ],
+    "kind": "article",
+    "date": "2026-09-01"
+  },
+  {
+    "title": "ROCm & Vulkan on AMD: running local AI on Radeon",
+    "url": "rocm-vulkan-amd-guide.html",
+    "desc": "ROCm vs Vulkan on AMD GPUs for local AI – what each backend is, which to choose, how to install, and real benchmark results on the RX 6800M.",
+    "category": "AI",
+    "tags": [
+      "ROCm",
+      "Vulkan",
+      "AMD",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "Running LLMs on Apple Silicon: a practical guide",
+    "url": "apple-silicon-llm-guide.html",
+    "desc": "How M1/M2/M3/M4 Macs run local AI, what unified memory means, which models fit your Mac, and how to get started with Metal.",
+    "category": "AI",
+    "tags": [
+      "Apple Silicon",
+      "Metal",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "RAG from scratch: ask questions about your own documents",
+    "url": "rag-from-scratch.html",
+    "desc": "What RAG is, how it works, and a working local example – build a private question-answering system over your own files with an LLM and embeddings.",
+    "category": "AI",
+    "tags": [
+      "RAG",
+      "Embeddings",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "Quantization deep dive: how Q4, Q5, and Q8 change quality and speed",
+    "url": "quantization-deep-dive.html",
+    "desc": "How quantization levels (Q4, Q5, Q8) affect LLM quality, size, and speed – with real numbers and practical advice for local AI.",
+    "category": "AI",
+    "tags": [
+      "Quantization",
+      "GGUF",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "KV cache explained: why context windows eat memory",
+    "url": "kv-cache-explained.html",
+    "desc": "Why longer context windows eat memory, how the key-value cache grows with tokens, and how to calculate it for your own GPU.",
+    "category": "AI",
+    "tags": [
+      "KV Cache",
+      "VRAM",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "Flash Attention & speculative decoding: making LLMs faster",
+    "url": "flash-attention-guide.html",
+    "desc": "How Flash Attention and speculative decoding make LLMs faster and use less memory – and why they matter for running models locally.",
+    "category": "AI",
+    "tags": [
+      "Flash Attention",
+      "Speculative Decoding",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "GGUF explained: the format that makes local LLMs work",
+    "url": "gguf-explained.html",
+    "desc": "GGUF is the file format that makes running LLMs locally possible. Here's what it is, what quantization levels mean, and how to pick the right one for your hardware.",
+    "category": "AI",
+    "tags": [
+      "GGUF",
+      "Quantization",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "llama.cpp guide: run GGUF models locally",
+    "url": "llama-cpp-guide.html",
+    "desc": "Complete guide to llama.cpp – install it, run GGUF models, enable GPU acceleration, and read the benchmark output. The engine behind Ollama, explained.",
+    "category": "AI",
+    "tags": [
+      "llama.cpp",
+      "GGUF",
+      "Local AI"
+    ],
+    "kind": "article",
+    "date": "2026-08-30"
+  },
+  {
+    "title": "How to get started with local AI (2026)",
+    "url": "how-to-get-started-local-ai.html",
+    "desc": "How to get started with local AI in 2026 – pick the right hardware, install Ollama, download a model, and run it on your own machine. No cloud, no subscription, no jargon.",
+    "category": "AI",
+    "tags": [
+      "Local AI",
+      "Ollama",
+      "Getting Started",
+      "Beginner"
+    ],
+    "kind": "article",
+    "date": "2026-08-29"
+  },
+  {
+    "title": "DGX Spark vs RTX Spark vs Ryzen AI Halo: the 2026 local-AI desktop showdown",
+    "url": "dgx-spark-rtx-spark-ryzen-ai-halo.html",
+    "desc": "NVIDIA DGX Spark, NVIDIA RTX Spark, and AMD Ryzen AI Max (Strix Halo) – three ways to run local AI in 2026. Specs, what each is for, and which one you should buy.",
+    "category": "Hardware",
+    "tags": [
+      "AI Hardware",
+      "GPU",
+      "Local AI",
+      "NVIDIA",
+      "AMD"
+    ],
+    "kind": "article",
+    "date": "2026-08-29"
+  },
+  {
+    "title": "Best GPU for running LLMs locally (2026)",
+    "url": "best-gpu-for-local-llm.html",
+    "desc": "The best GPUs for running LLMs locally in 2026 – RTX vs Radeon, how much VRAM you really need, and what actually matters for llama.cpp and Ollama.",
+    "category": "Hardware",
+    "tags": [
+      "GPU",
+      "LLM",
+      "Local AI",
+      "Benchmarks",
+      "VelsTech Lab"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "How much VRAM do you need for 7B, 14B, and 32B models?",
+    "url": "how-much-vram-for-llm.html",
+    "desc": "VRAM needed for 7B, 14B, and 32B LLMs – weights, quantization, KV cache, and context length, with a quick-reference table.",
+    "category": "AI",
+    "tags": [
+      "VRAM",
+      "LLM",
+      "GPU",
+      "Quantization",
+      "VelsTech Lab"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "Best GPU for AI under ₹50,000 (India, 2026)",
+    "url": "best-gpu-ai-under-50000.html",
+    "desc": "The best GPUs for AI under ₹50,000 in India – which cards actually fit the budget and can run local LLMs, with VRAM per rupee compared.",
+    "category": "Hardware",
+    "tags": [
+      "GPU",
+      "Budget",
+      "India",
+      "Local AI",
+      "VelsTech Lab"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "Xiaomi AI Cube: the mini desktop built for local AI",
+    "url": "xiaomi-ai-cube.html",
+    "desc": "Xiaomi's AI Cube is a small desktop with a big NPU – made to run LLMs locally. Here's what it is, what's inside, and whether it's worth buying.",
+    "category": "Hardware",
+    "tags": [
+      "AI Hardware",
+      "NPU",
+      "Mini PC",
+      "VelsTech Lab"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "Qwen3.8 Flash Next: Alibaba's new fast reasoning model",
+    "url": "qwen3-8-flash-next.html",
+    "desc": "Qwen3.8 Flash Next is Alibaba's newest reasoning model – faster, cheaper, and smarter. Here's what changed, how it performs, and how it compares.",
+    "category": "AI",
+    "tags": [
+      "LLM",
+      "Qwen",
+      "Reasoning"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "GLM 5.3: what's new in Zhipu AI's latest model",
+    "url": "glm-5-3.html",
+    "desc": "GLM 5.3 is Zhipu AI's newest update – stronger reasoning, better coding, and competitive pricing. Here's what's new and who it's for.",
+    "category": "AI",
+    "tags": [
+      "LLM",
+      "GLM",
+      "Benchmarks"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "Omarchy: the beautiful, opinionated Linux distro everyone's talking about",
+    "url": "omarchy.html",
+    "desc": "The Arch-based distro made by DHH of Basecamp – beautiful, opinionated, terminal-first. Here's what it is, why it's trending, and whether you should try it.",
+    "category": "Operating Systems",
+    "tags": [
+      "Linux",
+      "Arch",
+      "Distro"
+    ],
+    "kind": "article",
+    "date": "2026-08-26"
+  },
+  {
+    "title": "What is machine learning, really?",
+    "url": "what-is-machine-learning.html",
+    "desc": "A plain-language look at what learning from data actually means – training, models, and prediction – without the jargon.",
+    "category": "AI",
+    "tags": [
+      "Basics",
+      "ML"
+    ],
+    "kind": "article",
+    "date": "2026-08-25"
+  },
+  {
+    "title": "What is a Large Language Model, really?",
+    "url": "what-is-an-llm.html",
+    "desc": "A plain-language look at how LLMs work under the hood – tokens, context, and probabilities – without the jargon.",
+    "category": "AI",
+    "tags": [
+      "LLM",
+      "Basics"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "How to write better prompts",
+    "url": "better-prompts.html",
+    "desc": "Practical prompting patterns that get better answers from ChatGPT, Claude, and similar tools.",
+    "category": "AI",
+    "tags": [
+      "Prompting",
+      "Tools"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Local vs cloud AI: which should you choose?",
+    "url": "local-vs-cloud-ai.html",
+    "desc": "Privacy, cost, and capability – a comparison of running models on your own hardware versus cloud APIs.",
+    "category": "AI",
+    "tags": [
+      "Privacy",
+      "Hardware"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "How to choose parts for your first PC build",
+    "url": "first-pc-build.html",
+    "desc": "A beginner-friendly guide to picking a CPU, GPU, RAM, and storage that actually match how you'll use the PC.",
+    "category": "Hardware",
+    "tags": [
+      "PC Build",
+      "Guide"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "CPU vs GPU: what does each one do?",
+    "url": "cpu-vs-gpu.html",
+    "desc": "Breaking down the two most important components in your machine and when each one matters most.",
+    "category": "Hardware",
+    "tags": [
+      "Components",
+      "Basics"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "SSD vs HDD: the upgrade that changes everything",
+    "url": "ssd-vs-hdd.html",
+    "desc": "Why an SSD makes an old computer feel new again, and how to pick the right drive and size.",
+    "category": "Hardware",
+    "tags": [
+      "Storage",
+      "Upgrade"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Linux for beginners: getting started",
+    "url": "linux-beginners.html",
+    "desc": "Picking a distro, installing it, and surviving your first week without breaking anything.",
+    "category": "Operating Systems",
+    "tags": [
+      "Linux",
+      "Beginners"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Essential terminal commands everyone should know",
+    "url": "terminal-commands.html",
+    "desc": "Navigation, files, permissions, and package management – the commands you'll use every single day.",
+    "category": "Operating Systems",
+    "tags": [
+      "Terminal",
+      "Basics"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Windows vs Linux: when to use which",
+    "url": "windows-vs-linux.html",
+    "desc": "An honest comparison of the two for daily use, gaming, and development work.",
+    "category": "Operating Systems",
+    "tags": [
+      "Linux",
+      "Windows"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "How does the internet actually work?",
+    "url": "how-internet-works.html",
+    "desc": "A straightforward walkthrough of IP addresses, DNS, and routing – the basics that make the internet tick.",
+    "category": "Networking",
+    "tags": [
+      "Basics",
+      "DNS"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Setting up a domain and pointing it anywhere",
+    "url": "setup-domain.html",
+    "desc": "How to buy a domain, configure DNS records, and connect it to GitHub Pages, a VPS, or a home server.",
+    "category": "Networking",
+    "tags": [
+      "DNS",
+      "Self-hosting"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Self-hosting 101: what can you run at home?",
+    "url": "self-hosting-101.html",
+    "desc": "From a media server to a personal cloud – services you can run on a Raspberry Pi or old laptop.",
+    "category": "Networking",
+    "tags": [
+      "Self-hosting",
+      "Projects"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "The only 5 security habits you really need",
+    "url": "security-habits.html",
+    "desc": "Passwords, two-factor authentication, updates, backups, and skepticism – the checklist that covers most risks.",
+    "category": "Security & Privacy",
+    "tags": [
+      "Basics",
+      "Passwords"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Password managers: why you need one",
+    "url": "password-managers.html",
+    "desc": "How a password manager works, what to look for, and why reusing passwords is the biggest risk most people have.",
+    "category": "Security & Privacy",
+    "tags": [
+      "Passwords",
+      "Tools"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Spotting phishing attempts",
+    "url": "spotting-phishing.html",
+    "desc": "Real examples of fake emails and messages, and the red flags that give them away before you click.",
+    "category": "Security & Privacy",
+    "tags": [
+      "Phishing",
+      "Awareness"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "How to start learning to code in 2026",
+    "url": "learn-to-code.html",
+    "desc": "A realistic roadmap – pick a language, build tiny projects, and avoid the tutorial trap.",
+    "category": "Programming & Web",
+    "tags": [
+      "Beginners",
+      "Roadmap"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "HTML, CSS, and JavaScript: what does each one do?",
+    "url": "html-css-js.html",
+    "desc": "The three building blocks of every website, explained with a simple analogy.",
+    "category": "Programming & Web",
+    "tags": [
+      "Web",
+      "Basics"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Version control with Git for complete beginners",
+    "url": "git-beginners.html",
+    "desc": "Why every developer uses Git, and the handful of commands that cover 90% of daily work.",
+    "category": "Programming & Web",
+    "tags": [
+      "Git",
+      "Tools"
+    ],
+    "kind": "article",
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Installing ROCm on Ubuntu for Radeon GPUs",
+    "url": "install-rocm-ubuntu.html",
+    "desc": "Step-by-step guide to installing ROCm 7.14 on Ubuntu 26.04 for AMD Radeon (RDNA2/RDNA3) GPUs – from apt setup to rocminfo verification.",
+    "category": "Tutorials",
+    "tags": [
+      "ROCm",
+      "Radeon",
+      "GPU"
+    ],
+    "kind": "article",
+    "date": "2026-08-25"
+  },
+  {
+    "title": "Installing PyTorch with ROCm on Radeon GPUs",
+    "url": "install-pytorch-rocm-ubuntu.html",
+    "desc": "Step-by-step guide to installing PyTorch with ROCm support on Ubuntu for AMD Radeon (RDNA2) GPUs – venv setup, pip install, and GPU verification.",
+    "category": "Tutorials",
+    "tags": [
+      "PyTorch",
+      "ROCm",
+      "Radeon"
+    ],
+    "kind": "article",
+    "date": "2026-08-25"
+  },
+  {
+    "title": "Apple's new Mac desktops: Mac Studio M5 Max/Ultra and Mac mini M6/M5 Pro",
+    "url": "new-mac-desktops.html",
+    "desc": "Apple's compact desktops land on 22 September – the Mac Studio with M5 Max and M5 Ultra, plus the Mac mini with M6 and M5 Pro. Here's what changed and which one is yours.",
+    "category": "Hardware",
+    "tags": [
+      "Apple Silicon",
+      "Mac",
+      "Desktop"
+    ],
+    "kind": "article",
+    "date": "2026-08-25"
+  },
+  {
+    "title": "Qwen 27B Ridge 3.7bpw on RX 6800M: ROCm vs Vulkan at 16K – VelsTech Lab",
+    "url": "qwen-27b-ridge-rocm-vs-vulkan.html",
+    "desc": "Tested Qwen 27B Ridge at 3.7bpw on a 12GB RX 6800M – ROCm 18.1 tok/s vs Vulkan 21.8 tok/s decode at 16K, with prompt-eval tradeoffs and VRAM fit.",
+    "category": "AI",
+    "tags": [
+      "VelsTech Lab",
+      "Qwen",
+      "RX 6800M",
+      "ROCm",
+      "Vulkan",
+      "Benchmark"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "Ornith 35B MoE at 262K on RX 6800M: ROCm vs Vulkan – VelsTech Lab",
+    "url": "ornith-35b-moe-262k-rocm-vs-vulkan.html",
+    "desc": "Tested Ornith 1.5 35B-A3B MoE at 262K on RX 6800M – ROCm 25.6 tok/s vs Vulkan 19.6 tok/s decode, 83 tok/s prompt, with 28 CPU experts and q8 KV.",
+    "category": "AI",
+    "tags": [
+      "VelsTech Lab",
+      "MoE",
+      "Ornith 35B",
+      "RX 6800M",
+      "ROCm",
+      "Vulkan",
+      "Benchmark"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "MoE vs Dense on RX 6800M: 3B Active vs 27B at 16K/262K – VelsTech Lab",
+    "url": "moe-vs-dense-rx6800m-16k-vs-262k.html",
+    "desc": "Same RX 6800M 12GB – Ornith 35B MoE (3B active, 262K) vs Qwen 27B dense (27B, 16K) at q8 KV, ROCm vs Vulkan head-to-head.",
+    "category": "AI",
+    "tags": [
+      "VelsTech Lab",
+      "MoE vs Dense",
+      "RX 6800M",
+      "Benchmark"
+    ],
+    "kind": "article",
+    "date": "2026-08-27"
+  },
+  {
+    "title": "Tools",
+    "url": "tools.html",
+    "desc": "Free practical tools – an LLM VRAM calculator, a GPU AI performance calculator, and a PC power supply calculator.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "LLM VRAM Calculator",
+    "url": "llm-vram-calculator.html",
+    "desc": "Estimate how much GPU memory an LLM needs – model weights plus KV cache at your quantization and context length – and see if it fits your GPU.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "GPU AI Performance Calculator",
+    "url": "gpu-ai-calculator.html",
+    "desc": "Estimate tokens/sec, prompt processing speed, and time to first token for running an LLM on a specific GPU.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "PC Power Supply Calculator",
+    "url": "psu-calculator.html",
+    "desc": "Estimate your build's peak power draw and get a recommended PSU wattage with headroom.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "CIDR / Subnet Calculator",
+    "url": "cidr-calculator.html",
+    "desc": "Enter an IPv4 address and prefix to get the network address, usable host range, broadcast address, subnet mask, and wildcard mask.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "chmod Calculator",
+    "url": "chmod-calculator.html",
+    "desc": "Toggle read/write/execute permissions for owner, group, and others and get the numeric mode (like 755) and the chmod command to run.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Cron Generator",
+    "url": "cron-generator.html",
+    "desc": "Pick a schedule in plain English and get the cron expression plus next run times. No more memorizing cron syntax.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "CSV to JSON Converter",
+    "url": "csv-json-converter.html",
+    "desc": "Paste CSV and get clean JSON, or paste a JSON array and get CSV back. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Docker Compose Generator",
+    "url": "docker-compose-generator.html",
+    "desc": "Generate a copy-paste ready docker-compose.yml – pick an image, ports, volumes, environment variables, and restart policy.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "FFmpeg Command Generator",
+    "url": "ffmpeg-command-generator.html",
+    "desc": "Build a correct ffmpeg command for converting, compressing, and trimming media – container, codec, quality, scale, and audio settings.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "JSON Formatter & Validator",
+    "url": "json-formatter.html",
+    "desc": "Format, minify, validate, and check the size of JSON with syntax highlighting. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Regex Tester",
+    "url": "regex-tester.html",
+    "desc": "Test regular expressions live – paste a pattern and test string to see every match, capture group, and position highlighted inline.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "JWT Decoder",
+    "url": "jwt-decoder.html",
+    "desc": "Decode and inspect a JSON Web Token – header, payload, claims like exp/iat/iss, and signature. All data stays in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Base64 Encoder / Decoder",
+    "url": "base64-encoder-decoder.html",
+    "desc": "Convert text to and from base64 with proper UTF-8 support. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Unix Timestamp Converter",
+    "url": "timestamp-converter.html",
+    "desc": "Convert between Unix timestamps (seconds or milliseconds) and human-readable dates with relative time. Copy the current timestamp instantly.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Color Converter (HEX / RGB / HSL)",
+    "url": "color-converter.html",
+    "desc": "Convert colors between HEX, RGB, and HSL with a live swatch and copy-ready CSS values. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Text Diff Checker",
+    "url": "text-diff-checker.html",
+    "desc": "Compare two versions of text with added and removed lines highlighted. A simple line-based diff, no server involved.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "URL Encoder / Decoder",
+    "url": "url-encoder-decoder.html",
+    "desc": "Percent-encode and decode URL components with UTF-8 support. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "GGUF Size Calculator",
+    "url": "gguf-size-calculator.html",
+    "desc": "Estimate how much disk space a quantized model will take at Q2 through Q8 before you download it.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Context Length & Memory Calculator",
+    "url": "context-length-calculator.html",
+    "desc": "Estimate VRAM usage for different context window sizes and KV cache quantizations on your GPU.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Password Strength Checker",
+    "url": "password-strength-checker.html",
+    "desc": "Check a password's strength, estimated entropy, and crack time. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "AI API Cost Calculator",
+    "url": "ai-api-cost-calculator.html",
+    "desc": "Compare per-token pricing across OpenAI, Anthropic, Google, and local inference costs. Estimate the break-even point for running your own hardware.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Random Secret Generator",
+    "url": "random-secret-generator.html",
+    "desc": "Create secure random secrets for API keys, salts, or session tokens with a chosen length and character set. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Hash Generator (MD5 / SHA-1 / SHA-256 / SHA-512)",
+    "url": "hash-generator.html",
+    "desc": "Compute MD5, SHA-1, SHA-256, and SHA-512 hashes of any text instantly. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Password Generator",
+    "url": "password-generator.html",
+    "desc": "Generate strong random passwords with adjustable length and character sets. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Text Case Converter",
+    "url": "text-case-converter.html",
+    "desc": "Convert text to uppercase, lowercase, title case, sentence case, or camelCase instantly. Runs entirely in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "UUID Generator",
+    "url": "uuid-generator.html",
+    "desc": "Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "LLM Playground – Chat with AI models",
+    "url": "playground.html",
+    "desc": "Full LLM Playground – chat with multiple models, adjust temperature, top-p, max tokens, system prompt, and share conversations. Powered by VelsTech's AI proxy.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "LLM Benchmark Explorer",
+    "url": "benchmark-explorer.html",
+    "desc": "Browse and compare LLM benchmarks across GPUs, models, and backends – filter by hardware, sort by tok/s, and see real tested results.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Model Comparison Wizard",
+    "url": "model-comparison.html",
+    "desc": "Compare LLM models, quantizations, and GPUs side-by-side – VRAM requirements, expected tok/s, and whether your hardware can run it.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "VRAM Budget Planner",
+    "url": "vram-budget-planner.html",
+    "desc": "Visual VRAM budget planner – pick a GPU, model, and context length to see a bar chart of weights, KV cache, overhead, and whether it fits.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Prompt Library & Editor",
+    "url": "prompt-library.html",
+    "desc": "Browse prompt templates, fill in variables, test them against an AI model, and save your own prompts. Copy anywhere or chat directly.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Markdown Notes",
+    "url": "notes.html",
+    "desc": "Private Markdown notes that stay in your browser – no account, no server. Write, preview, search, and copy your notes.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Bookmarks & Reading List",
+    "url": "bookmarks.html",
+    "desc": "Save, tag, and search your reading list right in the browser – no account needed. Import URLs, export JSON, mark things done.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "Config Generator Studio",
+    "url": "config-generator.html",
+    "desc": "Generate Docker Compose, systemd service units, and llama-server commands with a live YAML preview – copy and paste to use.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "PDF to Image Converter — Private, Fast, No Upload",
+    "url": "pdf-to-image/index.html",
+    "desc": "Convert PDF pages to PNG, JPEG, or WebP right in your browser. 100% client-side, private, no upload, up to 100MB, custom DPI and page ranges.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "RAG: Ask Your File",
+    "url": "rag-ask.html",
+    "desc": "Upload a text file and ask questions about it. The content is chunked, scored, and sent to an AI model with the relevant context.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "RSS Aggregator",
+    "url": "rss-aggregator.html",
+    "desc": "Read your favorite RSS and Atom feeds in one place. Add any feed URL, browse the latest posts, and manage your reading list.",
+    "category": "Tools",
+    "tags": [
+      "Tool"
+    ],
+    "kind": "tool"
+  },
+  {
+    "title": "AI",
+    "url": "ai.html",
+    "desc": "AI and machine learning notes – LLMs, tools, prompting, and trends.",
+    "category": "AI",
+    "tags": [],
+    "kind": "hub"
+  },
+  {
+    "title": "Hardware",
+    "url": "hardware.html",
+    "desc": "Hardware notes – PC builds, components, GPUs, and performance.",
+    "category": "Hardware",
+    "tags": [],
+    "kind": "hub"
+  },
+  {
+    "title": "Operating Systems",
+    "url": "os.html",
+    "desc": "Operating system notes – Linux, Windows, and macOS guides.",
+    "category": "Operating Systems",
+    "tags": [],
+    "kind": "hub"
+  },
+  {
+    "title": "Networking",
+    "url": "networking.html",
+    "desc": "Networking notes – DNS, routers, self-hosting, and how the internet works.",
+    "category": "Networking",
+    "tags": [],
+    "kind": "hub"
+  },
+  {
+    "title": "Security & Privacy",
+    "url": "security.html",
+    "desc": "Security and privacy basics – passwords, backups, and safe habits.",
+    "category": "Security & Privacy",
+    "tags": [],
+    "kind": "hub"
+  },
+  {
+    "title": "Programming & Web",
+    "url": "programming.html",
+    "desc": "Programming and web development – learning to code and building websites.",
+    "category": "Programming & Web",
+    "tags": [],
+    "kind": "hub"
+  },
+  {
+    "title": "Tutorials",
+    "url": "tutorials.html",
+    "desc": "Step-by-step tutorials and practical guides – build, set up, and learn with clear instructions.",
+    "category": "Tutorials",
+    "tags": [],
+    "kind": "hub"
+  },
+  {
+    "title": "VelsTech Solutions",
+    "url": "index.html",
+    "desc": "Technology explained for everyone – plain-language guides, free tools and real experiments: choosing a first PC, staying safe online, understanding AI, and more.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "VelsTech Lab – Benchmarks & Experiments",
+    "url": "lab.html",
+    "desc": "VelsTech Lab – benchmarks, experiments and tools tested on real hardware. Status, hardware specs, methodology and raw results – including failures.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Terms of Use",
+    "url": "terms.html",
+    "desc": "Terms of use and disclaimer for VelsTech.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Privacy Policy",
+    "url": "privacy.html",
+    "desc": "Privacy policy for VelsTech.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Tags",
+    "url": "tags.html",
+    "desc": "Browse all VelsTech articles by tag – Linux, AI, security, and more.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Affiliate Disclosure",
+    "url": "disclosure.html",
+    "desc": "How affiliate links on VelsTech work – when we earn a commission and why it never costs you anything extra.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Recommended Tools",
+    "url": "resources.html",
+    "desc": "VelsTech's recommended tools – the AI apps, developer tools, cloud services, hosting, and security software we actually use.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Advertise",
+    "url": "advertise.html",
+    "desc": "Advertise on VelsTech – sponsored tutorials, product reviews, newsletter sponsorships, and display advertising for AI, hardware, Linux, and developer tools.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Linux Command Cheat Sheet (Free)",
+    "url": "linux-cheat-sheet.html",
+    "desc": "Every Linux command you need – files, permissions, processes, networking, and package management. Free printable cheat sheet.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "LLM & GPU Benchmark Database | VelsTech Lab",
+    "url": "benchmarks/index.html",
+    "desc": "Real tokens/sec for LLMs on real GPUs – filter by GPU, model, quantization, context, and backend. RX 6800M, RTX 4090, RX 7900 XTX and more.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "What Should I Buy? – Tech Buying Guides",
+    "url": "buying-guides.html",
+    "desc": "Decision-focused tech buying guides – best laptop under ₹50,000, best GPU for local AI, best mini PC for Linux, best SSD for developers, and more. Tested or research-backed picks.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Start Here – choose your learning path",
+    "url": "start-here.html",
+    "desc": "New to VelsTech? Pick an interest – AI, PCs, Linux, or Programming – and follow a step-by-step learning path built from our plain-language guides.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Best laptop under ₹50,000 in India (2026)",
+    "url": "best-laptop-under-50000.html",
+    "desc": "Best laptops under ₹50,000 in India (2026) – what to look for, what to skip, and which specs matter most at this price. Ryzen 5, 16 GB RAM, and more.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Best mini PC for Linux (2026)",
+    "url": "best-mini-pc-for-linux.html",
+    "desc": "Best mini PCs for Linux in 2026 – quiet, low-power, always-on machines for self-hosting, local AI, and daily use.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  },
+  {
+    "title": "Best SSD for developers (2026)",
+    "url": "best-ssd-for-developers.html",
+    "desc": "Best SSDs for developers and everyday users in 2026 – NVMe vs SATA, what specs matter, how much capacity, and which drives are worth the money.",
+    "category": "",
+    "tags": [],
+    "kind": "page"
+  }
+]

@@ -39,6 +39,39 @@
   "mainEntityOfPage": "https://velstech.net/how-internet-works.html"
 }
   </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://velstech.net/how-internet-works.html#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between an IP address and DNS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An IP address is the street address of a computer (like 185.199.108.153). DNS is the phone book that translates names like velstech.net into those addresses, so you never have to remember numbers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What actually happens when I type a website address?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your computer asks a DNS server for the site's IP. If it isn't cached, the query follows a chain – root servers, then the .net servers, then the domain's nameserver – which returns the IP in milliseconds, and it gets cached for next time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are there two versions of IP addresses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IPv4 has only about 4.3 billion addresses and we ran out, so devices share one public address through your home router (NAT). IPv6 has a vastly larger pool and is rolling out slowly."
+      }
+    }
+  ]
+}
+  </script>
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/how-internet-works.html" />

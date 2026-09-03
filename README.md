@@ -49,7 +49,7 @@ node --test tests/*.test.js
 ## Content types
 
 ### Articles (43 total)
-Registered in `articles.js` with title, URL, date, category, tags, description, and optional `faq` array. Articles appear in the RSS feed, homepage "Latest" section, Mastodon auto-posts, and category hubs. 18 articles ship with `faq` arrays for FAQ rich-result eligibility.
+Registered in `articles.js` with title, URL, date, category, tags, description, and optional `faq` array. Articles appear in the RSS feed, homepage "Latest" section, Mastodon auto-posts, and category hubs. 28 articles ship with `faq` arrays – rendered visibly on-page by `initFaq()` (script.js) and mirrored as FAQPage JSON-LD by `gen-seo.js`. (Note: Google restricted FAQ rich results to gov/health sites in 2023 – the visible Q&As still serve featured snippets, AI answer engines, and readers.)
 
 **To add an article:**
 1. Create `your-article.html` with [BlogPosting JSON-LD](https://schema.org/BlogPosting)

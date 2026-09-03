@@ -327,6 +327,19 @@ const ARTICLES = [
     category: "AI",
     tags: ["Basics", "ML"],
     description: "A plain-language look at what learning from data actually means – training, models, and prediction – without the jargon.",
+    faq: [
+      {
+        q: "How is machine learning different from normal programming?",
+        a: "In normal programming you write the rules and the computer follows them. Machine learning flips it: you show the computer thousands of labelled examples and it figures out the rules itself by hunting for patterns.",
+      },
+      {
+        q: "What is an LLM in simple terms?",
+        a: "A large language model is one kind of machine learning – a model with a lot of adjustable numbers that learned language patterns by repeatedly guessing, measuring the error, and adjusting across huge amounts of text.",
+      },
+      {
+        q: "Why does machine learning get things wrong?",
+        a: "A model is only as good as the examples it learned from. If the training data is narrow or biased – like a weather model trained only on desert data – the model's guesses fail outside what it has seen.",
+      },    ],
   },
   {
     title: "What is a Large Language Model, really?",
@@ -374,6 +387,23 @@ const ARTICLES = [
     category: "AI",
     tags: ["Privacy", "Hardware"],
     description: "Privacy, cost, and capability – a comparison of running models on your own hardware versus cloud APIs.",
+    faq: [
+      {
+        q: "Is running AI locally actually free?",
+        a: "After the hardware, yes – you download a model once and chat with it offline forever, with no subscription or per-token fees. Cloud AI costs money every time you use it.",
+      },
+      {
+        q: "Can I run something like ChatGPT on my own computer?",
+        a: "You can run open models locally with tools like Ollama, LM Studio, and llama.cpp – typically 7B to 30B quality on capable hardware. The frontier models are too big to run at home, so cloud still wins on raw quality.",
+      },
+      {
+        q: "Is local AI more private than ChatGPT?",
+        a: "Yes – a local model never sends your prompts anywhere; everything stays on your machine. Cloud AI sends your prompts to a third party's servers, which is the main reason privacy-conscious users go local.",
+      },
+      {
+        q: "Do I need a powerful PC for local AI?",
+        a: "You need enough RAM/VRAM for the model size – a phone or old laptop handles small models (7B and under), while bigger models need a desktop GPU. If you don't want to think about hardware, cloud has zero setup.",
+      },    ],
   },
   {
     title: "How to choose parts for your first PC build",
@@ -383,6 +413,23 @@ const ARTICLES = [
     category: "Hardware",
     tags: ["PC Build", "Guide"],
     description: "A beginner-friendly guide to picking a CPU, GPU, RAM, and storage that actually match how you'll use the PC.",
+    faq: [
+      {
+        q: "What matters most in a first PC build?",
+        a: "Your use case decides the budget split: gaming puts most money in the GPU, programming and general work want a balanced build with a good CPU, and editing needs strong CPU + GPU + lots of RAM. Decide what you'll actually do before buying anything.",
+      },
+      {
+        q: "How much RAM do I need in a new PC?",
+        a: "16 GB is the new minimum for gaming and general use; 32 GB is comfortable for editing, virtual machines, and heavy multitasking. More capacity beats more speed, and a matched two-stick kit runs in dual-channel mode – effectively faster memory.",
+      },
+      {
+        q: "Should my first build use SSD or HDD?",
+        a: "SSD first, always. An NVMe SSD for the operating system is the single biggest quality-of-life decision – starting with a spinning boot drive is the most common first-build regret. Add a cheap HDD later for bulk storage if you need it.",
+      },
+      {
+        q: "Does the CPU have to match the motherboard?",
+        a: "Yes – the CPU socket must match the board, and the board must support your RAM type (DDR4 or DDR5) and form factor (ATX, micro-ATX, mini-ITX). Pick the CPU first, then choose a board that fits it and your case.",
+      },    ],
   },
   {
     title: "CPU vs GPU: what does each one do?",
@@ -392,6 +439,19 @@ const ARTICLES = [
     category: "Hardware",
     tags: ["Components", "Basics"],
     description: "Breaking down the two most important components in your machine and when each one matters most.",
+    faq: [
+      {
+        q: "What is the difference between a CPU and a GPU?",
+        a: "A CPU is a few fast, smart cores that handle complex sequential work – the operating system, apps, and anything with lots of branching logic. A GPU is thousands of simple cores doing the same operation on many things at once – pixels, matrix math, video frames.",
+      },
+      {
+        q: "Do I need a GPU for AI?",
+        a: "For serious work, yes – neural networks are matrix math repeated at massive scale, which is exactly what a GPU's thousands of parallel cores are built for. A CPU can run small models, but a GPU with enough VRAM is what makes local AI practical.",
+      },
+      {
+        q: "Which should I spend more on, CPU or GPU?",
+        a: "Whatever your workload is bottlenecked on: gaming and AI want the biggest GPU your budget allows, while programming and general use benefit more from a strong CPU. A fast CPU makes everything feel snappy; a GPU only helps the tasks that can use it.",
+      },    ],
   },
   {
     title: "SSD vs HDD: the upgrade that changes everything",
@@ -401,6 +461,19 @@ const ARTICLES = [
     category: "Hardware",
     tags: ["Storage", "Upgrade"],
     description: "Why an SSD makes an old computer feel new again, and how to pick the right drive and size.",
+    faq: [
+      {
+        q: "Is upgrading to an SSD worth it?",
+        a: "It's the single biggest 'wow, my computer is new' upgrade: boot time drops from 30–60+ seconds to 10–15, apps open in about a second, and the drive is silent with no moving parts to wear out.",
+      },
+      {
+        q: "Why are SSDs so much faster than HDDs?",
+        a: "An HDD has to physically move an arm over a spinning platter for every read – milliseconds of seek time, thousands of times per session. An SSD reads flash chips electronically, so there's nothing to wait for.",
+      },
+      {
+        q: "Should I use both an SSD and an HDD?",
+        a: "A common combo is a 1 TB NVMe SSD for the OS, programs, and games plus a 2–4 TB HDD for bulk storage like backups and media. HDDs still win on cost per gigabyte for data you access rarely.",
+      },    ],
   },
   {
     title: "Linux for beginners: getting started",
@@ -438,6 +511,23 @@ const ARTICLES = [
     category: "Operating Systems",
     tags: ["Linux", "Windows"],
     description: "An honest comparison of the two for daily use, gaming, and development work.",
+    faq: [
+      {
+        q: "Is Linux good enough for gaming now?",
+        a: "Steam Deck and Proton closed much of the gap, but Windows is still the safest bet for gaming – most titles target it first and some anti-cheat software remains Windows-only.",
+      },
+      {
+        q: "Can I use Windows and Linux together?",
+        a: "Yes, three common ways: dual boot (pick at startup, one at a time), Linux with a Windows VM for occasional Windows apps, or WSL for a real Linux terminal inside Windows while you keep your Windows software.",
+      },
+      {
+        q: "Is Linux really free?",
+        a: "Yes – the OS, updates, and the app catalog cost nothing, forever. The trade-off is a learning curve: the terminal and package managers replace the settings menus you know from Windows.",
+      },
+      {
+        q: "Which is more private, Windows or Linux?",
+        a: "Linux is private by default – no forced telemetry, no ads in the OS, no account requirements. Windows collects data and pushes a Microsoft account; it's good on security with updates, but it's not quiet.",
+      },    ],
   },
   {
     title: "How does the internet actually work?",
@@ -447,6 +537,19 @@ const ARTICLES = [
     category: "Networking",
     tags: ["Basics", "DNS"],
     description: "A straightforward walkthrough of IP addresses, DNS, and routing – the basics that make the internet tick.",
+    faq: [
+      {
+        q: "What is the difference between an IP address and DNS?",
+        a: "An IP address is the street address of a computer (like 185.199.108.153). DNS is the phone book that translates names like velstech.net into those addresses, so you never have to remember numbers.",
+      },
+      {
+        q: "What actually happens when I type a website address?",
+        a: "Your computer asks a DNS server for the site's IP. If it isn't cached, the query follows a chain – root servers, then the .net servers, then the domain's nameserver – which returns the IP in milliseconds, and it gets cached for next time.",
+      },
+      {
+        q: "Why are there two versions of IP addresses?",
+        a: "IPv4 has only about 4.3 billion addresses and we ran out, so devices share one public address through your home router (NAT). IPv6 has a vastly larger pool and is rolling out slowly.",
+      },    ],
   },
   {
     title: "Setting up a domain and pointing it anywhere",
@@ -493,6 +596,19 @@ const ARTICLES = [
     category: "Security & Privacy",
     tags: ["Passwords", "Tools"],
     description: "How a password manager works, what to look for, and why reusing passwords is the biggest risk most people have.",
+    faq: [
+      {
+        q: "Are password managers safe to use?",
+        a: "Yes – the vault is encrypted with your master password on your device before anything reaches the cloud. Even if the company's servers are breached, an attacker sees only encrypted gibberish, because the decryption key exists only in your head.",
+      },
+      {
+        q: "Which password manager should I use?",
+        a: "Bitwarden and KeePassXC both have free plans and are open-source; 1Password is the polished paid option. Any of them beats the real alternatives people use: one password everywhere, predictable variations, or a notebook.",
+      },
+      {
+        q: "Why is reusing one password so dangerous?",
+        a: "One site breach compromises every account, because attackers try the leaked email/password pair everywhere. Variations like 'Facebook#1' and 'Gmail#1' are just as bad – the pattern is easy to guess once one password leaks.",
+      },    ],
   },
   {
     title: "Spotting phishing attempts",
@@ -502,6 +618,19 @@ const ARTICLES = [
     category: "Security & Privacy",
     tags: ["Phishing", "Awareness"],
     description: "Real examples of fake emails and messages, and the red flags that give them away before you click.",
+    faq: [
+      {
+        q: "What is the most common sign of a phishing email?",
+        a: "Urgency or fear – 'your account is locked', 'verify within 24 hours'. Legitimate companies don't threaten you into acting fast, because pressure is the tool that short-circuits your judgment. When you feel rushed, slow down.",
+      },
+      {
+        q: "How do I check if a sender address is real?",
+        a: "Look at the actual email address, not the display name – the display name can say anything. 'paypa1-security@update-now.xyz' is fake even if it says 'PayPal'; 'no-reply@paypal.com' is the real domain. Hover over links to see where they truly go.",
+      },
+      {
+        q: "What should I do if I get a suspicious email?",
+        a: "Don't click links or attachments, don't hit 'unsubscribe' (it confirms your address works), and don't reply. If it claims to be from a service you use, open a new tab, type the real address yourself, and check your account there.",
+      },    ],
   },
   {
     title: "How to start learning to code in 2026",
@@ -511,6 +640,19 @@ const ARTICLES = [
     category: "Programming & Web",
     tags: ["Beginners", "Roadmap"],
     description: "A realistic roadmap – pick a language, build tiny projects, and avoid the tutorial trap.",
+    faq: [
+      {
+        q: "Which programming language should I learn first?",
+        a: "Match the language to what you want to build: JavaScript for websites, Python for data/AI/automation, C# or Godot for games. If you genuinely have no idea, start with Python – it reads almost like English and has the friendliest learning curve.",
+      },
+      {
+        q: "What is the tutorial trap?",
+        a: "Watching course after course without ever building anything – you can watch 200 hours of video and still not write a program from scratch. The fix: watch one lesson, close the video, type the code yourself, break it, then rebuild it from memory.",
+      },
+      {
+        q: "What should my first real coding project be?",
+        a: "Classic starters that teach everything: a to-do list app (data, events, state), a calculator (logic and edge cases), a number guesser (loops and conditionals), or a personal website you deploy free on GitHub Pages.",
+      },    ],
   },
   {
     title: "HTML, CSS, and JavaScript: what does each one do?",

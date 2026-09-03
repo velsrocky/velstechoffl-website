@@ -13,6 +13,7 @@ zone_name = "velstech.net"
 ALLOWED_ORIGIN = "https://velstech.net"
 RATE_LIMIT = 30
 RATE_WINDOW = 60000
+RSS_LIMIT = 10
 AI_PROVIDER = "cloudflare"
 # Cloudflare Workers AI model - options include:
 # @cf/meta/llama-3.1-8b-instruct

@@ -77,6 +77,7 @@ zone_name = "velstech.net"
 ALLOWED_ORIGIN = "https://velstech.net"
 RATE_LIMIT = 30
 RATE_WINDOW = 60000
+RSS_LIMIT = 10
 AI_PROVIDER = "cloudflare"
 AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
 ```
@@ -134,10 +135,18 @@ const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";  // API is at /v1
 - To strengthen blog answers, add fuller summaries to the `description` fields
   in `articles.js`.
 - The proxy is **locked down by default**: CORS is restricted via
-  `getCorsOrigin()` in `chat-proxy.js`, a per-IP rate limit applies (default
-  30 req / 60s), and nothing is logged.
+  `getCorsOrigin()` in `chat-proxy.js`, per-IP rate limits apply per endpoint
+  (chat: 30 req / 60s via `RATE_LIMIT`; RSS proxy: 10 req / 60s via `RSS_LIMIT`),
+  and nothing is logged.
+- **Cost / SSRF guardrails** (all in `chat-proxy-core.js`, unit-tested):
+  chat `messages` are validated (count, role, size) and generation options are
+  clamped (`max_tokens` ≤ 8192, `temperature` ≤ 2, `top_p` ≤ 1); a client can
+  only pick a model from `PLAYGROUND_MODELS` (or the configured `AI_MODEL`).
+  `/api/rss` accepts only public `http(s)` URLs – localhost, private /
+  link-local / metadata IPs, credentials, and non-http schemes are rejected,
+  redirect targets are re-validated, and responses are capped at 512 KB.
 - `getCorsOrigin()` echoes the request `Origin` when it is:
   `https://velstech.net`, any `*.velstech.net` subdomain, or a localhost preview
   (`http://localhost:*` / `http://127.0.0.1:*`) – so local dev works out of the
   box. Unknown origins fall back to `ALLOWED_ORIGIN`.
-- Adjust `RATE_LIMIT` / `RATE_WINDOW` in `wrangler.toml` as needed.
+- Adjust `RATE_LIMIT` / `RATE_WINDOW` / `RSS_LIMIT` in `wrangler.toml` as needed.

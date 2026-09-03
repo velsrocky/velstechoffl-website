@@ -4,8 +4,12 @@
  * Supports: cloudflare (Workers AI), openai, anthropic, omniroute.
  *
  * Safety by default:
- *   - CORS locked to ALLOWED_ORIGIN
- *   - Per-IP rate limiting
+ *   - CORS locked to ALLOWED_ORIGIN (browser-side only – see validation below
+ *     for what actually gates scripted clients)
+ *   - Per-IP rate limiting, bucketed per endpoint (chat vs rss)
+ *   - Chat payloads validated, generation options clamped, models allowlisted
+ *   - /api/rss: http(s) only, private/localhost/metadata hosts blocked,
+ *     redirect targets re-validated, responses size-capped
  *   - No request bodies logged
  *
  * Deployment:
@@ -29,6 +33,7 @@
 
 import {
   DEFAULTS,
+  LIMITS,
   rateOK,
   getCorsOrigin,
   corsPreflight,
@@ -36,15 +41,21 @@ import {
   toAnthropicMessages,
   convertCloudflareStream,
   convertAnthropicStream,
+  validateMessages,
+  clampOptions,
+  allowedModel,
+  validateFeedUrl,
+  pruneHits,
+  readCapped,
 } from "./chat-proxy-core.js";
 
 // Per-IP hit counters for rateOK(). Module-scope so they persist across
 // requests inside a single Worker instance (Workers are long-lived; this map
-// is a sliding window per isolate).
+// is a sliding window per isolate). Keys are bucketed ("chat:ip", "rss:ip").
 const hitCounts = new Map();
 
 function json(body, status, origin) {
-  return new Response(body, {
+  return new Response(typeof body === "string" ? body : JSON.stringify(body), {
     status,
     headers: {
       "Content-Type": "application/json",
@@ -62,6 +73,10 @@ export default {
     const model = env.AI_MODEL || DEFAULTS.AI_MODEL;
     const limit = parseInt(env.RATE_LIMIT || String(DEFAULTS.RATE_LIMIT), 10);
     const windowMs = parseInt(env.RATE_WINDOW || String(DEFAULTS.RATE_WINDOW), 10);
+    const rssLimit = parseInt(env.RSS_LIMIT || String(DEFAULTS.RSS_LIMIT), 10);
+    const ip = getClientIp(request);
+
+    if (hitCounts.size > 5000) pruneHits(hitCounts, windowMs);
 
     // CORS preflight
     if (request.method === "OPTIONS") {
@@ -71,29 +86,40 @@ export default {
 
     // GET /api/models -> list models the playground can offer.
     if (request.method === "GET" && new URL(request.url).pathname === "/api/models") {
-      const list = (env.PLAYGROUND_MODELS && JSON.parse(env.PLAYGROUND_MODELS)) || [
-        "@cf/meta/llama-3.1-8b-instruct",
-        "@cf/meta/llama-3.2-3b-instruct",
-        "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-        "@cf/qwen/qwen2.5-7b-instruct",
-        "@cf/qwen/qwen3-8b",
-      ];
+      let list;
+      try {
+        list = env.PLAYGROUND_MODELS ? JSON.parse(env.PLAYGROUND_MODELS) : DEFAULTS.PLAYGROUND_MODELS;
+      } catch {
+        list = DEFAULTS.PLAYGROUND_MODELS;
+      }
       return json(JSON.stringify({ models: list }), 200, origin);
     }
 
-    // GET /api/rss?url=<encoded> -> fetch an RSS/Atom feed server-side and return
-    // its raw XML (the browser page parses it with DOMParser). Avoids CORS on
-    // arbitrary feed hosts; rate-limited like the chat endpoint.
+    // GET /api/rss?url=<encoded> -> fetch an RSS/Atom feed server-side and
+    // return its raw XML (the browser page parses it with DOMParser). This is
+    // an outbound fetch on our account, so unlike the old version it is
+    // rate-limited (own bucket), URL-validated (SSRF guard), size-capped, and
+    // the post-redirect URL is re-validated.
     if (request.method === "GET" && new URL(request.url).pathname === "/api/rss") {
-      const target = new URL(request.url).searchParams.get("url");
-      if (!target) return json({ error: "missing_url" }, 400, origin);
+      if (!rateOK(hitCounts, "rss:" + ip, rssLimit, windowMs)) {
+        return json({ error: "rate_limited", detail: "Too many feed requests. Slow down." }, 429, origin);
+      }
+      const check = validateFeedUrl(new URL(request.url).searchParams.get("url") || "");
+      if (!check.ok) return json({ error: check.error }, 400, origin);
       try {
-        const res = await fetch(target, { headers: { "User-Agent": "VelsTech-RSS/1.0" } });
-        const body = await res.text();
+        const res = await fetch(check.url.toString(), {
+          headers: { "User-Agent": "VelsTech-RSS/1.0" },
+          redirect: "follow",
+        });
+        if (res.url && !validateFeedUrl(res.url).ok) {
+          return json({ error: "redirect_not_allowed" }, 400, origin);
+        }
+        const body = res.body ? await readCapped(res.body, LIMITS.FEED_MAX_BYTES) : "";
         return new Response(body, {
           status: res.status,
           headers: {
             "Content-Type": "application/xml; charset=utf-8",
+            "Cache-Control": "no-store",
             "Access-Control-Allow-Origin": origin,
           },
         });
@@ -102,10 +128,12 @@ export default {
       }
     }
 
-    const ip = getClientIp(request);
+    if (request.method !== "POST") {
+      return json({ error: "method_not_allowed" }, 405, origin);
+    }
 
-    // Rate limit
-    if (!rateOK(hitCounts, ip, limit, windowMs)) {
+    // Rate limit (chat bucket)
+    if (!rateOK(hitCounts, "chat:" + ip, limit, windowMs)) {
       return json(
         { error: "rate_limited", detail: "Too many requests. Slow down a little." },
         429,
@@ -120,17 +148,24 @@ export default {
       return json({ error: "invalid_json" }, 400, origin);
     }
 
+    // Guardrails: a client must never be able to steer cost or abuse the
+    // provider with our key – validate the conversation, clamp generation
+    // options, and ignore client-supplied models outside the allowlist.
+    const v = validateMessages(payload.messages);
+    if (!v.ok) return json({ error: v.error }, 400, origin);
+    const opts = clampOptions(payload);
+
     // Route to appropriate provider
     try {
       if (provider === "openai") {
-        return await handleOpenAI(payload, env, origin, model);
+        return await handleOpenAI(payload, opts, env, origin, model);
       } else if (provider === "anthropic") {
-        return await handleAnthropic(payload, env, origin, model);
+        return await handleAnthropic(payload, opts, env, origin, model);
       } else if (provider === "cloudflare") {
-        return await handleCloudflare(payload, env, origin, model);
+        return await handleCloudflare(payload, opts, env, origin, model);
       } else {
         // OmniRoute or other OpenAI-compatible
-        return await handleOmniroute(payload, env, origin, model);
+        return await handleOmniroute(payload, opts, env, origin, model);
       }
     } catch (err) {
       return json({ error: "provider_error", detail: err.message }, 502, origin);
@@ -138,7 +173,7 @@ export default {
   },
 };
 
-async function handleOpenAI(payload, env, origin, model) {
+async function handleOpenAI(payload, opts, env, origin, model) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) return json({ error: "missing_api_key" }, 500, origin);
 
@@ -152,9 +187,9 @@ async function handleOpenAI(payload, env, origin, model) {
       model: model,
       messages: payload.messages,
       stream: payload.stream !== false,
-      temperature: payload.temperature,
-      top_p: payload.top_p,
-      max_tokens: payload.max_tokens,
+      temperature: opts.temperature,
+      top_p: opts.top_p,
+      max_tokens: opts.max_tokens,
     }),
   });
 
@@ -179,7 +214,7 @@ async function handleOpenAI(payload, env, origin, model) {
   return json(jsonOut !== null ? JSON.stringify(jsonOut) : await res.text(), 200, origin);
 }
 
-async function handleAnthropic(payload, env, origin, model) {
+async function handleAnthropic(payload, opts, env, origin, model) {
   const apiKey = env.ANTHROPIC_API_KEY;
   if (!apiKey) return json({ error: "missing_api_key" }, 500, origin);
 
@@ -195,7 +230,7 @@ async function handleAnthropic(payload, env, origin, model) {
     },
     body: JSON.stringify({
       model: model,
-      max_tokens: 1024,
+      max_tokens: opts.max_tokens,
       system: system,
       messages: messages,
       stream: payload.stream !== false,
@@ -224,7 +259,7 @@ async function handleAnthropic(payload, env, origin, model) {
   return json(jsonOut !== null ? JSON.stringify(jsonOut) : await res.text(), 200, origin);
 }
 
-async function handleOmniroute(payload, env, origin, model) {
+async function handleOmniroute(payload, opts, env, origin, model) {
   const baseUrl = env.OMNIRUTE_BASE_URL;
   if (!baseUrl) return json({ error: "missing_omniroute_url" }, 500, origin);
 
@@ -262,15 +297,15 @@ async function handleOmniroute(payload, env, origin, model) {
   return json(jsonOut !== null ? JSON.stringify(jsonOut) : await res.text(), 200, origin);
 }
 
-async function handleCloudflare(payload, env, origin, model) {
+async function handleCloudflare(payload, opts, env, origin, model) {
   const apiKey = env.CLOUDFLARE_API_KEY;
   const accountId = env.CLOUDFLARE_ACCOUNT_ID;
   if (!apiKey || !accountId) return json({ error: "missing_cloudflare_config" }, 500, origin);
 
   // Cloudflare Workers AI endpoint format: https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}
-  // Prefer the model the client requested (so the widget's fallback chain works),
-  // otherwise fall back to the model configured in wrangler.toml.
-  const activeModel = payload.model || model;
+  // Prefer the model the client requested (so the widget's fallback chain works)
+  // but only if it is on the allowlist; otherwise use the configured model.
+  const activeModel = allowedModel(payload.model, env) || model;
   const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${activeModel}`;
 
   // Convert OpenAI messages to Cloudflare format

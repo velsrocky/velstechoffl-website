@@ -344,3 +344,229 @@ test("convertAnthropicStream: handles chunks split mid-line (buffer)", async () 
   const text = await core.readStreamAsText(output);
   assert.match(text, /"content":"partial"/);
 });
+/* ---------- validateMessages ---------- */
+
+test("validateMessages: accepts a normal system+user conversation", () => {
+  const r = core.validateMessages([
+    { role: "system", content: "You are helpful." },
+    { role: "user", content: "hi" },
+  ]);
+  assert.equal(r.ok, true);
+});
+
+test("validateMessages: rejects non-array and empty array", () => {
+  assert.equal(core.validateMessages(undefined).ok, false);
+  assert.equal(core.validateMessages("nope").ok, false);
+  assert.equal(core.validateMessages([]).ok, false);
+});
+
+test("validateMessages: rejects too many messages", () => {
+  const many = Array.from({ length: 51 }, () => ({ role: "user", content: "x" }));
+  const r = core.validateMessages(many);
+  assert.equal(r.ok, false);
+  assert.equal(r.error, "too_many_messages");
+});
+
+test("validateMessages: rejects disallowed roles", () => {
+  const r = core.validateMessages([{ role: "tool", content: "x" }]);
+  assert.equal(r.ok, false);
+  assert.equal(r.error, "invalid_role");
+});
+
+test("validateMessages: rejects non-string content", () => {
+  assert.equal(core.validateMessages([{ role: "user", content: { evil: true } }]).ok, false);
+  assert.equal(core.validateMessages([{ role: "user", content: 12345 }]).ok, false);
+});
+
+test("validateMessages: rejects an oversized single message", () => {
+  const big = "a".repeat(core.LIMITS.MAX_MESSAGE_CHARS + 1);
+  const r = core.validateMessages([{ role: "user", content: big }]);
+  assert.equal(r.ok, false);
+  assert.equal(r.error, "message_too_long");
+});
+
+test("validateMessages: rejects oversized total conversation", () => {
+  const chunk = "a".repeat(25000);
+  const msgs = Array.from({ length: 5 }, () => ({ role: "user", content: chunk }));
+  const r = core.validateMessages(msgs);
+  assert.equal(r.ok, false);
+  assert.equal(r.error, "conversation_too_large");
+});
+
+/* ---------- clampOptions ---------- */
+
+test("clampOptions: defaults max_tokens when absent", () => {
+  assert.equal(core.clampOptions({}).max_tokens, core.LIMITS.DEFAULT_MAX_TOKENS);
+});
+
+test("clampOptions: clamps max_tokens to the ceiling", () => {
+  assert.equal(core.clampOptions({ max_tokens: 999999 }).max_tokens, core.LIMITS.MAX_TOKENS);
+});
+
+test("clampOptions: floors max_tokens at 1 and ignores non-numbers", () => {
+  assert.equal(core.clampOptions({ max_tokens: -5 }).max_tokens, 1);
+  assert.equal(core.clampOptions({ max_tokens: "huge" }).max_tokens, core.LIMITS.DEFAULT_MAX_TOKENS);
+  assert.equal(core.clampOptions({ max_tokens: Infinity }).max_tokens, core.LIMITS.DEFAULT_MAX_TOKENS);
+});
+
+test("clampOptions: passes through a valid max_tokens", () => {
+  assert.equal(core.clampOptions({ max_tokens: 2048 }).max_tokens, 2048);
+});
+
+test("clampOptions: clamps temperature to [0,2] and top_p to [0,1]", () => {
+  assert.equal(core.clampOptions({ temperature: 99 }).temperature, 2);
+  assert.equal(core.clampOptions({ temperature: -1 }).temperature, 0);
+  assert.equal(core.clampOptions({ top_p: 5 }).top_p, 1);
+  assert.equal(core.clampOptions({ top_p: 0.8 }).top_p, 0.8);
+});
+
+test("clampOptions: omits temperature/top_p when not provided", () => {
+  const o = core.clampOptions({});
+  assert.ok(!("temperature" in o));
+  assert.ok(!("top_p" in o));
+});
+
+/* ---------- allowedModel ---------- */
+
+test("allowedModel: permits a default-list model", () => {
+  assert.equal(core.allowedModel("@cf/meta/llama-3.1-8b-instruct", {}), "@cf/meta/llama-3.1-8b-instruct");
+});
+
+test("allowedModel: rejects an arbitrary client-chosen model", () => {
+  assert.equal(core.allowedModel("gpt-5-turbo-extremely-expensive", {}), null);
+});
+
+test("allowedModel: always permits the configured AI_MODEL", () => {
+  assert.equal(core.allowedModel("custom-model", { AI_MODEL: "custom-model" }), "custom-model");
+});
+
+test("allowedModel: honors PLAYGROUND_MODELS override", () => {
+  const env = { PLAYGROUND_MODELS: JSON.stringify(["only-this"]) };
+  assert.equal(core.allowedModel("only-this", env), "only-this");
+  assert.equal(core.allowedModel("@cf/meta/llama-3.1-8b-instruct", env), null);
+});
+
+test("allowedModel: falls back to defaults on malformed PLAYGROUND_MODELS JSON", () => {
+  const env = { PLAYGROUND_MODELS: "{not json" };
+  assert.equal(core.allowedModel("@cf/meta/llama-3.1-8b-instruct", env), "@cf/meta/llama-3.1-8b-instruct");
+});
+
+test("allowedModel: rejects non-string model", () => {
+  assert.equal(core.allowedModel(undefined, {}), null);
+  assert.equal(core.allowedModel({ evil: true }, {}), null);
+});
+
+/* ---------- validateFeedUrl (SSRF guard) ---------- */
+
+test("validateFeedUrl: accepts public http(s) feeds", () => {
+  assert.equal(core.validateFeedUrl("https://example.com/feed.xml").ok, true);
+  assert.equal(core.validateFeedUrl("http://example.com/rss").ok, true);
+});
+
+test("validateFeedUrl: rejects non-http(s) schemes", () => {
+  for (const u of ["javascript:alert(1)", "file:///etc/passwd", "data:text/plain,hi", "gopher://x"]) {
+    assert.equal(core.validateFeedUrl(u).ok, false, u);
+  }
+});
+
+test("validateFeedUrl: rejects localhost and internal hostnames", () => {
+  for (const h of ["localhost", "foo.localhost", "db.internal", "svc.cluster.local", "x.onion"]) {
+    assert.equal(core.validateFeedUrl(`http://${h}/feed`).ok, false, h);
+  }
+});
+
+test("validateFeedUrl: rejects private / link-local / metadata IPv4 literals", () => {
+  for (const ip of ["127.0.0.1", "10.0.0.5", "192.168.1.1", "172.16.0.1", "169.254.169.254", "0.0.0.0", "100.64.0.1"]) {
+    assert.equal(core.validateFeedUrl(`http://${ip}/latest/meta-data`).ok, false, ip);
+  }
+});
+
+test("validateFeedUrl: allows a public IPv4 literal", () => {
+  assert.equal(core.validateFeedUrl("http://93.184.216.34/feed.xml").ok, true);
+});
+
+test("validateFeedUrl: rejects IPv6 loopback / ULA / link-local", () => {
+  for (const h of ["[::1]", "[fd00::1]", "[fe80::1]"]) {
+    assert.equal(core.validateFeedUrl(`http://${h}/feed`).ok, false, h);
+  }
+});
+
+test("validateFeedUrl: rejects IPv4-mapped IPv6 private addresses", () => {
+  assert.equal(core.validateFeedUrl("http://[::ffff:127.0.0.1]/feed").ok, false);
+});
+
+test("validateFeedUrl: rejects embedded credentials", () => {
+  assert.equal(core.validateFeedUrl("http://user:pass@example.com/feed").ok, false);
+});
+
+test("validateFeedUrl: rejects garbage / empty", () => {
+  assert.equal(core.validateFeedUrl("").ok, false);
+  assert.equal(core.validateFeedUrl("not a url").ok, false);
+});
+
+/* ---------- pruneHits ---------- */
+
+test("pruneHits: removes IPs whose hits all aged out, keeps fresh ones", () => {
+  const hits = new Map([
+    ["old", [1000]],
+    ["fresh", [500000]],
+  ]);
+  const removed = core.pruneHits(hits, 60000, 500000);
+  assert.equal(removed, 1);
+  assert.equal(hits.has("old"), false);
+  assert.equal(hits.has("fresh"), true);
+});
+
+test("pruneHits: trims stale timestamps within a still-active IP", () => {
+  const hits = new Map([["mixed", [1000, 2000, 500000]]]);
+  core.pruneHits(hits, 60000, 500000);
+  assert.deepEqual(hits.get("mixed"), [500000]);
+});
+
+/* ---------- readCapped ---------- */
+
+test("readCapped: returns full text when under the cap", async () => {
+  const stream = core.stringToStream(["hello ", "world"]);
+  assert.equal(await core.readCapped(stream, 1024), "hello world");
+});
+
+test("readCapped: truncates at the byte cap", async () => {
+  const stream = core.stringToStream(["aaaa", "bbbb", "cccc"]);
+  const out = await core.readCapped(stream, 6);
+  assert.equal(out, "aaaabb");
+});
+
+/* ---------- Worker integration: error responses are valid JSON ----------
+ * Guards the json() helper: it must stringify object bodies, otherwise
+ * `new Response(obj)` yields "[object Object]" and the client's
+ * res.json().catch(()=>({})) silently discards every error message.
+ * These paths return before any provider fetch, so no network is touched. */
+
+let worker;
+test("worker: loads", async () => {
+  worker = (await import(path.join(__dirname, "..", "chat-proxy.js"))).default;
+  assert.equal(typeof worker.fetch, "function");
+});
+
+test("worker: validation error returns parseable JSON with the real message", async () => {
+  const env = { AI_PROVIDER: "cloudflare", RATE_LIMIT: "30", RATE_WINDOW: "60000", RSS_LIMIT: "10" };
+  const req = new Request("https://chat.velstech.net/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages: [{ role: "tool", content: "x" }] }),
+  });
+  const res = await worker.fetch(req, env);
+  assert.equal(res.status, 400);
+  const body = await res.json();
+  assert.equal(body.error, "invalid_role");
+});
+
+test("worker: SSRF attempt returns parseable JSON 400", async () => {
+  const env = { AI_PROVIDER: "cloudflare", RATE_LIMIT: "30", RATE_WINDOW: "60000", RSS_LIMIT: "10" };
+  const res = await worker.fetch(
+    new Request("https://chat.velstech.net/api/rss?url=http://169.254.169.254/latest/meta-data"),
+    env
+  );
+  assert.equal(res.status, 400);
+  assert.equal((await res.json()).error, "host_not_allowed");
+});

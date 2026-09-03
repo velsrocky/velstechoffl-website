@@ -6,10 +6,12 @@
 <meta name="theme-color" content="#0b0f14">
 <meta name="description" content="RSS ஒருங்கிணைப்பி – உங்களுக்குப் பிடித்த ஃபீட்களை ஒரே இடத்தில் படிக்கவும். எந்த RSS/Atom ஃபீட் URL ஐயும் சேர்த்து சமீபத்திய பதிவுகளை உங்கள் உலாவியிலேயே படிக்கவும்.">
 <title>RSS ஒருங்கிணைப்பி | VelsTech</title>
-<link rel="canonical" href="https://velstech.net/rss-aggregator.ta.html">
-<link rel="alternate" hreflang="en" href="https://velstech.net/rss-aggregator.html">
-<link rel="alternate" hreflang="ta" href="https://velstech.net/rss-aggregator.ta.html">
-<link rel="alternate" hreflang="x-default" href="https://velstech.net/rss-aggregator.html">
+  <link rel="canonical" href="https://velstech.net/rss-aggregator.ta.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/rss-aggregator.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/rss-aggregator.hi.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/rss-aggregator.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/rss-aggregator.html" />
+  <link rel="alternate" type="application/atom+xml" title="VelsTech (Atom feed)" href="https://velstech.net/feed.xml" />
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VelsTech">
 <meta property="og:url" content="https://velstech.net/rss-aggregator.ta.html">
@@ -110,6 +112,12 @@
   function esc(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
+  function safeUrl(u) {
+    // Feed content is untrusted: only http(s) or protocol-relative links,
+    // never javascript:/data:/vbscript:.
+    const s = String(u || '').trim();
+    return /^(https?:)?\/\//i.test(s) ? s : '#';
+  }
   function timeAgo(dateStr) {
     try {
       var t = new Date(dateStr).getTime();
@@ -139,7 +147,7 @@
     html += items.map(function(it) {
       var desc = (it.description || it.content || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
       if (desc.length > 300) desc = desc.slice(0, 300) + '…';
-      return '<div class="item"><h3><a href="' + esc(it.link || '#') + '" target="_blank" rel="noopener">' + esc(it.title || '(untitled)') + '</a></h3>' +
+      return '<div class="item"><h3><a href="' + esc(safeUrl(it.link)) + '" target="_blank" rel="noopener">' + esc(it.title || '(untitled)') + '</a></h3>' +
         '<div class="meta"><span>' + timeAgo(it.pubDate || it.updated || '') + '</span>' +
         (it.author ? '<span>' + esc(it.author) + '</span>' : '') + '</div>' +
         (desc ? '<div class="desc">' + esc(desc) + '</div>' : '') + '</div>';

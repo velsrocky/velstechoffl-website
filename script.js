@@ -1330,7 +1330,14 @@ function initArticleFlow() {
       next = idx < list.length - 1 ? ARTICLES.find((a) => a.url === list[idx + 1]) : null;
     }
   }
-  if (!prev && !next) return;
+  if (!prev && !next) {
+    const related = ARTICLES.filter((a) => a.url !== cur.url && a.category === cur.category)
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 2);
+    if (!related.length) return;
+    prev = related[0] || null;
+    next = related[1] || null;
+  }
 
   const flow = document.createElement("div");
   flow.className = "article-flow";
@@ -1356,12 +1363,15 @@ function initPillar() {
   card.className = "pillar-card";
   const steps = PILLAR.map((p, i) => {
     const active = p.url === curFile;
-    const label = esc(t(p.key));
-    if (active) return '<span class="pillar-step is-active"><span class="pillar-num">' + (i + 1) + '</span>' + label + "</span>";
-    return '<a class="pillar-step" href="' + esc(localizeUrl(p.url)) + '"><span class="pillar-num">' + (i + 1) + "</span>" + label + "</a>";
+    const labelKey = p.key;
+    const label = esc(t(labelKey));
+    const num = '<span class="pillar-num">' + (i + 1) + "</span>";
+    const labelSpan = '<span data-i18n="' + labelKey + '">' + label + "</span>";
+    if (active) return '<span class="pillar-step is-active" data-pillar-url="' + esc(p.url) + '">' + num + labelSpan + "</span>";
+    return '<a class="pillar-step" data-pillar-url="' + esc(p.url) + '" href="' + esc(localizeUrl(p.url)) + '">' + num + labelSpan + "</a>";
   }).join('<span class="pillar-sep">→</span>');
   card.innerHTML =
-    '<div class="pillar-head"><span class="pillar-title">' + esc(t("pillar_title")) + '</span><span class="pillar-desc">' + esc(t("pillar_desc")) + "</span></div>" +
+    '<div class="pillar-head"><span class="pillar-title" data-i18n="pillar_title">' + esc(t("pillar_title")) + '</span><span class="pillar-desc" data-i18n="pillar_desc">' + esc(t("pillar_desc")) + "</span></div>" +
     '<nav class="pillar-path" aria-label="Local AI path">' + steps + "</nav>";
   const stack = nav.parentElement.querySelector(".cta-stack");
   if (stack) stack.parentNode.insertBefore(card, stack);
@@ -1370,6 +1380,12 @@ function initPillar() {
   card.querySelectorAll("a.pillar-step").forEach((a) =>
     a.addEventListener("click", () => track("pillar_click", { from: curFile, to: a.getAttribute("href"), page: location.pathname }))
   );
+  window.addEventListener("vt-lang-change", () => {
+    card.querySelectorAll("[data-pillar-url]").forEach((el) => {
+      const base = el.getAttribute("data-pillar-url");
+      if (el.tagName === "A") el.setAttribute("href", localizeUrl(base));
+    });
+  });
 }
 
 function initBackToTop() {
@@ -1442,14 +1458,14 @@ function initArticleCta() {
     const nl = document.createElement("div");
     nl.className = "cta-card cta-newsletter";
     nl.innerHTML =
-      '<h3>' + esc(t("cta_newsletter_title")) + "</h3>" +
-      '<p>' + esc(t("cta_newsletter_text")) + "</p>" +
+      '<h3 data-i18n="cta_newsletter_title">' + esc(t("cta_newsletter_title")) + "</h3>" +
+      '<p data-i18n="cta_newsletter_text">' + esc(t("cta_newsletter_text")) + "</p>" +
       '<form class="newsletter-form" id="newsletter-form">' +
       '<input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />' +
       '<input type="hidden" name="subject" value="VelsTech newsletter signup (article CTA) - ' + esc(cur.url) + '" />' +
       '<label class="sr-only" for="cta-newsletter-email">Email</label>' +
       '<input id="cta-newsletter-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required />' +
-      '<button class="btn btn-primary" type="submit">' + esc(t("cta_newsletter_button")) + "</button>" +
+      '<button class="btn btn-primary" type="submit" data-i18n="cta_newsletter_button">' + esc(t("cta_newsletter_button")) + "</button>" +
       '<p class="form-status" hidden></p>' +
       "</form>";
     stack.appendChild(nl);
@@ -1462,11 +1478,11 @@ function initArticleCta() {
     const gear = document.createElement("div");
     gear.className = "cta-card cta-gear";
     gear.innerHTML =
-      '<h3>' + esc(t("cta_gear_title")) + "</h3>" +
+      '<h3 data-i18n="cta_gear_title">' + esc(t("cta_gear_title")) + "</h3>" +
       '<div class="cta-gear-links">' +
       picks.map((p) => '<a data-amazon="' + esc(p) + '" href="#">' + esc(p) + "</a>").join(" · ") +
       "</div>" +
-      '<p class="cta-gear-note">' + esc(t("cta_gear_note")) + "</p>";
+      '<p class="cta-gear-note" data-i18n="cta_gear_note">' + esc(t("cta_gear_note")) + "</p>";
     stack.appendChild(gear);
     initAmazonLinks();
   }

@@ -97,7 +97,7 @@ const TOOLS_META = {
   "text-case-converter.html": { title: "Text Case Converter | VelsTech", desc: "Convert text to uppercase, lowercase, title case, sentence case, or camelCase instantly. Runs entirely in your browser." },
   "uuid-generator.html": { title: "UUID Generator | VelsTech", desc: "Generate UUID v4 and v7 identifiers instantly. Copy ready-to-use UUIDs for your database, API, or code. Runs in your browser." },
   "playground.html": { title: "LLM Playground – Chat with AI models | VelsTech", desc: "Full LLM Playground – chat with multiple models, adjust temperature, top-p, max tokens, system prompt, and share conversations. Powered by VelsTech's AI proxy." },
-  "benchmark-explorer.html": { title: "LLM Benchmark Explorer | VelsTech", desc: "Browse and compare LLM benchmarks across GPUs, models, and backends – filter by hardware, sort by tok/s, and see real tested results." },
+  "benchmark-explorer.html": { title: "LLM Benchmark Explorer | VelsTech", desc: "Browse and compare LLM benchmarks across GPUs, models, and backends – filter by hardware, sort by tok/s, and see tested and estimated results." },
   "model-comparison.html": { title: "Model Comparison Wizard | VelsTech", desc: "Compare LLM models, quantizations, and GPUs side-by-side – VRAM requirements, expected tok/s, and whether your hardware can run it." },
   "vram-budget-planner.html": { title: "VRAM Budget Planner | VelsTech", desc: "Visual VRAM budget planner – pick a GPU, model, and context length to see a bar chart of weights, KV cache, overhead, and whether it fits." },
   "prompt-library.html": { title: "Prompt Library & Editor | VelsTech", desc: "Browse prompt templates, fill in variables, test them against an AI model, and save your own prompts. Copy anywhere or chat directly." },
@@ -130,6 +130,26 @@ function getMeta(file) {
 
 function pageUrl(file) {
   return file === "index.html" ? `${SITE}/` : `${SITE}/${file}`;
+}
+
+/* EN/HI/TA cluster membership: the EN file plus every translation that exists. */
+function clusterFiles(enFile) {
+  const hiFile = enFile.replace(/\.html$/, ".hi.html");
+  const taFile = enFile.replace(/\.html$/, ".ta.html");
+  const members = [{ lang: "en", file: enFile }];
+  if (fs.existsSync(path.join(__dirname, "..", hiFile))) members.push({ lang: "hi", file: hiFile });
+  if (fs.existsSync(path.join(__dirname, "..", taFile))) members.push({ lang: "ta", file: taFile });
+  return members;
+}
+
+/* Reciprocal in-head hreflang block: every page in a multi-language cluster
+   lists every member + x-default -> EN. Empty for single-language pages. */
+function headHreflang(enFile) {
+  const members = clusterFiles(enFile);
+  if (members.length < 2) return "";
+  const lines = members.map((m) => `  <link rel="alternate" hreflang="${m.lang}" href="${pageUrl(m.file)}" />`);
+  lines.push(`  <link rel="alternate" hreflang="x-default" href="${pageUrl(enFile)}" />`);
+  return lines.join("\n");
 }
 
 function jsonLd(file, meta) {
@@ -315,7 +335,55 @@ for (const file of files) {
   fs.writeFileSync(fp, html);
 }
 
+/* Head hreflang alternates + translated-page canonicals. gen-seo.js owns
+   these. Line-based so it is idempotent regardless of source formatting
+   (pretty-printed, minified, or non-self-closing tags):
+   1. drop every existing hreflang <link> (whole-line tags remove the line),
+   2. rewrite the canonical (self-referential for translations – required for
+      valid hreflang clusters) and insert the full reciprocal block after it.
+   Pages without a canonical (e.g. 404) are left alone. */
+let hreflangUpdated = 0;
+for (const file of files) {
+  const isTrans = /\.(hi|ta)\.html$/.test(file);
+  const enFile = isTrans ? file.replace(/\.(hi|ta)\.html$/, ".html") : file;
+  if (isTrans) {
+    if (!fs.existsSync(path.join(__dirname, "..", enFile))) continue; // orphan translation
+  } else if (!getMeta(file)) {
+    continue; // not a sitemap page
+  }
+  const fp = path.join(__dirname, "..", file);
+  const html = fs.readFileSync(fp, "utf8");
+  const headEnd = html.indexOf("</head>");
+  if (headEnd === -1 || !html.slice(0, headEnd).includes('rel="canonical"')) continue;
+  let head = html.slice(0, headEnd);
+  head = head
+    .split("\n")
+    .filter((line) => !(line.includes("hreflang") && line.replace(/<link\b[^>]*hreflang="[^"]*"[^>]*\/?>/g, "").trim() === ""))
+    .join("\n")
+    .replace(/[ \t]*<link\b[^>]*hreflang="[^"]*"[^>]*\/?>/g, "")
+    .replace(/[ \t]*<link\b[^>]*rel="alternate"[^>]*application\/atom\+xml[^>]*\/?>[ \t]*\n?/g, "");
+  const canUrl = pageUrl(isTrans ? file : enFile);
+  const block = headHreflang(enFile);
+  const feedLink = `  <link rel="alternate" type="application/atom+xml" title="VelsTech (Atom feed)" href="${SITE}/feed.xml" />`;
+  const canLine = /^([ \t]*)<link\b[^>]*rel="canonical"[^>]*\/?>[ \t]*$/m;
+  if (canLine.test(head)) {
+    head = head.replace(canLine, () => `  <link rel="canonical" href="${canUrl}" />${block ? `\n${block}` : ""}\n${feedLink}`);
+  } else {
+    head = head.replace(/<link\b[^>]*rel="canonical"[^>]*\/?>/, (m) => `${m}${block ? `\n${block}` : ""}\n${feedLink}`);
+  }
+  fs.writeFileSync(fp, head + html.slice(headEnd));
+  hreflangUpdated++;
+}
+
 const urls = [];
+/* lastmod source of truth: articles.js `updated` (also used for JSON-LD
+   dateModified). Translated pages inherit their EN article's date. */
+const lastmodByFile = {};
+for (const a of ARTICLES) {
+  lastmodByFile[a.url] = a.updated;
+  lastmodByFile[a.url.replace(/\.html$/, ".hi.html")] = a.updated;
+  lastmodByFile[a.url.replace(/\.html$/, ".ta.html")] = a.updated;
+}
 for (const file of files) {
   if (file.endsWith(".hi.html") || file.endsWith(".ta.html")) continue; // handled below
   if (!getMeta(file)) continue;
@@ -354,25 +422,12 @@ ${urls.map((u) => {
   const isHi = u.file.endsWith(".hi.html");
   const isTa = u.file.endsWith(".ta.html");
   const enFile = isHi ? u.file.replace(".hi.html", ".html") : isTa ? u.file.replace(".ta.html", ".html") : u.file;
-  const enLoc = SITE + (enFile === "index.html" ? "/" : "/" + enFile);
-  const hiLoc = SITE + "/" + enFile.replace(/\.html$/, ".hi.html");
-  const taLoc = SITE + "/" + enFile.replace(/\.html$/, ".ta.html");
+  const members = clusterFiles(enFile);
   let alternates = "";
-  if (isHi || isTa) {
-    // Translated page: point to EN primary + its own language
-    const ownLang = isHi ? "hi" : "ta";
-    const ownLoc = isHi ? hiLoc : taLoc;
-    alternates = `\n    <xhtml:link rel="alternate" hreflang="en" href="${enLoc}" />\n    <xhtml:link rel="alternate" hreflang="${ownLang}" href="${ownLoc}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
-  } else {
-    // EN page: add alternate links for every translation that exists
-    const hiExists = fs.existsSync(path.join(__dirname, "..", enFile.replace(/\.html$/, ".hi.html")));
-    const taExists = fs.existsSync(path.join(__dirname, "..", enFile.replace(/\.html$/, ".ta.html")));
-    alternates = `\n    <xhtml:link rel="alternate" hreflang="en" href="${enLoc}" />`;
-    if (hiExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="hi" href="${hiLoc}" />`;
-    if (taExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="ta" href="${taLoc}" />`;
-    if (hiExists || taExists) alternates += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${enLoc}" />`;
-  }
-  return `  <url>\n    <loc>${u.loc}</loc>${alternates}\n    <changefreq>monthly</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`;
+  for (const m of members) alternates += `\n    <xhtml:link rel="alternate" hreflang="${m.lang}" href="${pageUrl(m.file)}" />`;
+  if (members.length > 1) alternates += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${pageUrl(enFile)}" />`;
+  const lastmod = lastmodByFile[u.file] ? `\n    <lastmod>${lastmodByFile[u.file]}T00:00:00Z</lastmod>` : "";
+  return `  <url>\n    <loc>${u.loc}</loc>${lastmod}${alternates}\n    <changefreq>monthly</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`;
 }).join("\n")}
 </urlset>
 `;
@@ -386,6 +441,7 @@ Sitemap: ${SITE}/sitemap.xml
 fs.writeFileSync(path.join(__dirname, "..", "robots.txt"), robots);
 
 console.log(`Canonical + JSON-LD injected into ${injected} pages`);
+console.log(`hreflang + canonicals updated on ${hreflangUpdated} pages`);
 console.log(`sitemap.xml: ${urls.length} URLs`);
 console.log("robots.txt written");
 }

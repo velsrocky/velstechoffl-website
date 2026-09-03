@@ -137,6 +137,8 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 | `tools/gen-search-index.js` | Generate `search-index.json` (articles + tools + hubs) for fuzzy search | After adding articles/tools |
 | `tools/gen-favicon.py` | Generate favicon variants | Rarely |
 | `tools/build.js` | Canonical boilerplate + asset-version management (`check`/`sync`/`bump`) | After asset changes; `check` runs in CI |
+| `tools/check-og-images.js` | Verify every article has `og/*.png` | CI guard in `build-check.yml` |
+| `tools/check-links.js` | Verify no broken internal links | CI guard in `build-check.yml` |
 | `tools/gen-og-img.py` | Legacy single OG image generator | Replaced by gen-og-images.py |
 | `tools/check-stale.js` | Check for stale articles (GitHub Action) | Automated (weekly) |
 | `tools/post-new-articles.js` | Detect new articles and post to socials | Automated (GitHub Action) |
@@ -145,7 +147,8 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `build-check.yml` | Push to `main`, PRs | `node tools/build.js check` – fails on boilerplate/version drift |
+| `build-check.yml` | Push to `main`, PRs | Syntax + `build.js check` + OG image + link checks |
+| `lighthouse.yml` | PRs | Lighthouse CI (perf ≥0.85, a11y ≥0.9, LCP <2.5s, CLS <0.1) via `lighthouserc.json` |
 | `deploy-pages.yml` | Push to `main` | Deploys the site to Cloudflare Pages (`velstech-website.pages.dev`). Requires `CLOUDFLARE_API_TOKEN` secret with Pages Edit permission |
 | `auto-feed.yml` | Push to `main` | Regenerates `feed.xml` from `articles.js` and commits it |
 | `social-post.yml` | Push to `main` (articles.js changed) | Detects new articles via `posted-articles.json`, posts to Mastodon/X/webhook, commits state back |

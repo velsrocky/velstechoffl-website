@@ -17,6 +17,9 @@ node tools/build.js check
 
 # Check syntax
 node --check tools/*.js
+
+# Run unit tests (CI runs this in build-check.yml)
+node --test tests/*.test.js
 ```
 
 ## Project structure
@@ -28,10 +31,14 @@ node --check tools/*.js
 | `*.ta.html` | Tamil translations (all pages) |
 | `articles.js` | **Content source of truth** – all article metadata |
 | `i18n.js` | **EN/TA/HI** UI strings + `vt-lang` persistence + `VelsI18n` API |
+| `whatsnew-core.js` | Pure functions powering the homepage "Latest" section (`matchesFilter`, `sortByRecency`, `pickLatest`, `formatLatestCount`). Loaded as a `<script>` on every page; required by `tests/whatsnew.test.js` |
 | `glossary.js` | 40+ tech-term definitions (`fullForm`/`short`/`link`) |
 | `define.js` | Auto-wraps glossary terms + popover + selection-to-chat |
 | `glossary.css` | Glossary term/popover/selection-chip styling |
+| `chat-proxy.js` | Cloudflare Worker entry point (`fetch` event, provider routing, rate limiting) for `chat.velstech.net` |
+| `chat-proxy-core.js` | Pure helpers used by `chat-proxy.js`: `getCorsOrigin`, `rateOK`, `toAnthropicMessages`, `convertCloudflareStream`, `convertAnthropicStream`. Required by `tests/chat-proxy.test.js` |
 | `velstech.pws` | `aspell` personal dictionary (111 tech terms) |
+| `tests/` | Unit tests (`node --test`). Covers `whatsnew-core.js` (filter/sort/count) and `chat-proxy-core.js` (CORS, rate limit, SSE converters) |
 | `benchmarks/data.json` | Benchmark results (tested + estimated) |
 | `benchmarks/*.html` | Generated benchmark detail pages |
 | `og/*.png` | Per-article OG images (1200×630) |
@@ -41,8 +48,8 @@ node --check tools/*.js
 
 ## Content types
 
-### Articles (42 total)
-Registered in `articles.js` with title, URL, date, category, tags, description, and optional `faq` array. Articles appear in the RSS feed, homepage "Latest" section, Mastodon auto-posts, and category hubs.
+### Articles (43 total)
+Registered in `articles.js` with title, URL, date, category, tags, description, and optional `faq` array. Articles appear in the RSS feed, homepage "Latest" section, Mastodon auto-posts, and category hubs. 18 articles ship with `faq` arrays for FAQ rich-result eligibility.
 
 **To add an article:**
 1. Create `your-article.html` with [BlogPosting JSON-LD](https://schema.org/BlogPosting)
@@ -64,7 +71,7 @@ Includes interactive web apps: **LLM Playground** (streaming multi-model chat vi
 4. Add HI/TA translations (`your-tool.hi.html` / `your-tool.ta.html`) if the page should be translated
 5. Run `node tools/gen-seo.js`
 
-### Benchmark database (12 results → 14 pages)
+### Benchmark database (17 generated pages)
 Structured GPU × model × quantization results in `benchmarks/data.json`. Each entry
 generates a detail page per backend (e.g. ROCm and Vulkan).
 
@@ -75,8 +82,8 @@ generates a detail page per backend (e.g. ROCm and Vulkan).
 ### Buying guides (4 pages)
 Standalone decision-oriented pages at `/buying-guides.html`, wired with `data-amazon` affiliate links.
 
-### Category hubs (6 pages)
-`ai.html`, `hardware.html`, `os.html`, `networking.html`, `security.html`, `programming.html` – each rebuilt as a learning-progression hub with tiers (Start here → Go deeper → Tools → Roadmap).
+### Category hubs (7 pages)
+`ai.html`, `hardware.html`, `os.html`, `networking.html`, `security.html`, `programming.html`, `tutorials.html` – each rebuilt as a learning-progression hub with tiers (Start here → Go deeper → Tools → Roadmap).
 
 ## Internationalization (EN / TA / HI)
 
@@ -124,6 +131,12 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 - Language-aware: if `vt-lang` is `ta`/`hi`, the system prompt appends "respond in Tamil/Hindi".
 - Answers start with `TERM – Full Form:` for define/full-form questions; `—` em dashes are
   normalized to `–` in `renderContent`.
+- **Server-side**: `chat.velstech.net` is a Cloudflare Worker. `chat-proxy.js` is the
+  Worker entry point (`fetch` event, provider routing, rate limit). Pure helpers
+  (CORS origin policy, sliding-window rate limiter, OpenAI↔Anthropic message conversion,
+  Anthropic/Cloudflare SSE → OpenAI SSE stream converters) live in `chat-proxy-core.js`
+  and are covered by `tests/chat-proxy.test.js`. The Worker bundles both files via
+  `wrangler`; deployment is manual (`wrangler deploy`).
 - **Full setup & deploy:** see `CHAT-SETUP.md`.
 
 ## Generators
@@ -147,12 +160,33 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `build-check.yml` | Push to `main`, PRs | Syntax + `build.js check` + OG image + link checks |
-| `lighthouse.yml` | PRs | Lighthouse CI (perf ≥0.85, a11y ≥0.9, LCP <2.5s, CLS <0.1) via `lighthouserc.json` |
+| `build-check.yml` | Push to `main`, PRs | Syntax check + `build.js check` + tests + OG image + link checks |
+| `lighthouse.yml` | PRs | Lighthouse CI on 10 representative URLs (perf ≥0.85, a11y ≥0.9, FCP <2s, LCP <2.5s, CLS <0.1) via `lighthouserc.json`. Assertions are `error`-gated so a regression fails PRs |
 | `deploy-pages.yml` | Push to `main` | Deploys the site to Cloudflare Pages (`velstech-website.pages.dev`). Requires `CLOUDFLARE_API_TOKEN` secret with Pages Edit permission |
 | `auto-feed.yml` | Push to `main` | Regenerates `feed.xml` from `articles.js` and commits it |
 | `social-post.yml` | Push to `main` (articles.js changed) | Detects new articles via `posted-articles.json`, posts to Mastodon/X/webhook, commits state back |
 | `stale-check.yml` | Weekly (Monday) | Checks for articles that haven't been updated in 90 days |
+
+## Tests
+
+Unit tests run on every push via `node --test tests/*.test.js` in `build-check.yml`. No npm dependencies — uses Node's built-in `node:test` (Node 18+).
+
+- **`tests/whatsnew.test.js`** (18 tests) — exercises the homepage "Latest" section:
+  filter matching (`All` / `AI` / `Hardware` / `Software` / `Lab`), sort-by-recency
+  with featured tiebreak, count formatting in EN/TA/HI, plus smoke tests against
+  the live `articles.js` dataset (every article matches `All`, all category
+  values are recognized, every article has the fields the renderer needs).
+- **`tests/chat-proxy.test.js`** (36 tests) — exercises the chat proxy's pure
+  helpers: CORS origin policy (primary echoed, foreign denied, localhost +
+  `*.velstech.net` allowed, malformed headers tolerated), per-IP sliding-window
+  rate limiter, client-IP extraction (CF-Connecting-IP > X-Forwarded-For >
+  anonymous), OpenAI↔Anthropic message conversion, and both SSE stream converters
+  (Cloudflare Workers AI + Anthropic → OpenAI format) including multi-chunk
+  splits, line buffering, malformed JSON handling, and `[DONE]` sentinel dedup.
+
+Total: **54 tests**, all passing in <100ms.
+
+Run locally: `node --test tests/*.test.js`. CI: see `build-check.yml`.
 
 ## Social auto-posting
 
@@ -187,7 +221,7 @@ node tools/build.js status         # Show canonical versions + drift summary
 
 This replaces the old manual perl one-liner. Managed per page:
 - head favicon links + stylesheet link (full favicon set, correct `../` prefixes in benchmarks/)
-- trailing `articles.js` / `i18n.js` / `script.js` tags
+- trailing `articles.js` / `i18n.js` / `whatsnew-core.js` / `script.js` tags
 - runtime-injected versions in `script.js` (`chat.js`, `glossary.js`, `define.js`, `chat.css`, `glossary.css`)
 
 Not managed (owned by `gen-seo.js`): canonical, OG/Twitter meta, JSON-LD, hreflang, sitemap.
@@ -196,6 +230,7 @@ Not managed (owned by `gen-seo.js`): canonical, OG/Twitter meta, JSON-LD, hrefla
 ## Key SEO features
 - Per-article OG images (1200×630, dark theme, category pill)
 - BlogPosting + FAQPage + WebApplication + CollectionPage schema
+- Site-wide **Person** entity (`@id: #author`, `name`, `url`, `description`, `knowsAbout`, `sameAs`); every `BlogPosting.author` references it by `@id` for E-E-A-T
 - sitemap.xml (EN + HI + TA URLs) + robots.txt
 - `hreflang` `en` / `hi` / `ta` / `x-default` alternates on articles
 - Google Search Console verified (DNS TXT)
@@ -253,12 +288,18 @@ Test: DevTools → Application → Service Workers (active) / Cache Storage / Ma
 - **Static HTML** – no framework, no build step
 - **CSS** – single `styles.css` with CSS custom properties, dark/light theme, multiple accent colors
 - **JS** – `script.js` (nav, theme, search, article rendering, share buttons, analytics),
-  `i18n.js` (EN/TA/HI UI), `chat.js` (VelsChat widget), `glossary.js` + `define.js` (inline glossary)
+  `i18n.js` (EN/TA/HI UI), `whatsnew-core.js` (homepage Latest pure logic),
+  `chat.js` (VelsChat widget), `chat-proxy.js` + `chat-proxy-core.js` (Worker +
+  pure helpers), `glossary.js` + `define.js` (inline glossary)
+- **Pure-ESM cores** – `whatsnew-core.js` and `chat-proxy-core.js` are dual-export
+  (browser global + CommonJS) so the same source runs in the page and in `node --test`
+- **Tests** – `node:test` (built-in, no npm deps). 54 tests across `whatsnew` + `chat-proxy`,
+  CI on every push via `build-check.yml`
 - **Python 3** – OG image generation (Pillow)
 - **Node.js** – SEO, feed, benchmark generators (built-in modules only)
-- **GitHub Actions** – feed regeneration, social auto-posting, stale checks, Cloudflare Pages deploy
+- **GitHub Actions** – feed regeneration, social auto-posting, stale checks, tests, Cloudflare Pages deploy
 - **Cloudflare Pages** – hosting (`velstech-website` project; GitHub Pages kept as fallback during migration)
-- **Cloudflare Workers** – AI chat proxy (`chat.velstech.net`)
+- **Cloudflare Workers** – AI chat proxy (`chat.velstech.net`); deploy is manual via `wrangler deploy`
 - **Cloudflare** – DNS, proxying, Web Analytics
 - **Mastodon** – social auto-posting
 - **aspell** – spelling audits (`--personal=./velstech.pws`)

@@ -236,7 +236,9 @@ node tools/build.js status         # Show canonical versions + drift summary
 
 This replaces the old manual perl one-liner. Managed per page:
 - head favicon links + stylesheet link (full favicon set, correct `../` prefixes in benchmarks/)
-- trailing `articles.js` / `i18n.js` / `whatsnew-core.js` / `script.js` tags
+- head `defer` script tags for `articles.js` / `i18n.js` / `whatsnew-core.js` / `script.js`
+  (loaded deferred in `<head>` so script.js injects the nav before first paint – end-of-body
+  scripts caused 0.07–0.5 CLS as the nav pushed content down)
 - runtime-injected versions in `script.js` (`chat.js`, `glossary.js`, `define.js`, `chat.css`, `glossary.css`)
 
 Not managed (owned by `gen-seo.js`): canonical, OG/Twitter meta, JSON-LD, hreflang, sitemap.
@@ -320,4 +322,4 @@ Test: DevTools → Application → Service Workers (active) / Cache Storage / Ma
 - **Cloudflare** – DNS, proxying, Web Analytics
 - **Mastodon** – social auto-posting
 - **aspell** – spelling audits (`--personal=./velstech.pws`)
-- **Perf** – `chatbot.png` 72×72 retina (12 KB, was 1.6 MB), font `preload` for `InterVariable.woff2` in canonical head via `build.js`.
+- **Perf** – `chatbot.png` 72×72 retina (12 KB, was 1.6 MB), font `preload` for `InterVariable.woff2` in canonical head via `build.js`, `font-display: optional` + deferred head scripts + share-bar space reservation keep CLS ~0 (field-verified pattern: JS-injected nav/share-bar were the shift sources).

@@ -128,6 +128,23 @@ function getMeta(file) {
   return null;
 }
 
+/* Category pill colors/links – keep in sync with CAT_COLORS/CAT_URL in script.js. */
+const CAT_COLORS = {
+  "AI & ML": "#a78bfa", AI: "#a78bfa", Hardware: "#fb923c",
+  "Operating Systems": "#3ddc97", Linux: "#3ddc97", Software: "#3ddc97",
+  Networking: "#4cc2ff", "Networking & Self-hosting": "#4cc2ff",
+  "Security & Privacy": "#f472b6", Security: "#f472b6",
+  "Programming & Web": "#facc15", Development: "#facc15", Tutorials: "#38bdf8",
+};
+const CAT_URL = {
+  "AI & ML": "ai.html", AI: "ai.html", Hardware: "hardware.html",
+  "Operating Systems": "os.html", Linux: "os.html", Software: "os.html",
+  Networking: "networking.html", "Networking & Self-hosting": "networking.html",
+  "Security & Privacy": "security.html", Security: "security.html",
+  "Programming & Web": "programming.html", Development: "programming.html",
+  Tutorials: "tutorials.html",
+};
+
 function pageUrl(file) {
   return file === "index.html" ? `${SITE}/` : `${SITE}/${file}`;
 }
@@ -371,7 +388,32 @@ for (const file of files) {
   } else {
     head = head.replace(/<link\b[^>]*rel="canonical"[^>]*\/?>/, (m) => `${m}${block ? `\n${block}` : ""}\n${feedLink}`);
   }
-  fs.writeFileSync(fp, head + html.slice(headEnd));
+  /* Mark real articles (not tool/hub pages that share .article-page markup)
+     so styles.css can reserve the JS-injected share-bar's height and avoid CLS.
+     Also inject the AI-assisted badge statically: when script.js appended it
+     post-paint, .meta re-wrapped on narrow viewports (+33px CLS). */
+  const isArticle = !!ARTICLES.find((a) => a.url === enFile);
+  let body = html.slice(headEnd);
+  if (isArticle) {
+    body = body.replace(/<main class="article-page"(?![^>]*data-article)/, '<main class="article-page" data-article');
+    const art = ARTICLES.find((a) => a.url === enFile);
+    const color = art && CAT_COLORS[art.category];
+    let pillHref = art && CAT_URL[art.category];
+    if (pillHref && isTrans) pillHref = pillHref.replace(/\.html$/, (file.endsWith(".hi.html") ? ".hi" : ".ta") + ".html");
+    body = body.replace(/(<div class="meta">)(\s*)([\s\S]*?)(<\/div>)/, (m, open, ws, inner, close) => {
+      let out = open;
+      if (color && !inner.includes("cat-pill")) {
+        out += `\n      <a class="tag cat-pill" href="${pillHref}" style="color:${color};background:${color}26;border-color:transparent;">${esc(art.category)}</a>`;
+      }
+      if (!inner.includes("ai-badge")) {
+        inner += `      <span class="ai-badge" title="This article was created with the assistance of artificial intelligence.">🤖 AI-assisted</span>\n    `;
+      }
+      return out + ws + inner + close;
+    });
+  } else {
+    body = body.replace(/<main class="article-page"[^>]*data-article(?=[^>]*>)/, (m) => m.replace(/\s*data-article/, ""));
+  }
+  fs.writeFileSync(fp, head + body);
   hreflangUpdated++;
 }
 

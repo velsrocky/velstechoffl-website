@@ -15,8 +15,10 @@
    Canonical versions live in tools/versions.json.
 
    Managed per page:
-     - head: favicon links + stylesheet link (contiguous block containing rel="stylesheet")
-     - tail: articles.js / i18n.js / script.js tags before </body>
+     - head: favicon links + stylesheet link + the four deferred script tags
+       (contiguous block ending at script.js; scripts moved to head to kill
+       the nav-injection CLS)
+     - legacy end-of-body script blocks are detected and removed by sync
      - script.js runtime-injected asset versions (chat/glossary/define)
    Not managed (owned by gen-seo.js): canonical, OG/Twitter meta, JSON-LD, hreflang, sitemap.
    Pages outside the template system (never touched): pdf-to-image/, newsletter/.
@@ -51,8 +53,10 @@ function managedPages() {
   return pages;
 }
 
-/* Canonical head block: full favicon set + stylesheet (improves on the old
-   logo.svg-only blocks and fixes ../ prefixing in benchmarks/). */
+/* Canonical head block: full favicon set + stylesheet + deferred scripts.
+   Scripts are deferred in <head> (not end-of-body) so script.js injects the
+   nav before first paint – end-of-body scripts ran after paint and caused a
+   0.07-0.5 CLS as the nav pushed all content down. */
 function headBoilerplate(pre, V) {
   return [
     `  <link rel="manifest" href="${pre}manifest.json" />`,
@@ -63,31 +67,27 @@ function headBoilerplate(pre, V) {
     `  <link rel="icon" type="image/svg+xml" href="${pre}logo.svg" />`,
     `  <link rel="apple-touch-icon" sizes="180x180" href="${pre}apple-touch-icon.png" />`,
     `  <link rel="stylesheet" href="${pre}styles.css?v=${V["styles.css"]}" />`,
+    `  <script defer src="${pre}articles.js?v=${V["articles.js"]}"></script>`,
+    `  <script defer src="${pre}i18n.js?v=${V["i18n.js"]}"></script>`,
+    `  <script defer src="${pre}whatsnew-core.js?v=${V["whatsnew-core.js"]}"></script>`,
+    `  <script defer src="${pre}script.js?v=${V["script.js"]}"></script>`,
   ].join("\n");
 }
 
-function tailBoilerplate(pre, V) {
-  return [
-    `  <script src="${pre}articles.js?v=${V["articles.js"]}"></script>`,
-    `  <script src="${pre}i18n.js?v=${V["i18n.js"]}"></script>`,
-    `  <script src="${pre}whatsnew-core.js?v=${V["whatsnew-core.js"]}"></script>`,
-    `  <script src="${pre}script.js?v=${V["script.js"]}"></script>`,
-  ].join("\n");
-}
-
-/* The contiguous run of font-preload/icon/stylesheet links that contains rel="stylesheet".
-   Matches any attribute order and both ">"/"/>"/"" link styles. */
+/* The contiguous run of font-preload/icon/stylesheet links that contains
+   rel="stylesheet", plus any deferred script tags immediately following it
+   (optional so pre-migration pages still match and get rewritten). */
 function findHeadBlock(html) {
-  const re = /(?:^[ \t]*<link\b(?=[^>]*rel="(?:manifest|preload|icon|apple-touch-icon|stylesheet)")[^>]*>\n)+/gm;
+  const re = /(?:^[ \t]*<link\b(?=[^>]*rel="(?:manifest|preload|icon|apple-touch-icon|stylesheet)")[^>]*>\n)+(?:^[ \t]*<script defer src="[^"]*\.js\?v=\d+"><\/script>\n)*/gm;
   const matches = [...html.matchAll(re)];
   return matches.find((m) => m[0].includes('rel="stylesheet"'));
 }
 
-/* The contiguous run of articles/i18n/script script tags (with page prefix). */
+/* Legacy end-of-body script block (pre-defer layout) – detected to be removed. */
 function findTailBlock(html, pre) {
   const escPre = pre.replace(/[/.]/g, "\\$&");
   const re = new RegExp(
-    `(?:^[ \\t]*<script src="${escPre}(?:articles|i18n|whatsnew-core|script)\\.js\\?v=\\d+"></script>\\n)+`,
+    `(?:^[ \\t]*<script src="${escPre}(?:articles|i18n|whatsnew-core|script)\\.js\\?v=\\d+"><\\/script>\\n)+`,
     "gm"
   );
   return [...html.matchAll(re)].pop() || null;
@@ -103,21 +103,16 @@ function processPage(fp, pre, V, fix) {
   if (!head) {
     issues.push("no favicon/stylesheet link block in head");
   } else if (head[0] !== headBoilerplate(pre, V) + "\n") {
-    issues.push("head favicon/stylesheet block differs from canonical");
+    issues.push("head block differs from canonical (favicon/stylesheet/deferred scripts)");
     if (fix) out = out.slice(0, head.index) + headBoilerplate(pre, V) + "\n" + out.slice(head.index + head[0].length);
   }
 
-  const tail = findTailBlock(html, pre);
-  if (!tail) {
-    issues.push("no articles/i18n/script tags before </body>");
-    if (fix) out = out.replace("</body>", tailBoilerplate(pre, V) + "\n</body>");
-  } else if (tail[0] !== tailBoilerplate(pre, V) + "\n") {
-    const found = tail[0].trim().split("\n").map((l) => l.trim()).join(" | ");
-    issues.push(`tail script tags differ (found: ${found})`);
+  const tail = findTailBlock(out, pre);
+  if (tail) {
+    issues.push("legacy end-of-body script tags present (scripts belong in head, deferred)");
     if (fix) {
-      // Re-find the tail in `out` – the head fix may have shifted offsets.
-      const tail2 = findTailBlock(out, pre) || tail;
-      out = out.slice(0, tail2.index) + tailBoilerplate(pre, V) + "\n" + out.slice(tail2.index + tail2[0].length);
+      const t2 = findTailBlock(out, pre);
+      out = out.slice(0, t2.index) + out.slice(t2.index + t2[0].length);
     }
   }
 

@@ -649,7 +649,7 @@ function initArticleMeta() {
   ai.className = "ai-badge";
   ai.textContent = "🤖 AI-assisted";
   ai.title = "This article was created with the assistance of artificial intelligence.";
-  meta.appendChild(ai);
+  if (!meta.querySelector(".ai-badge")) meta.appendChild(ai);
 
   meta.querySelectorAll(".tag").forEach((t) => {
     const link = document.createElement("a");
@@ -1337,6 +1337,7 @@ function addCategoryPill() {
   if (!cur || !cur.category) return;
   const meta = document.querySelector(".meta");
   if (!meta) return;
+  if (meta.querySelector(".cat-pill")) return; // already injected statically by gen-seo
   const color = CAT_COLORS[cur.category];
   if (!color) return;
   const pill = document.createElement("a");

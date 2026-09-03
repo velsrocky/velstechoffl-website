@@ -61,14 +61,14 @@
 @font-face {
   font-family: "Inter Variable";
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
   font-weight: 100 900;
   src: url("fonts/InterVariable.woff2") format("woff2-variations");
 }
 @font-face {
   font-family: "Inter Variable";
   font-style: italic;
-  font-display: swap;
+  font-display: optional;
   font-weight: 100 900;
   src: url("fonts/InterVariable-Italic.woff2") format("woff2-variations");
 }
@@ -163,6 +163,19 @@ a {
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
+
+/* CLS: the nav used to be injected by script.js after first paint, pushing
+   all content down (0.07-0.5 CLS). Fixed structurally by loading scripts with
+   `defer` in <head> (build.js canonical head block) so the nav exists before
+   the first paint. The share-bar below is injected at the same time but sits
+   mid-document, so its space is still reserved for slow-connection paints. */
+
+/* Same trick for the JS-injected share-bar on articles (marked data-article
+   by tools/gen-seo.js): meta mb 24 + bar 60 + bar mb 24 = 108px. Margin-top
+   collapses with meta's 24px margin (max = 108) before injection, and the
+   real bar reproduces the exact same 108px gap after -> zero shift. */
+main.article-page[data-article] > .article-body { margin-top: 108px; }
+main.article-page > .share-bar + .article-body { margin-top: 0; }
 
 @media (max-width: 640px) {
   .nav {

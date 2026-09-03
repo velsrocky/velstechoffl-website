@@ -38,7 +38,7 @@ node --test tests/*.test.js
 | `chat-proxy.js` | Cloudflare Worker entry point (`fetch` event, provider routing, rate limiting) for `chat.velstech.net` |
 | `chat-proxy-core.js` | Pure helpers used by `chat-proxy.js`: `getCorsOrigin`, `rateOK`, `pruneHits`, `toAnthropicMessages`, `convertCloudflareStream`, `convertAnthropicStream`, + guardrails `validateMessages`, `clampOptions`, `allowedModel`, `validateFeedUrl`, `readCapped`. Required by `tests/chat-proxy.test.js` |
 | `velstech.pws` | `aspell` personal dictionary (111 tech terms) |
-| `tests/` | Unit tests (`node --test`). Covers `whatsnew-core.js` (filter/sort/count) and `chat-proxy-core.js` (CORS, rate limit, SSE converters, cost/SSRF guardrails) |
+| `tests/` | Unit tests (`node --test`) for `whatsnew-core.js` + `chat-proxy-core.js`; opt-in browser test for the EN/TA/HI toggle (skips without Chrome) |
 | `benchmarks/data.json` | Benchmark results (tested + estimated) |
 | `benchmarks/*.html` | Generated benchmark detail pages |
 | `og/*.png` | Per-article OG images (1200×630) |
@@ -190,7 +190,16 @@ Unit tests run on every push via `node --test tests/*.test.js` in `build-check.y
   allowlist, feed-URL validation (private/localhost/metadata/IPv6 blocked),
   rate-limiter pruning, and capped feed reads.
 
-Total: **89 tests**, all passing in <100ms.
+Total: **96 tests** (89 unit + 7 browser), all passing in <100ms.
+
+- **`tests/lang-toggle.test.js`** (7 tests, opt-in) — browser-level guard for the
+  EN/TA/HI toggle, served through a mini Cloudflare-Pages emulator (308 `.html`
+  → clean URL) since every toggle bug was clean-URL-specific. Covers: toggle
+  buttons, click→persist→swap for HI/TA/EN, cross-page language persistence,
+  FAQ rendering + localization after in-place swap, no redirect-loops on
+  untranslated paths. **Skips automatically** when `puppeteer-core` or a Chrome
+  binary is absent, so CI is unaffected. Run locally:
+  `npm i puppeteer-core && CHROME_PATH=/usr/bin/google-chrome node --test tests/lang-toggle.test.js`
 
 Run locally: `node --test tests/*.test.js`. CI: see `build-check.yml`.
 
@@ -301,7 +310,7 @@ Test: DevTools → Application → Service Workers (active) / Cache Storage / Ma
   pure helpers), `glossary.js` + `define.js` (inline glossary)
 - **Pure-ESM cores** – `whatsnew-core.js` and `chat-proxy-core.js` are dual-export
   (browser global + CommonJS) so the same source runs in the page and in `node --test`
-- **Tests** – `node:test` (built-in, no npm deps). 89 tests across `whatsnew` + `chat-proxy`,
+- **Tests** – `node:test` (built-in, no npm deps). 89 unit tests + 7 opt-in browser tests (auto-skip without Chrome),
   CI on every push via `build-check.yml`
 - **Python 3** – OG image generation (Pillow)
 - **Node.js** – SEO, feed, benchmark generators (built-in modules only)

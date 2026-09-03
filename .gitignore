@@ -8,3 +8,6 @@ npm-debug.log*
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# Pages staging dir (tools/stage-pages.js)
+.dist/

@@ -14,9 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Stage public files (excludes repo internals)
+        run: node tools/stage-pages.js
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: fd4cf9318e4b4e6f965bb1191f711fa7
           wranglerVersion: "4.128.0"
-          command: pages deploy . --project-name velstech-website --branch main --commit-dirty=true
+          command: pages deploy .dist --project-name velstech-website --branch main --commit-dirty=true

@@ -38,11 +38,12 @@ function saveVersions(v) {
   fs.writeFileSync(VERSIONS_FILE, JSON.stringify(v, null, 2) + "\n");
 }
 
-/* Managed pages: root *.html + benchmarks/*.html. */
+/* Managed pages: root *.html + benchmarks/*.html. offline.html is excluded –
+   it is the SW offline fallback and intentionally self-contained (inline styles). */
 function managedPages() {
   const pages = fs
     .readdirSync(ROOT)
-    .filter((f) => f.endsWith(".html"))
+    .filter((f) => f.endsWith(".html") && f !== "offline.html")
     .map((f) => ({ rel: f, pre: "" }));
   for (const f of fs.readdirSync(path.join(ROOT, "benchmarks"))) {
     if (f.endsWith(".html")) pages.push({ rel: `benchmarks/${f}`, pre: "../" });
@@ -54,6 +55,7 @@ function managedPages() {
    logo.svg-only blocks and fixes ../ prefixing in benchmarks/). */
 function headBoilerplate(pre, V) {
   return [
+    `  <link rel="manifest" href="${pre}manifest.json" />`,
     `  <link rel="preload" href="${pre}fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />`,
     `  <link rel="icon" href="${pre}favicon.ico" sizes="48x48" />`,
     `  <link rel="icon" type="image/png" sizes="32x32" href="${pre}favicon-32x32.png" />`,
@@ -75,7 +77,7 @@ function tailBoilerplate(pre, V) {
 /* The contiguous run of font-preload/icon/stylesheet links that contains rel="stylesheet".
    Matches any attribute order and both ">"/"/>"/"" link styles. */
 function findHeadBlock(html) {
-  const re = /(?:^[ \t]*<link\b(?=[^>]*rel="(?:preload|icon|apple-touch-icon|stylesheet)")[^>]*>\n)+/gm;
+  const re = /(?:^[ \t]*<link\b(?=[^>]*rel="(?:manifest|preload|icon|apple-touch-icon|stylesheet)")[^>]*>\n)+/gm;
   const matches = [...html.matchAll(re)];
   return matches.find((m) => m[0].includes('rel="stylesheet"'));
 }

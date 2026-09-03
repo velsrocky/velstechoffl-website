@@ -1326,3 +1326,12 @@ document.addEventListener("click", (e) => {
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Service worker – offline support (PWA) */
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch((err) =>
+      console.error("[VelsTech] Service worker registration failed:", err)
+    );
+  });
+}

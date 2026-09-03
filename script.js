@@ -590,32 +590,34 @@ function initWhatsNew() {
   const filterBtns = filters ? filters.querySelectorAll(".tag-btn") : [];
   const countEl = document.getElementById("latest-count");
   const total = (typeof ARTICLES !== "undefined") ? ARTICLES.length : 0;
+  const core = window.WhatsNewCore || {};
 
   function renderCount() {
     if (!countEl || !window.VelsI18n) return;
-    const template = window.VelsI18n.t("latest_count");
-    countEl.textContent = template.replace("{n}", String(total));
+    countEl.textContent = core.formatLatestCount
+      ? core.formatLatestCount(window.VelsI18n.t("latest_count"), total)
+      : window.VelsI18n.t("latest_count").replace("{n}", String(total));
   }
 
-  function matchesFilter(a, filter) {
+  const matchesFilter = core.matchesFilter || function (a, filter) {
     if (filter === "All") return true;
-    if (filter === "AI") return a.category.includes("AI");
+    if (filter === "AI") return a.category === "AI";
     if (filter === "Hardware") return a.category === "Hardware";
     if (filter === "Software") return ["Operating Systems", "Programming & Web", "Tutorials"].includes(a.category);
-    if (filter === "Lab") return a.tags.includes("VelsTech Lab") || a.tags.includes("Benchmark");
-    return true;
-  }
+    if (filter === "Lab") return Array.isArray(a.tags) && (a.tags.includes("VelsTech Lab") || a.tags.includes("Benchmark"));
+    return false;
+  };
 
   function render(filter) {
     const f = filter || "All";
     const filtered = ARTICLES.filter((a) => matchesFilter(a, f));
-    const sorted = [...filtered].sort((a, b) => {
-      const d = b.updated.localeCompare(a.updated);
-      if (d !== 0) return d;
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-      return 0;
-    }).slice(0, 5);
+    const sorted = (core.sortByRecency || function (arr) {
+      return [...arr].sort((a, b) => {
+        const d = (b.updated || b.date || "").localeCompare(a.updated || a.date || "");
+        if (d !== 0) return d;
+        return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+      });
+    })(filtered).slice(0, 5);
     if (!sorted.length) {
       list.innerHTML = '<p class="tool-note">No articles in this filter yet – try All.</p>';
       return;

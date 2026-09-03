@@ -6,7 +6,13 @@
         "http://localhost/index.html",
         "http://localhost/what-is-an-llm.html",
         "http://localhost/tools.html",
-        "http://localhost/llm-vram-calculator.html"
+        "http://localhost/llm-vram-calculator.html",
+        "http://localhost/best-gpu-for-local-llm.html",
+        "http://localhost/dgx-spark-rtx-spark-ryzen-ai-halo.html",
+        "http://localhost/how-to-get-started-local-ai.html",
+        "http://localhost/linux-beginners.html",
+        "http://localhost/playground.html",
+        "http://localhost/benchmarks/index.html"
       ],
       "numberOfRuns": 1
     },

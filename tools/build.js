@@ -70,6 +70,7 @@ function tailBoilerplate(pre, V) {
   return [
     `  <script src="${pre}articles.js?v=${V["articles.js"]}"></script>`,
     `  <script src="${pre}i18n.js?v=${V["i18n.js"]}"></script>`,
+    `  <script src="${pre}whatsnew-core.js?v=${V["whatsnew-core.js"]}"></script>`,
     `  <script src="${pre}script.js?v=${V["script.js"]}"></script>`,
   ].join("\n");
 }
@@ -86,7 +87,7 @@ function findHeadBlock(html) {
 function findTailBlock(html, pre) {
   const escPre = pre.replace(/[/.]/g, "\\$&");
   const re = new RegExp(
-    `(?:^[ \\t]*<script src="${escPre}(?:articles|i18n|script)\\.js\\?v=\\d+"></script>\\n)+`,
+    `(?:^[ \\t]*<script src="${escPre}(?:articles|i18n|whatsnew-core|script)\\.js\\?v=\\d+"></script>\\n)+`,
     "gm"
   );
   return [...html.matchAll(re)].pop() || null;

@@ -24,6 +24,25 @@ const REDDIT_URL = "";
 const MASTODON_URL = "";
 const LINKEDIN_URL = "";
 
+/* Site author – a Person entity referenced by every BlogPosting.author.
+   Single source of truth. Set META_AUTHOR_NAME in one place and every article
+   picks it up. */
+const AUTHOR_NAME = "VelsTech";
+const AUTHOR_URL = `${SITE}/`;
+const AUTHOR_DESCRIPTION =
+  "A developer who tests technology on real hardware before writing about it. Covers local AI, Linux, hardware, and practical guides for everyday users.";
+const AUTHOR_KNOWS_ABOUT = [
+  "Artificial Intelligence",
+  "Large Language Models",
+  "Local AI",
+  "Linux",
+  "PC Building",
+  "GPUs",
+  "Self-Hosting",
+  "Privacy",
+  "Programming",
+];
+
 const files = fs.readdirSync(path.join(__dirname, "..")).filter((f) => f.endsWith(".html"));
 
 const STATIC_META = {
@@ -118,6 +137,20 @@ function jsonLd(file, meta) {
   const art = ARTICLES.find((a) => a.url === file);
   const blocks = [];
 
+  const socials = [GITHUB_URL, YOUTUBE_URL, X_URL, REDDIT_URL, MASTODON_URL, LINKEDIN_URL].filter(Boolean);
+
+  // Site-wide Person entity. Every BlogPosting references this by @id so
+  // there's one canonical author across the site.
+  const author = {
+    "@type": "Person",
+    "@id": `${SITE}/#author`,
+    name: AUTHOR_NAME,
+    url: AUTHOR_URL,
+    description: AUTHOR_DESCRIPTION,
+    knowsAbout: AUTHOR_KNOWS_ABOUT,
+  };
+  if (socials.length) author.sameAs = socials;
+
   if (file === "index.html") {
     const org = {
       "@type": "Organization",
@@ -126,7 +159,6 @@ function jsonLd(file, meta) {
       url: `${SITE}/`,
       logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
     };
-    const socials = [GITHUB_URL, YOUTUBE_URL, X_URL, REDDIT_URL, MASTODON_URL, LINKEDIN_URL].filter(Boolean);
     if (socials.length) org.sameAs = socials;
     blocks.push({
       "@context": "https://schema.org",
@@ -146,6 +178,7 @@ function jsonLd(file, meta) {
           },
         },
         org,
+        author,
       ],
     });
   } else if (art) {
@@ -160,7 +193,7 @@ function jsonLd(file, meta) {
       dateModified: `${art.updated}T00:00:00Z`,
       inLanguage: "en",
       image: `${SITE}/og/${art.url.replace(/\.html$/, "")}.png`,
-      author: { "@type": "Person", name: "VelsTech", url: `${SITE}/` },
+      author: { "@id": `${SITE}/#author` },
       publisher: {
         "@type": "Organization",
         name: "VelsTech",

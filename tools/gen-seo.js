@@ -21,7 +21,7 @@ const GITHUB_URL = "https://github.com/velsrocky";
 const YOUTUBE_URL = "";
 const X_URL = "";
 const REDDIT_URL = "";
-const MASTODON_URL = "";
+const MASTODON_URL = "https://mastodon.social/@velstech";
 const LINKEDIN_URL = "";
 
 /* Site author – a Person entity referenced by every BlogPosting.author.

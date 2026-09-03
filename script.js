@@ -236,7 +236,7 @@ const SOCIAL_LINKS = {
   youtube: "",
   x: "",
   reddit: "",
-  mastodon: "",
+  mastodon: "https://mastodon.social/@velstech",
   linkedin: "",
 };
 

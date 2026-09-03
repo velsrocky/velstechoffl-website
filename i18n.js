@@ -79,7 +79,13 @@
 lang_en: "EN",
       lang_ta: "TA",
       lang_hi: "HI",
-      latest_count: "{n} लेख और बढ़ते जा रहे हैं।"
+      latest_count: "{n} articles and counting.",
+      filter_all: "All",
+      filter_ai: "AI",
+      filter_hardware: "Hardware",
+      filter_software: "Software",
+      filter_lab: "🧪 Lab",
+      latest_nojs: "Loading latest articles…"
     },
     ta: {
       lang_name: "தமிழ்",
@@ -152,7 +158,13 @@ lang_en: "EN",
       lang_en: "EN",
       lang_ta: "TA",
       lang_hi: "HI",
-      latest_count: "{n} கட்டுரைகள் மற்றும் தொடர்கிறது."
+      latest_count: "{n} கட்டுரைகள் மற்றும் தொடர்கிறது.",
+      filter_all: "அனைத்தும்",
+      filter_ai: "AI",
+      filter_hardware: "வன்பொருள்",
+      filter_software: "மென்பொருள்",
+      filter_lab: "🧪 Lab",
+      latest_nojs: "சமீபத்திய கட்டுரைகள் ஏற்றப்படுகின்றன…"
     },
     hi: {
       lang_name: "हिन्दी",
@@ -224,7 +236,14 @@ lang_en: "EN",
       ask_about: "के बारे में पूछें",
       lang_en: "EN",
       lang_ta: "TA",
-      lang_hi: "HI"
+      lang_hi: "HI",
+      latest_count: "{n} लेख और बढ़ते जा रहे हैं।",
+      filter_all: "सभी",
+      filter_ai: "AI",
+      filter_hardware: "हार्डवेयर",
+      filter_software: "सॉफ़्टवेयर",
+      filter_lab: "🧪 Lab",
+      latest_nojs: "नवीनतम लेख लोड हो रहे हैं…"
     }
   };
 

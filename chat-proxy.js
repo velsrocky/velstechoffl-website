@@ -1,7 +1,7 @@
 /*
  * VelsTech AI chat proxy – Cloudflare Worker.
  *
- * Supports: OpenAI, Anthropic, or OmniRoute relay.
+ * Supports: cloudflare (Workers AI), openai, anthropic, omniroute.
  *
  * Safety by default:
  *   - CORS locked to ALLOWED_ORIGIN
@@ -10,12 +10,17 @@
  *
  * Deployment:
  *   1. Set in wrangler.toml:
- *        AI_PROVIDER = "openai"  # or "anthropic" or "omniroute"
- *        AI_MODEL = "gpt-4o-mini"
+ *        AI_PROVIDER = "cloudflare"  # or "openai" / "anthropic" / "omniroute"
+ *        AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
  *        ALLOWED_ORIGIN = "https://velstech.net"
  *   2. Set secrets:
+ *        # cloudflare
+ *        wrangler secret put CLOUDFLARE_API_KEY
+ *        wrangler secret put CLOUDFLARE_ACCOUNT_ID
+ *        # openai
  *        wrangler secret put OPENAI_API_KEY
- *        # or wrangler secret put ANTHROPIC_API_KEY
+ *        # anthropic
+ *        wrangler secret put ANTHROPIC_API_KEY
  *   3. wrangler deploy
  */
 

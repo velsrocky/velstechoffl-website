@@ -168,6 +168,19 @@ function affiliateHref(key) {
   return url || null;
 }
 
+/* Analytics – provider-agnostic helper. Tries Zaraz (Cloudflare),
+   gtag (GA4), plausible, then a no-op. The beacon for Web Analytics
+   (Automatic Setup) is edge-injected; zaraz.track is its custom-event API.
+   No error is thrown if no provider is present. */
+function track(name, props) {
+  try {
+    if (window.zaraz && typeof window.zaraz.track === "function") window.zaraz.track(name, props);
+    if (typeof window.gtag === "function") window.gtag("event", name, props);
+    if (typeof window.plausible === "function") window.plausible(name, { props });
+    window.dispatchEvent(new CustomEvent("vt:track", { detail: { name, props } }));
+  } catch {}
+}
+
 /* Google AdSense – client ID is live (Auto Ads). Setting ADSENSE_SLOT additionally
    inserts a manual responsive unit before .article-nav; leave empty to let Google
    auto-place ads. Ads only serve after AdSense approval. */
@@ -229,14 +242,27 @@ function initAmazonLinks() {
     const rel = a.getAttribute("rel") ? a.getAttribute("rel").split(/\s+/) : [];
     ["sponsored", "nofollow", "noopener"].forEach((r) => { if (!rel.includes(r)) rel.push(r); });
     a.setAttribute("rel", rel.join(" "));
+    if (!a.dataset.trackWired) {
+      a.dataset.trackWired = "1";
+      a.addEventListener("click", () =>
+        track("affiliate_click", { network: "amazon", query, page: location.pathname })
+      );
+    }
   });
 
   document.querySelectorAll("a[data-aff]").forEach((a) => {
-    const url = affiliateHref(a.getAttribute("data-aff"));
+    const key = a.getAttribute("data-aff");
+    const url = affiliateHref(key);
     if (!url) return;
     a.href = url;
     a.target = "_blank";
     a.setAttribute("rel", "sponsored nofollow noopener");
+    if (!a.dataset.trackWired) {
+      a.dataset.trackWired = "1";
+      a.addEventListener("click", () =>
+        track("affiliate_click", { network: key, page: location.pathname })
+      );
+    }
   });
 }
 
@@ -830,6 +856,7 @@ function wireNewsletterForm(form) {
         if (emailInput) emailInput.blur();
         status.textContent = "You're in! Watch your inbox for the next issue.";
         status.style.color = "var(--accent)";
+        track("newsletter_signup", { source: form.id || "newsletter", page: location.pathname });
       } else {
         status.textContent = "Couldn't subscribe right now. Please email hello@velstech.net instead.";
         status.style.color = "var(--text)";
@@ -1312,7 +1339,24 @@ function initArticleCta() {
     initAmazonLinks();
   }
 
-  if (stack.children.length) nav.parentNode.insertBefore(stack, nav);
+  if (stack.children.length) {
+    nav.parentNode.insertBefore(stack, nav);
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            track("cta_view", { type: "article_bottom", page: location.pathname, cards: stack.children.length });
+            io.disconnect();
+          });
+        },
+        { threshold: 0.3 }
+      );
+      io.observe(stack);
+    } else {
+      track("cta_view", { type: "article_bottom", page: location.pathname, cards: stack.children.length });
+    }
+  }
 }
 
 initSearch();

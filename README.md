@@ -204,7 +204,26 @@ Affiliate links use two mechanisms:
 - `data-amazon="search query"` → Amazon.in keyword search with `velstechoffl-21` tag
 - `data-aff="key"` → Software/cloud referral URLs from `AFFILIATE_LINKS` in `script.js`
 
+Every click fires `affiliate_click` (Zaraz / gtag / plausible) with `{ network, query?, page }` so
+conversions can be sliced by article and money page in your analytics dashboard. No extra
+setup beyond your existing Cloudflare Web Analytics – enable **Zaraz** in the dashboard to see
+custom events, or wire `gtag`/`plausible` and events flow there too. Listen for `vt:track`
+(`window.addEventListener("vt:track", e => console.log(e.detail))`) to debug locally.
+
 See `MONETIZATION-SETUP.md` for sign-up instructions.
+
+### Analytics events
+
+Provider-agnostic `track(name, props)` in `script.js` fans out to Zaraz / gtag / plausible:
+
+| Event | When | Props |
+|---|---|---|
+| `affiliate_click` | Any `data-amazon` / `data-aff` link clicked | `network` (`"amazon"` or aff key), `query` (for Amazon), `page` |
+| `cta_view` | Article-bottom CTA stack scrolls into view (≥30% visible) | `type: "article_bottom"`, `page`, `cards` (1–2) |
+| `newsletter_signup` | Newsletter form succeeds | `source` (form id), `page` |
+
+Use these in Zaraz → Triggers or GA4 → Events to build the per-article money funnel:
+`cta_view` (impressions) → `affiliate_click` (intent) → Amazon Associate reports (sales).
 
 ## Tech stack
 

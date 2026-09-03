@@ -1,0 +1,14 @@
+# Cloudflare Pages: files listed here are never uploaded to the deployment.
+# Repo internals (build scripts, tests, docs, Worker source) must not be
+# fetchable from the production domain. Site runtime files are untouched.
+/.github/
+/.gitignore
+/.wrangler/
+/tools/
+/tests/
+*.md
+/wrangler.toml
+/lighthouserc.json
+/velstech.pws
+/chat-proxy.js
+/chat-proxy-core.js

@@ -90,7 +90,7 @@ To get the **canonical tracked link**, use Amazon's SiteStripe:
 
 ### Send issue #1
 1. Brevo → **Campaigns → Email → Create**.
-2. Paste the HTML from `newsletter/issue-001.html` (email-safe, table layout, inline styles).
+2. Paste the HTML from `newsletter/issue-002.html` (email-safe, table layout, inline styles).
 3. Add the Deal-of-the-week affiliate link (already templated with `tag=velstechoffl-21`).
 4. Sender: `newsletter@velstech.net` · Subject: e.g. "VelsTech Weekly #1 – GPUs for local AI, VRAM guide, 15 free tools".
 5. Send a **test** to yourself first, then to the full list.

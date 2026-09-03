@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<body style="margin:0;padding:0;background-color:#f6f8fa;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f6f8fa;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:12px;">
+          <!-- Header -->
+          <tr>
+            <td style="padding:32px 40px;border-bottom:1px solid #e2e8f0;">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#55606e;letter-spacing:1px;text-transform:uppercase;font-weight:bold;">VelsTech Weekly &middot; Issue #2</p>
+              <h1 style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:28px;color:#0f172a;font-weight:bold;">Practical AI, Linux &amp; Hardware</h1>
+              <p style="margin:6px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#55606e;">September 4, 2026 &middot; ~4 min read</p>
+            </td>
+          </tr>
+          <!-- Intro -->
+          <tr>
+            <td style="padding:32px 40px 8px;">
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0f172a;">Hey, here&rsquo;s <strong>VelsTech Weekly #2</strong>.</p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;">This is five things I found or built this week in AI, hardware, Linux, and tools. No filler, no fluff – just the stuff that was actually useful. If something's wrong or missing, just reply and tell me.</p>
+            </td>
+          </tr>
+          <!-- Section: AI -->
+          <tr>
+            <td style="padding:24px 40px 8px;">
+              <h2 style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">🤖 AI</h2>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">1. Speculative decoding (MTP) on a 35B MoE &ndash; real numbers on 12 GB VRAM</strong><br/>Tiel-Coder-35B with Multi-Token Prediction vs without, on the RX 6800M at 262K context: 29.09 tok/s with MTP vs 25.39 without. MTP wins &ndash; but only with the right expert count.<br/><a href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" style="color:#2f8fd8;">Read it here &rarr;</a></p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">2. Qwen 27B Ridge: ROCm vs Vulkan on AMD, at 16K and 262K context</strong><br/>A dense 27B model partially offloaded to system RAM: Vulkan won decode (+20%), ROCm won the huge-context MoE runs (+30%). Benchmark both backends on your card.<br/><a href="https://velstech.net/qwen-27b-ridge-rocm-vs-vulkan.html" style="color:#2f8fd8;">Read it here &rarr;</a></p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">3. The benchmark database now covers 13 GPU &times; model combos</strong><br/>Every result is labelled &#129513; Tested (on real hardware) or &#128208; Estimated (from the calculator). Filter by GPU, model, quant, and backend &ndash; and see exactly which numbers are real.<br/><a href="https://velstech.net/benchmarks/" style="color:#2f8fd8;">Browse the database &rarr;</a></p>
+            </td>
+          </tr>
+          <!-- Section: Hardware -->
+          <tr>
+            <td style="padding:24px 40px 8px;">
+              <h2 style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">🔧 Under the hood</h2>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">4. I audited my own site with an AI &ndash; three bugs worth knowing about</strong><br/>An hreflang setup that silently ignored 100 pages of translations, an AI proxy anyone could abuse as a free SSRF tunnel, and a &ldquo;Poor&rdquo; CLS score caused by JavaScript injecting the nav bar after first paint. The fixes &ndash; and the traps &ndash; are generic.<br/><a href="https://velstech.net/start-here.html" style="color:#2f8fd8;">Start here &rarr;</a></p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">5. Terminal tip: <code>node --test</code> is enough</strong><br/>This site ships with 97 tests and zero npm dependencies &ndash; Node&rsquo;s built-in runner covers unit tests, and a headless-Chrome guard catches UI regressions. You don&rsquo;t need a framework to have tests.<br/><a href="https://velstech.net/linux-cheat-sheet.html" style="color:#2f8fd8;">Grab the cheat sheet &rarr;</a></p>
+            </td>
+          </tr>
+          <!-- Section: Linux -->
+          <tr>
+            <td style="padding:24px 40px 8px;">
+              <h2 style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">📚 New on the site</h2>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">6. 10 more articles now have visible FAQ sections</strong><br/>The questions people actually search &ndash; &ldquo;Is Linux good enough for gaming?&rdquo;, &ldquo;Are password managers safe?&rdquo; &ndash; answered at the bottom of each guide.<br/><a href="https://velstech.net/tutorials.html" style="color:#2f8fd8;">Browse tutorials &rarr;</a></p>
+            </td>
+          </tr>
+          <!-- Deal of the week -->
+          <tr>
+            <td style="padding:24px 40px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#eef6ff;border:1px solid #d6e9fb;border-radius:10px;">
+                <tr>
+                  <td style="padding:20px 24px;">
+                    <h2 style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">🔥 Deal of the week</h2>
+                    <p style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;">[Pick one deal – e.g. a GPU, NVMe SSD, or VPS offer.] One sentence on why it's a good deal and for whom.</p>
+                    <a href="https://www.amazon.in/s?k=NVMe+SSD+1TB&tag=velstechoffl-21&linkCode=ll1&language=en_IN" style="display:inline-block;padding:10px 20px;background-color:#2f8fd8;color:#ffffff;text-decoration:none;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;">Check the deal &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 40px 32px;border-top:1px solid #e2e8f0;">
+              <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#55606e;">Some links in this newsletter are affiliate links – if you buy through them, VelsTech may earn a small commission at no extra cost to you. <a href="https://velstech.net/disclosure.html" style="color:#55606e;">Full disclosure</a>.</p>
+              <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#55606e;"><strong style="color:#0f172a;">VelsTech – Practical AI, Linux &amp; Hardware.</strong> · <a href="https://velstech.net/" style="color:#2f8fd8;">Home</a> · <a href="https://velstech.net/#newsletter" style="color:#2f8fd8;">Subscribe</a> · <a href="mailto:hello@velstech.net?subject=unsubscribe" style="color:#2f8fd8;">Unsubscribe</a></p>
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#94a3b8;">You're receiving this because you subscribed at velstech.net. We don't track or share your email.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

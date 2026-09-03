@@ -76,12 +76,13 @@ re-adding the single CNAME.
 
 ## Sending checklist (each issue)
 
-1. Copy `newsletter/issue-001.md` → `newsletter/issue-00N.md`; update number/date/picks.
+1. Copy the latest issue (`newsletter/issue-002.md` → `issue-003.md`); update number/date/picks.
 2. Fill the **Deal of the week** link (Amazon affiliate, tag `velstechoffl-21`).
 3. Optional sponsor slot.
-4. Paste into Brevo editor (use `newsletter/issue-001.html` for a pre-styled HTML version).
-5. Send to a small test list first; then full list.
-6. Keep the affiliate disclosure footer in every issue.
+4. Paste into Brevo editor (use the matching `newsletter/issue-00N.html` for a pre-styled HTML version).
+5. Update the "Read Issue #N" link on the homepage in all 3 languages (index.html, .hi, .ta).
+6. Send to a small test list first; then full list.
+7. Keep the affiliate disclosure footer in every issue.
 
 ## Recommended practices
 

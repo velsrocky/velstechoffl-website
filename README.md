@@ -35,14 +35,17 @@ node --test tests/*.test.js
 | `glossary.js` | 40+ tech-term definitions (`fullForm`/`short`/`link`) |
 | `define.js` | Auto-wraps glossary terms + popover + selection-to-chat |
 | `glossary.css` | Glossary term/popover/selection-chip styling |
-| `chat-proxy.js` | Cloudflare Worker entry point (`fetch` event, provider routing, rate limiting) for `chat.velstech.net` |
+| `chat-proxy.js` | Cloudflare Worker entry point (`fetch` event, provider routing, per-endpoint rate limits, SSRF/cost guardrails) for `chat.velstech.net` |
 | `chat-proxy-core.js` | Pure helpers used by `chat-proxy.js`: `getCorsOrigin`, `rateOK`, `pruneHits`, `toAnthropicMessages`, `convertCloudflareStream`, `convertAnthropicStream`, + guardrails `validateMessages`, `clampOptions`, `allowedModel`, `validateFeedUrl`, `readCapped`. Required by `tests/chat-proxy.test.js` |
 | `velstech.pws` | `aspell` personal dictionary (111 tech terms) |
 | `tests/` | Unit tests (`node --test`) for `whatsnew-core.js` + `chat-proxy-core.js`; opt-in browser test for the EN/TA/HI toggle (skips without Chrome) |
 | `benchmarks/data.json` | Benchmark results (tested + estimated) |
 | `benchmarks/*.html` | Generated benchmark detail pages |
 | `og/*.png` | Per-article OG images (1200×630) |
-| `tools/` | Generators + scripts |
+| `tools/` | Generators + scripts (incl. `stage-pages.js` – builds the clean `.dist/` for deploy) |
+| `_headers` | Cloudflare Pages security headers (nosniff, HSTS, referrer/permissions policy, frame deny) |
+| `_redirects` | 404 rules for repo-internal paths (defense-in-depth on the production domain) |
+| `newsletter/` | Weekly issues – `issue-NNN.md` (source) + `issue-NNN.html` (email-safe template); outside the template system |
 | `.github/workflows/` | CI/CD pipelines |
 | `tools/posted-articles.json` | State tracking for social auto-poster |
 
@@ -81,6 +84,11 @@ generates a detail page per backend (e.g. ROCm and Vulkan).
 
 ### Buying guides (4 pages)
 Standalone decision-oriented pages at `/buying-guides.html`, wired with `data-amazon` affiliate links.
+
+### Newsletter (weekly)
+`newsletter/issue-NNN.md` is the source; `issue-NNN.html` is the email-safe table template for Brevo.
+The homepage links the latest issue ("Read Issue #N →") in all 3 languages – update those 3 links
+when a new issue ships. Sending workflow + DNS: see `NEWSLETTER-SETUP.md`.
 
 ### Category hubs (7 pages)
 `ai.html`, `hardware.html`, `os.html`, `networking.html`, `security.html`, `programming.html`, `tutorials.html` – each rebuilt as a learning-progression hub with tiers (Start here → Go deeper → Tools → Roadmap).
@@ -190,16 +198,16 @@ Unit tests run on every push via `node --test tests/*.test.js` in `build-check.y
   allowlist, feed-URL validation (private/localhost/metadata/IPv6 blocked),
   rate-limiter pruning, and capped feed reads.
 
-Total: **96 tests** (89 unit + 7 browser), all passing in <100ms.
-
-- **`tests/lang-toggle.test.js`** (7 tests, opt-in) — browser-level guard for the
-  EN/TA/HI toggle, served through a mini Cloudflare-Pages emulator (308 `.html`
-  → clean URL) since every toggle bug was clean-URL-specific. Covers: toggle
-  buttons, click→persist→swap for HI/TA/EN, cross-page language persistence,
-  FAQ rendering + localization after in-place swap, no redirect-loops on
-  untranslated paths. **Skips automatically** when `puppeteer-core` or a Chrome
-  binary is absent, so CI is unaffected. Run locally:
+- **`tests/lang-toggle.test.js`** (8 tests, opt-in) — browser-level guard for the
+  EN/TA/HI toggle and keyboard a11y, served through a mini Cloudflare-Pages
+  emulator (308 `.html` → clean URL) since every toggle bug was clean-URL-specific.
+  Covers: toggle buttons, click→persist→swap for HI/TA/EN, cross-page language
+  persistence, FAQ rendering + localization after in-place swap, skip link as
+  first tab stop, no redirect-loops on untranslated paths. **Skips automatically**
+  when `puppeteer-core` or a Chrome binary is absent, so CI is unaffected. Run locally:
   `npm i puppeteer-core && CHROME_PATH=/usr/bin/google-chrome node --test tests/lang-toggle.test.js`
+
+Total: **97 tests** (89 unit + 8 browser), all passing.
 
 Run locally: `node --test tests/*.test.js`. CI: see `build-check.yml`.
 
@@ -312,7 +320,7 @@ Test: DevTools → Application → Service Workers (active) / Cache Storage / Ma
   pure helpers), `glossary.js` + `define.js` (inline glossary)
 - **Pure-ESM cores** – `whatsnew-core.js` and `chat-proxy-core.js` are dual-export
   (browser global + CommonJS) so the same source runs in the page and in `node --test`
-- **Tests** – `node:test` (built-in, no npm deps). 89 unit tests + 7 opt-in browser tests (auto-skip without Chrome),
+- **Tests** – `node:test` (built-in, no npm deps). 89 unit tests + 8 opt-in browser tests (auto-skip without Chrome),
   CI on every push via `build-check.yml`
 - **Python 3** – OG image generation (Pillow)
 - **Node.js** – SEO, feed, benchmark generators (built-in modules only)

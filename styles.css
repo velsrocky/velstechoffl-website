@@ -2935,3 +2935,61 @@ summary:focus-visible,
   scroll-margin-top: 90px;
   letter-spacing: -0.3px;
 }
+
+/* Article-bottom CTA stack (newsletter + gear) */
+.cta-stack {
+  margin: 34px 0 0;
+  display: grid;
+  gap: 16px;
+}
+
+.cta-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  background: var(--bg-soft);
+}
+
+.cta-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  letter-spacing: -0.2px;
+}
+
+.cta-card p {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.cta-card .newsletter-form {
+  margin: 12px 0 0;
+}
+
+.cta-card .form-status {
+  font-size: 0.88rem;
+  margin: 8px 0 0;
+}
+
+.cta-gear-links {
+  margin: 6px 0 8px;
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.cta-gear-links a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--accent-deep);
+}
+
+.cta-gear-links a:hover {
+  border-bottom-style: solid;
+}
+
+.cta-gear-note {
+  font-size: 0.8rem !important;
+  color: var(--muted);
+  opacity: 0.85;
+}

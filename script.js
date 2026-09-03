@@ -801,14 +801,19 @@ function initContactForm() {
 }
 
 function initNewsletter() {
-  const form = document.getElementById("newsletter-form");
-  if (!form) return;
-  const status = document.getElementById("newsletter-status");
-  const email = document.getElementById("newsletter-email");
+  document.querySelectorAll("form.newsletter-form").forEach((form) => wireNewsletterForm(form));
+}
+
+function wireNewsletterForm(form) {
+  if (form.dataset.wired) return;
+  form.dataset.wired = "1";
+  const status = form.querySelector(".form-status");
+  const emailInput = form.querySelector('input[type="email"]');
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const btn = form.querySelector("button[type='submit']");
+    const original = btn.textContent;
     btn.disabled = true;
     btn.textContent = "Subscribing…";
     status.hidden = true;
@@ -822,6 +827,7 @@ function initNewsletter() {
       const json = await res.json();
       if (res.ok && json.success) {
         form.reset();
+        if (emailInput) emailInput.blur();
         status.textContent = "You're in! Watch your inbox for the next issue.";
         status.style.color = "var(--accent)";
       } else {
@@ -835,7 +841,7 @@ function initNewsletter() {
     }
     status.hidden = false;
     btn.disabled = false;
-    btn.textContent = "Subscribe";
+    btn.textContent = original;
   });
 }
 
@@ -1245,6 +1251,70 @@ function initHotTopic() {
     "</a>";
 }
 
+/* "Recommended gear" – per-category Amazon searches (money pages first).
+   Keys must match ARTICLES categories (see CAT_COLORS). */
+const GEAR_PICKS = {
+  "AI": ["RTX 4060 Ti 16GB GPU", "NVMe SSD 2TB"],
+  "AI & ML": ["RTX 4060 Ti 16GB GPU", "NVMe SSD 2TB"],
+  "Hardware": ["Ryzen 5 processor", "NVMe SSD 1TB", "power supply 650W"],
+  "Operating Systems": ["Raspberry Pi 5 kit", "USB-C hub"],
+  "Linux": ["Raspberry Pi 5 kit", "USB-C hub"],
+  "Software": ["Raspberry Pi 5 kit", "USB-C hub"],
+  "Networking": ["WiFi 6 router", "Raspberry Pi 5 kit"],
+  "Networking & Self-hosting": ["WiFi 6 router", "Raspberry Pi 5 kit"],
+  "Security & Privacy": ["hardware security key", "password manager book"],
+  "Security": ["hardware security key", "password manager book"],
+  "Programming & Web": ["mechanical keyboard", "monitor arm"],
+  "Development": ["mechanical keyboard", "monitor arm"],
+  "Tutorials": ["laptop stand", "mechanical keyboard"],
+};
+
+function initArticleCta() {
+  const cur = getCurrentArticle();
+  if (!cur) return; // articles only
+  const nav = document.querySelector(".article-nav");
+  if (!nav || nav.parentElement.querySelector(".cta-stack")) return;
+
+  const stack = document.createElement("div");
+  stack.className = "cta-stack";
+
+  // Newsletter card (skip if the page already has a hand-placed newsletter form)
+  if (!document.querySelector("main form.newsletter-form")) {
+    const nl = document.createElement("div");
+    nl.className = "cta-card cta-newsletter";
+    nl.innerHTML =
+      '<h3>' + esc(t("cta_newsletter_title")) + "</h3>" +
+      '<p>' + esc(t("cta_newsletter_text")) + "</p>" +
+      '<form class="newsletter-form" id="newsletter-form">' +
+      '<input type="hidden" name="access_key" value="047538ca-c990-448d-9fe7-2319998e6840" />' +
+      '<input type="hidden" name="subject" value="VelsTech newsletter signup (article CTA) - ' + esc(cur.url) + '" />' +
+      '<label class="sr-only" for="cta-newsletter-email">Email</label>' +
+      '<input id="cta-newsletter-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required />' +
+      '<button class="btn btn-primary" type="submit">' + esc(t("cta_newsletter_button")) + "</button>" +
+      '<p class="form-status" hidden></p>' +
+      "</form>";
+    stack.appendChild(nl);
+    wireNewsletterForm(nl.querySelector("form"));
+  }
+
+  // Gear card – category-mapped Amazon picks
+  const picks = GEAR_PICKS[cur.category];
+  if (picks && picks.length) {
+    const gear = document.createElement("div");
+    gear.className = "cta-card cta-gear";
+    gear.innerHTML =
+      '<h3>' + esc(t("cta_gear_title")) + "</h3>" +
+      '<div class="cta-gear-links">' +
+      picks.map((p) => '<a data-amazon="' + esc(p) + '" href="#">' + esc(p) + "</a>").join(" · ") +
+      "</div>" +
+      '<p class="cta-gear-note">' + esc(t("cta_gear_note")) + "</p>";
+    stack.appendChild(gear);
+    initAmazonLinks();
+  }
+
+  if (stack.children.length) nav.parentNode.insertBefore(stack, nav);
+}
+
 initSearch();
 initNavDropdown();
 initLangSwitch();
@@ -1262,6 +1332,7 @@ initProgressBar();
 initReveal();
 initCategoryColors();
 initHotTopic();
+initArticleCta();
 initAmazonLinks();
 initAdsense();
 initShareBar();

@@ -59,22 +59,59 @@ function setLang(lang) {
   }
 
   // Apply the UI immediately so the toggle feels instant,
-  // then navigate to the translated variant in the background.
+  // then swap the article body in place (no full reload) if the
+  // translated variant exists; fall back to navigation on failure.
   applyLang(lang);
 
-  fetch(baseUrl + target, { method: "HEAD" })
-    .then(r => {
-      if (r.ok) {
-        // Full translated variant exists -> navigate to it.
-        location.href = baseUrl + target + location.search + location.hash;
-      } else if (lang !== "en" && path !== base) {
-        // Picked a language with no variant while on a translated page ->
-        // fall back to the English original.
-        location.href = baseUrl + base + location.search + location.hash;
-      } else {
-        // No translated variant -> translate the UI instantly, keep content.
-        applyLang(lang);
+  const swapMain = (html, url) => {
+    try {
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const newMain = doc.querySelector("main");
+      const curMain = document.querySelector("main");
+      if (!newMain || !curMain) return false;
+      if (doc.title) document.title = doc.title;
+      const newDesc = doc.querySelector('meta[name="description"]')?.content;
+      if (newDesc) {
+        const curDesc = document.querySelector('meta[name="description"]');
+        if (curDesc) curDesc.content = newDesc;
       }
+      curMain.innerHTML = newMain.innerHTML;
+      try { history.pushState(null, "", url); } catch {}
+      try { document.documentElement.setAttribute("lang", lang); } catch {}
+      document.querySelectorAll(".article-flow, .pillar-card, .cta-stack, .caution-callout, .pre-caution-wrap").forEach((el) => el.remove());
+      document.querySelectorAll(".code-block").forEach((el) => {
+        const pre = el.querySelector("pre");
+        if (pre) el.replaceWith(pre);
+      });
+      applyLang(lang);
+      try { initArticleFlow(); } catch {}
+      try { initPillar(); } catch {}
+      try { initArticleCta(); } catch {}
+      try { initCopyButtons(); } catch {}
+      try { initCaution(); } catch {}
+      try { initAmazonLinks(); } catch {}
+      try { injectGlossary(); } catch {}
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return true;
+    } catch { return false; }
+  };
+
+  fetch(baseUrl + target)
+    .then((r) => {
+      if (r.ok) return r.text().then((html) => {
+        if (!swapMain(html, baseUrl + target + location.search + location.hash))
+          location.href = baseUrl + target + location.search + location.hash;
+      });
+      if (lang !== "en" && path !== base) {
+        return fetch(baseUrl + base).then((r2) => {
+          if (r2.ok) return r2.text().then((html) => {
+            if (!swapMain(html, baseUrl + base + location.search + location.hash))
+              location.href = baseUrl + base + location.search + location.hash;
+          });
+          location.href = baseUrl + base + location.search + location.hash;
+        });
+      }
+      applyLang(lang);
     })
     .catch(() => applyLang(lang));
 }

@@ -5,7 +5,7 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-09-01T00:00:00Z</updated>
+  <updated>2026-09-04T00:00:00Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>
@@ -202,7 +202,7 @@
     <link rel="alternate" href="https://velstech.net/what-is-machine-learning.html" />
     <id>https://velstech.net/what-is-machine-learning.html</id>
     <published>2026-08-25T00:00:00Z</published>
-    <updated>2026-08-25T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="AI" />
     <summary>A plain-language look at what learning from data actually means – training, models, and prediction – without the jargon.</summary>
   </entry>
@@ -256,7 +256,7 @@
     <link rel="alternate" href="https://velstech.net/local-vs-cloud-ai.html" />
     <id>https://velstech.net/local-vs-cloud-ai.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="AI" />
     <summary>Privacy, cost, and capability – a comparison of running models on your own hardware versus cloud APIs.</summary>
   </entry>
@@ -265,7 +265,7 @@
     <link rel="alternate" href="https://velstech.net/first-pc-build.html" />
     <id>https://velstech.net/first-pc-build.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Hardware" />
     <summary>A beginner-friendly guide to picking a CPU, GPU, RAM, and storage that actually match how you'll use the PC.</summary>
   </entry>
@@ -274,7 +274,7 @@
     <link rel="alternate" href="https://velstech.net/cpu-vs-gpu.html" />
     <id>https://velstech.net/cpu-vs-gpu.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Hardware" />
     <summary>Breaking down the two most important components in your machine and when each one matters most.</summary>
   </entry>
@@ -283,7 +283,7 @@
     <link rel="alternate" href="https://velstech.net/ssd-vs-hdd.html" />
     <id>https://velstech.net/ssd-vs-hdd.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Hardware" />
     <summary>Why an SSD makes an old computer feel new again, and how to pick the right drive and size.</summary>
   </entry>
@@ -310,7 +310,7 @@
     <link rel="alternate" href="https://velstech.net/windows-vs-linux.html" />
     <id>https://velstech.net/windows-vs-linux.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Operating Systems" />
     <summary>An honest comparison of the two for daily use, gaming, and development work.</summary>
   </entry>
@@ -319,7 +319,7 @@
     <link rel="alternate" href="https://velstech.net/how-internet-works.html" />
     <id>https://velstech.net/how-internet-works.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Networking" />
     <summary>A straightforward walkthrough of IP addresses, DNS, and routing – the basics that make the internet tick.</summary>
   </entry>
@@ -355,7 +355,7 @@
     <link rel="alternate" href="https://velstech.net/password-managers.html" />
     <id>https://velstech.net/password-managers.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Security &amp; Privacy" />
     <summary>How a password manager works, what to look for, and why reusing passwords is the biggest risk most people have.</summary>
   </entry>
@@ -364,7 +364,7 @@
     <link rel="alternate" href="https://velstech.net/spotting-phishing.html" />
     <id>https://velstech.net/spotting-phishing.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Security &amp; Privacy" />
     <summary>Real examples of fake emails and messages, and the red flags that give them away before you click.</summary>
   </entry>
@@ -373,7 +373,7 @@
     <link rel="alternate" href="https://velstech.net/learn-to-code.html" />
     <id>https://velstech.net/learn-to-code.html</id>
     <published>2026-08-24T00:00:00Z</published>
-    <updated>2026-08-24T00:00:00Z</updated>
+    <updated>2026-09-04T00:00:00Z</updated>
     <category term="Programming &amp; Web" />
     <summary>A realistic roadmap – pick a language, build tiny projects, and avoid the tutorial trap.</summary>
   </entry>

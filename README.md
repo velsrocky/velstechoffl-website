@@ -71,7 +71,7 @@ Includes interactive web apps: **LLM Playground** (streaming multi-model chat vi
 4. Add HI/TA translations (`your-tool.hi.html` / `your-tool.ta.html`) if the page should be translated
 5. Run `node tools/gen-seo.js`
 
-### Benchmark database (17 generated pages)
+### Benchmark database (16 generated pages)
 Structured GPU × model × quantization results in `benchmarks/data.json`. Each entry
 generates a detail page per backend (e.g. ROCm and Vulkan).
 

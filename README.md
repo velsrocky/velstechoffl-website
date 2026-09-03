@@ -230,6 +230,24 @@ Provider-agnostic `track(name, props)` in `script.js` fans out to Zaraz / gtag /
 Use these in Zaraz → Triggers or GA4 → Events to build the per-article money funnel:
 `cta_view` (impressions) → `affiliate_click` (intent) → Amazon Associate reports (sales).
 
+## PWA (Offline + Installable)
+
+- **`manifest.json`** – `standalone` display, `id`/`scope` `/`, 4 icons (192/512 `any` + `maskable` generated from `apple-touch-icon.png` via `icon-*.png`), 3 shortcuts (Tools / Benchmarks / Playground).
+- **`sw.js`** (`SW_VERSION = "v2"`) – precached shell (`/`, `offline.html`, `manifest.json`, `search-index.json`, `fonts/InterVariable.woff2`, `logo.svg`…); **network-first** for HTML (fresh when online, last-known offline, then `offline.html`), **cache-first** for CSS/JS/img/font (versioned `?v=N` keys auto-invalidate), passthrough for cross-origin (chat proxy, RSS) and `pdf-to-image/`.
+- **`offline.html`** – self-contained fallback (inline styles, no deps) for uncached navigations; excluded from `build.js` managed set intentionally.
+- Registration in `script.js` (https-only, `onload` → `navigator.serviceWorker.register("/sw.js")`). Bump `SW_VERSION` and redeploy to clear old `velstech-shell-*`/`runtime-*` caches.
+
+Test: DevTools → Application → Service Workers (active) / Cache Storage / Manifest; then go offline and reload — visited pages + tools still load.
+
+## Article CTA & Pillar
+
+- **CTA stack** (`initArticleCta` in `script.js`, styles `.cta-stack`/`.cta-card` in `styles.css`) – JS-injected before `.article-nav` on every article (skips pages with a hand-placed `form.newsletter-form`): **Newsletter card** (`data-i18n="cta_newsletter_*"`, `wireNewsletterForm` multi-form safe, Web3Forms) + **Gear card** (`GEAR_PICKS` per `category` → `data-amazon` links, rewritten by `initAmazonLinks`). Tracks `cta_view` on 30% visibility.
+- **Pillar** (`PILLAR` + `initPillar`, 7 steps: *Understand VRAM → Pick a GPU → Budget picks (India) → Calculate VRAM → Estimate speed → Visual planner → Real benchmarks*) – injected on all 7 cluster URLs (articles + tools, `data-pillar-url` + `localizeUrl`), highlights current step, localizes via `data-i18n="pillar_*"`, re-localizes `href`s on `vt-lang-change`. Tracks `pillar_view`/`pillar_click`.
+- Both use `data-i18n` so the language toggle translates them instantly without reload; orphans get `Continue reading` fallback (2 related by `category`) instead of hiding.
+- **Search** (`tools/gen-search-index.js` → `search-index.json` 103 entries, `sw.js` precached network-first) – fuzzy ranked in `script.js` (`editDist1` incl. transposition, tag/category/desc weighting, top-8, `↑`/`↓`/`Enter`/`Esc`, `?q=` param).
+
+
+
 ## Tech stack
 
 - **Static HTML** – no framework, no build step
@@ -244,3 +262,4 @@ Use these in Zaraz → Triggers or GA4 → Events to build the per-article money
 - **Cloudflare** – DNS, proxying, Web Analytics
 - **Mastodon** – social auto-posting
 - **aspell** – spelling audits (`--personal=./velstech.pws`)
+- **Perf** – `chatbot.png` 72×72 retina (12 KB, was 1.6 MB), font `preload` for `InterVariable.woff2` in canonical head via `build.js`.

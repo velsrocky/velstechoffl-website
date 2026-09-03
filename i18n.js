@@ -248,9 +248,23 @@ lang_en: "EN",
   };
 
   function getLang() {
+    // 1. URL wins: Cloudflare Pages serves clean URLs (/foo.hi or /foo.hi.html),
+    //    and a direct landing on a translated page must render in that language
+    //    even with no stored preference.
+    try {
+      const p = location.pathname.split("/").pop() || "";
+      if (/\.hi(\.html)?$/.test(p)) return "hi";
+      if (/\.ta(\.html)?$/.test(p)) return "ta";
+    } catch {}
+    // 2. Explicit user preference.
     try {
       const s = localStorage.getItem("vt-lang");
       if (s && TRANSLATIONS[s]) return s;
+    } catch {}
+    // 3. The page's own static lang attribute (set in the HTML source).
+    try {
+      const l = document.documentElement.getAttribute("lang");
+      if (l && TRANSLATIONS[l]) return l;
     } catch {}
     return "en";
   }

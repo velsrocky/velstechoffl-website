@@ -15,16 +15,22 @@ function t(key) {
   } catch {}
   return key;
 }
+/* Cloudflare Pages serves clean URLs (/foo, /foo.hi) via 308 from the .html
+   files. Normalize the current pathname back to its on-disk filename so all
+   path-based logic works on both /foo.html and /foo. */
+function currentFile() {
+  const seg = location.pathname.split("/").pop() || "index.html";
+  if (!seg) return "index.html"; // directory URL like /benchmarks/
+  if (/\.(hi|ta)$/.test(seg)) return seg + ".html"; // clean translated URL
+  if (seg.includes(".")) return seg; // already has an extension
+  return seg + ".html"; // clean english URL
+}
 function getCurrentArticle() {
-  const path = location.pathname.split("/").pop() || "index.html";
-  const base = path.replace(/\.(hi|ta)\.html$/, ".html");
+  const base = currentFile().replace(/\.(hi|ta)\.html$/, ".html");
   return ARTICLES.find((a) => a.url === base) || ARTICLES.find((a) => location.pathname.endsWith(a.url)) || null;
 }
 function localizeUrl(url) {
-  const lang = getLang();
-  // Also infer from current pathname if localStorage not yet set
-  const path = location.pathname.split("/").pop() || "";
-  const inferred = path.endsWith(".hi.html") ? "hi" : path.endsWith(".ta.html") ? "ta" : lang;
+  const inferred = getLang(); // infers .hi/.ta from the URL first
   if (inferred === "hi") return url.replace(/\.html$/, ".hi.html");
   if (inferred === "ta") return url.replace(/\.html$/, ".ta.html");
   return url;
@@ -37,8 +43,7 @@ function setLang(lang) {
     try { window.dispatchEvent(new CustomEvent("vt-lang-change", { detail: lang })); } catch {}
   }
 
-  const rawPath = location.pathname.split("/").pop() || "index.html";
-  let path = rawPath.includes(".") ? rawPath : rawPath + ".html";
+  const path = currentFile(); // handles clean URLs incl. /foo.hi -> foo.hi.html
   const baseUrl = location.origin + location.pathname.replace(/[^/]+$/, "");
 
   // Resolve the English base filename of the current page.
@@ -88,6 +93,7 @@ function setLang(lang) {
       try { initArticleFlow(); } catch {}
       try { initPillar(); } catch {}
       try { initArticleCta(); } catch {}
+      try { initFaq(); } catch {}
       try { initCopyButtons(); } catch {}
       try { initCaution(); } catch {}
       try { initAmazonLinks(); } catch {}
@@ -152,7 +158,7 @@ function redirectToLangVariant() {
   try {
     const lang = getLang();
     if (lang === "en") return;
-    const path = location.pathname.split("/").pop() || "index.html";
+    const path = currentFile(); // works on clean URLs (/foo -> foo.html)
     const baseUrl = location.origin + location.pathname.replace(/[^/]+$/, "");
     // Already on the correct variant -> nothing to do.
     if ((lang === "ta" && path.endsWith(".ta.html")) ||
@@ -326,7 +332,7 @@ const TOPICS = [
   { href: "programming.html", label: "Development", page: "programming.html" },
 ];
 
-const currentPage = location.pathname.split("/").pop() || "index.html";
+const currentPage = currentFile();
 
 const brandSVG =
   '<svg class="brand-mark" viewBox="0 0 64 64" width="34" height="34" role="img" aria-label="VelsTech logo">' +
@@ -1254,9 +1260,7 @@ const ARTICLE_TITLES = {
   "xiaomi-ai-cube.html": { hi: "Xiaomi AI Cube: लोकल AI के लिए बना मिनी डेस्कटॉप", ta: "Xiaomi AI Cube: உள்ளூர் AI-க்காக உருவாக்கப்பட்ட மினி டெஸ்க்டாப்" },
 };
 function getLocalizedTitle(url) {
-  const lang = getLang();
-  const path = location.pathname.split("/").pop() || "";
-  const inferred = path.endsWith(".hi.html") ? "hi" : path.endsWith(".ta.html") ? "ta" : lang;
+  const inferred = getLang(); // URL-aware: .hi/.ta clean URLs included
   const entry = ARTICLE_TITLES[url];
   if (entry && entry[inferred]) return entry[inferred];
   const art = ARTICLES.find((a) => a.url === url);
@@ -1389,7 +1393,7 @@ function initArticleFlow() {
 }
 
 function initPillar() {
-  const curFile = (location.pathname.split("/").pop() || "index.html").replace(/\.(hi|ta)\.html$/, ".html");
+  const curFile = currentFile().replace(/\.(hi|ta)\.html$/, ".html");
   if (!PILLAR.some((p) => p.url === curFile)) return;
   const nav = document.querySelector(".article-nav");
   if (!nav || nav.parentElement.querySelector(".pillar-card")) return;

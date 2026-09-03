@@ -1,0 +1,16 @@
+# Repo internals must 404 at the routing layer, not just be absent from the
+# deployment (stale hostname-asset fallback was serving old copies).
+/README.md 404
+/CHAT-SETUP.md 404
+/ANALYTICS-SETUP.md 404
+/MONETIZATION-SETUP.md 404
+/NEWSLETTER-SETUP.md 404
+/tools/* 404
+/tests/* 404
+/wrangler.toml 404
+/lighthouserc.json 404
+/velstech.pws 404
+/chat-proxy.js 404
+/chat-proxy-core.js 404
+/.gitignore 404
+/.assetsignore 404

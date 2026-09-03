@@ -1176,6 +1176,16 @@ const SERIES = {
   ],
 };
 
+const PILLAR = [
+  { url: "how-much-vram-for-llm.html", key: "pillar_step_vram" },
+  { url: "best-gpu-for-local-llm.html", key: "pillar_step_gpu" },
+  { url: "best-gpu-ai-under-50000.html", key: "pillar_step_budget" },
+  { url: "llm-vram-calculator.html", key: "pillar_step_calc" },
+  { url: "gpu-ai-calculator.html", key: "pillar_step_speed" },
+  { url: "vram-budget-planner.html", key: "pillar_step_planner" },
+  { url: "benchmark-explorer.html", key: "pillar_step_bench" },
+];
+
 // Localized titles for Continue reading / Related (HI/TA) – keep tech terms English
 const ARTICLE_TITLES = {
   "better-prompts.html": { hi: "बेहतर prompt कैसे लिखें", ta: "சிறந்த பரிந்துரைகளை எழுதுவதற்கான முறைகள்" },
@@ -1337,6 +1347,31 @@ function initArticleFlow() {
   nav.parentNode.insertBefore(flow, nav);
 }
 
+function initPillar() {
+  const curFile = (location.pathname.split("/").pop() || "index.html").replace(/\.(hi|ta)\.html$/, ".html");
+  if (!PILLAR.some((p) => p.url === curFile)) return;
+  const nav = document.querySelector(".article-nav");
+  if (!nav || nav.parentElement.querySelector(".pillar-card")) return;
+  const card = document.createElement("div");
+  card.className = "pillar-card";
+  const steps = PILLAR.map((p, i) => {
+    const active = p.url === curFile;
+    const label = esc(t(p.key));
+    if (active) return '<span class="pillar-step is-active"><span class="pillar-num">' + (i + 1) + '</span>' + label + "</span>";
+    return '<a class="pillar-step" href="' + esc(localizeUrl(p.url)) + '"><span class="pillar-num">' + (i + 1) + "</span>" + label + "</a>";
+  }).join('<span class="pillar-sep">→</span>');
+  card.innerHTML =
+    '<div class="pillar-head"><span class="pillar-title">' + esc(t("pillar_title")) + '</span><span class="pillar-desc">' + esc(t("pillar_desc")) + "</span></div>" +
+    '<nav class="pillar-path" aria-label="Local AI path">' + steps + "</nav>";
+  const stack = nav.parentElement.querySelector(".cta-stack");
+  if (stack) stack.parentNode.insertBefore(card, stack);
+  else nav.parentNode.insertBefore(card, nav);
+  track("pillar_view", { page: location.pathname });
+  card.querySelectorAll("a.pillar-step").forEach((a) =>
+    a.addEventListener("click", () => track("pillar_click", { from: curFile, to: a.getAttribute("href"), page: location.pathname }))
+  );
+}
+
 function initBackToTop() {
   const btn = document.createElement("button");
   btn.className = "back-to-top";
@@ -1468,6 +1503,7 @@ initCopyButtons();
 initCaution();
 addCategoryPill();
 initArticleFlow();
+initPillar();
 initBackToTop();
 initProgressBar();
 initReveal();

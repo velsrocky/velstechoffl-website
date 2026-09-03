@@ -588,6 +588,14 @@ function initWhatsNew() {
   if (!list) return;
   const filters = document.getElementById("latest-filters");
   const filterBtns = filters ? filters.querySelectorAll(".tag-btn") : [];
+  const countEl = document.getElementById("latest-count");
+  const total = (typeof ARTICLES !== "undefined") ? ARTICLES.length : 0;
+
+  function renderCount() {
+    if (!countEl || !window.VelsI18n) return;
+    const template = window.VelsI18n.t("latest_count");
+    countEl.textContent = template.replace("{n}", String(total));
+  }
 
   function matchesFilter(a, filter) {
     if (filter === "All") return true;
@@ -626,6 +634,9 @@ function initWhatsNew() {
       });
     }
   }
+
+  renderCount();
+  window.addEventListener("vt-lang-change", renderCount);
 
   if (filters) {
     filters.addEventListener("click", (e) => {

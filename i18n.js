@@ -76,9 +76,10 @@
       read_guide: "Read guide →",
       ask_about: "Ask about",
       // language
-      lang_en: "EN",
+lang_en: "EN",
       lang_ta: "TA",
-      lang_hi: "HI"
+      lang_hi: "HI",
+      latest_count: "{n} लेख और बढ़ते जा रहे हैं।"
     },
     ta: {
       lang_name: "தமிழ்",
@@ -150,7 +151,8 @@
       ask_about: "பற்றி கேளுங்கள்",
       lang_en: "EN",
       lang_ta: "TA",
-      lang_hi: "HI"
+      lang_hi: "HI",
+      latest_count: "{n} கட்டுரைகள் மற்றும் தொடர்கிறது."
     },
     hi: {
       lang_name: "हिन्दी",

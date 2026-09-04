@@ -944,7 +944,7 @@ function injectChat() {
   if (document.getElementById("vt-chat-script")) return;
   const s = document.createElement("script");
   s.id = "vt-chat-script";
-  s.src = pre + "chat.js?v=22";
+  s.src = pre + "chat.js?v=23";
   s.onerror = () => console.error("[VelsTech] Failed to load chat widget");
   document.head.appendChild(s);
 }

@@ -630,6 +630,18 @@ main.article-page > .share-bar + .article-body { margin-top: 0; }
   letter-spacing: -0.4px;
 }
 
+/* Tamil words are long agglutinative tokens with no break points –
+   keep them inside narrow viewports instead of forcing a zoom-out.
+   `anywhere` (not `break-word`) so it also shrinks min-content size
+   inside flex/grid items, which default to min-width:auto. */
+h1, h2, h3, h4, .article-page .title {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+html[lang="ta"] .hero h1 {
+  font-size: clamp(1.5rem, 6.2vw, 2.6rem);
+}
+
 .accent {
   color: var(--accent);
 }
@@ -1009,6 +1021,8 @@ a.tag:hover {
 .related-title {
   font-weight: 600;
   font-size: 0.95rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .related-meta {
@@ -1216,9 +1230,9 @@ a.tag:hover {
 }
 
 .caution-callout {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
+  /* inline flow, not flex: the content is raw text + <code> and flex would
+     split it into anonymous items that cannot wrap/shrink (TA overflow) */
+  display: block;
   padding: 12px 16px;
   border-radius: 10px;
   background: rgba(251, 146, 60, 0.1);
@@ -1357,6 +1371,15 @@ a.tag:hover {
   border: 1px solid var(--border);
   border-radius: 5px;
   padding: 1px 6px;
+  overflow-wrap: anywhere;
+}
+
+/* Long content (Tamil words, ASCII tokens) must not widen the page –
+   let wide tables scroll instead of forcing a horizontal zoom-out. */
+.article-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .article-body blockquote {
@@ -2661,6 +2684,8 @@ summary:focus-visible,
   color: var(--muted);
   font-size: 0.82rem;
   text-align: right;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /* Hash generator – long digests need to wrap */
@@ -2691,6 +2716,7 @@ summary:focus-visible,
   margin-bottom: 14px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .hub-tier-label {
@@ -2700,6 +2726,12 @@ summary:focus-visible,
   text-transform: none;
   color: var(--accent);
   white-space: nowrap;
+}
+
+/* TA/HI labels are long agglutinative words – nowrap overflows phones */
+html[lang="ta"] .hub-tier-label,
+html[lang="hi"] .hub-tier-label {
+  white-space: normal;
 }
 
 .hub-tier-title {
@@ -2984,6 +3016,8 @@ summary:focus-visible,
   border-radius: 12px;
   padding: 20px 22px;
   background: var(--bg-soft);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .cta-card h3 {

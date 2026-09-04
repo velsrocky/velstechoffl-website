@@ -1,5 +1,14 @@
  const ARTICLES = [
   {
+    title: "Gated Delta Net on AMD: why ROCm stumbles on hybrid-attention LLMs",
+    url: "gated-delta-net-rocm-hybrid.html",
+    date: "2026-09-05",
+    updated: "2026-09-05",
+    category: "AI",
+    tags: ["ROCm","AMD","LLM","Architecture"],
+    description: "A llama.cpp warning on my RX 6800M exposed the real problem with the new wave of hybrid-attention models (Qwen3.8, Kimi Linear, Nemotron-H): no fused GDN kernel on ROCm – and what that costs in tokens per second.",
+  },
+  {
     title: "Qwen3.8 27B GSQ-RCO on RX 6800M: IQ2_XS vs IQ3_S – VelsTech Lab",
     url: "qwen38-27b-gsq-rco-rx6800m.html",
     date: "2026-09-04",

@@ -254,8 +254,20 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp-mtp.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp-mtp.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s-auto-fit.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s-auto-fit.html" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -913,6 +925,36 @@
     <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/flash-attention-guide.hi.html" />
     <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/flash-attention-guide.ta.html" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/flash-attention-guide.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/gated-delta-net-rocm-hybrid.hi.html</loc>
+    <lastmod>2026-09-05T00:00:00Z</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gated-delta-net-rocm-hybrid.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/gated-delta-net-rocm-hybrid.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/gated-delta-net-rocm-hybrid.html</loc>
+    <lastmod>2026-09-05T00:00:00Z</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gated-delta-net-rocm-hybrid.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/gated-delta-net-rocm-hybrid.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/gated-delta-net-rocm-hybrid.ta.html</loc>
+    <lastmod>2026-09-05T00:00:00Z</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gated-delta-net-rocm-hybrid.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/gated-delta-net-rocm-hybrid.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -9,6 +9,15 @@
   <author><name>VelsTech</name></author>
 
   <entry>
+    <title>Gated Delta Net on AMD: why ROCm stumbles on hybrid-attention LLMs</title>
+    <link rel="alternate" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+    <id>https://velstech.net/gated-delta-net-rocm-hybrid.html</id>
+    <published>2026-09-05T00:00:00Z</published>
+    <updated>2026-09-05T00:00:00Z</updated>
+    <category term="AI" />
+    <summary>A llama.cpp warning on my RX 6800M exposed the real problem with the new wave of hybrid-attention models (Qwen3.8, Kimi Linear, Nemotron-H): no fused GDN kernel on ROCm – and what that costs in tokens per second.</summary>
+  </entry>
+  <entry>
     <title>Qwen3.8 27B GSQ-RCO on RX 6800M: IQ2_XS vs IQ3_S – VelsTech Lab</title>
     <link rel="alternate" href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.html" />
     <id>https://velstech.net/qwen38-27b-gsq-rco-rx6800m.html</id>

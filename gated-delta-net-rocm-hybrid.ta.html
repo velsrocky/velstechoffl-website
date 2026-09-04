@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="RX 6800M-ல் llama.cpp எச்சரிக்கை ஒன்று புதிய hybrid-attention models (Qwen3.8, Kimi Linear, Nemotron-H) உண்மையான பிரச்சினையை வெளிப்படுத்தியது: ROCm-ல் fused GDN kernel இல்லை – அதன் விலை tokens per second-ல் என்ன." />
+  <title>AMD-ல் Gated Delta Net: hybrid-attention LLM-களில் ROCm ஏன் தடுமாறுகிறது | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/gated-delta-net-rocm-hybrid.ta.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/gated-delta-net-rocm-hybrid.hi.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/gated-delta-net-rocm-hybrid.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/gated-delta-net-rocm-hybrid.html" />
+  <link rel="alternate" type="application/atom+xml" title="VelsTech (Atom feed)" href="https://velstech.net/feed.xml" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css?v=53" />
+  <script defer src="articles.js?v=15"></script>
+  <script defer src="i18n.js?v=5"></script>
+  <script defer src="whatsnew-core.js?v=1"></script>
+  <script defer src="script.js?v=69"></script>
+</head>
+<body>
+  <main class="article-page" data-article>
+    <p class="breadcrumb"><a href="index.ta.html">முகப்பு</a> / <a href="ai.ta.html">AI</a></p>
+    <h1 class="title">Gated Delta Net on AMD: why ROCm stumbles on hybrid-attention LLMs</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">ROCm</span>
+      <span class="tag">AMD</span>
+      <span class="tag">LLM</span>
+      <span class="tag">Architecture</span>
+      <span>4 Sept 2026</span>
+      <span>· 5 நிமிட வாசிப்பு</span>
+      <span>· Updated 4 Sept 2026</span>
+          <span class="ai-badge" title="இந்த கட்டுரை AI உதவியுடன் உருவாக்கப்பட்டது.">🤖 AI-assisted</span>
+    </div>
+
+    <div class="article-body">
+      <p>RX 6800M-ல் Qwen3.8 27B-ஐ benchmark செய்து கொண்டிருந்தபோது, llama.cpp-வின் ஒரு எச்சரிக்கை விளக்கம் கொடுத்தது விளக்கவே முடியாத 2.6× வேக வீழ்ச்சிக்கு காரணம்: <code>fused Gated Delta Net (chunked) not supported</code>. அந்த ஒரே வரி, அடுத்த தலைமுறை language models வருகையில் AMD சந்திக்கப் போகும் மிகப்பெரிய software இடைவெளியின் முன்னோட்டம் – ஆனால் பெரும்பாலானவர்களுக்கு இது தெரியவே தெரியாது, ஏனெனில் model ஓடுவது ஓடும்தான். வேகமாக மட்டுமல்ல.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 இதற்குப் பின்னால் உள்ள அளவீடு</div>
+        <p>முழு test logs மற்றும் எண்கள்: <a href="qwen38-27b-gsq-rco-rx6800m.ta.html">RX 6800M-ல் Qwen3.8 27B GSQ-RCO</a> · <a href="benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s-auto-fit.html">auto-fit benchmark entry</a>.</p>
+        <a class="btn btn-primary" href="benchmarks/index.html">Benchmark தரவுத்தளம் →</a>
+      </div>
+
+      <h2>எல்லாம் தொடங்கிய எச்சரிக்கை</h2>
+      <p>IQ3_S-ஐ இரண்டாவது முறை ஓட்டினேன்; <code>-ngl 999</code> ஐ கட்டாயப்படுத்துவதற்குப் பதிலாக GPU/CPU பிரிவை <code>--fit</code>-க்கு விட்டுக்கொடுத்தேன். Decode 19.0-லிருந்து 7.3 tok/s-ஆக சரிந்தது. காரணம் லாக்கில் இருந்தது:</p>
+      <pre>W resolve_fused_ops: layer 0 is assigned to device CPU but fused
+  Gated Delta Net (chunked) is assigned to device ROCm0
+W fused Gated Delta Net (chunked) not supported, set to disabled</pre>
+      <p>இந்த இரண்டு வரிகளில் இரண்டு உண்மைகள் மறைந்திருக்கின்றன. முதலாவது: <strong>Qwen3.8 சாதாரண transformer அல்ல</strong> – standard attention layers-உடன் Gated Delta Net (GDN) layers-ஐ கலக்கிறது. இரண்டாவது: CUDA-க்கு llama.cpp-ல் வேகமான fused GDN kernel உள்ளது, ஆனால் <strong>ROCm-ல் எதுவும் இல்லை</strong>. fit algorithm GDN layer-ஐ தொட்ட உடனேயே அது fallback-க்கு செல்ல நேர்ந்தது – அந்த fallback பேரழிவு அளவுக்கு மெதுவு.</p>
+
+      <h2>Gated Delta Net என்றால் என்ன – எளிய மொழியில்</h2>
+      <p>Standard attention ஒவ்வொரு புதிய token-ஐயும் <em>கடந்த ஒவ்வொரு token-உடனும்</em> ஒப்பிடுகிறது. அந்த வரலாறு தான் KV cache – context அதிகரிக்க அதிகரிக்கும், VRAM-ஐ உண்ணும். Linear attention சொல்கிறது: துல்லியமான வரலாறை மறந்துவிடு, அதற்குப் பதிலாக ஒரு <em>fixed-size running summary</em> வைத்திரு. token ஒன்றுக்கான செலவு context-உடன் வளர்வதை நிறுத்தும்; memory நிலையாகிவிடும்.</p>
+      <p>அந்த summary-யை உருவாக்க தற்போதைய சிறந்த மருந்து GDN. இரண்டு ideas அடுக்கடுக்காக:</p>
+      <ul>
+        <li><strong>Delta rule</strong> – புதிய தகவல் வரும்போது memory-ல் சேர்க்காதீர்கள்; அது எந்தப் பகுதியோடு மோதுகிறதோ <em>அந்தப் பகுதியை overwrite செய்யுங்கள்</em> – append log அல்ல, diff மாதிரி.</li>
+        <li><strong>Gating</strong> – update-இல் எவ்வளவு பயன்படுத்த வேண்டும் என்று தீர்மானிக்கும் கற்ற per-channel volume knob; எதுவும் மாறாதபோது layer state-ஐ பிடித்தும் வைக்கலாம்.</li>
+      </ul>
+      <p>தனியே ஓடினால் linear attention விவரங்களை மறந்துவிடும். அதனால் தான் தீவிரமான புதிய models எல்லாம் <strong>hybrid</strong>: ஒரு full-attention layer-க்கு சுமார் மூன்று GDN layers. Attention layers துல்லியமான recall-ஐ வைக்கும்; GDN layers மலிவு விலையில் sequence mixing-ன் பெரும் பணியை செய்யும். Qwen3-Next இந்த design-ஐ நிரூபித்தது; Qwen3.8 அதை 27B size class-க்கு கொண்டு வருகிறது; Kimi Linear, MiniMax-ன் lightning attention, Falcon-H1, Nemotron-H (Mamba-2, அதே idea family) எல்லாம் இந்த திசையிலேயே ஓடுகின்றன.</p>
+
+      <h2>இது AMD பயனர்களை ஏன் குத்துகிறது</h2>
+      <p>GDN layer ஒரு recurrent state update. மேம்படுத்தாமல், token-by-token ஓட்டினால் அது <em>sequential</em> – GPU-களுக்கு sequential வேலை பிடிக்காது. "chunked" fused kernel-ன் முழு நோக்கமே அந்த recurrence-ஐ மறுஎழுதி parallel blocks-ஆக ஓட்டுவது. NVIDIA பயனர்களுக்கு அந்த kernel விரைவில் கிடைத்தது. ROCm-ல் llama.cpp-ன் fused-op table-இல் இது இன்னும் இல்லை – அதனால் layer அல்ல unfused fallback-ல் ஓடும், அல்லது என்னைப் போல CPU-க்கு செல்லும்.</p>
+      <p>விலை என்ன? அதே model, அதே அட்டை, ஒரே ஒரு flag வித்தியாசம்:</p>
+      <pre>Config                 Layers on GPU    Decode        Context
+──────────────────────────────────────────────────────────────
+-ngl 999 (forced)      all              18.97 tok/s   4K
+--fit (auto)           all but layer 0  7.30 tok/s    4K</pre>
+      <p><em>ஒரே</em> hybrid layer CPU-க்கு போனதற்கு 62% penalty – அதன்பின் GPU ஒவ்வொரு token-லும் அதைப் பார்த்து stall ஆகும். பாடம் கசக்கமாக generalise ஆகிறது: இன்று ROCm-ல், hybrid model ஒரு வேகம் தான் – அதன் மோசமாக வைக்கப்பட்ட linear-attention layer எவ்வளவு வேகமோ அவ்வளவு.</p>
+
+      <h2>உங்கள் model பாதிக்கப்பட்டுள்ளதா? மூன்று சோதனைகள்</h2>
+      <ol>
+        <li><strong>Startup log-ஐப் படியுங்கள்.</strong> <code>resolve_fused_ops</code> அல்லது "not supported, set to disabled" வரி – GDN, Mamba, SSM, "recurrent" என்று இருந்தால் உங்களிடம் hybrid உள்ளது; ROCm-ல் அதன் வேக பாதை இல்லை.</li>
+        <li><strong>Architecture-ஐச் சரிபார்க்கவும்.</strong> <code>llama-gguf --metadata model.gguf</code> (அல்லது எந்த GGUF reader)-ல் <code>general.architecture</code> பார்க்கவும் – <code>qwen3next</code> வகை keys, <code>linear_attention</code> layer types, <code>ssm*</code> fields ஆகியவை சொல்லும்.</li>
+        <li><strong>இரண்டு config-உம் benchmark செய்யுங்கள்.</strong> <code>-ngl 999</code> கட்டாயப்படுத்தி auto-fit-உடன் ஒப்பிடுங்கள். forcing ஜெரித்தால், fit algorithm hybrid layer-ஐ உங்கள் backend வேகமாக ஓட்ட முடியாத இடத்தில் வைக்கிறது.</li>
+      </ol>
+
+      <h2>இன்று என்ன செய்வது</h2>
+      <ul>
+        <li><strong>AMD-ல் hybrid models-க்கு <code>-ngl 999</code> கட்டாயம்</strong> – சிறிய context-ஐ ஏற்றுக்கொள்ளுங்கள்; என் சோதனையில் இது auto-fit-ஐ 2.6× தோற்கடித்தது.</li>
+        <li><strong>VRAM இடவசதியை context-ஆல் அல்ல, quant-ஆல் வாங்குங்கள்.</strong> IQ2_XS 52K tokens இடம் விட்டது; IQ3_S கிட்டத்தட்ட ஒன்றுமில்லை. 12 GB அட்டையில் 2 bpw quant தான் hybrid-க்கு நண்பன்.</li>
+        <li><strong>ROCm-ல் இன்னும் full-attention models தான் பாதுகாப்பான தேர்வு.</strong> fused kernels வருவதற்கு முன் dense 27B கணிக்கத்தக்கது; hybrid 27B-ல் குழி உள்ளது.</li>
+        <li><strong>llama.cpp-ன் ROCm backend-ஐ கண்காணியுங்கள்.</strong> Fused-op table வளர்கிறது; இந்த இடைவெளி "எப்போது" என்ற கேள்வி, "ஏன்" அல்ல. பெரிய merge-களுக்குப் பிறகு மீண்டும் சோதிக்கவும்.</li>
+      </ul>
+
+      <h2>முடிவு</h2>
+      <p>LLM stack-இன் architecture அடுக்கு "பெரிய KV cache" இலிருந்து "ஸ்மார்ட்டான fixed-size state" நகர்ந்து கொண்டிருக்கிறது; Gated Delta Net தற்போதைய வெற்றியாளர். AMD-ன் hardware சரி – இந்த புதிய ops-க்கு அதன் kernel coverage இல்லை, அதை llama.cpp startup-ல் ஒரு அமைதியான எச்சரிக்கை வரியில் மட்டுமே சொல்லும். நீங்கள் Radeon-ல் local AI ஓட்டுபவர் என்றால், அந்த வரியை இன்றே படிக்கத் தொடங்குங்கள்: 2026-ன் models hybrid – நீங்கள் தயாராக இருந்தாலும் இல்லையென்றாலும்.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">📚 தொடர்ந்து படிக்க</div>
+        <p><a href="what-is-an-llm.ta.html">LLM என்றால் என்ன?</a> – KV cache எங்கே பொருந்துகிறது · <a href="kv-cache-explained.ta.html">KV cache explained</a> – GDN மாற்றும் அந்த விஷயம் · <a href="how-much-vram-for-llm.ta.html">LLM-க்கு எவ்வளவு VRAM தேவை?</a></p>
+        <a class="btn btn-primary" href="ai.ta.html">AI-க்கு திரும்ப →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.ta.html">← AI-க்கு திரும்ப</a>
+      <a href="tutorials.ta.html">அனைத்து டுடோரியல்கள்</a>
+    </div>
+  </main>
+
+</body>
+</html>

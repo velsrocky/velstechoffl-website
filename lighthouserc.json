@@ -4,6 +4,7 @@
       "staticDistDir": ".",
       "url": [
         "http://localhost/index.html",
+        "http://localhost/index.ta.html",
         "http://localhost/what-is-an-llm.html",
         "http://localhost/tools.html",
         "http://localhost/llm-vram-calculator.html",

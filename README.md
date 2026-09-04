@@ -10,7 +10,7 @@ python3 tools/gen-og-images.py   # OG images per article
 node tools/gen-seo.js             # SEO meta, sitemap, robots.txt
 node tools/gen-feed.js            # Atom feed
 node tools/gen-benchmarks.js      # Benchmark detail pages
-node tools/gen-search-index.js    # Prebuilt search index (104 entries)
+node tools/gen-search-index.js    # Prebuilt search index (105 entries)
 
 # Keep boilerplate/versions canonical (see Boilerplate & versioning below)
 node tools/build.js check
@@ -51,7 +51,7 @@ node --test tests/*.test.js
 
 ## Content types
 
-### Articles (44 total)
+### Articles (45 total)
 Registered in `articles.js` with title, URL, date, category, tags, description, and optional `faq` array. Articles appear in the RSS feed, homepage "Latest" section, Mastodon auto-posts, and category hubs. 29 articles ship with `faq` arrays – rendered visibly on-page by `initFaq()` (script.js) and mirrored as FAQPage JSON-LD by `gen-seo.js`. (Note: Google restricted FAQ rich results to gov/health sites in 2023 – the visible Q&As still serve featured snippets, AI answer engines, and readers.)
 
 **To add an article:**
@@ -371,7 +371,7 @@ Test: DevTools → Application → Service Workers (active) / Cache Storage / Ma
 - **CTA stack** (`initArticleCta` in `script.js`, styles `.cta-stack`/`.cta-card` in `styles.css`) – JS-injected before `.article-nav` on every article (skips pages with a hand-placed `form.newsletter-form`): **Newsletter card** (`data-i18n="cta_newsletter_*"`, `wireNewsletterForm` multi-form safe, Web3Forms) + **Gear card** (`GEAR_PICKS` per `category` → `data-amazon` links, rewritten by `initAmazonLinks`). Tracks `cta_view` on 30% visibility.
 - **Pillar** (`PILLAR` + `initPillar`, 7 steps: *Understand VRAM → Pick a GPU → Budget picks (India) → Calculate VRAM → Estimate speed → Visual planner → Real benchmarks*) – injected on all 7 cluster URLs (articles + tools, `data-pillar-url` + `localizeUrl`), highlights current step, localizes via `data-i18n="pillar_*"`, re-localizes `href`s on `vt-lang-change`. Tracks `pillar_view`/`pillar_click`.
 - Both use `data-i18n` so the language toggle translates them instantly without reload; orphans get `Continue reading` fallback (2 related by `category`) instead of hiding.
-- **Search** (`tools/gen-search-index.js` → `search-index.json` 104 entries, `sw.js` precached network-first) – fuzzy ranked in `script.js` (`editDist1` incl. transposition, tag/category/desc weighting, top-8, `↑`/`↓`/`Enter`/`Esc`, `?q=` param).
+- **Search** (`tools/gen-search-index.js` → `search-index.json` 105 entries, `sw.js` precached network-first) – fuzzy ranked in `script.js` (`editDist1` incl. transposition, tag/category/desc weighting, top-8, `↑`/`↓`/`Enter`/`Esc`, `?q=` param).
 
 
 

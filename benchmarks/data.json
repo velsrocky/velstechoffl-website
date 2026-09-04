@@ -69,6 +69,7 @@
       "kv_quant": "q8_0",
       "offload": false,
       "tested": true,
+      "source_article": "qwen38-27b-gsq-rco-rx6800m.html",
       "backends": [
         { "name": "ROCm (IQ2_XS-mtp)", "decode": 20.77, "prompt": 113.51 },
         { "name": "ROCm (IQ3_S)", "decode": 18.97, "prompt": 178.32 }

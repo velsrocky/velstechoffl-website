@@ -1,5 +1,21 @@
 [
   {
+    "title": "Qwen3.8 27B GSQ-RCO on RX 6800M: IQ2_XS vs IQ3_S – VelsTech Lab",
+    "url": "qwen38-27b-gsq-rco-rx6800m.html",
+    "desc": "Tested Qwen3.8 27B GSQ-RCO on a 12 GB RX 6800M – IQ2_XS decodes 20.8 tok/s with 52K context at 90% VRAM, while IQ3_S wins prompt eval but gets stuck at 4K context because --fit aborted on a manual -ngl.",
+    "category": "AI",
+    "tags": [
+      "VelsTech Lab",
+      "Qwen",
+      "GGUF",
+      "RX 6800M",
+      "Quantization",
+      "Benchmark"
+    ],
+    "kind": "article",
+    "date": "2026-09-04"
+  },
+  {
     "title": "GPT-6 Astra: OpenAI's new frontier model, explained",
     "url": "gpt-6-astra.html",
     "desc": "OpenAI launched GPT-6 Astra today. The benchmark numbers that matter, the honest caveats, the pricing – and what it means if you run local AI on AMD hardware.",

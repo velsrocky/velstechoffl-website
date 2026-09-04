@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="12 GB RX 6800M-ல் Qwen3.8 27B GSQ-RCO சோதிக்கப்பட்டது – IQ2_XS 90% VRAM-ல் 52K context உடன் 20.8 tok/s decode செய்கிறது; IQ3_S prompt eval-ல் வென்றாலும் manual -ngl காரணமாக 4K context-ல் மாட்டிக்கொண்டது." />
+  <title>RX 6800M-ல் Qwen3.8 27B GSQ-RCO: IQ2_XS vs IQ3_S – VelsTech Lab | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.ta.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.html" />
+  <link rel="alternate" hreflang="hi" href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.hi.html" />
+  <link rel="alternate" hreflang="ta" href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.ta.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.html" />
+  <link rel="alternate" type="application/atom+xml" title="VelsTech (Atom feed)" href="https://velstech.net/feed.xml" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css?v=53" />
+  <script defer src="articles.js?v=15"></script>
+  <script defer src="i18n.js?v=5"></script>
+  <script defer src="whatsnew-core.js?v=1"></script>
+  <script defer src="script.js?v=69"></script>
+</head>
+<body>
+  <main class="article-page" data-article>
+    <p class="breadcrumb"><a href="index.ta.html">முகப்பு</a> / <a href="ai.ta.html">AI</a> / <a href="lab.ta.html">VelsTech Lab</a> / இந்த சோதனை</p>
+    <h1 class="title">RX 6800M-ல் Qwen3.8 27B GSQ-RCO: IQ2_XS vs IQ3_S – VelsTech Lab</h1>
+    <div class="meta">
+      <span class="tag cat-pill" style="color:#a78bfa;background:#a78bfa26">AI</span>
+      <span class="tag">VelsTech Lab</span>
+      <span class="tag">Qwen</span>
+      <span class="tag">GGUF</span>
+      <span class="tag">RX 6800M</span>
+      <span class="tag">llama.cpp</span>
+      <span>செப் 4, 2026</span>
+      <span>· 4 நிமிட வாசிப்பு</span>
+      <span>· புதுப்பிப்பு செப் 4, 2026</span>
+          <span class="ai-badge" title="இந்த கட்டுரை AI உதவியுடன் உருவாக்கப்பட்டது.">🤖 AI-assisted</span>
+    </div>
+
+    <div class="article-body">
+      <p><span class="tested-badge">🧪 VelsTech Lab</span> 12 GB mobile GPU-ல் 27B dense model உண்மையில் பயனுள்ளதாக இயங்குமா? <strong>Qwen3.8 27B GSQ-RCO</strong>-யின் இரண்டு quants – <code>IQ2_XS</code> (MTP draft head உடன்) மற்றும் <code>IQ3_S</code> – ஐ RX 6800M-ல் பக்கத்துக்குப் பக்கமாக இயக்கினேன். எந்த quant தேர்வு செய்கிறீர்கள் என்பது context பட்ஜெட்டையும் வேகத்தையும் தீர்மானிக்கிறது; llama.cpp-ல் ஒரு flag தவறு IQ3_S ஓட்டத்திடமிருந்து அமைதியாக 92% context-ஐ பறித்தது.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🔧 முதலில் உங்கள் fit-ஐ நீங்களே சரிபார்க்கவும்</div>
+        <p><a href="llm-vram-calculator.ta.html">LLM VRAM Calculator</a> – 27B IQ2/IQ3 + உங்கள் context உங்கள் VRAM-ல் பொருக்குமா? · <a href="gpu-ai-calculator.ta.html">GPU AI Performance Calculator</a> – இயக்குவதற்கு முன்பே எந்த tok/s எதிர்பார்க்கலாம் என்று கணக்கிடுங்கள்.</p>
+        <a class="btn btn-primary" href="llm-vram-calculator.ta.html">கால்குலேட்டர்களைத் திறக்க →</a>
+      </div>
+
+      <h2>சோதனை இயந்திரம்</h2>
+      <ul>
+        <li><strong>Machine:</strong> ASUS ROG Strix G513QY · Ryzen 9 5900HX (8C/16T) · AMD RX 6800M 12GB (RDNA2, mobile) · 32 GB RAM · 2 TB NVMe</li>
+        <li><strong>OS:</strong> Ubuntu 26.04.1 LTS (Wayland) · ROCm · <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> (current build), <code>n_threads=8</code></li>
+        <li><strong>Model A:</strong> <code>Qwen3.8-27B-GSQ-RCO-IQ2_XS-mtp.gguf</code> – 27B dense, ~2 bpw i-quants, block-64 MTP draft head உடன்</li>
+        <li><strong>Model B:</strong> <code>Qwen3.8-27B-GSQ-RCO-IQ3_S.gguf</code> – அதே model, ~3 bpw, draft head இல்லை</li>
+        <li><strong>இரண்டு ஓட்டங்களும்:</strong> <code>-ngl 999 --cache-type-k q8_0 --cache-type-v q8_0 -fa on --fit on --reasoning-preserve --jinja</code></li>
+      </ul>
+      <figure>
+        <img src="img/qwen38-27b-gsq-rco/rig.webp" alt="System details பலகை: ASUS ROG Strix G513QY, Ryzen 9 5900HX, 32 GB RAM, AMD Radeon RX 6800M, Ubuntu 26.04" width="868" height="564" loading="lazy" />
+        <figcaption>சோதனை இயந்திரம் – 12 GB RDNA2 mobile GPU கொண்ட 2021 கேமிங் லேப்டாப்.</figcaption>
+      </figure>
+
+      <h2>எப்படி இயக்கினோம்</h2>
+      <h3>Run 1 – IQ2_XS (MTP tensors உடன்)</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Qwen3.8-27B-GSQ-RCO-IQ2_XS-mtp.gguf \
+ -ngl 999 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -fa on \
+ --fit on \
+ --reasoning-preserve \
+ --jinja</pre>
+
+      <h3>Run 2 – IQ3_S</h3>
+      <pre>export LD_LIBRARY_PATH=/opt/rocm/lib:$LD_LIBRARY_PATH
+llama-server \
+ -m /home/user-name/models/Qwen3.8-27B-GSQ-RCO-IQ3_S.gguf \
+ -ngl 999 \
+ --cache-type-k q8_0 \
+ --cache-type-v q8_0 \
+ -fa on \
+ --fit on \
+ --reasoning-preserve \
+ --jinja</pre>
+
+      <h2>அளவீட்டு முடிவுகள்</h2>
+      <pre>Metric               IQ2_XS-mtp          IQ3_S           Delta
+──────────────────────────────────────────────────────────────
+Decode (eval)        20.77 tok/s         18.97 tok/s     +9.5%
+Decode (tg)          20.70 tok/s         18.93 tok/s     +9.4%
+Prompt eval          113.51 tok/s        178.32 tok/s    -36%  (IQ3_S வேகம்)
+Context fitted       52,736 tok          4,096 tok       12.9×
+VRAM used            11.57 / 12.87 GB    12.52 / 12.87 GB
+                     (90%)               (97%)
+Graphs reused        124                 252
+Chat UI avg speed    20.9 t/s            19.0 t/s</pre>
+      <p><strong>முக்கிய கண்டுபிடிப்பு:</strong> IQ2_XS decode-ல் வென்றது – <em>13 மடங்கு அதிக context</em> எடுத்தபடி – பெரிய KV cache decode-ஐ மெதுவாக்குமே தவிர வேகமாக்காது, எனவே இந்த வெற்றி உண்மை. IQ3_S ஒரு token-க்கு அதிக bytes படிக்கிறது (~3 bpw vs ~2 bpw); இந்த அட்டை bandwidth-bound, அந்த வேறுபாடு ~1.8 tok/s-ஆக தெரிகிறது. ஆச்சரியம் prompt eval-ல்: IQ3_S உள்ளீட்டை <strong>57% வேகமாக</strong> செயலாக்குகிறது (178 vs 114 tok/s) – 2 bpw i-quants compute-bound prompt pass-ல் கனமான dequant/codebook செலவு தருகின்றன; bandwidth-bound decode-ல் தரவரிசை திரும்பிவிடுகிறது.</p>
+
+      <h2>சான்று – chat ஓட்டங்கள்</h2>
+      <figure>
+        <img src="img/qwen38-27b-gsq-rco/chat-iq2xs.webp" alt="llama.cpp chat UI-ல் IQ2_XS model அறிமுகம், 52.74K-ல் 498 context பயன்பாடு, சராசரி வேகம் 20.9 tokens வினாடி" width="1200" height="1122" loading="lazy" />
+        <figcaption>IQ2_XS: 498 / 52.74K context பயன்பாடு, chat UI-ல் 20.9 t/s சராசரி.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/qwen38-27b-gsq-rco/chat-iq3s.webp" alt="llama.cpp chat UI-ல் IQ3_S model அறிமுகம், 4.10K-ல் 711 context பயன்பாடு (17 சதவீதம்), சராசரி வேகம் 19.0 tokens வினாடி" width="1200" height="870" loading="lazy" />
+        <figcaption>IQ3_S: பதில் நீளமாக வந்தது, ஆனால் நிரப்ப 4.10K context மட்டுமே இருந்தது – 19.0 t/s.</figcaption>
+      </figure>
+
+      <h2>VRAM – அமைதியான பெரிய கதை</h2>
+      <figure>
+        <img src="img/qwen38-27b-gsq-rco/vram-iq2xs.webp" alt="GPU மானிட்டர்: AMD Radeon RX 6800M வீடியோ மேம்பாடு 11.57 / 12.87 GB, 90 சதவீதம்" width="900" height="1477" loading="lazy" />
+        <figcaption>90% VRAM-ல் IQ2_XS – weights ப்ளஸ் 52K q8_0 KV cache, ~1.3 GB இடம் மீதம்.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/qwen38-27b-gsq-rco/vram-iq3s.webp" alt="GPU மானிட்டர்: AMD Radeon RX 6800M வீடியோ மேம்பாடு 12.52 / 12.87 GB, 97 சதவீதம்" width="900" height="1696" loading="lazy" />
+        <figcaption>இயல்பான 4K context-ோடே IQ3_S 97% VRAM-ல் – weights மட்டும் அட்டையை நிரப்பிவிடுகின்றன.</figcaption>
+      </figure>
+
+      <h2>லாக்கள் என்ன சொன்ன – என்ன உடைந்தது</h2>
+      <ol>
+        <li><strong>Run 2:</strong> <code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – <code>--fit</code> தானே <code>-ngl</code>-உம் context-உம் தேர்வு செய்ய வேண்டும்; கைமுறையாக <code>-ngl 999</code> திணித்ததும் அது விட்டுக்கொடுத்து விட்டது, அதனால் IQ3_S <strong>இயல்பான 4096-token context</strong>-ல் நின்றுபோய்விட்டது. <code>-ngl</code>-ஐ நீக்கவும் (அல்லது <code>-c</code>-ஐ தெளிவாக அமைக்கவும்) – ~9.5 GB weights-க்குப் பிறகு 4K முதல் 16K வரை எங்காவது பொருந்தும்.</li>
+        <li><strong>Run 1:</strong> பதினைந்து <code>W model has unused tensor blk.64.*</code> வரிகள் – முழு extra transformer block-உம் (attention + FFN + <code>nextn.*</code> MTP head, ~348 MB) <code>--spec-type draft-mtp</code> flag கொடுக்காததால் புறக்கணிக்கப்பட்டது. இந்த ஓட்டத்தில் MTP head வெறும் dead weight; அதை இயக்குவது தான் அடுத்த தெளிவான சோதனை (<a href="tiel-coder-35b-mtp-rx6800m.ta.html">Tiel-Coder 35B-A3B</a>-ல் அது +14.6% தந்தது).</li>
+        <li><strong>இரண்டு ஓட்டங்களும்:</strong> <code>W srv llama_server: CORS is set to allow all origins ('*') and no API key is set</code> – server <code>127.0.0.1</code>-ல் மட்டுமே bind ஆகி இருக்கும் வரை பாதுகாப்பானது; API key இல்லாமல் இந்த port-ஐ எப்போதும் நெட்வொர்க்கு வெளியே திறக்கக் கூடாது.</li>
+        <li><strong>இரண்டு ஓட்டங்களும்:</strong> <code>n_ctx_slot = 52736 / 4096, kv_unified = 'true'</code> – 4 slots-ல் unified KV; 52K என்ற எண்ணை IQ2_XS weights-உடன் சேர்த்து --fit தான் பொருத்தியது.</li>
+      </ol>
+
+      <h2>முடிவு</h2>
+      <p>12 GB RX 6800M-ல் <strong>இந்த 27B-க்கு IQ2_XS தான் practical choice</strong>: ~21 tok/s decode, உண்மையில் பயன்படும் 52K context, 10% VRAM இடவசதி. IQ3_S தாள் மீது நல்ல quant, ஆனால் இந்த அட்டைக்கு இன்னும் விலை அதிகம் – உண்மையான context-க்கே முன்பே 97% VRAM, என் <code>-ngl 999</code> தவறு அதன் உண்மையான திறனை மறைத்துவிட்டது. இரண்டு follow-ups செய்யத் தக்கவை: <code>--fit</code>-ஐ விட்டு (கைமுறை <code>-ngl</code> இல்லாமல்) IQ3_S மீண்டும் இயக்குவது, IQ2_XS-ல் <code>--spec-type draft-mtp</code> இயக்குவது – IQ3_S 16K கூட பொருந்தினால் அது quality pick ஆகிவிடும்; MTP வேலை செய்தால் IQ2_XS 23–24 tok/s-ஐ தாண்டலாம்.</p>
+
+      <div class="tool-callout">
+        <div class="tool-callout-title">🧪 மேலும் Lab</div>
+        <p>தொடர்புடையவை: <a href="how-much-vram-for-llm.ta.html">LLM-க்கு எவ்வளவு VRAM தேவை?</a> · <a href="quantization-deep-dive.ta.html">Quantization deep dive</a> · <a href="moe-vs-dense-rx6800m-16k-vs-262k.ta.html">இதே அட்டையில் MoE vs Dense</a>.</p>
+        <a class="btn btn-primary" href="lab.ta.html">VelsTech Lab-க்கு திரும்ப →</a>
+      </div>
+    </div>
+
+    <div class="article-nav">
+      <a href="ai.ta.html">← AI-க்கு திரும்ப</a>
+      <a href="tiel-coder-35b-mtp-rx6800m.ta.html">Tiel-Coder 35B: MTP vs non-MTP</a>
+    </div>
+  </main>
+
+</body>
+</html>

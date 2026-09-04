@@ -1390,6 +1390,27 @@ a.tag:hover {
   font-style: italic;
 }
 
+/* Lab screenshots */
+.article-body figure {
+  margin: 22px 0;
+}
+.article-body figure img {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-soft);
+}
+.article-body figcaption {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
 .article-nav {
   margin-top: 48px;
   padding-top: 24px;

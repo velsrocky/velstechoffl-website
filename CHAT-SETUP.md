@@ -39,10 +39,19 @@ window.VelsChat.open() / close() / isReady
 
 ## Language-aware chat
 
-`chat.js` reads `vt-lang` (from `i18n.js`). If the user chose `ta` or `hi`, the
-system prompt appends "respond in Tamil/Hindi", and the widget UI strings come
-from `VelsI18n.t()`. Glossary answers always start with `TERM – Full Form:`
-(line 1), and `—` em dashes in model output are normalized to `–`.
+`chat.js` reads the active language via `VelsI18n.getLang()` (URL suffix first –
+`.hi`/`.ta` pages always win – then the stored `vt-lang` preference). If it is `ta` or
+`hi`, the system prompt appends "respond in Tamil/Hindi", and the widget UI strings
+(title, placeholder, disclaimer, welcome) come from `VelsI18n.t()`.
+
+The widget re-localizes on the `vt-lang-change` event. Gotcha (fixed in `ba7e151`):
+`getLang()` is URL-first, but the in-place language swap changes the URL only *after*
+the event fires – so `swapMain()` in `script.js` **re-dispatches** `vt-lang-change`
+after `history.pushState`, otherwise the chat keeps the old language when toggling
+away from a translated page. Guarded by `tests/lang-toggle.test.js`.
+
+Glossary answers always start with `TERM – Full Form:` (line 1), and `—` em dashes in
+model output are normalized to `–`.
 
 ## Production backend (default – live)
 
@@ -122,7 +131,11 @@ then run the Worker locally with `wrangler dev`.
 - The proxy is **locked down by default**: CORS is restricted via
   `getCorsOrigin()` in `chat-proxy.js`, per-IP rate limits apply per endpoint
   (chat: 30 req / 60s via `RATE_LIMIT`; RSS proxy: 10 req / 60s via `RSS_LIMIT`),
-  and nothing is logged.
+  and nothing is logged. Caveat: the limiter is an in-memory map **per isolate**,
+  so the effective global limit is higher under distributed load (verified live:
+  sequential bursts spread across isolates pass a 10/min bucket). If chat cost ever
+  spikes, add Cloudflare rate-limiting rules on `chat.velstech.net` or Turnstile –
+  don't rely on `RATE_LIMIT` alone.
 - **Cost / SSRF guardrails** (all in `chat-proxy-core.js`, unit-tested):
   chat `messages` are validated (count, role, size) and generation options are
   clamped (`max_tokens` ≤ 8192, `temperature` ≤ 2, `top_p` ≤ 1); a client can

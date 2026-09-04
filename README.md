@@ -110,6 +110,15 @@ persists `vt-lang` in `localStorage`, sets `<html lang>` on every page, and driv
   in *delivered* HTML into `[email protected]` spans that CF's decoder only fixes at page
   load – `decodeCfEmails()` in `script.js` XOR-decodes them at startup and after every
   swap. Guarded by `tests/lang-toggle.test.js`.
+- **Late language consumers** (chat widget, pillar links, selection chip) listen for the
+  `vt-lang-change` event. Because `getLang()` is URL-first and the swap changes the URL
+  only after the event, `swapMain()` re-dispatches `vt-lang-change` after `pushState` –
+  keep that when touching the toggle (see `CHAT-SETUP.md`).
+- **Tamil typography**: TA words are long unbreakable tokens. `styles.css` keeps them
+  inside phone viewports (`overflow-wrap: anywhere` on headings/inline code,
+  `min-width: 0` on flex/grid text items, wrapping hub headers, scrollable article
+  tables, smaller `html[lang="ta"]` hero font). When adding components with Tamil text,
+  verify no horizontal overflow at 360px and 320px.
 
 **To add a new page with translations** (e.g. `your-page.html`):
 1. Create the EN file first, then generate HI/TA variants by copying the EN file and translating visible text.
@@ -203,16 +212,18 @@ Unit tests run on every push via `node --test tests/*.test.js` in `build-check.y
   allowlist, feed-URL validation (private/localhost/metadata/IPv6 blocked),
   rate-limiter pruning, and capped feed reads.
 
-- **`tests/lang-toggle.test.js`** (8 tests, opt-in) — browser-level guard for the
+- **`tests/lang-toggle.test.js`** (9 tests, opt-in) — browser-level guard for the
   EN/TA/HI toggle and keyboard a11y, served through a mini Cloudflare-Pages
   emulator (308 `.html` → clean URL) since every toggle bug was clean-URL-specific.
   Covers: toggle buttons, click→persist→swap for HI/TA/EN, cross-page language
   persistence, FAQ rendering + localization after in-place swap, skip link as
-  first tab stop, no redirect-loops on untranslated paths. **Skips automatically**
+  first tab stop, no redirect-loops on untranslated paths, and chat-widget
+  re-localization when toggling away from a translated page (the `vt-lang-change`
+  re-dispatch after `swapMain`'s `pushState`). **Skips automatically**
   when `puppeteer-core` or a Chrome binary is absent, so CI is unaffected. Run locally:
   `npm i puppeteer-core && CHROME_PATH=/usr/bin/google-chrome node --test tests/lang-toggle.test.js`
 
-Total: **97 tests** (89 unit + 8 browser), all passing.
+Total: **98 tests** (89 unit + 9 browser), all passing.
 
 Run locally: `node --test tests/*.test.js`. CI: see `build-check.yml`.
 
@@ -258,6 +269,53 @@ version changes (two live bugs this session came from forgotten bumps). Managed 
 
 Not managed (owned by `gen-seo.js`): canonical, OG/Twitter meta, JSON-LD, hreflang, sitemap.
 `pdf-to-image/` and `newsletter/` are outside the template system and never touched.
+
+## Security
+
+Static site + one AI proxy Worker. No accounts, no cookies, no server-rendered user data.
+
+**Response headers** (`_headers`, applied at the Cloudflare Pages edge):
+`Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`,
+`Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (camera/mic/geo/
+payment/usb all disabled), and a `Content-Security-Policy`.
+
+**CSP** is the one to keep current. It locks everything to `'self'` plus the exact
+third-party origins the site actually uses:
+- `script-src` / `img-src` / `connect-src` / `frame-src`: Google AdSense
+  (`pagead2.googlesyndication.com`, `*.googlesyndication.com`, `*.google.com`,
+  `*.doubleclick.net`, `*.adtrafficquality.google`, `syndication.google.com`,
+  `adservice.google.com`) and Cloudflare Web Analytics (`static.cloudflareinsights.com`).
+- `connect-src`: the chat Worker (`chat.velstech.net`) and the form backend
+  (`api.web3forms.com`).
+- `script-src` / `style-src` need `'unsafe-inline'` because the tool pages use inline
+  `<script>`/`<style>` blocks (no nonces in a no-build static site).
+- `frame-ancestors 'none'`, `base-uri 'self'`, `object-src 'none'`, `form-action 'self'`.
+
+> **Rule:** any new third-party script, font, image host, or `fetch()` target must be
+> added to the CSP in `_headers`, or it will be blocked in production. Validate before
+> shipping by serving the repo locally with the CSP header and watching the console for
+> `Refused to …` violations (the ad stack in particular pulls extra `*.adtrafficquality.google`
+> and `*.doubleclick.net` origins at runtime).
+
+**AI chat proxy** (`chat-proxy.js` + `chat-proxy-core.js`) – the only server-side code and
+the only thing that spends money, so it's locked down by default: CORS origin allowlist,
+per-IP sliding-window rate limits (separate chat / RSS buckets), message validation,
+generation-option clamping, a model allowlist, and an SSRF guard on `/api/rss` (http(s)
+only; localhost / private / link-local / metadata / IPv6-mapped hosts rejected; redirect
+targets re-validated; 512 KB cap). API keys live only as Worker secrets, never in the repo
+or client. Full details and deploy steps in `CHAT-SETUP.md`; covered by `tests/chat-proxy.test.js`.
+
+**Client-side XSS hygiene** – every tool that renders user input into `innerHTML` escapes
+first (`esc()` / `escHtml()` / `renderContent()`); bookmark URLs are scheme-locked to
+`http(s)`; the notes search-query echo is escaped. When adding a tool that writes
+user- or model-supplied text via `innerHTML`, escape it the same way.
+
+**Repo internals stay private** – `tools/`, `tests/`, `*.md`, `wrangler.toml`, and the Worker
+source are excluded from the deploy by `tools/stage-pages.js` (`.dist/`) and additionally
+404'd via `_redirects`. Note: Cloudflare Pages serves recently-removed assets from its
+immutable deployment store for a short window (marked `x-robots-tag: noindex`, ~7-day
+`s-maxage`); zone and project cache purges do **not** clear it – it self-heals, and nothing
+secret is ever committed (keys are GH Actions secrets / Worker secrets only).
 
 ## Key SEO features
 - Per-article OG images (1200×630, dark theme, category pill)
@@ -327,7 +385,7 @@ Test: DevTools → Application → Service Workers (active) / Cache Storage / Ma
   pure helpers), `glossary.js` + `define.js` (inline glossary)
 - **Pure-ESM cores** – `whatsnew-core.js` and `chat-proxy-core.js` are dual-export
   (browser global + CommonJS) so the same source runs in the page and in `node --test`
-- **Tests** – `node:test` (built-in, no npm deps). 89 unit tests + 8 opt-in browser tests (auto-skip without Chrome),
+- **Tests** – `node:test` (built-in, no npm deps). 89 unit tests + 9 opt-in browser tests (auto-skip without Chrome),
   CI on every push via `build-check.yml`
 - **Python 3** – OG image generation (Pillow)
 - **Node.js** – SEO, feed, benchmark generators (built-in modules only)

@@ -105,6 +105,11 @@ persists `vt-lang` in `localStorage`, sets `<html lang>` on every page, and driv
   leaving `HI` returns to the English original.
 - **Tamil** translations are also separate static files `*.ta.html` (all pages) with
   the same `hreflang` pattern for `ta`.
+- **In-place swap**: `setLang()` fetches the translated page and swaps `<main>` via
+  `innerHTML` (no reload). Gotcha: Cloudflare's Email Obfuscation rewrites mailto links
+  in *delivered* HTML into `[email protected]` spans that CF's decoder only fixes at page
+  load – `decodeCfEmails()` in `script.js` XOR-decodes them at startup and after every
+  swap. Guarded by `tests/lang-toggle.test.js`.
 
 **To add a new page with translations** (e.g. `your-page.html`):
 1. Create the EN file first, then generate HI/TA variants by copying the EN file and translating visible text.
@@ -156,7 +161,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 | `tools/gen-seo.js` | Inject canonical/JSON-LD/OG tags + reciprocal head hreflang alternates (EN/HI/TA clusters) + Atom feed auto-discovery link, generate `sitemap.xml` (with `<lastmod>` from `articles.js`) + `robots.txt` | After any new page or article |
 | `tools/gen-feed.js` | Generate `feed.xml` Atom feed from `articles.js` | After article changes |
 | `tools/gen-og-images.py` | Render 1200×630 OG images per article into `og/` | After adding articles |
-| `tools/gen-benchmarks.js` | Generate per-benchmark detail pages from `benchmarks/data.json` | After adding benchmark data |
+| `tools/gen-benchmarks.js` | Generate per-benchmark detail pages from `benchmarks/data.json` (head boilerplate read from `tools/versions.json` so output never drifts) | After adding benchmark data |
 | `tools/gen-search-index.js` | Generate `search-index.json` (articles + tools + hubs) for fuzzy search | After adding articles/tools |
 | `tools/gen-favicon.py` | Generate favicon variants | Rarely |
 | `tools/build.js` | Canonical boilerplate + asset-version management (`check`/`sync`/`bump`) | After asset changes; `check` runs in CI |
@@ -242,7 +247,9 @@ node tools/build.js bump script.js # Bump ?v=N on an asset everywhere (incl. scr
 node tools/build.js status         # Show canonical versions + drift summary
 ```
 
-This replaces the old manual perl one-liner. Managed per page:
+This replaces the old manual perl one-liner. **Rule: any change to an asset's content
+requires `bump <asset>` in the same commit** – the cache-busting system only works if the
+version changes (two live bugs this session came from forgotten bumps). Managed per page:
 - head favicon links + stylesheet link (full favicon set, correct `../` prefixes in benchmarks/)
 - head `defer` script tags for `articles.js` / `i18n.js` / `whatsnew-core.js` / `script.js`
   (loaded deferred in `<head>` so script.js injects the nav before first paint – end-of-body

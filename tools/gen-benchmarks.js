@@ -9,6 +9,9 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const OUT = path.join(ROOT, "benchmarks");
 const SITE = "https://velstech.net";
+/* Canonical asset versions – same source of truth as tools/build.js, so
+   generated pages never drift the boilerplate backwards. */
+const V = JSON.parse(fs.readFileSync(path.join(__dirname, "versions.json"), "utf8"));
 
 const data = JSON.parse(fs.readFileSync(path.join(OUT, "data.json"), "utf8")).benchmarks;
 
@@ -59,12 +62,18 @@ function page(b, bk) {
   <meta name="twitter:title" content="${esc(title)}" />
   <meta name="twitter:description" content="${esc(desc)}" />
   <meta name="twitter:image" content="${SITE}/og-image.png" />
+  <link rel="manifest" href="../manifest.json" />
+  <link rel="preload" href="../fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="icon" href="../favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
   <link rel="icon" type="image/svg+xml" href="../logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
-  <link rel="stylesheet" href="../styles.css?v=42" />
+  <link rel="stylesheet" href="../styles.css?v=${V["styles.css"]}" />
+  <script defer src="../articles.js?v=${V["articles.js"]}"></script>
+  <script defer src="../i18n.js?v=${V["i18n.js"]}"></script>
+  <script defer src="../whatsnew-core.js?v=${V["whatsnew-core.js"]}"></script>
+  <script defer src="../script.js?v=${V["script.js"]}"></script>
 </head>
 <body>
   <main class="article-page">
@@ -117,10 +126,6 @@ function page(b, bk) {
       <a href="../lab.html">VelsTech Lab</a>
     </div>
   </main>
-
-  <script src="../articles.js?v=14"></script>
-  <script src="../i18n.js?v=2"></script>
-  <script src="../script.js?v=49"></script>
 </body>
 </html>`;
 }

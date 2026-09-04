@@ -844,7 +844,7 @@
   {
     "title": "LLM Benchmark Explorer",
     "url": "benchmark-explorer.html",
-    "desc": "Browse and compare LLM benchmarks across GPUs, models, and backends – filter by hardware, sort by tok/s, and see real tested results.",
+    "desc": "Browse and compare LLM benchmarks across GPUs, models, and backends – filter by hardware, sort by tok/s, and see tested and estimated results.",
     "category": "Tools",
     "tags": [
       "Tool"

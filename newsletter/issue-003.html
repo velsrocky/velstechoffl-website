@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<body style="margin:0;padding:0;background-color:#f6f8fa;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f6f8fa;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:12px;">
+          <!-- Header -->
+          <tr>
+            <td style="padding:32px 40px;border-bottom:1px solid #e2e8f0;">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#55606e;letter-spacing:1px;text-transform:uppercase;font-weight:bold;">VelsTech Weekly &middot; Issue #3</p>
+              <h1 style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:28px;color:#0f172a;font-weight:bold;">Practical AI, Linux &amp; Hardware</h1>
+              <p style="margin:6px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#55606e;">September 5, 2026 &middot; ~4 min read</p>
+            </td>
+          </tr>
+          <!-- Intro -->
+          <tr>
+            <td style="padding:32px 40px 8px;">
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0f172a;">Hey, here&rsquo;s <strong>VelsTech Weekly #3</strong>.</p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;">This week I broke my own site in three languages &ndash; and then hardened it. A Tamil word that refused to fit on a phone, a chat widget that wouldn&rsquo;t let go of the old language, and a Content-Security-Policy that went to war with Google Ads. Plus the best benchmark surprise yet on the 6800M. If something&rsquo;s wrong or missing, just reply and tell me.</p>
+            </td>
+          </tr>
+          <!-- Section: AI -->
+          <tr>
+            <td style="padding:24px 40px 8px;">
+              <h2 style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">🤖 AI</h2>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">1. Qwen3.8 27B on a 12 GB RX 6800M &ndash; and it&rsquo;s not the model I thought it was</strong><br/>IQ2_XS vs IQ3_S, same model, same flags: 20.8 vs 19.0 tok/s decode, 52K vs 4K context. Then the re-runs flipped the story: enabling the MTP head hit 23 tok/s, and &ldquo;letting --fit do the right thing&rdquo; <em>collapsed</em> decode to 7.3 tok/s &ndash; because Qwen3.8 is a Gated Delta Net hybrid and ROCm has no fused kernel for it. My &ldquo;mistake&rdquo; was the correct config.<br/><a href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.html" style="color:#2f8fd8;">Read the full Lab report &rarr;</a></p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">2. The benchmark database grew to 14 GPU &times; model combos (20 rows)</strong><br/>Four new entries for the Qwen3.8 runs, each labelled &#129513; Tested or &#128208; Estimated &ndash; and the explorer now reads one live data source, so nothing drifts behind anymore.<br/><a href="https://velstech.net/benchmarks/" style="color:#2f8fd8;">Browse the database &rarr;</a></p>
+            </td>
+          </tr>
+          <!-- Section: Under the hood -->
+          <tr>
+            <td style="padding:24px 40px 8px;">
+              <h2 style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">🔧 Under the hood</h2>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">3. The Tamil word that broke mobile on 108 pages</strong><br/>One unbreakable 21-character word. Tamil is agglutinative: no spaces, no hyphenation points, and flex/grid items refuse to shrink below their longest word. The fix is three CSS properties &ndash; and knowing when to use <code>display: block</code> instead of flex. If your site has a Hindi or Tamil version, open it at 320px width today.<br/><a href="https://velstech.net/lab.html" style="color:#2f8fd8;">See the Lab &rarr;</a></p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">4. An event that fires before the state changes is a lie</strong><br/>The chat widget re-localises on a language-change event &ndash; but the event fired <em>before</em> the URL swap, and the language is read from the URL first. Switching away from a translated page left the chat speaking the old language. One re-dispatch after <code>pushState</code> fixed it; a headless-Chrome test keeps it fixed.<br/><a href="https://velstech.net/lab.html" style="color:#2f8fd8;">See the Lab &rarr;</a></p>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">5. I gave my site a CSP. Google Ads fought me for four rounds.</strong><br/><code>adtrafficquality.google</code>? Not in any doc I found &ndash; it just appeared in the console. While auditing, I also found a real XSS in my own notes tool and learned that Cloudflare zone purges don&rsquo;t touch Pages&rsquo; own cache. Zero secrets found anywhere, which was the nice part.<br/><a href="https://velstech.net/start-here.html" style="color:#2f8fd8;">Start here &rarr;</a></p>
+            </td>
+          </tr>
+          <!-- Section: New on the site -->
+          <tr>
+            <td style="padding:24px 40px 8px;">
+              <h2 style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">📚 New on the site</h2>
+              <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;"><strong style="color:#0f172a;">6. A pipeline that refuses half-finished articles</strong><br/>Scaffold &rarr; translate &rarr; one <code>sync-all</code> command regenerates hreflang, feed, search, OG images and benchmark pages &ndash; and a CI guard fails the build if any article is missing its Hindi or Tamil version. Shipping an English-only article is now structurally impossible.<br/><a href="https://velstech.net/tutorials.html" style="color:#2f8fd8;">Browse tutorials &rarr;</a></p>
+            </td>
+          </tr>
+          <!-- Deal of the week -->
+          <tr>
+            <td style="padding:24px 40px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#eef6ff;border:1px solid #d6e9fb;border-radius:10px;">
+                <tr>
+                  <td style="padding:20px 24px;">
+                    <h2 style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f172a;">🔥 Deal of the week</h2>
+                    <p style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;">[Pick one deal &ndash; e.g. a GPU, NVMe SSD, or VPS offer.] One sentence on why it's a good deal and for whom.</p>
+                    <a href="https://www.amazon.in/s?k=NVMe+SSD+1TB&tag=velstechoffl-21&linkCode=ll1&language=en_IN" style="display:inline-block;padding:10px 20px;background-color:#2f8fd8;color:#ffffff;text-decoration:none;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;">Check the deal &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 40px 32px;border-top:1px solid #e2e8f0;">
+              <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#55606e;">Some links in this newsletter are affiliate links &ndash; if you buy through them, VelsTech may earn a small commission at no extra cost to you. <a href="https://velstech.net/disclosure.html" style="color:#55606e;">Full disclosure</a>.</p>
+              <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#55606e;"><strong style="color:#0f172a;">VelsTech &ndash; Practical AI, Linux &amp; Hardware.</strong> &middot; <a href="https://velstech.net/" style="color:#2f8fd8;">Home</a> &middot; <a href="https://velstech.net/#newsletter" style="color:#2f8fd8;">Subscribe</a> &middot; <a href="mailto:hello@velstech.net?subject=unsubscribe" style="color:#2f8fd8;">Unsubscribe</a></p>
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#94a3b8;">You're receiving this because you subscribed at velstech.net. We don't track or share your email.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -25,6 +25,25 @@ function currentFile() {
   if (seg.includes(".")) return seg; // already has an extension
   return seg + ".html"; // clean english URL
 }
+/* Cloudflare Email Obfuscation rewrites mailto links in delivered HTML into
+   <span class="__cf_email__" data-cfemail="hex">[email protected]</span>, and
+   CF's decoder script runs once at page load. swapMain() injects a translated
+   <main> via innerHTML afterwards, so the obfuscated literal would stay
+   visible on language toggle. Decode them ourselves (XOR with first byte). */
+function decodeCfEmails(root) {
+  (root || document).querySelectorAll("span.__cf_email__[data-cfemail]").forEach((span) => {
+    const hex = span.getAttribute("data-cfemail") || "";
+    if (!/^([0-9a-f]{2})+$/.test(hex)) return;
+    const key = parseInt(hex.slice(0, 2), 16);
+    let email = "";
+    for (let i = 2; i < hex.length; i += 2) email += String.fromCharCode(parseInt(hex.slice(i, i + 2), 16) ^ key);
+    const a = span.closest("a");
+    if (a && /^\/cdn-cgi\/l\/email-protection/.test(a.getAttribute("href") || "")) a.setAttribute("href", "mailto:" + email);
+    span.replaceWith(document.createTextNode(email));
+  });
+}
+decodeCfEmails(document);
+
 function getCurrentArticle() {
   const base = currentFile().replace(/\.(hi|ta)\.html$/, ".html");
   return ARTICLES.find((a) => a.url === base) || ARTICLES.find((a) => location.pathname.endsWith(a.url)) || null;
@@ -82,6 +101,7 @@ function setLang(lang) {
         if (curDesc) curDesc.content = newDesc;
       }
       curMain.innerHTML = newMain.innerHTML;
+      decodeCfEmails(curMain);
       try { history.pushState(null, "", url); } catch {}
       try { document.documentElement.setAttribute("lang", lang); } catch {}
       document.querySelectorAll(".article-flow, .pillar-card, .cta-stack, .caution-callout, .pre-caution-wrap").forEach((el) => el.remove());

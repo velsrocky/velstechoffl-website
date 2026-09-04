@@ -222,6 +222,8 @@
     if (send) send.setAttribute("aria-label", tChat("chat_send"));
     const disclaimer = document.querySelector(".vt-disclaimer");
     if (disclaimer) disclaimer.textContent = tChat("chat_disclaimer");
+    const welcome = $("vt-chat-welcome");
+    if (welcome) welcome.innerHTML = tChat("chat_welcome");
   }
 
   function openPanel() {
@@ -478,6 +480,7 @@
     // Welcome message
     const welcome = tChat("chat_welcome");
     const w = addMessage("assistant", welcome);
+    w.id = "vt-chat-welcome";
 
     // Re-apply localized strings when the site language changes
     window.addEventListener("vt-lang-change", () => applyChatLang());

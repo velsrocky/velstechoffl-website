@@ -107,6 +107,10 @@ function setLang(lang) {
       decodeCfEmails(curMain);
       try { history.pushState(null, "", url); } catch {}
       try { document.documentElement.setAttribute("lang", lang); } catch {}
+      // URL just changed – getLang() is URL-first, so consumers that read it
+      // lazily (chat) saw the OLD language on the first vt-lang-change.
+      // Re-notify now that the URL matches the chosen language.
+      try { window.dispatchEvent(new CustomEvent("vt-lang-change", { detail: lang })); } catch {}
       document.querySelectorAll(".article-flow, .pillar-card, .cta-stack, .caution-callout, .pre-caution-wrap").forEach((el) => el.remove());
       document.querySelectorAll(".code-block").forEach((el) => {
         const pre = el.querySelector("pre");

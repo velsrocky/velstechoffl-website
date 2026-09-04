@@ -204,6 +204,22 @@ test("FAQ section renders on article and localizes after toggle", { skip: SKIP }
   await page.close();
 });
 
+test("chat widget re-localizes when switching away from a translated page", { skip: SKIP }, async () => {
+  const page = await newPage();
+  await goto(page, "/what-is-an-llm.html");
+  const chatPh = () => page.evaluate(() => document.getElementById("vt-chat-input")?.placeholder || null);
+  await clickLang(page, "hi");
+  let ph = await chatPh();
+  assert.ok(ph && /[\u0900-\u097F]/.test(ph), "chat placeholder should be Hindi after HI toggle");
+  await clickLang(page, "ta");
+  ph = await chatPh();
+  assert.ok(ph && /[\u0B80-\u0BFF]/.test(ph), "chat must follow TA toggle even though URL was .hi when the event fired");
+  await clickLang(page, "en");
+  ph = await chatPh();
+  assert.equal(ph, "Ask about the blog or anything else…");
+  await page.close();
+});
+
 test("untranslated paths do not redirect-loop or leave the site", { skip: SKIP }, async () => {
   const page = await newPage();
   await goto(page, "/");

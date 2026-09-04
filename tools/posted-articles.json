@@ -30,6 +30,7 @@
   "quantization-deep-dive.html",
   "qwen-27b-ridge-rocm-vs-vulkan.html",
   "qwen3-8-flash-next.html",
+  "qwen38-27b-gsq-rco-rx6800m.html",
   "rag-from-scratch.html",
   "rocm-vulkan-amd-guide.html",
   "security-habits.html",

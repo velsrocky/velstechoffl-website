@@ -65,6 +65,34 @@ try {
   }
 } catch { problems.push("benchmarks/data.json: missing or unreadable"); }
 
+/* Drift guards: single source of truth. */
+for (const f of fs.readdirSync(ROOT).filter((x) => x.endsWith(".html"))) {
+  const s = read(f) || "";
+  if (/"benchmarks":\s*\[\s*\{/.test(s)) {
+    problems.push(`${f}: embeds a copy of benchmarks/data.json – fetch it instead (explorer drift bug)`);
+  }
+}
+for (const f of ["benchmark-explorer.html", "benchmark-explorer.hi.html", "benchmark-explorer.ta.html"]) {
+  const s = read(f) || "";
+  if (s && !s.includes('fetch("benchmarks/data.json")')) {
+    problems.push(`${f}: does not fetch benchmarks/data.json`);
+  }
+}
+try {
+  const seo = read(path.join("tools", "gen-seo.js")) || "";
+  const meta = seo.match(/const TOOLS_META = \{([\s\S]*?)\n\};/);
+  const toolsHub = read("tools.html") || "";
+  if (meta) {
+    for (const key of meta[1].match(/"([^"]+\.html)"/g).map((x) => x.slice(1, -1))) {
+      if (key === "tools.html") continue;
+      const linkForm = key === "pdf-to-image/index.html" ? "pdf-to-image/" : key;
+      if (!toolsHub.includes(linkForm)) {
+        problems.push(`tools.html: ${key} is registered in TOOLS_META but not linked from the tools hub`);
+      }
+    }
+  }
+} catch { /* gen-seo parse is best-effort */ }
+
 if (problems.length) {
   console.error(`article-sync guard: ${problems.length} problem(s)`);
   for (const p of problems) console.error("  - " + p);

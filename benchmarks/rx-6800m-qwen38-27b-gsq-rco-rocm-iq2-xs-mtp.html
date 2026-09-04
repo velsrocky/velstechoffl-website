@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ2_XS-mtp) – 20.77 tok/s decode. Tested in the VelsTech Lab." />
+  <title>RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ2_XS-mtp) · 52K / 4K | VelsTech Lab</title>
+  <link rel="canonical" href="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "@id": "https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html#article",
+  "headline": "RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ2_XS-mtp) · 52K / 4K",
+  "description": "Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ2_XS-mtp) – 20.77 tok/s decode. Tested in the VelsTech Lab.",
+  "url": "https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html",
+  "inLanguage": "en",
+  "author": { "@type": "Person", "name": "VelsTech", "url": "https://velstech.net/" },
+  "publisher": { "@type": "Organization", "name": "VelsTech", "url": "https://velstech.net/", "logo": { "@type": "ImageObject", "url": "https://velstech.net/logo.svg" } },
+  "mainEntityOfPage": "https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html",
+  "image": "https://velstech.net/og-image.png"
+}
+  </script>
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html" />
+  <meta property="og:title" content="RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ2_XS-mtp) · 52K / 4K" />
+  <meta property="og:description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ2_XS-mtp) – 20.77 tok/s decode. Tested in the VelsTech Lab." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ2_XS-mtp) · 52K / 4K" />
+  <meta name="twitter:description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ2_XS-mtp) – 20.77 tok/s decode. Tested in the VelsTech Lab." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="manifest" href="../manifest.json" />
+  <link rel="preload" href="../fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="../favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="../logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <link rel="stylesheet" href="../styles.css?v=52" />
+  <script defer src="../articles.js?v=14"></script>
+  <script defer src="../i18n.js?v=5"></script>
+  <script defer src="../whatsnew-core.js?v=1"></script>
+  <script defer src="../script.js?v=69"></script>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Benchmarks</a> / RX 6800M / Qwen3.8 27B GSQ-RCO</p>
+    <h1 class="title">RX 6800M · Qwen3.8 27B GSQ-RCO</h1>
+    <div class="meta">
+      <span>27B (dense)</span>
+      <span>· IQ2_XS / IQ3_S</span>
+      <span>· 52K / 4K</span>
+      <span>· q8_0</span>
+      <span>· 🧪 Tested</span>
+    </div>
+
+    <div class="article-body">
+      <div class="calc">
+        <div class="result-rows">
+          <div class="result-row total"><span>Backend</span><strong>ROCm (IQ2_XS-mtp)</strong></div>
+          <div class="result-row total"><span>Decode</span><strong>20.77 tok/s</strong></div>
+          <div class="result-row"><span>Prompt eval</span><strong>113.51 tok/s</strong></div>
+          <div class="result-row"><span>VRAM</span><strong>12 GB</strong></div>
+          <div class="result-row"><span>Memory bandwidth</span><strong>~384 GB/s</strong></div>
+          <div class="result-row"><span>Model</span><strong>Qwen3.8 27B GSQ-RCO</strong></div>
+          <div class="result-row"><span>Parameters</span><strong>27B (dense)</strong></div>
+          <div class="result-row"><span>Quantization</span><strong>IQ2_XS / IQ3_S</strong></div>
+          <div class="result-row"><span>Context</span><strong>52K / 4K</strong></div>
+          <div class="result-row"><span>KV quant</span><strong>q8_0</strong></div>
+          <div class="result-row"><span>Offload</span><strong>Fully on GPU</strong></div>
+        </div>
+      </div>
+
+      <h2>About this result</h2>
+      <p>IQ2_XS-mtp carries blk.64.nextn.* MTP tensors but no MTP flag was passed, so they are ignored – both runs are plain decode. IQ2_XS wins decode (+9%) and fits 52K ctx with q8_0 KV under --fit; IQ3_S wins prompt eval (+57%) but --fit aborted because -ngl 999 was set by hand, leaving the default 4K ctx. Drop -ngl (or raise -c) to let --fit size IQ3_S properly.</p>
+      <p>
+        This result was <strong>tested in the VelsTech Lab</strong> on real hardware.
+      </p>
+
+      <h2>Related</h2>
+      <ul>
+        <li><a href="../best-gpu-for-local-llm.html">Best GPU for running LLMs locally</a></li>
+        <li><a href="../llm-vram-calculator.html">LLM VRAM Calculator</a></li>
+        <li><a href="../gpu-ai-calculator.html">GPU AI Performance Calculator</a></li>
+        <li><a href="index.html">All benchmarks</a></li>
+      </ul>
+    </div>
+
+    <div class="article-nav">
+      <a href="index.html">← All benchmarks</a>
+      <a href="../lab.html">VelsTech Lab</a>
+    </div>
+  </main>
+</body>
+</html>

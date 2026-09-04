@@ -58,6 +58,24 @@
       "notes": "MTP speculative decoding on MoE (28 vs 32 CPU experts). MTP +14.6% decode (25.39 → 29.09 tok/s), prompt -6.4%, 54.7% acceptance (2.64 mean). 35B Q4 ~17.5GB + q8 KV 262K needs --n-cpu-moe offload on 12GB."
     },
     {
+      "id": "rx-6800m-qwen38-27b-gsq-rco",
+      "gpu": "RX 6800M",
+      "gpu_vram": "12 GB",
+      "gpu_bw": "~384 GB/s",
+      "model": "Qwen3.8 27B GSQ-RCO",
+      "params": "27B (dense)",
+      "quant": "IQ2_XS / IQ3_S",
+      "context": "52K / 4K",
+      "kv_quant": "q8_0",
+      "offload": false,
+      "tested": true,
+      "backends": [
+        { "name": "ROCm (IQ2_XS-mtp)", "decode": 20.77, "prompt": 113.51 },
+        { "name": "ROCm (IQ3_S)", "decode": 18.97, "prompt": 178.32 }
+      ],
+      "notes": "IQ2_XS-mtp carries blk.64.nextn.* MTP tensors but no MTP flag was passed, so they are ignored – both runs are plain decode. IQ2_XS wins decode (+9%) and fits 52K ctx with q8_0 KV under --fit; IQ3_S wins prompt eval (+57%) but --fit aborted because -ngl 999 was set by hand, leaving the default 4K ctx. Drop -ngl (or raise -c) to let --fit size IQ3_S properly."
+    },
+    {
       "id": "rtx-4090-qwen-7b-q4",
       "gpu": "RTX 4090",
       "gpu_vram": "24 GB",

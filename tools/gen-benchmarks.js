@@ -108,7 +108,7 @@ function page(b, bk) {
       <p>${esc(b.notes)}</p>
       <p>
         ${b.tested
-          ? 'This result was <strong>tested in the VelsTech Lab</strong> on real hardware. <a href="../' + b.source_article + '">Read the full Lab report →</a>'
+          ? 'This result was <strong>tested in the VelsTech Lab</strong> on real hardware.' + (b.source_article ? ' <a href="../' + b.source_article + '">Read the full Lab report →</a>' : '')
           : 'This result is <strong>estimated</strong> from the <a href="../gpu-ai-calculator.html">GPU AI Performance Calculator</a> – expect variation on real hardware.'}
       </p>
 

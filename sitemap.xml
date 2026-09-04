@@ -254,6 +254,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq2-xs-mtp.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/benchmarks/rx-6800m-tiel-coder-35b-mtp-rocm-mtp.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/benchmarks/rx-6800m-tiel-coder-35b-mtp-rocm-mtp.html" />
     <changefreq>monthly</changefreq>

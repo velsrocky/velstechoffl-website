@@ -110,6 +110,10 @@ const ADSENSE_CLIENT = "ca-pub-5002392377660300"; // live
 const ADSENSE_SLOT = "";                            // optional manual ad unit
 ```
 
+`ads.txt` lives at the repo root and authorizes the publisher ID
+(`google.com, pub-5002392377660300, DIRECT, f08c47fec0942fa0`). AdSense should report
+the site as **Authorized** – if the publisher ID ever changes, update `ads.txt` too.
+
 Optionally, create an ad unit in AdSense → paste its slot ID into `ADSENSE_SLOT`; then
 `initAdsense()` also inserts a responsive unit before `.article-nav` on article pages.
 
@@ -127,4 +131,4 @@ Checklist once approved:
 | 1 | Software affiliates (cash-per-sale) | ✅ `AFFILIATE_LINKS` + `data-aff` links | Sign up for Hostinger, NordVPN, Kit, Brevo → paste URLs into `script.js` |
 | 2 | Amazon Business | ✅ card placed | Generate canonical link via SiteStripe, replace href |
 | 3 | Newsletter | ✅ DNS + Brevo compliant + draft HTML | Create sender, import subscribers, send |
-| 4 | AdSense | ✅ client ID live (Auto Ads) | Await approval; optional manual slot ID |
+| 4 | AdSense | ✅ client ID live (Auto Ads) + ads.txt authorized | Await approval; optional manual slot ID |

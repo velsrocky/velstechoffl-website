@@ -5,7 +5,11 @@ Static site at **velstech.net** – plain-language tech guides, free tools, real
 ## Quick start
 
 ```sh
-# Regenerate everything after adding content
+# New article? Use the pipeline (see "New article workflow" below):
+node tools/new-article.js <slug> --title "…" --category AI   # scaffold + register
+node tools/sync-all.js                                       # regenerate everything + guard
+
+# Regenerate everything manually after adding content
 python3 tools/gen-og-images.py   # OG images per article
 node tools/gen-seo.js             # SEO meta, sitemap, robots.txt
 node tools/gen-feed.js            # Atom feed
@@ -14,6 +18,9 @@ node tools/gen-search-index.js    # Prebuilt search index (105 entries)
 
 # Keep boilerplate/versions canonical (see Boilerplate & versioning below)
 node tools/build.js check
+
+# Verify every article is fully wired (translations, hreflang, og, feed…)
+node tools/check-article-sync.js
 
 # Check syntax
 node --check tools/*.js
@@ -121,10 +128,41 @@ persists `vt-lang` in `localStorage`, sets `<html lang>` on every page, and driv
   verify no horizontal overflow at 360px and 320px.
 
 **To add a new page with translations** (e.g. `your-page.html`):
+Use the article pipeline below (`tools/new-article.js` → translate → `tools/sync-all.js`);
+`tools/check-article-sync.js` (CI) enforces every step. Manual conventions still apply:
 1. Create the EN file first, then generate HI/TA variants by copying the EN file and translating visible text.
 2. Conventions: `<html lang="hi">`/`<html lang="ta">`, **self-referential canonical** (required for valid hreflang clusters), JSON-LD `inLanguage: "hi"`/`"ta"`, translate meta/title/OG/Twitter, keep tech acronyms in English, preserve `<script>`/`<code>`/`<pre>` blocks verbatim. Head `<link rel="alternate" hreflang">` tags are **generated** – do not hand-edit them.
 3. Add the page to `tools/gen-seo.js` (`TOOLS_META` or `STATIC_META`) and run `node tools/gen-seo.js` to update the sitemap.
 4. If the page is an article, add it to `articles.js` and run `node tools/gen-feed.js`.
+
+## New article workflow (the routine)
+
+One pipeline, CI-enforced. Homepage **Latest**, category hubs, tags, search, feed,
+social posting and the deploy all key off `articles.js` – register once, everything follows.
+
+```sh
+# 1. scaffold: creates <slug>.html from the canonical skeleton + articles.js entry
+node tools/new-article.js my-guide --title "My Guide…" --category AI --tags "Linux,How-To" --desc "…"
+
+# 2. write the EN body, then translate to HI + TA (same skeleton, translated prose)
+#    -> my-guide.hi.html, my-guide.ta.html
+
+# 3. optional Lab piece: add an entry to benchmarks/data.json
+#    (tested:true, source_article:"my-guide.html") – pages regenerate in step 4
+
+# 4. regenerate every derived artifact in one go:
+#    gen-seo (hreflang+canonicals+sitemap) -> feed -> search-index -> OG images
+#    -> benchmark pages -> build.js sync (boilerplate+versions) -> guard
+node tools/sync-all.js
+
+# 5. commit + push – CI re-runs the guard; deploy + Mastodon post are automatic
+```
+
+**The guard** (`tools/check-article-sync.js`, in `build-check.yml`) fails the build until
+every article in `articles.js` has: EN/HI/TA files, a complete hreflang cluster in all
+three, `og/<slug>.png`, and entries in feed.xml / sitemap.xml / search-index.json – and
+until every benchmark `source_article` exists and is registered. An EN-only half-finished
+article cannot pass CI, so the site layout can never drift half-updated again.
 
 ## Glossary → VelsChat (inline definitions)
 
@@ -167,6 +205,9 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 
 | Script | What it does | When to run |
 |---|---|---|
+| `tools/new-article.js` | Scaffold a new article: EN page from canonical skeleton + `articles.js` entry + printed checklist | Start of the article pipeline |
+| `tools/sync-all.js` | Run the whole regeneration chain (seo → feed → search → og → benchmarks → build sync) then the sync guard | After any content change |
+| `tools/check-article-sync.js` | Guard: every article has EN/HI/TA files, hreflang clusters, OG image, feed/sitemap/search entries; benchmark `source_article` valid | CI guard in `build-check.yml`; end of `sync-all` |
 | `tools/gen-seo.js` | Inject canonical/JSON-LD/OG tags + reciprocal head hreflang alternates (EN/HI/TA clusters) + Atom feed auto-discovery link, generate `sitemap.xml` (with `<lastmod>` from `articles.js`) + `robots.txt` | After any new page or article |
 | `tools/gen-feed.js` | Generate `feed.xml` Atom feed from `articles.js` | After article changes |
 | `tools/gen-og-images.py` | Render 1200×630 OG images per article into `og/` | After adding articles |

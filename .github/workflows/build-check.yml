@@ -22,5 +22,7 @@ jobs:
         run: node tools/build.js check
       - name: Check OG images for every article
         run: node tools/check-og-images.js
+      - name: Check article sync (translations, hreflang, feed, sitemap, search)
+        run: node tools/check-article-sync.js
       - name: Check internal links
         run: node tools/check-links.js

@@ -1,7 +1,7 @@
 /*
  * VelsTech AI chat proxy – Cloudflare Worker.
  *
- * Supports: cloudflare (Workers AI), openai, anthropic, omniroute.
+ * Supports: cloudflare (Workers AI), openai, anthropic.
  *
  * Safety by default:
  *   - CORS locked to ALLOWED_ORIGIN (browser-side only – see validation below
@@ -14,7 +14,7 @@
  *
  * Deployment:
  *   1. Set in wrangler.toml:
- *        AI_PROVIDER = "cloudflare"  # or "openai" / "anthropic" / "omniroute"
+  *        AI_PROVIDER = "cloudflare"  # or "openai" / "anthropic"
  *        AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
  *        ALLOWED_ORIGIN = "https://velstech.net"
  *   2. Set secrets:
@@ -161,11 +161,9 @@ export default {
         return await handleOpenAI(payload, opts, env, origin, model);
       } else if (provider === "anthropic") {
         return await handleAnthropic(payload, opts, env, origin, model);
-      } else if (provider === "cloudflare") {
-        return await handleCloudflare(payload, opts, env, origin, model);
       } else {
-        // OmniRoute or other OpenAI-compatible
-        return await handleOmniroute(payload, opts, env, origin, model);
+        // Default: Cloudflare Workers AI (also covers unset AI_PROVIDER).
+        return await handleCloudflare(payload, opts, env, origin, model);
       }
     } catch (err) {
       return json({ error: "provider_error", detail: err.message }, 502, origin);
@@ -246,44 +244,6 @@ async function handleAnthropic(payload, opts, env, origin, model) {
   if (res.headers.get("content-type")?.includes("event-stream")) {
     const transformedStream = convertAnthropicStream(res.body);
     return new Response(transformedStream, {
-      status: 200,
-      headers: {
-        "Content-Type": "text/event-stream",
-        "Cache-Control": "no-cache",
-        "Access-Control-Allow-Origin": origin,
-      },
-    });
-  }
-
-  const jsonOut = await res.json().catch(() => null);
-  return json(jsonOut !== null ? JSON.stringify(jsonOut) : await res.text(), 200, origin);
-}
-
-async function handleOmniroute(payload, opts, env, origin, model) {
-  const baseUrl = env.OMNIRUTE_BASE_URL;
-  if (!baseUrl) return json({ error: "missing_omniroute_url" }, 500, origin);
-
-  const chatUrl = `${baseUrl.replace(/\/$/, "")}/chat/completions`;
-  const headers = { "Content-Type": "application/json" };
-  if (env.OMNIRUTE_API_KEY) headers["Authorization"] = `Bearer ${env.OMNIRUTE_API_KEY}`;
-
-  const res = await fetch(chatUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      model: model,
-      messages: payload.messages,
-      stream: payload.stream !== false,
-    }),
-  });
-
-  if (!res.ok || !res.body) {
-    const errBody = await res.text().catch(() => "");
-    return json({ error: "relay_error", status: res.status, detail: errBody.slice(0, 500) }, res.status >= 500 ? 502 : res.status, origin);
-  }
-
-  if (res.headers.get("content-type")?.includes("event-stream")) {
-    return new Response(res.body, {
       status: 200,
       headers: {
         "Content-Type": "text/event-stream",

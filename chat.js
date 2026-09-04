@@ -4,39 +4,20 @@
  * - Floating bubble (bottom-right) that opens a chat panel.
  * - Client-side retrieval: scores your ARTICLES against the question and uses
  *   the most relevant snippets as "site context" (injected into the message).
- * - Streams replies from OmniRoute.
- *
- * TWO BACKENDS (toggle with CHAT_BACKEND):
- *   "local"  → calls your local OmniRoute directly at
- *               OMNIRUTE_BASE_URL + "/chat/completions".
- *               No proxy, no key (OmniRoute is keyless). Works while the site
- *               and OmniRoute run on the same machine.
- *   "proxy"  (default) → calls your deployed Cloudflare Worker (chat-proxy.js),
- *               which proxies through Cloudflare Workers AI.
+ * - Streams replies via the Cloudflare Worker proxy (chat-proxy.js).
  */
 (function () {
   "use strict";
 
-  // "local" or "proxy"
-  const CHAT_BACKEND = "proxy";
-
-  // Local backend: your OmniRoute API base (the OpenAI-compatible endpoint).
-  // NOTE: the API is at /v1 – /home is only the web dashboard.
-  const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";
-
-  // Proxy backend: the URL where you deployed chat-proxy.js.
+  // Deployed Cloudflare Worker (chat-proxy.js) that forwards to Cloudflare Workers AI.
   const CHAT_PROXY_URL = "https://chat.velstech.net";
 
-  // Model sent to the proxy. With CHAT_BACKEND = "proxy", this must be a
-  // Cloudflare Workers AI model name (e.g. @cf/meta/llama-3.1-8b-instruct).
-  // With CHAT_BACKEND = "local", use an OmniRoute provider model (e.g.
-  // "kr/claude-haiku-4.5"); avoid "auto/*" combos, which force tool-calling
-  // and can return no text for a plain chat message.
+  // Model sent to the proxy. Must be a Cloudflare Workers AI model name
+  // (e.g. @cf/meta/llama-3.1-8b-instruct).
   const CHAT_MODEL = "@cf/meta/llama-3.1-8b-instruct";
 
   // If the primary model returns no text, retry with these in order until one
-  // replies. Keep these valid for the active backend (Cloudflare Workers AI
-  // names for proxy mode, OmniRoute names for local mode).
+  // replies (Cloudflare Workers AI names).
   const CHAT_FALLBACK_MODELS = [
     "@cf/meta/llama-3.2-3b-instruct",
     "@cf/qwen/qwen2.5-7b-instruct",
@@ -64,8 +45,7 @@
     return lang === "ta" ? "Tamil (தமிழ்)" : lang === "hi" ? "Hindi (हिन्दी)" : "English";
   }
 
-  // System prompt (scoped, safe-by-design). Sent as a `system` message in both
-  // local and proxy modes.
+  // System prompt (scoped, safe-by-design). Sent as a `system` message.
   const CHAT_GUIDANCE_BASE =
     "You are the VelsTech assistant – a helpful, friendly, plain-language helper for a " +
     "personal technology blog (velstech.net) aimed at tech-curious beginners and intermediate users.\n" +
@@ -293,7 +273,6 @@
 
     // Build messages: a scoped system prompt (guidance + retrieved blog
     // snippets + optional current-page content) followed by the user's question.
-    // Works identically for local and proxy backends.
     const systemParts = [getChatGuidance()];
     if (pageContext) {
       systemParts.push("Current page content:\n" + pageContext);
@@ -306,11 +285,8 @@
       { role: "user", content: text },
     ];
 
-    // Try models in order until one returns text (auto/* combos can return
-    // tool-only responses with no text, so we fall back automatically).
-    const endpoint = (CHAT_BACKEND === "local")
-      ? (OMNIRUTE_BASE_URL.replace(/\/$/, "") + "/chat/completions")
-      : CHAT_PROXY_URL;
+    // Try models in order until one returns text.
+    const endpoint = CHAT_PROXY_URL;
     const models = [activeModel, ...CHAT_FALLBACK_MODELS];
 
     async function streamOne(model) {
@@ -328,6 +304,7 @@
         const decoder = new TextDecoder();
         let buf = "";
         let acc = "";
+        let dotsHidden = false;
         while (true) {
           const { value, done } = await reader.read();
           if (done) break;
@@ -343,6 +320,11 @@
             const json = JSON.parse(data);
             const delta = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
             if (delta) {
+              if (!dotsHidden) {
+                const dots = status.querySelector('.vt-dots');
+                if (dots) dots.remove();
+                dotsHidden = true;
+              }
               acc += delta;
               bodyEl.innerHTML = renderContent(acc);
             }

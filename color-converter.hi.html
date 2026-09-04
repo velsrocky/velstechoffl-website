@@ -48,7 +48,7 @@
   <script defer src="articles.js?v=14"></script>
   <script defer src="i18n.js?v=5"></script>
   <script defer src="whatsnew-core.js?v=1"></script>
-  <script defer src="script.js?v=67"></script>
+  <script defer src="script.js?v=68"></script>
 </head>
 <body>
   <main class="article-page">
@@ -158,7 +158,7 @@
       const hex = rgbToHex(r, g, b);
       const [h, s, l] = rgbToHsl(r, g, b);
       const hex3 = (r % 17 === 0 && g % 17 === 0 && b % 17 === 0)
-        ? "#" + r.toString(16) + g.toString(16) + b.toString(16) : null;
+        ? "#" + (r / 17).toString(16) + (g / 17).toString(16) + (b / 17).toString(16) : null;
       const lum = luminance(r, g, b);
 
       swatch.style.background = hex;

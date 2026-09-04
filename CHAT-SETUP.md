@@ -46,14 +46,13 @@ from `VelsI18n.t()`. Glossary answers always start with `TERM – Full Form:`
 
 ## Production backend (default – live)
 
-`CHAT_BACKEND = "proxy"` in `chat.js` calls the deployed Worker at
+`chat.js` calls the deployed Worker at
 `CHAT_PROXY_URL` (`https://chat.velstech.net`), which forwards to **Cloudflare
 Workers AI** – no API key needed on the client.
 
 Config in `chat.js`:
 
 ```js
-const CHAT_BACKEND = "proxy";
 const CHAT_PROXY_URL = "https://chat.velstech.net";
 const CHAT_MODEL = "@cf/meta/llama-3.1-8b-instruct";  // must be a Workers AI model
 const CHAT_FALLBACK_MODELS = [ "@cf/meta/llama-3.2-3b-instruct", "@cf/qwen/qwen2.5-7b-instruct" ];
@@ -101,23 +100,9 @@ and falls back to `AI_MODEL` when the client doesn't specify one.
 
 ### Local development (optional)
 
-For testing against a local OpenAI-compatible server (e.g. OmniRoute), set
-`CHAT_BACKEND = "local"` and `CHAT_MODEL` to a provider model (e.g.
-`"kr/claude-haiku-4.5"`). The widget then calls `OMNIRUTE_BASE_URL` directly:
-
-```js
-const CHAT_BACKEND = "local";
-const OMNIRUTE_BASE_URL = "http://localhost:20128/v1";  // API is at /v1
-```
-
-> ⚠️ Serve the site from a local origin (e.g. `python -m http.server 8000`) so
-> the `Origin` matches and CORS is satisfied. Opening the file via `file://`
-> will not work for fetch calls.
->
-> In local mode, use a specific provider model (any `claude-*`, `gemini-*`,
-> `deepseek-*`, `qwen-*` under a provider prefix). Avoid `auto/*` combos – they
-> force tool-calling and can come back with no text. The widget retries a small
-> fallback list if the primary returns nothing.
+For testing against a local OpenAI-compatible server, point the Worker at it
+by setting `AI_PROVIDER = "openai"` and the server URL in `chat-proxy.js`,
+then run the Worker locally with `wrangler dev`.
 
 ## Verify
 

@@ -25,6 +25,8 @@ export const DEFAULTS = {
   RATE_LIMIT: 30,
   RATE_WINDOW: 60000,
   RSS_LIMIT: 10,
+  AI_PROVIDER: "cloudflare",
+  AI_MODEL: "@cf/meta/llama-3.1-8b-instruct",
   PLAYGROUND_MODELS: [
     "@cf/meta/llama-3.1-8b-instruct",
     "@cf/meta/llama-3.2-3b-instruct",

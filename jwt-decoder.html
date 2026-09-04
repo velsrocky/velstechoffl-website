@@ -48,7 +48,7 @@
   <script defer src="articles.js?v=14"></script>
   <script defer src="i18n.js?v=5"></script>
   <script defer src="whatsnew-core.js?v=1"></script>
-  <script defer src="script.js?v=67"></script>
+  <script defer src="script.js?v=68"></script>
 </head>
 <body>
   <main class="article-page">
@@ -176,8 +176,8 @@
       const sigHex = sigBytes ? Array.from(sigBytes, (c) => c.charCodeAt(0).toString(16).padStart(2, "0")).join("") : "(invalid)";
 
       results.hidden = false;
-      headerOut.innerHTML = headerJson ? highlight(JSON.stringify(headerJson, null, 2)) : esc(headerDecoded);
-      payloadOut.innerHTML = payloadJson ? highlight(JSON.stringify(payloadJson, null, 2)) : esc(payloadDecoded);
+      headerOut.innerHTML = headerJson ? highlight(JSON.stringify(headerJson, null, 2)) : esc(String(headerDecoded || ""));
+      payloadOut.innerHTML = payloadJson ? highlight(JSON.stringify(payloadJson, null, 2)) : esc(String(payloadDecoded || ""));
       sigOut.textContent = sigHex;
 
       let ok = true;
@@ -186,9 +186,9 @@
 
       if (ok) {
         const claims = [];
-        if (payloadJson.iss !== undefined) claims.push({ k: "iss (Issuer)", v: payloadJson.iss });
-        if (payloadJson.sub !== undefined) claims.push({ k: "sub (Subject)", v: payloadJson.sub });
-        if (payloadJson.aud !== undefined) claims.push({ k: "aud (Audience)", v: Array.isArray(payloadJson.aud) ? payloadJson.aud.join(", ") : payloadJson.aud });
+        if (payloadJson.iss !== undefined) claims.push({ k: "iss (Issuer)", v: esc(String(payloadJson.iss)) });
+        if (payloadJson.sub !== undefined) claims.push({ k: "sub (Subject)", v: esc(String(payloadJson.sub)) });
+        if (payloadJson.aud !== undefined) claims.push({ k: "aud (Audience)", v: esc(Array.isArray(payloadJson.aud) ? payloadJson.aud.join(", ") : String(payloadJson.aud)) });
         if (payloadJson.exp !== undefined) {
           const d = fmtDate(payloadJson.exp);
           claims.push({ k: "exp (Expiration)", v: d ? esc(d) : "Invalid timestamp" });
@@ -201,7 +201,7 @@
           const d = fmtDate(payloadJson.iat);
           claims.push({ k: "iat (Issued At)", v: d ? esc(d) : "Invalid timestamp" });
         }
-        if (payloadJson.jti !== undefined) claims.push({ k: "jti (JWT ID)", v: payloadJson.jti });
+        if (payloadJson.jti !== undefined) claims.push({ k: "jti (JWT ID)", v: esc(String(payloadJson.jti)) });
         if (!claims.length) claims.push({ k: "", v: "No standard claims found" });
 
         claimsList.innerHTML = claims.map(c =>

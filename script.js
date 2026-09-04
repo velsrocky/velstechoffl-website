@@ -18,6 +18,9 @@ function t(key) {
 /* Cloudflare Pages serves clean URLs (/foo, /foo.hi) via 308 from the .html
    files. Normalize the current pathname back to its on-disk filename so all
    path-based logic works on both /foo.html and /foo. */
+function rootPrefix() {
+  return location.pathname.includes("/benchmarks/") || location.pathname.endsWith("/benchmarks") ? "../" : "";
+}
 function currentFile() {
   const seg = location.pathname.split("/").pop() || "index.html";
   if (!seg) return "index.html"; // directory URL like /benchmarks/
@@ -292,7 +295,7 @@ function initAdsense() {
   const nav = main.querySelector(".article-nav");
   if (nav) main.insertBefore(slot, nav);
   else main.appendChild(slot);
-  (adsbygoogle = window.adsbygoogle || []).push({});
+  (window.adsbygoogle = window.adsbygoogle || []).push({});
 }
 
 function initAmazonLinks() {
@@ -380,9 +383,10 @@ const paletteColors = [
 ];
 
 function navHTML() {
+  const pre = rootPrefix();
   const inTopic = TOPICS.some((t) => t.page === currentPage);
   const topicLinks = TOPICS.map(
-    (t) => `<a class="dropdown-link${t.page === currentPage ? " active" : ""}" href="${t.href}">${t.label}</a>`
+    (t) => `<a class="dropdown-link${t.page === currentPage ? " active" : ""}" href="${pre}${t.href}">${t.label}</a>`
   ).join("");
 
   const dots = paletteColors
@@ -400,22 +404,22 @@ function navHTML() {
   return (
     '<a class="skip-link" href="#main" data-i18n="skip_to_content">' + t("skip_to_content") + "</a>" +
     '<header class="nav">' +
-    '<a class="brand" href="index.html">' + brandSVG + '<span class="brand-name">VelsTech<span class="brand-sub">Solutions</span></span></a>' +
+    '<a class="brand" href="' + pre + 'index.html">' + brandSVG + '<span class="brand-name">VelsTech<span class="brand-sub">Solutions</span></span></a>' +
     '<div class="search-wrap">' +
     '<input id="search-input" class="search-input" type="search" data-i18n="search_placeholder" data-i18n-attr="placeholder" placeholder="' + t("search_placeholder") + '" aria-label="Search articles" autocomplete="off" />' +
     '<div id="search-results" class="search-results" hidden></div>' +
     "</div>" +
     '<nav class="links">' +
-    '<a class="nav-link' + (currentPage === "index.html" ? " active" : "") + '" href="index.html" data-i18n="nav_home">' + t("nav_home") + '</a>' +
-    '<a class="nav-link' + (currentPage === "start-here.html" ? " active" : "") + '" href="start-here.html" data-i18n="nav_getstarted">' + t("nav_getstarted") + '</a>' +
+    '<a class="nav-link' + (currentPage === "index.html" && !pre ? " active" : "") + '" href="' + pre + 'index.html" data-i18n="nav_home">' + t("nav_home") + '</a>' +
+    '<a class="nav-link' + (currentPage === "start-here.html" ? " active" : "") + '" href="' + pre + 'start-here.html" data-i18n="nav_getstarted">' + t("nav_getstarted") + '</a>' +
     '<div class="nav-dropdown" id="topics-dropdown">' +
     '<button type="button" class="nav-link dropdown-toggle' + (inTopic ? " active" : "") + '" id="topics-toggle" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav_topics">' + t("nav_topics") + '</span> <span class="dropdown-caret">▾</span></button>' +
     '<div class="dropdown-menu" id="topics-menu">' + topicLinks + "</div>" +
     "</div>" +
-    '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="lab.html" data-i18n="nav_lab">' + t("nav_lab") + '</a>' +
-    '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="benchmarks/index.html" data-i18n="nav_benchmarks">' + t("nav_benchmarks") + '</a>' +
-    '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="tools.html" data-i18n="nav_tools">' + t("nav_tools") + '</a>' +
-    '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="buying-guides.html" data-i18n="nav_guides">' + t("nav_guides") + '</a>' +
+    '<a class="nav-link' + (currentPage === "lab.html" ? " active" : "") + '" href="' + pre + 'lab.html" data-i18n="nav_lab">' + t("nav_lab") + '</a>' +
+    '<a class="nav-link' + (currentPage === "benchmarks/index.html" || location.pathname.includes("/benchmarks/") ? " active" : "") + '" href="' + pre + 'benchmarks/index.html" data-i18n="nav_benchmarks">' + t("nav_benchmarks") + '</a>' +
+    '<a class="nav-link' + (currentPage === "tools.html" ? " active" : "") + '" href="' + pre + 'tools.html" data-i18n="nav_tools">' + t("nav_tools") + '</a>' +
+    '<a class="nav-link' + (currentPage === "buying-guides.html" ? " active" : "") + '" href="' + pre + 'buying-guides.html" data-i18n="nav_guides">' + t("nav_guides") + '</a>' +
     "</nav>" +
     '<div class="controls">' +
     langSwitch +
@@ -469,7 +473,8 @@ function initSearch() {
 
   function loadIndex() {
     if (SEARCH_INDEX || window._vtSearchLoading) return window._vtSearchLoading;
-    window._vtSearchLoading = fetch("/search-index.json", { cache: "no-store" })
+    const pre = rootPrefix();
+    window._vtSearchLoading = fetch(pre + "search-index.json", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => { if (Array.isArray(j) && j.length) SEARCH_INDEX = j; })
       .catch(() => {})
@@ -567,10 +572,11 @@ function initSearch() {
       results.hidden = false;
       return;
     }
+    const pre = rootPrefix();
     results.innerHTML = hits
       .map(
         (a) =>
-          '<a class="search-result' + (a.kind && a.kind !== "article" ? " search-kind-" + a.kind : "") + '" href="' + esc(a.url) + '">' +
+          '<a class="search-result' + (a.kind && a.kind !== "article" ? " search-kind-" + a.kind : "") + '" href="' + esc(pre + a.url) + '">' +
           '<span class="search-title">' + esc(a.title) + "</span>" +
           '<span class="search-meta">' + esc(a.category || a.kind || "") + (a.date ? " · " + fmtDate(a.date) : "") + "</span>" +
           "</a>"
@@ -872,15 +878,16 @@ const socialHTML = () => {
 };
 
 function footerHTML() {
+  const pre = rootPrefix();
   return (
     '<footer class="footer">' +
     '<nav class="footer-links">' +
-    '<a href="feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' <span data-i18n="footer_subscribe">' + t("footer_subscribe") + '</span></a>' +
-    '<a href="resources.html" data-i18n="footer_resources">' + t("footer_resources") + '</a>' +
-    '<a href="advertise.html" data-i18n="footer_advertise">' + t("footer_advertise") + '</a>' +
-    '<a href="disclosure.html" data-i18n="footer_disclosure">' + t("footer_disclosure") + '</a>' +
-    '<a href="terms.html" data-i18n="footer_terms">' + t("footer_terms") + '</a>' +
-    '<a href="privacy.html" data-i18n="footer_privacy">' + t("footer_privacy") + '</a>' +
+    '<a href="' + pre + 'feed.xml" title="Subscribe to the Atom feed">' + rssIcon + ' <span data-i18n="footer_subscribe">' + t("footer_subscribe") + '</span></a>' +
+    '<a href="' + pre + 'resources.html" data-i18n="footer_resources">' + t("footer_resources") + '</a>' +
+    '<a href="' + pre + 'advertise.html" data-i18n="footer_advertise">' + t("footer_advertise") + '</a>' +
+    '<a href="' + pre + 'disclosure.html" data-i18n="footer_disclosure">' + t("footer_disclosure") + '</a>' +
+    '<a href="' + pre + 'terms.html" data-i18n="footer_terms">' + t("footer_terms") + '</a>' +
+    '<a href="' + pre + 'privacy.html" data-i18n="footer_privacy">' + t("footer_privacy") + '</a>' +
     '<a href="mailto:hello@velstech.net" data-i18n="footer_contact">' + t("footer_contact") + '</a>' +
     "</nav>" +
     socialHTML() +
@@ -892,17 +899,18 @@ function footerHTML() {
 
 function injectGlossary() {
   if (!document.querySelector(".article-body")) return;
+  const pre = rootPrefix();
   if (!document.getElementById("vt-glossary-css")) {
     const l = document.createElement("link");
     l.id = "vt-glossary-css";
     l.rel = "stylesheet";
-    l.href = "glossary.css?v=2";
+    l.href = pre + "glossary.css?v=2";
     document.head.appendChild(l);
   }
   if (!document.getElementById("vt-glossary-js")) {
     const g = document.createElement("script");
     g.id = "vt-glossary-js";
-    g.src = "glossary.js?v=2";
+    g.src = pre + "glossary.js?v=2";
     g.onload = injectDefine;
     g.onerror = () => console.error("[VelsTech] Failed to load glossary");
     document.head.appendChild(g);
@@ -912,24 +920,27 @@ function injectGlossary() {
 }
 function injectDefine() {
   if (document.getElementById("vt-define-js")) return;
+  const pre = rootPrefix();
   const d = document.createElement("script");
   d.id = "vt-define-js";
-  d.src = "define.js?v=5";
+  d.src = pre + "define.js?v=5";
   d.onerror = () => console.error("[VelsTech] Failed to load define");
   document.head.appendChild(d);
 }
 function injectChat() {
-  if (document.getElementById("vt-chat-link")) return;
-  const link = document.createElement("link");
-  link.id = "vt-chat-link";
-  link.rel = "stylesheet";
-  link.href = "chat.css?v=9";
-  document.head.appendChild(link);
+  const pre = rootPrefix();
+  if (!document.getElementById("vt-chat-link")) {
+    const link = document.createElement("link");
+    link.id = "vt-chat-link";
+    link.rel = "stylesheet";
+    link.href = pre + "chat.css?v=9";
+    document.head.appendChild(link);
+  }
 
   if (document.getElementById("vt-chat-script")) return;
   const s = document.createElement("script");
   s.id = "vt-chat-script";
-  s.src = "chat.js?v=21";
+  s.src = pre + "chat.js?v=22";
   s.onerror = () => console.error("[VelsTech] Failed to load chat widget");
   document.head.appendChild(s);
 }
@@ -944,7 +955,7 @@ const feedLink = document.createElement("link");
 feedLink.rel = "alternate";
 feedLink.type = "application/atom+xml";
 feedLink.title = "VelsTech – Atom feed";
-feedLink.href = "feed.xml";
+feedLink.href = rootPrefix() + "feed.xml";
 document.head.appendChild(feedLink);
 
 function initContactForm() {

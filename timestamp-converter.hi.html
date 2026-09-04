@@ -48,7 +48,7 @@
   <script defer src="articles.js?v=14"></script>
   <script defer src="i18n.js?v=5"></script>
   <script defer src="whatsnew-core.js?v=1"></script>
-  <script defer src="script.js?v=67"></script>
+  <script defer src="script.js?v=68"></script>
 </head>
 <body>
   <main class="article-page">
@@ -130,8 +130,8 @@
     function show(d) {
       results.hidden = false;
       const sec = Math.floor(d.getTime() / 1000);
-      document.getElementById("r-sec").textContent = sec.toLocaleString("en-US");
-      document.getElementById("r-ms").textContent = d.getTime().toLocaleString("en-US");
+      document.getElementById("r-sec").textContent = String(sec);
+      document.getElementById("r-ms").textContent = String(d.getTime());
       document.getElementById("r-iso").textContent = d.toISOString().replace("T", " ").replace("Z", " UTC");
       document.getElementById("r-local").textContent = d.toString();
       document.getElementById("r-rel").textContent = relTime(d);

@@ -38,7 +38,7 @@
       <span class="tag">llama.cpp</span>
       <span>செப் 4, 2026</span>
       <span>· 4 நிமிட வாசிப்பு</span>
-      <span>· புதுப்பிப்பு செப் 4, 2026</span>
+      <span>· புதுப்பிப்பு செப் 5, 2026</span>
           <span class="ai-badge" title="இந்த கட்டுரை AI உதவியுடன் உருவாக்கப்பட்டது.">🤖 AI-assisted</span>
     </div>
 
@@ -124,14 +124,36 @@ Chat UI avg speed    20.9 t/s            19.0 t/s</pre>
 
       <h2>லாக்கள் என்ன சொன்ன – என்ன உடைந்தது</h2>
       <ol>
-        <li><strong>Run 2:</strong> <code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – <code>--fit</code> தானே <code>-ngl</code>-உம் context-உம் தேர்வு செய்ய வேண்டும்; கைமுறையாக <code>-ngl 999</code> திணித்ததும் அது விட்டுக்கொடுத்து விட்டது, அதனால் IQ3_S <strong>இயல்பான 4096-token context</strong>-ல் நின்றுபோய்விட்டது. <code>-ngl</code>-ஐ நீக்கவும் (அல்லது <code>-c</code>-ஐ தெளிவாக அமைக்கவும்) – ~9.5 GB weights-க்குப் பிறகு 4K முதல் 16K வரை எங்காவது பொருந்தும்.</li>
+        <li><strong>Run 2:</strong> <code>W common_fit_params: failed to fit params to free device memory: n_gpu_layers already set by user to 999, abort</code> – <code>--fit</code> தானே <code>-ngl</code>-உம் context-உம் தேர்வு செய்ய வேண்டும்; கைமுறையாக <code>-ngl 999</code> திணித்ததும் அது விட்டுக்கொடுத்து விட்டது, அதனால் IQ3_S <strong>இயல்பான 4096-token context</strong>-ல் நின்றுபோய்விட்டது. (கீழே உள்ள follow-up-ல் இந்த model-ல் <code>-ngl</code> நீக்குவது உண்மையில் <em>மோசம்</em> என்று தெரிகிறது – ஃபோர்ஸ் செய்தே வைக்கவும்.)</li>
         <li><strong>Run 1:</strong> பதினைந்து <code>W model has unused tensor blk.64.*</code> வரிகள் – முழு extra transformer block-உம் (attention + FFN + <code>nextn.*</code> MTP head, ~348 MB) <code>--spec-type draft-mtp</code> flag கொடுக்காததால் புறக்கணிக்கப்பட்டது. இந்த ஓட்டத்தில் MTP head வெறும் dead weight; அதை இயக்குவது தான் அடுத்த தெளிவான சோதனை (<a href="tiel-coder-35b-mtp-rx6800m.ta.html">Tiel-Coder 35B-A3B</a>-ல் அது +14.6% தந்தது).</li>
         <li><strong>இரண்டு ஓட்டங்களும்:</strong> <code>W srv llama_server: CORS is set to allow all origins ('*') and no API key is set</code> – server <code>127.0.0.1</code>-ல் மட்டுமே bind ஆகி இருக்கும் வரை பாதுகாப்பானது; API key இல்லாமல் இந்த port-ஐ எப்போதும் நெட்வொர்க்கு வெளியே திறக்கக் கூடாது.</li>
         <li><strong>இரண்டு ஓட்டங்களும்:</strong> <code>n_ctx_slot = 52736 / 4096, kv_unified = 'true'</code> – 4 slots-ல் unified KV; 52K என்ற எண்ணை IQ2_XS weights-உடன் சேர்த்து --fit தான் பொருத்தியது.</li>
       </ol>
 
+      <h2>Follow-up: <code>--fit</code>-க்கு தேர்வு விட்டு, MTP-யும் இயக்கினோம்</h2>
+      <p>முதல் சுற்றின் இரண்டு திறந்த கேள்விகளுக்கு முதல் மீண்டும் இரண்டு configs-ஐ ஓட்டினேன். இரண்டு பதில்களும் எதிர்பார்ப்புக்கு நேர் எதிர்.</p>
+
+      <h3>IQ3_S <code>-ngl</code> இல்லாமல் – auto-fit</h3>
+      <pre>prompt eval:   3329.43 ms / 373 tokens (   8.93 ms/tok,  112.03 tok/s)
+eval (decode): 45080.30 ms / 330 tokens ( 137.02 ms/tok,    7.30 tok/s)
+context:       n_ctx_slot = 4096  (fit உயர்த்தவே இல்லை)
+W resolve_fused_ops: layer 0 is assigned to device CPU but fused
+  Gated Delta Net (chunked) is assigned to device ROCm0
+W fused Gated Delta Net (chunked) not supported, set to disabled</pre>
+      <p><code>-ngl 999</code> நீக்கியதில் நிலை வியக்கத்தக்க வகையில் <em>மோசமானது</em>: 7.30 tok/s – manual அமைப்பின் மூன்றில் ஒரு பங்கு. <code>--fit</code> layer 0-ஐ CPU-ல் போட்டது; context default 4K-ஐ தாண்டவே இல்லை. இந்த warning model உண்மையில் என்ன என்பதையும் வெளிப்படுத்துகிறது: <strong>Qwen3.8 ஒரு Gated Delta Net (GDN) hybrid</strong> – பெரும்பாலான layers linear attention பயன்படுத்துகின்றன; ROCm-ல் fused chunked-GDN kernel இல்லை, அதனால் CPU/GPU கலப்பு பிரிவு throughput-ை அழித்துவிடுகிறது. இந்த அட்டையில் IQ3_S-க்கு சரியான config <code>-ngl 999</code> (எல்லா layers-உம் GPU-ல், சிறிய context-ஐ ஏற்றுக்கொள்ளவும்) – என் அசல் "தவறு" தான் சரியான பதிலாக வெளிவந்தது.</p>
+
+      <h3>IQ2_XS <code>--spec-type draft-mtp</code> உடன்</h3>
+      <pre>prompt eval:   3568.06 ms / 373 tokens (   9.57 ms/tok,  104.54 tok/s)
+eval (decode): 8148.60 ms / 189 tokens (  43.34 ms/tok,   23.07 tok/s)
+generate:      103 tokens @ 26.73 tok/s (tg), 26.99 tok/s (tg_3s)
+draft:         acceptance = 0.48052 (111 accepted / 231 generated), mean len = 2.44
+context:       n_ctx_slot = 4096  (--fit aborted: -ngl 999 + draft context)
+W llama_sampler_backend_support: device 'ROCm0' does not have
+  support for op TOP_K needed for sampler 'top-k'  (×4)</pre>
+      <p>MTP head இயங்குகிறது: <strong>23.07 tok/s</strong> (உச்சம் 26.7) – இல்லாதபோது 20.77. இரண்டு காரணங்களால் இது தெளிவான +11% ஆகிவிடவில்லை: MTP run-க்கு 4K context தான் கிடைத்தது (draft context-ஆல் <code>--fit</code> KV-க்கு செலவிடும் திறன் உறிஞ்சப்படுகிறது; <code>-ngl 999</code> இருந்தால் fit விட்டுவிடுகிறது), சிறிய KV cache decode-ஐ அழகாகக் காட்டும் – சம context-ல் நிகர MTP லாபம் <strong>+5–8%</strong> அருகில். நான்கு TOP_K warning-களும் முக்கியம்: ROCm draft sampler-ின் top-k-வை GPU-ல் இயக்க முடியாது, அது acceptance-ஐ 48%-ல் முடக்கலாம் (Tiel-Coder-ல் 54.7%). ஆனாலும், இந்த அட்டையில் இதுவரையிலான வேகமான IQ2_XS எண்.</p>
+
       <h2>முடிவு</h2>
-      <p>12 GB RX 6800M-ல் <strong>இந்த 27B-க்கு IQ2_XS தான் practical choice</strong>: ~21 tok/s decode, உண்மையில் பயன்படும் 52K context, 10% VRAM இடவசதி. IQ3_S தாள் மீது நல்ல quant, ஆனால் இந்த அட்டைக்கு இன்னும் விலை அதிகம் – உண்மையான context-க்கே முன்பே 97% VRAM, என் <code>-ngl 999</code> தவறு அதன் உண்மையான திறனை மறைத்துவிட்டது. இரண்டு follow-ups செய்யத் தக்கவை: <code>--fit</code>-ஐ விட்டு (கைமுறை <code>-ngl</code> இல்லாமல்) IQ3_S மீண்டும் இயக்குவது, IQ2_XS-ல் <code>--spec-type draft-mtp</code> இயக்குவது – IQ3_S 16K கூட பொருந்தினால் அது quality pick ஆகிவிடும்; MTP வேலை செய்தால் IQ2_XS 23–24 tok/s-ஐ தாண்டலாம்.</p>
+      <p>12 GB RX 6800M-ல் <strong>இந்த 27B-க்கு IQ2_XS தான் practical choice</strong>: 52K context-ல் ~21 tok/s, <code>--spec-type draft-mtp</code> உடன் <strong>~23 tok/s</strong> – 4K context போதும் என்றால் (அல்லது fit/MTP ஒன்றோடொன்று பழகும் வரை காத்திருங்கள்). IQ3_S தாள் மீது நல்ல quant, ஆனால் இந்த அட்டைக்கு மீறியது: உண்மையான context-க்கு முன்பே 97% VRAM; "proper" auto-fit பாதை ஒரு பொறி – layer 0 CPU-க்குச் சென்று decode 7.3 tok/s-ல் விழுந்துவிடும். IQ3_S ஓட்ட வேண்டுமென்றால் <code>-ngl 999</code> ஃபோர்ஸ் செய்யவும், 4K-ஐ ஏற்கவும். இனி திறந்த கேள்விகள் hardware-து அல்ல, software stack-து: ROCm-க்கு fused GDN kernel, MTP sampler-க்கு TOP_K support – இவைதான் இந்த 3 bpw quant-ஐயும் மேலான draft acceptance-ஐயும் திறக்கும்.</p>
 
       <div class="tool-callout">
         <div class="tool-callout-title">🧪 மேலும் Lab</div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta name="description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab." />
+  <meta name="description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (GDN hybrid)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab." />
   <title>RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ3_S) · 52K / 4K | VelsTech Lab</title>
   <link rel="canonical" href="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s.html" />
   <script type="application/ld+json">
@@ -13,7 +13,7 @@
   "@type": "TechArticle",
   "@id": "https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s.html#article",
   "headline": "RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ3_S) · 52K / 4K",
-  "description": "Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab.",
+  "description": "Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (GDN hybrid)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab.",
   "url": "https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s.html",
   "inLanguage": "en",
   "author": { "@type": "Person", "name": "VelsTech", "url": "https://velstech.net/" },
@@ -26,13 +26,13 @@
   <meta property="og:site_name" content="VelsTech" />
   <meta property="og:url" content="https://velstech.net/benchmarks/rx-6800m-qwen38-27b-gsq-rco-rocm-iq3-s.html" />
   <meta property="og:title" content="RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ3_S) · 52K / 4K" />
-  <meta property="og:description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab." />
+  <meta property="og:description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (GDN hybrid)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab." />
   <meta property="og:image" content="https://velstech.net/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="RX 6800M · Qwen3.8 27B GSQ-RCO · IQ2_XS / IQ3_S · ROCm (IQ3_S) · 52K / 4K" />
-  <meta name="twitter:description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (dense)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab." />
+  <meta name="twitter:description" content="Benchmark: RX 6800M (12 GB) running Qwen3.8 27B GSQ-RCO (27B (GDN hybrid)) at IQ2_XS / IQ3_S / 52K / 4K / q8_0 on ROCm (IQ3_S) – 18.97 tok/s decode. Tested in the VelsTech Lab." />
   <meta name="twitter:image" content="https://velstech.net/og-image.png" />
   <link rel="manifest" href="../manifest.json" />
   <link rel="preload" href="../fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
@@ -52,7 +52,7 @@
     <p class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Benchmarks</a> / RX 6800M / Qwen3.8 27B GSQ-RCO</p>
     <h1 class="title">RX 6800M · Qwen3.8 27B GSQ-RCO</h1>
     <div class="meta">
-      <span>27B (dense)</span>
+      <span>27B (GDN hybrid)</span>
       <span>· IQ2_XS / IQ3_S</span>
       <span>· 52K / 4K</span>
       <span>· q8_0</span>
@@ -68,7 +68,7 @@
           <div class="result-row"><span>VRAM</span><strong>12 GB</strong></div>
           <div class="result-row"><span>Memory bandwidth</span><strong>~384 GB/s</strong></div>
           <div class="result-row"><span>Model</span><strong>Qwen3.8 27B GSQ-RCO</strong></div>
-          <div class="result-row"><span>Parameters</span><strong>27B (dense)</strong></div>
+          <div class="result-row"><span>Parameters</span><strong>27B (GDN hybrid)</strong></div>
           <div class="result-row"><span>Quantization</span><strong>IQ2_XS / IQ3_S</strong></div>
           <div class="result-row"><span>Context</span><strong>52K / 4K</strong></div>
           <div class="result-row"><span>KV quant</span><strong>q8_0</strong></div>
@@ -77,7 +77,7 @@
       </div>
 
       <h2>About this result</h2>
-      <p>IQ2_XS-mtp carries blk.64.nextn.* MTP tensors but no MTP flag was passed, so they are ignored – both runs are plain decode. IQ2_XS wins decode (+9%) and fits 52K ctx with q8_0 KV under --fit; IQ3_S wins prompt eval (+57%) but --fit aborted because -ngl 999 was set by hand, leaving the default 4K ctx. Drop -ngl (or raise -c) to let --fit size IQ3_S properly.</p>
+      <p>IQ2_XS wins decode (+9%) and fits 52K ctx with q8_0 KV under --fit. Enabling the MTP head (--spec-type draft-mtp) lifts IQ2_XS to 23.07 t/s (48% acceptance, mean len 2.44) but ROCm lacks TOP_K for the draft sampler and the draft context makes --fit bail to 4K. IQ3_S at -ngl 999 wins prompt eval (+57%) yet only fits a 4K ctx at 97% VRAM; letting --fit choose (no -ngl) is worse, not better: it offloads layer 0 to CPU and the fused Gated Delta Net kernel is unsupported on ROCm, collapsing decode to 7.3 t/s. Manual -ngl 999 is the correct config for IQ3_S on this card.</p>
       <p>
         This result was <strong>tested in the VelsTech Lab</strong> on real hardware. <a href="../qwen38-27b-gsq-rco-rx6800m.html">Read the full Lab report →</a>
       </p>

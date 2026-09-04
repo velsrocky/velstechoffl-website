@@ -3,7 +3,7 @@
     title: "Qwen3.8 27B GSQ-RCO on RX 6800M: IQ2_XS vs IQ3_S – VelsTech Lab",
     url: "qwen38-27b-gsq-rco-rx6800m.html",
     date: "2026-09-04",
-    updated: "2026-09-04",
+    updated: "2026-09-05",
     category: "AI",
     tags: ["VelsTech Lab", "Qwen", "GGUF", "RX 6800M", "Quantization", "Benchmark"],
     description: "Tested Qwen3.8 27B GSQ-RCO on a 12 GB RX 6800M – IQ2_XS decodes 20.8 tok/s with 52K context at 90% VRAM, while IQ3_S wins prompt eval but gets stuck at 4K context because --fit aborted on a manual -ngl.",

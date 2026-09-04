@@ -5,7 +5,7 @@
   <id>https://velstech.net/</id>
   <link rel="alternate" href="https://velstech.net/" />
   <link rel="self" href="https://velstech.net/feed.xml" />
-  <updated>2026-09-04T00:00:00Z</updated>
+  <updated>2026-09-05T00:00:00Z</updated>
   <author><name>VelsTech</name></author>
 
   <entry>
@@ -13,7 +13,7 @@
     <link rel="alternate" href="https://velstech.net/qwen38-27b-gsq-rco-rx6800m.html" />
     <id>https://velstech.net/qwen38-27b-gsq-rco-rx6800m.html</id>
     <published>2026-09-04T00:00:00Z</published>
-    <updated>2026-09-04T00:00:00Z</updated>
+    <updated>2026-09-05T00:00:00Z</updated>
     <category term="AI" />
     <summary>Tested Qwen3.8 27B GSQ-RCO on a 12 GB RX 6800M – IQ2_XS decodes 20.8 tok/s with 52K context at 90% VRAM, while IQ3_S wins prompt eval but gets stuck at 4K context because --fit aborted on a manual -ngl.</summary>
   </entry>

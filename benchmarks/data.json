@@ -63,7 +63,7 @@
       "gpu_vram": "12 GB",
       "gpu_bw": "~384 GB/s",
       "model": "Qwen3.8 27B GSQ-RCO",
-      "params": "27B (dense)",
+      "params": "27B (GDN hybrid)",
       "quant": "IQ2_XS / IQ3_S",
       "context": "52K / 4K",
       "kv_quant": "q8_0",
@@ -72,9 +72,11 @@
       "source_article": "qwen38-27b-gsq-rco-rx6800m.html",
       "backends": [
         { "name": "ROCm (IQ2_XS-mtp)", "decode": 20.77, "prompt": 113.51 },
-        { "name": "ROCm (IQ3_S)", "decode": 18.97, "prompt": 178.32 }
+        { "name": "ROCm (IQ2_XS-mtp + MTP)", "decode": 23.07, "prompt": 104.54 },
+        { "name": "ROCm (IQ3_S)", "decode": 18.97, "prompt": 178.32 },
+        { "name": "ROCm (IQ3_S, auto-fit)", "decode": 7.30, "prompt": 112.03 }
       ],
-      "notes": "IQ2_XS-mtp carries blk.64.nextn.* MTP tensors but no MTP flag was passed, so they are ignored – both runs are plain decode. IQ2_XS wins decode (+9%) and fits 52K ctx with q8_0 KV under --fit; IQ3_S wins prompt eval (+57%) but --fit aborted because -ngl 999 was set by hand, leaving the default 4K ctx. Drop -ngl (or raise -c) to let --fit size IQ3_S properly."
+      "notes": "IQ2_XS wins decode (+9%) and fits 52K ctx with q8_0 KV under --fit. Enabling the MTP head (--spec-type draft-mtp) lifts IQ2_XS to 23.07 t/s (48% acceptance, mean len 2.44) but ROCm lacks TOP_K for the draft sampler and the draft context makes --fit bail to 4K. IQ3_S at -ngl 999 wins prompt eval (+57%) yet only fits a 4K ctx at 97% VRAM; letting --fit choose (no -ngl) is worse, not better: it offloads layer 0 to CPU and the fused Gated Delta Net kernel is unsupported on ROCm, collapsing decode to 7.3 t/s. Manual -ngl 999 is the correct config for IQ3_S on this card."
     },
     {
       "id": "rtx-4090-qwen-7b-q4",

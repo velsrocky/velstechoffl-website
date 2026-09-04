@@ -1,5 +1,20 @@
 [
   {
+    "title": "GPT-6 Astra: OpenAI's new frontier model, explained",
+    "url": "gpt-6-astra.html",
+    "desc": "OpenAI launched GPT-6 Astra today. The benchmark numbers that matter, the honest caveats, the pricing – and what it means if you run local AI on AMD hardware.",
+    "category": "AI",
+    "tags": [
+      "LLM",
+      "OpenAI",
+      "GPT-6",
+      "Benchmarks",
+      "AI News"
+    ],
+    "kind": "article",
+    "date": "2026-09-04"
+  },
+  {
     "title": "Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab",
     "url": "tiel-coder-35b-mtp-rx6800m.html",
     "desc": "Tested Tiel-Coder-35B-A3B Q4_K_XL on RX 6800M – MTP speculative decoding at 29.09 tok/s vs 25.39 tok/s without MTP, at 262K q8 KV, 28-32 CPU experts, ROCm 10.0.",

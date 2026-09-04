@@ -1022,6 +1022,36 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://velstech.net/gpt-6-astra.hi.html</loc>
+    <lastmod>2026-09-04T00:00:00Z</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gpt-6-astra.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gpt-6-astra.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/gpt-6-astra.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gpt-6-astra.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/gpt-6-astra.html</loc>
+    <lastmod>2026-09-04T00:00:00Z</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gpt-6-astra.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gpt-6-astra.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/gpt-6-astra.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gpt-6-astra.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://velstech.net/gpt-6-astra.ta.html</loc>
+    <lastmod>2026-09-04T00:00:00Z</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gpt-6-astra.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gpt-6-astra.hi.html" />
+    <xhtml:link rel="alternate" hreflang="ta" href="https://velstech.net/gpt-6-astra.ta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://velstech.net/gpt-6-astra.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://velstech.net/gpu-ai-calculator.hi.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://velstech.net/gpu-ai-calculator.html" />
     <xhtml:link rel="alternate" hreflang="hi" href="https://velstech.net/gpu-ai-calculator.hi.html" />

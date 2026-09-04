@@ -1,4 +1,28 @@
-const ARTICLES = [
+ const ARTICLES = [
+  {
+    title: "GPT-6 Astra: OpenAI's new frontier model, explained",
+    url: "gpt-6-astra.html",
+    date: "2026-09-04",
+    updated: "2026-09-04",
+    category: "AI",
+    featured: true,
+    tags: ["LLM", "OpenAI", "GPT-6", "Benchmarks", "AI News"],
+    description: "OpenAI launched GPT-6 Astra today. The benchmark numbers that matter, the honest caveats, the pricing – and what it means if you run local AI on AMD hardware.",
+    faq: [
+      {
+        q: "Can I run GPT-6 Astra locally?",
+        a: "No. Astra is a closed, cloud-only model available through ChatGPT, the OpenAI API, Azure, and AWS Bedrock. You cannot download its weights or run it on your own GPU.",
+      },
+      {
+        q: "How much does GPT-6 Astra cost?",
+        a: "In the API, standard pricing is $10 per million input tokens and $50 per million output tokens, with a fast mode at 2x speed for 2x the price. It's also included in ChatGPT Plus, Pro, Business, and Enterprise subscription allowances.",
+      },
+      {
+        q: "Is GPT-6 Astra the best AI model?",
+        a: "It's the best at agentic work – computer use, terminal tasks, and office automation – but not undisputed at everything. On Artificial Analysis's independent index, Claude Fable 5.1 still scores higher, and Claude leads Humanity's Last Exam with tools.",
+      },
+    ],
+  },
   {
     title: "Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab",
     url: "tiel-coder-35b-mtp-rx6800m.html",

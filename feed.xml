@@ -9,6 +9,15 @@
   <author><name>VelsTech</name></author>
 
   <entry>
+    <title>GPT-6 Astra: OpenAI's new frontier model, explained</title>
+    <link rel="alternate" href="https://velstech.net/gpt-6-astra.html" />
+    <id>https://velstech.net/gpt-6-astra.html</id>
+    <published>2026-09-04T00:00:00Z</published>
+    <updated>2026-09-04T00:00:00Z</updated>
+    <category term="AI" />
+    <summary>OpenAI launched GPT-6 Astra today. The benchmark numbers that matter, the honest caveats, the pricing – and what it means if you run local AI on AMD hardware.</summary>
+  </entry>
+  <entry>
     <title>Tiel-Coder 35B-A3B on RX 6800M: MTP vs non-MTP at 262K – VelsTech Lab</title>
     <link rel="alternate" href="https://velstech.net/tiel-coder-35b-mtp-rx6800m.html" />
     <id>https://velstech.net/tiel-coder-35b-mtp-rx6800m.html</id>

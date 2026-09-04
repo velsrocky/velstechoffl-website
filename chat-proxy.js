@@ -68,6 +68,14 @@ function json(body, status, origin) {
 
 export default {
   async fetch(request, env) {
+    const res = await handle(request, env);
+    // Every response we construct is local, so headers are mutable.
+    try { res.headers.set("X-Content-Type-Options", "nosniff"); } catch {}
+    return res;
+  },
+};
+
+async function handle(request, env) {
     const origin = getCorsOrigin(request, env);
     const provider = env.AI_PROVIDER || DEFAULTS.AI_PROVIDER;
     const model = env.AI_MODEL || DEFAULTS.AI_MODEL;
@@ -168,8 +176,7 @@ export default {
     } catch (err) {
       return json({ error: "provider_error", detail: err.message }, 502, origin);
     }
-  },
-};
+}
 
 async function handleOpenAI(payload, opts, env, origin, model) {
   const apiKey = env.OPENAI_API_KEY;

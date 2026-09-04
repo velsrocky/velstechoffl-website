@@ -679,7 +679,7 @@
         const filtered = getFilteredNotes();
         if (filtered.length === 0) {
           if (searchQuery) {
-            notesListEl.innerHTML = '<div class="notes-list-empty">No notes match "' + searchQuery + '"</div>';
+            notesListEl.innerHTML = '<div class="notes-list-empty">No notes match "' + escHtml(searchQuery) + '"</div>';
           } else {
             notesListEl.innerHTML = '<div class="notes-list-empty">No notes yet. Click + to create one.</div>';
           }

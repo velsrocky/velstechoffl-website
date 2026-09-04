@@ -301,228 +301,7 @@
   </main>
 
   <script>
-    const BENCH_DATA = {
-  "benchmarks": [
-    {
-      "id": "rx-6800m-qwen-27b-ridge",
-      "gpu": "RX 6800M",
-      "gpu_vram": "12 GB",
-      "gpu_bw": "~384 GB/s",
-      "model": "Qwen 27B Ridge",
-      "params": "27B (dense)",
-      "quant": "3.7bpw",
-      "context": "16K",
-      "kv_quant": "q8_0",
-      "offload": true,
-      "tested": true,
-      "source_article": "qwen-27b-ridge-rocm-vs-vulkan.html",
-      "backends": [
-        { "name": "ROCm", "decode": 18.12, "prompt": 217.6 },
-        { "name": "Vulkan", "decode": 21.84, "prompt": 149.6 }
-      ],
-      "notes": "Not fully resident on 12 GB (~15.6 GB needed). Partial offload to system RAM explains the ~18-21 tok/s decode. Vulkan wins decode (+20%), ROCm wins prompt eval (+45%)."
-    },
-    {
-      "id": "rx-6800m-ornith-35b-moe",
-      "gpu": "RX 6800M",
-      "gpu_vram": "12 GB",
-      "gpu_bw": "~384 GB/s",
-      "model": "Ornith 35B-A3B MoE",
-      "params": "35B (3B active)",
-      "quant": "Q5_K/Q4_K",
-      "context": "262K",
-      "kv_quant": "q8_0",
-      "offload": true,
-      "tested": true,
-      "source_article": "ornith-35b-moe-262k-rocm-vs-vulkan.html",
-      "backends": [
-        { "name": "ROCm", "decode": 25.62, "prompt": 83.8 },
-        { "name": "Vulkan", "decode": 19.66, "prompt": 83.1 }
-      ],
-      "notes": "28 CPU experts, MoE-sparse + q8 KV + CPU offload. ROCm wins decode (+30%). Decodes ~3B active per token, so speed holds even at 262K. Needs --load-mode none, no -ngl 999."
-    },
-    {
-      "id": "rtx-4090-qwen-7b-q4",
-      "gpu": "RTX 4090",
-      "gpu_vram": "24 GB",
-      "gpu_bw": "1008 GB/s",
-      "model": "Qwen 7B",
-      "params": "7B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "CUDA", "decode": 160, "prompt": null }
-      ],
-      "notes": "Estimated from the GPU AI Performance Calculator. Fully resident."
-    },
-    {
-      "id": "rtx-4090-qwen-14b-q4",
-      "gpu": "RTX 4090",
-      "gpu_vram": "24 GB",
-      "gpu_bw": "1008 GB/s",
-      "model": "Qwen 14B",
-      "params": "14B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "CUDA", "decode": 120, "prompt": null }
-      ],
-      "notes": "Estimated from the GPU AI Performance Calculator. Fully resident."
-    },
-    {
-      "id": "rtx-4090-qwen-27b-q4",
-      "gpu": "RTX 4090",
-      "gpu_vram": "24 GB",
-      "gpu_bw": "1008 GB/s",
-      "model": "Qwen 27B",
-      "params": "27B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "CUDA", "decode": 60, "prompt": null }
-      ],
-      "notes": "Estimated. Tight but resident on 24 GB."
-    },
-    {
-      "id": "rx-7900-xtx-qwen-27b-q4",
-      "gpu": "RX 7900 XTX",
-      "gpu_vram": "24 GB",
-      "gpu_bw": "960 GB/s",
-      "model": "Qwen 27B",
-      "params": "27B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "ROCm", "decode": 58, "prompt": null }
-      ],
-      "notes": "Estimated. Best VRAM-per-rupee on the AMD side."
-    },
-    {
-      "id": "rtx-5070-ti-qwen-7b-q4",
-      "gpu": "RTX 5070 Ti",
-      "gpu_vram": "16 GB",
-      "gpu_bw": "896 GB/s",
-      "model": "Qwen 7B",
-      "params": "7B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "CUDA", "decode": 95, "prompt": null }
-      ],
-      "notes": "Estimated from the GPU AI Performance Calculator."
-    },
-    {
-      "id": "rtx-5070-ti-qwen-14b-q4",
-      "gpu": "RTX 5070 Ti",
-      "gpu_vram": "16 GB",
-      "gpu_bw": "896 GB/s",
-      "model": "Qwen 14B",
-      "params": "14B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "CUDA", "decode": 90, "prompt": null }
-      ],
-      "notes": "Estimated. Fully resident on 16 GB."
-    },
-    {
-      "id": "rx-9070-xt-qwen-7b-q4",
-      "gpu": "RX 9070 XT",
-      "gpu_vram": "16 GB",
-      "gpu_bw": "644 GB/s",
-      "model": "Qwen 7B",
-      "params": "7B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "ROCm", "decode": 72, "prompt": null }
-      ],
-      "notes": "Estimated from the GPU AI Performance Calculator."
-    },
-    {
-      "id": "rx-9070-xt-qwen-14b-q4",
-      "gpu": "RX 9070 XT",
-      "gpu_vram": "16 GB",
-      "gpu_bw": "644 GB/s",
-      "model": "Qwen 14B",
-      "params": "14B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "ROCm", "decode": 68, "prompt": null }
-      ],
-      "notes": "Estimated. Fully resident on 16 GB."
-    },
-    {
-      "id": "rtx-4060-ti-qwen-7b-q4",
-      "gpu": "RTX 4060 Ti",
-      "gpu_vram": "16 GB",
-      "gpu_bw": "288 GB/s",
-      "model": "Qwen 7B",
-      "params": "7B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "CUDA", "decode": 42, "prompt": null }
-      ],
-      "notes": "Estimated. Low bandwidth limits decode."
-    },
-    {
-      "id": "rx-7600-xt-qwen-7b-q4",
-      "gpu": "RX 7600 XT",
-      "gpu_vram": "16 GB",
-      "gpu_bw": "288 GB/s",
-      "model": "Qwen 7B",
-      "params": "7B",
-      "quant": "Q4",
-      "context": "8K",
-      "kv_quant": "Q4",
-      "offload": false,
-      "tested": false,
-      "source_article": "best-gpu-for-local-llm.html",
-      "backends": [
-        { "name": "ROCm", "decode": 42, "prompt": null }
-      ],
-      "notes": "Estimated from the GPU AI Performance Calculator."
-    }
-  ]
-};
+    let BENCH_DATA = { benchmarks: [] };
 
     const state = {
       gpu: "all",
@@ -560,7 +339,7 @@
       return rows;
     }
 
-    const rows = flattenBenchmarks(BENCH_DATA);
+    let rows = [];
 
     function unique(values) {
       return [...new Set(values)].sort((a, b) => a.localeCompare(b));
@@ -580,10 +359,12 @@
       });
     }
 
-    populateSelect("f-gpu", unique(rows.map((r) => r.gpu)), "All GPUs");
-    populateSelect("f-model", unique(rows.map((r) => r.model)), "All models");
-    populateSelect("f-backend", unique(rows.map((r) => r.backend)), "All backends");
-    populateSelect("f-status", ["Tested", "Estimated"], "All statuses");
+    function initFilters() {
+      populateSelect("f-gpu", unique(rows.map((r) => r.gpu)), "All GPUs");
+      populateSelect("f-model", unique(rows.map((r) => r.model)), "All models");
+      populateSelect("f-backend", unique(rows.map((r) => r.backend)), "All backends");
+      populateSelect("f-status", ["Tested", "Estimated"], "All statuses");
+    }
 
     document.getElementById("f-gpu").addEventListener("change", (e) => { state.gpu = e.target.value; render(); });
     document.getElementById("f-model").addEventListener("change", (e) => { state.model = e.target.value; render(); });
@@ -748,7 +529,18 @@
       });
     });
 
-    render();
+    fetch("benchmarks/data.json")
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then((data) => {
+        BENCH_DATA = data;
+        rows = flattenBenchmarks(BENCH_DATA);
+        initFilters();
+        render();
+      })
+      .catch(() => {
+        document.querySelector("#bench-table tbody").innerHTML =
+          '<tr><td colspan="10" style="text-align:center;padding:24px">Could not load benchmark data. Refresh to retry.</td></tr>';
+      });
   </script>
 
 </body>

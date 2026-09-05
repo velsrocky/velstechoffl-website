@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="Privacy policy for Storalyze (Storage Analyzer) by VelsTech — offline storage analysis, on-device only." />
+  <title>Storalyze Privacy Policy | VelsTech</title>
+  <link rel="canonical" href="https://velstech.net/storalyze-privacy.html" />
+  <link rel="alternate" hreflang="en" href="https://velstech.net/storalyze-privacy.html" />
+  <link rel="alternate" hreflang="x-default" href="https://velstech.net/storalyze-privacy.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://velstech.net/storalyze-privacy.html#webpage",
+  "url": "https://velstech.net/storalyze-privacy.html",
+  "name": "Storalyze Privacy Policy | VelsTech",
+  "description": "Privacy policy for Storalyze (Storage Analyzer) by VelsTech.",
+  "inLanguage": "en"
+}
+  </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VelsTech" />
+  <meta property="og:url" content="https://velstech.net/storalyze-privacy.html" />
+  <meta property="og:title" content="Storalyze Privacy Policy | VelsTech" />
+  <meta property="og:description" content="Privacy policy for Storalyze (Storage Analyzer) by VelsTech — offline storage analysis, on-device only." />
+  <meta property="og:image" content="https://velstech.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Storalyze Privacy Policy | VelsTech" />
+  <meta name="twitter:description" content="Privacy policy for Storalyze (Storage Analyzer) by VelsTech — offline storage analysis, on-device only." />
+  <meta name="twitter:image" content="https://velstech.net/og-image.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css?v=54" />
+  <script defer src="articles.js?v=15"></script>
+  <script defer src="i18n.js?v=5"></script>
+  <script defer src="whatsnew-core.js?v=1"></script>
+  <script defer src="script.js?v=69"></script>
+</head>
+<body>
+  <main class="article-page">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Storalyze Privacy Policy</p>
+    <h1 class="title">Storalyze (Storage Analyzer) — Privacy Policy</h1>
+    <div class="meta">
+      <span>Last updated: Sep 6, 2026</span>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Storalyze ("the app", application ID <code>com.velstech.storalyze</code>) is an
+        offline storage-analysis tool for Android (with limited iOS support). The short
+        version: <strong>everything is analyzed on your device — no account, no servers,
+        no ads, and your files are never uploaded anywhere.</strong>
+      </p>
+
+      <h2>1. What the app accesses and why</h2>
+      <p>
+        To show where your storage went, the app reads <strong>on-device file
+        metadata</strong> (file names, sizes, and dates) and computes duplicate-detection
+        hashes locally. File contents are never read beyond hash sampling and never
+        transmitted.
+      </p>
+      <ul>
+        <li><strong>Photos / videos / audio</strong> (Android 13+ scoped access): scans
+        media categories with least privilege, only after an in-app explanation and the
+        system permission dialog.</li>
+        <li><strong>All files access</strong> (Android 11+): enables a full-device scan
+        including Downloads, WhatsApp media, and Screenshots. Requested only after an
+        in-app rationale screen that also offers a single-folder picker needing no
+        permission at all.</li>
+        <li><strong>Usage access (optional):</strong> if you open the system Usage Access
+        settings, the app shows an installed-apps size breakdown. The app works fully
+        without it.</li>
+        <li><strong>File deletion</strong> happens only after your explicit per-batch
+        confirmation. There is no remote delete.</li>
+      </ul>
+
+      <h2>2. What we collect</h2>
+      <p>
+        <strong>Nothing.</strong> There is no analytics SDK, no advertising SDK, and no
+        account system. Scan results live in the app's memory only and are cleared when
+        the app closes.
+      </p>
+
+      <h2>3. Crash reports (optional)</h2>
+      <p>
+        Release builds may include crash reporting (Sentry). When enabled, a crash sends
+        only the device model, OS version, stack trace, and breadcrumbs — never file
+        contents. Builds without a crash-reporting key log errors locally only.
+      </p>
+
+      <h2>4. Data sharing</h2>
+      <p>
+        We do not sell, share, or upload your files or personal data to any third party.
+        The only exception is the optional crash trace described above, sent to the
+        crash-reporting provider when that build option is enabled.
+      </p>
+
+      <h2>5. iOS</h2>
+      <p>
+        On iOS the app is sandboxed: it can only scan its own container or a folder you
+        pick with the document picker. Photo-library access is not requested.
+      </p>
+
+      <h2>6. Children's privacy</h2>
+      <p>
+        The app is not directed at children under 13 and collects no personal
+        information from anyone.
+      </p>
+
+      <h2>7. Your choices</h2>
+      <ul>
+        <li>Deny any permission and use "Pick a folder instead".</li>
+        <li>Revoke access anytime in system Settings → Apps → Storalyze → Permissions.</li>
+        <li>Ask about a crash report by emailing us with the event ID, if shown.</li>
+      </ul>
+
+      <h2>8. Changes to this policy</h2>
+      <p>
+        Material changes will update the date above before rollout.
+      </p>
+
+      <h2>9. Contact</h2>
+      <p>
+        Questions about privacy? Reach us at
+        <a href="mailto:velstechoffl@gmail.com">velstechoffl@gmail.com</a>.
+      </p>
+    </div>
+
+    <div class="article-nav">
+      <a href="index.html">← Back to Home</a>
+      <a href="privacy.html">Site Privacy Policy</a>
+    </div>
+  </main>
+
+</body>
+</html>

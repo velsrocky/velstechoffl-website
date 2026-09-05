@@ -1,6 +1,7 @@
 # Repo internals must 404 at the routing layer, not just be absent from the
 # deployment (stale hostname-asset fallback was serving old copies).
 /README.md 404
+/CHANGELOG.md 404
 /CHAT-SETUP.md 404
 /ANALYTICS-SETUP.md 404
 /MONETIZATION-SETUP.md 404

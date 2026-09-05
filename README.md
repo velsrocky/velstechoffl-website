@@ -2,6 +2,8 @@
 
 Static site at **velstech.net** – plain-language tech guides, free tools, real hardware benchmarks, and buying guides, with a focus on **local AI, Linux, hardware, and India-market tech**.
 
+Notable fixes, features and audits are logged in [`CHANGELOG.md`](CHANGELOG.md) (repo-only – excluded from the deploy).
+
 ## Quick start
 
 ```sh
@@ -48,7 +50,7 @@ node --test tests/*.test.js
 | `tests/` | Unit tests (`node --test`) for `whatsnew-core.js` + `chat-proxy-core.js`; opt-in browser test for the EN/TA/HI toggle (skips without Chrome) |
 | `benchmarks/data.json` | Benchmark results (tested + estimated) |
 | `benchmarks/*.html` | Generated benchmark detail pages |
-| `og/*.png` | Per-article OG images (1200×630) |
+| `og/*.png` | Per-article OG images (1200×630); `og/benchmarks/*.png` per benchmark row |
 | `tools/` | Generators + scripts (incl. `stage-pages.js` – builds the clean `.dist/` for deploy) |
 | `_headers` | Cloudflare Pages security headers (nosniff, HSTS, referrer/permissions policy, frame deny) |
 | `_redirects` | 404 rules for repo-internal paths (defense-in-depth on the production domain) |
@@ -210,7 +212,7 @@ appears after 8s / 40% scroll / glossary hover (auto-hides, dismissed state in
 | `tools/check-article-sync.js` | Guard: every article has EN/HI/TA files, hreflang clusters, OG image, feed/sitemap/search entries; benchmark `source_article` valid | CI guard in `build-check.yml`; end of `sync-all` |
 | `tools/gen-seo.js` | Inject canonical/JSON-LD/OG tags + reciprocal head hreflang alternates (EN/HI/TA clusters) + Atom feed auto-discovery link, generate `sitemap.xml` (with `<lastmod>` from `articles.js`) + `robots.txt` | After any new page or article |
 | `tools/gen-feed.js` | Generate `feed.xml` Atom feed from `articles.js` | After article changes |
-| `tools/gen-og-images.py` | Render 1200×630 OG images per article into `og/` | After adding articles |
+| `tools/gen-og-images.py` | Render 1200×630 OG images per article into `og/`, per benchmark backend row into `og/benchmarks/`, and per tool | After adding articles/benchmarks |
 | `tools/gen-benchmarks.js` | Generate per-benchmark detail pages from `benchmarks/data.json` (head boilerplate read from `tools/versions.json` so output never drifts) | After adding benchmark data |
 | `tools/gen-search-index.js` | Generate `search-index.json` (articles + tools + hubs) for fuzzy search | After adding articles/tools |
 | `tools/gen-favicon.py` | Generate favicon variants | Rarely |

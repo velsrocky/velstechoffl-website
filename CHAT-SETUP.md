@@ -77,9 +77,9 @@ main = "chat-proxy.js"
 compatibility_date = "2026-08-26"
 workers_dev = false
 
-[[custom_domains]]
-hostname = "chat.velstech.net"
-zone_name = "velstech.net"
+routes = [
+  { pattern = "chat.velstech.net", custom_domain = true }
+]
 
 [vars]
 ALLOWED_ORIGIN = "https://velstech.net"
@@ -100,9 +100,15 @@ wrangler deploy
 wrangler versions upload && wrangler versions deploy <version-id>
 ```
 
-> ⚠️ `custom_domains` triggers a "Unexpected fields" warning in wrangler v4 but still works.
+> The `routes = [{ custom_domain = true }]` form is the valid wrangler v4 syntax and
+> auto-provisions the `chat.velstech.net` DNS record. (The old `[[custom_domains]]` block
+> was an invalid top-level field wrangler warned about and ignored – the binding only
+> survived because it was already set. Fixed in `4ec4bf5`.)
 > If `wrangler deploy` reports "No targets deployed", run
 > `wrangler versions deploy <version-id>` (list with `wrangler versions list`).
+>
+> Every response carries `X-Content-Type-Options: nosniff`, set centrally in the `fetch`
+> wrapper in `chat-proxy.js` so JSON, SSE, RSS and preflight responses are all covered.
 
 The Worker honours the `model` the widget sends (so its fallback chain works)
 and falls back to `AI_MODEL` when the client doesn't specify one.

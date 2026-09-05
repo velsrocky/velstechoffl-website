@@ -29,6 +29,7 @@ const SKIP_FILES = new Set([
   "chat-proxy.js", // Worker source – deployed separately via `wrangler deploy`
   "chat-proxy-core.js",
   "README.md",
+  "CHANGELOG.md",
 ]);
 
 // Keep these even though they look like docs (search-engine verification + custom domain).

@@ -154,12 +154,72 @@ def gen_generic():
     print(f"  og-image.png (generic)")
 
 
+
+def slugify_backend(name):
+    import re
+    return re.sub(r"^-+|-+$", "", re.sub(r"[^a-z0-9]+", "-", name.lower()))
+
+
+def gen_benchmark_images():
+    data_path = os.path.join(ROOT, "benchmarks", "data.json")
+    if not os.path.exists(data_path):
+        return
+    with open(data_path) as f:
+        benchmarks = json.load(f)["benchmarks"]
+    out_dir = os.path.join(OG_DIR, "benchmarks")
+    os.makedirs(out_dir, exist_ok=True)
+    n = 0
+    for b in benchmarks:
+        for be in b["backends"]:
+            slug = b["id"] + "-" + slugify_backend(be["name"])
+            img = Image.new("RGB", (W, H), BG)
+            draw = ImageDraw.Draw(img)
+            draw_background(draw)
+
+            font_pill = ImageFont.truetype(FONT_BOLD, 26)
+            font_num = ImageFont.truetype(FONT_BOLD, 120)
+            font_unit = ImageFont.truetype(FONT_REG, 34)
+            font_model = ImageFont.truetype(FONT_BOLD, 44)
+            font_small = ImageFont.truetype(FONT_REG, 24)
+            font_brand = ImageFont.truetype(FONT_REG, 22)
+
+            pill = f"{b['gpu']}  ({b['gpu_vram']})  \u00b7  {'TESTED' if b.get('tested') else 'ESTIMATED'}"
+            pw = draw.textlength(pill, font=font_pill)
+            draw.rounded_rectangle((80, 64, 80 + pw + 40, 64 + 46), radius=23, fill=ACCENT)
+            draw.text((100, 72), pill, fill=BG, font=font_pill)
+
+            decode = be.get("decode")
+            if isinstance(decode, (int, float)):
+                draw.text((80, 150), f"{decode:.1f}", fill=WHITE, font=font_num)
+                nw = draw.textlength(f"{decode:.1f}", font=font_num)
+                draw.text((80 + nw + 16, 218), "tok/s decode", fill=ACCENT, font=font_unit)
+
+            lines = wrap_title(b["model"], font_model, W - 160, draw)[:2]
+            y = 320
+            for line in lines:
+                draw.text((80, y), line, fill=WHITE, font=font_model)
+                y += 54
+
+            prompt = be.get("prompt")
+            bits = [be["name"], b.get("quant", ""), f"{b.get('context','')} ctx"]
+            if isinstance(prompt, (int, float)):
+                bits.append(f"{prompt:.0f} tok/s prompt")
+            draw.text((80, y + 6), "  \u00b7  ".join(x for x in bits if x), fill=GRAY, font=font_small)
+
+            draw_brand(draw, font_brand)
+            img.save(os.path.join(out_dir, slug + ".png"), "PNG")
+            n += 1
+    print(f"Generating {n} benchmark OG images into og/benchmarks/")
+
+
 def main():
     os.makedirs(OG_DIR, exist_ok=True)
     articles = load_articles()
     print(f"Generating {len(articles)} article OG images into og/")
     for a in articles:
         gen_article_image(a)
+
+    gen_benchmark_images()
 
     tools = load_tools()
     tool_slugs = [

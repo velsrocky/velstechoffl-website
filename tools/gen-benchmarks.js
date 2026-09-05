@@ -47,7 +47,7 @@ function page(b, bk) {
   "author": { "@type": "Person", "name": "VelsTech", "url": "${SITE}/" },
   "publisher": { "@type": "Organization", "name": "VelsTech", "url": "${SITE}/", "logo": { "@type": "ImageObject", "url": "${SITE}/logo.svg" } },
   "mainEntityOfPage": "${url}",
-  "image": "${SITE}/og-image.png"
+  "image": "${SITE}/og/benchmarks/${slug}.png"
 }
   </script>
   <meta property="og:type" content="article" />
@@ -55,13 +55,13 @@ function page(b, bk) {
   <meta property="og:url" content="${url}" />
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(desc)}" />
-  <meta property="og:image" content="${SITE}/og-image.png" />
+  <meta property="og:image" content="${SITE}/og/benchmarks/${slug}.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${esc(title)}" />
   <meta name="twitter:description" content="${esc(desc)}" />
-  <meta name="twitter:image" content="${SITE}/og-image.png" />
+  <meta name="twitter:image" content="${SITE}/og/benchmarks/${slug}.png" />
   <link rel="manifest" href="../manifest.json" />
   <link rel="preload" href="../fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="icon" href="../favicon.ico" sizes="48x48" />

@@ -901,6 +901,10 @@ html[lang="ta"] .hero h1 {
   color: var(--muted);
   margin-bottom: 12px;
 }
+.breadcrumb a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 .page-hero h1 {
   font-size: clamp(2rem, 5vw, 2.8rem);

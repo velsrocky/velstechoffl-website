@@ -5,6 +5,7 @@
     date: "2026-09-05",
     updated: "2026-09-05",
     category: "AI",
+    featured: true,
     tags: ["ROCm","AMD","LLM","Architecture"],
     description: "A llama.cpp warning on my RX 6800M exposed the real problem with the new wave of hybrid-attention models (Qwen3.8, Kimi Linear, Nemotron-H): no fused GDN kernel on ROCm – and what that costs in tokens per second.",
   },
